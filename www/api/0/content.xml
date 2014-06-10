@@ -1,0 +1,85 @@
+<organization id="1">
+    <course id="1">
+       <module id="1">
+          <content>
+            <description>Awareness Of The Body</description> 
+            <time>1800</time>
+            <size>29</size>
+            <file>
+                <owner>dh.p.dakini@gmail.com</owner>
+                <type>audio</type>
+                <url>https%3A%2F%2Fdl.dropboxusercontent.com%2Fu%2F1120453%2Ftriratna%2Fbody.128.mp3</url>
+            </file>                
+          </content>
+       </module>
+    </course>
+</organization>
+
+
+<organization id="1">
+    <course id="1">
+       <module id="2">
+          <content>
+            <description>Awareness Of Positive Emotion</description> 
+            <time>2537</time>
+            <size>41</size>
+            <file>
+                <type>audio</type>
+                <owner>dh.p.dakini@gmail.com</owner>
+                <url>https%3A%2F%2Fdl.dropboxusercontent.com%2Fu%2F1120453%2Ftriratna%2Fmetta.128.mp3</url>
+            </file>                
+          </content>
+       </module>
+    </course>
+</organization>
+
+<organization id="1">
+    <course id="1">
+       <module id="3">
+          <content>
+            <description>Awareness Of Breath Experience</description> 
+            <time>2583</time>
+            <size>42</size>
+            <file>
+                <type>audio</type>
+                <owner>dh.p.dakini@gmail.com</owner>
+                <url>https%3A%2F%2Fdl.dropboxusercontent.com%2Fu%2F1120453%2Ftriratna%2Fbreath.128.mp3</url>
+            </file>                
+          </content>
+       </module>
+    </course>
+</organization>
+
+<organization id="1">
+    <course id="1">
+       <module id="4">
+          <content>
+            <description>Awareness Of Just Being</description> 
+            <time>2239</time>
+            <size>36</size>
+            <file>
+                <type>audio</type>
+                <owner>dh.p.dakini@gmail.com</owner>
+                <url>https%3A%2F%2Fdl.dropboxusercontent.com%2Fu%2F1120453%2Ftriratna%2Fbeing.128.mp3</url>
+            </file>                
+          </content>
+       </module>
+    </course>
+</organization>
+
+<organization id="1">
+    <course id="1">
+       <module id="5">
+          <content>
+            <description>Dreaming the new</description> 
+            <time>2770</time>
+            <size>45</size>
+            <file>
+                <type>audio</type>
+                <owner>dh.p.dakini@gmail.com</owner>
+                <url>https%3A%2F%2Fdl.dropboxusercontent.com%2Fu%2F1120453%2Ftriratna%2Fnew.128.mp3</url>
+            </file>                
+          </content>
+       </module>
+    </course>
+</organization>

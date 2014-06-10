@@ -1,0 +1,20 @@
+[
+    {
+        organizationId : '1',
+        name : 'Triratna East Surrey',
+        url: 'http://east.surreytriratna.com',
+        contact: 'east@surreytriratna.com',
+        description: 'Buddist Meditation Group',
+        logo: 'https://graph.facebook.com/233402610132766/picture?type=square',
+        html: ''
+    },
+    {
+        organizationId : '2',
+        name : 'The Now Project',
+        url: 'http://www.lovelifelivenow.com/',
+        contact: 'lovelifelivenow@gmail.com',
+        description: 'Mindfulness plain and simple.',
+        logo: 'http://www.lovelifelivenow.com/wp-content/uploads/2013/12/Now-Project-5-150x100.png',
+        html: ''
+    }
+]

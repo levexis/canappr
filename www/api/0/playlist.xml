@@ -1,0 +1,40 @@
+<organization id="1980329832">
+    <course id="321332312312213">
+       <module id="21098321983120938">
+          <author>Cook, Paul</author>
+          <email>paul@daddyswork.com</email>
+          <title>Breathing Meditation</title>
+          <description>A number of meditations to help you focus on the breath</description> 
+          <available>Immediate</available> [ If a number then will be number of days since last module completed, if a date then absolute date of release so content can be pre-downloaded ]
+          <content>
+            <description>Daily introduction</description> 
+            <time>500</time> [seconds ]
+            <size>500</size> [ MBs ]
+            <file>
+                <type>video</type>
+                <url>https://dropbox.com/19382/breathing.mp4</url>
+            </file>                
+            <notification>
+                <times>06:00</times> [ these files become available for playback after notification as well as clicking through ] 
+                <message>"10 minute breathing mediation"</message>
+                <file>
+                    <type>audio</type>
+                    <title>10 minute breathing meditation</title>
+                    <url>https://dropbox.com/19382/breath1.mp3</url>
+                    <pause>300</pause> [ number of seconds to pause for after file played ]
+                    <url>https://dropbox.com/19382/breath2.mp3</url>
+                </file>
+            </notification>
+            <notification>
+                <times>11:00,13:00,15:00,17:00</times>
+                <message>"Do you need a 1 minute timeout"</message>
+                <file>
+                    <type>audio</type>
+                    <title>1 minute breathing meditation</title>
+                    <url>https://dropbox.com/19382/breather.mp3</url>
+                </file>
+            </notification>
+          </content>
+       </module>
+    </course>
+</organization>
