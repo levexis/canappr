@@ -14,20 +14,17 @@ module.exports = function(config) {
         basePath: '',
 
         // frameworks to use, these need to be specified in plugins below
-        frameworks: [ 'mocha', 'requirejs' , 'sinon-chai', 'chai-backbone'],
+        frameworks: [ 'mocha', 'sinon-chai'],
 
         // list of ALL files / patterns needed by requireJS, if not loaded here will not work later
         files: [
-            { pattern: 'node_modules/chai/chai.js' , included: false },
-            { pattern: 'www/js/**/*.js' , included: false },
-            { pattern: 'www/js/**/*.html' , included: false },
+            { pattern: 'www/**/*.js' , included: false },
+            { pattern: 'www/**/*.html' , included: false },
             { pattern: 'test/**/*.test.js', included: false},
-            'test/main.js'
         ],
 
-        // list of files to exclude - the original main.js is replaced with one that creates the test list and no bootstrap
         exclude: [
-            'www/js/main.js'
+//            'www/js/main.js'
         ],
 
         // test results reporter to use

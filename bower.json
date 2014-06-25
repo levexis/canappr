@@ -1,11 +1,24 @@
 {
-    "name" : "BowerBackbone",
-    "version" : "0.0.1",
+    "name" : "canappr",
+    "version" : "0.0.2",
     "dependencies": {
-        "jquery": "1.10",
-        "backbone": null,
         "underscore": null,
-        "requirejs": null,
-        "text": null
+        "angular":  "~1.2.18",
+        "modernizr": null,
+        "json3": null,
+        "angular-resource": "~1.2.18",
+        "angular-cookies": null,
+        "angular-sanitize": null,
+        "angular-cordova-wrapper": "git@github.com:connectid/angular-cordova-wrapper.git",
+        "onsenui": "~1.0.4",
+        "angular-ui-router": "~0.2.10",
+        "angular-touch": "~1.2.18",
+        "angular-animate": "~1.2.18",
+        "animate.css": "~3.1.1",
+        "angular-cached-resource": "~0.6.9"
+    },
+    "devDependencies": {
+        "angular-mocks": null,
+        "angular-scenario": null
     }
 }
