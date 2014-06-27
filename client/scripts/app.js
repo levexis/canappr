@@ -25,5 +25,12 @@
                 controller : 'OrgsCtrl'
  */          });
     }]);
+    myApp.controller('TestCtrl', function( $scope , $location) {
+        console.log( 'TestCtrl initialised' );
+        $scope.isActive = function(route) {
+            return route === $location.path();
+        };
+        $scope.isTester = true;
+    })
 })(angular);
 

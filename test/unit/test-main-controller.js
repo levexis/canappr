@@ -1,6 +1,6 @@
 var expect = chai.expect;
 
-describe('test of tests', function () {
+describe('Main Controller', function () {
     beforeEach(module('canAppr'));
 
 /*    describe('reverse', function () {
