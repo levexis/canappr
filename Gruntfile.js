@@ -25,19 +25,21 @@ module.exports = function (grunt) {
         copy: {
             main: {
                 files: [
-                    {expand: true, src: ['bower_components/prefix-free/*.min.js'], dest: 'www/scripts/vendor' },
-                    {expand: true, src: ['bower_components/angular/*.min.js'], dest: 'www/scripts/vendor' },
-                    {expand: true, src: ['bower_components/angular-animate/*.min.js'], dest: 'www/scripts/vendor' },
-                    {expand: true, src: ['bower_components/angular-touch/*.min.js'], dest: 'www/scripts/vendor' },
-                    {expand: true, src: ['bower_components/ngular-cordova-wrapper/release/*.min.js'], dest: 'www/scripts/vendor' },
-                    {expand: true, src: ['bower_components/onsenui/build/js/onsenui.js'], dest: 'www/scripts/vendor' },
-                    {expand: true, src: ['bower_components/angular-resource/*.min.js'], dest: 'www/scripts/vendor' },
-                    {expand: true, src: ['bower_components/angular-cached-resource/*.min.js'], dest: 'www/scripts/vendor' },
-                    {expand: true, src: ['bower_components/angular-cookies/*.min.js'], dest: 'www/scripts/vendor' },
-                    {expand: true, src: ['bower_components/angular-sanatize/*.min.js'], dest: 'www/scripts/vendor' },
-                    {expand: true, src: ['bower_components/onsenui/build/css/topcoat-mobile-onsen-ios7.css'], dest: 'www/styles' },
-                    {expand: true, src: ['bower_components/onsenui/build/css/onsenui.css'], dest: 'www/styles' },
-                    {expand: true, src: ['bower_components/animate.css/animate.min.css'], dest: 'www/styles' }
+                    {expand: true, flatten: true, cwd: 'bower_components/prefixfree/', src:'*.min.js', dest: 'www/scripts/vendor/' },                    {flatten: true, src: ['bower_components/angular/*.min.js'], dest: 'www/scripts/vendor/' },
+                    {expand: true, flatten: true, cwd: 'bower_components/angular/', src:'*.min.js', dest: 'www/scripts/vendor/' },
+                    {expand: true, flatten: true, cwd: 'bower_components/angular-animate/', src:'*.min.js', dest: 'www/scripts/vendor/' },
+                    {expand: true, flatten: true, cwd: 'bower_components/angular-touch/', src:'*.min.js', dest: 'www/scripts/vendor/' },
+                    {expand: true, flatten: true, cwd: 'bower_components/angular-ui-router/release/', src:'*.min.js', dest: 'www/scripts/vendor/' },
+                    {expand: true, flatten: true, cwd: 'bower_components/angular-cordova-wrapper/release/', src:'*.min.js', dest: 'www/scripts/vendor/' },
+                    {expand: true, flatten: true, cwd: 'bower_components/onsenui/build/js/', src:'onsenui.js', dest: 'www/scripts/vendor/' },
+                    {expand: true, flatten: true, cwd: 'bower_components/onsenui/build/js/', src:'onsenui.js', dest: 'www/scripts/vendor/' },
+                    {expand: true, flatten: true, cwd: 'bower_components/angular-resource/', src:'*.min.js', dest: 'www/scripts/vendor/' },
+                    {expand: true, flatten: true, cwd: 'bower_components/angular-cached-resource/', src:'*.min.js', dest: 'www/scripts/vendor/' },
+                    {expand: true, flatten: true, cwd: 'bower_components/angular-cookies/', src:'*.min.js', dest: 'www/scripts/vendor/' },
+                    {expand: true, flatten: true, cwd: 'bower_components/angular-sanitize/', src:'*.min.js', dest: 'www/scripts/vendor/' },
+                    {expand: true, flatten: true, cwd: 'bower_components/modernizr/', src:'*.js', dest: 'www/scripts/vendor' },
+                    {expand: true, cwd: 'bower_components/onsenui/build/css/', src:'**/*', dest: 'www/styles/' },
+                    {expand: true, flatten: true, cwd: 'bower_components/animate.css/', src:'animate.min.css', dest: 'www/styles/' }
                 ]
             }
         },
