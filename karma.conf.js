@@ -8,15 +8,17 @@ module.exports = function(config) {
         // frameworks to use, these need to be specified in plugins below
         frameworks: [ 'mocha', 'sinon-chai'],
 
-        // list of ALL files / patterns needed by requireJS, if not loaded here will not work later
-        files: [
-            { pattern: 'www/**/*.js' , included: false },
-            { pattern: 'www/**/*.html' , included: false },
-            { pattern: 'test/**/*.test.js', included: false},
+        files : [
+            'bower_components/angular/angular.js',
+            'angular/scripts/**/*.js',
+            'bower_components/angular-mocks/angular-mocks.js',
+            'test/unit/**/*.js'
         ],
 
         exclude: [
-//            'www/js/main.js'
+//            'app/lib/angular/angular-loader.js',
+              'app/lib/angular/angular.min.js'
+//            'app/lib/angular/angular-scenario.js'
         ],
 
         // test results reporter to use
@@ -35,7 +37,7 @@ module.exports = function(config) {
         // level of logging
         // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
 //        logLevel: config.LOG_DEBUG,
-        logLevel: config.LOG_ERROR,
+        logLevel: config.LOG_DEBUG,
 
         // enable / disable watching file and executing tests whenever any file changes
 //        autoWatch: true, not for run once
@@ -61,7 +63,11 @@ module.exports = function(config) {
         singleRun: true,
 
         preprocessors : {
-            '**/www/*.js': 'coverage'
+            '**/angular/scripts/controllers/*.js' : 'coverage',
+            '**/angular/scripts/*.js' : 'coverage',
+            '**/angular/directives/*.js' : 'coverage',
+            '**/angular/filters/*.js' : 'coverage',
+            '**/angular/services/*.js' : 'coverage'
         },
 
         htmlReporter: {

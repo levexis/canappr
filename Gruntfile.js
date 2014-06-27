@@ -25,7 +25,7 @@ module.exports = function (grunt) {
         copy: {
             main: {
                 files: [
-                    {expand: true, flatten: true, cwd: 'bower_components/prefixfree/', src:'*.min.js', dest: 'angular/scripts/vendor/' },                    {flatten: true, src: ['bower_components/angular/*.min.js'], dest: 'angular/scripts/vendor/' },
+                    {expand: true, flatten: true, cwd: 'bower_components/prefixfree/', src:'*.min.js', dest: 'angular/scripts/vendor/' },
                     {expand: true, flatten: true, cwd: 'bower_components/angular/', src:'*.min.js', dest: 'angular/scripts/vendor/' },
                     {expand: true, flatten: true, cwd: 'bower_components/angular-animate/', src:'*.min.js', dest: 'angular/scripts/vendor/' },
                     {expand: true, flatten: true, cwd: 'bower_components/angular-touch/', src:'*.min.js', dest: 'angular/scripts/vendor/' },
@@ -37,7 +37,8 @@ module.exports = function (grunt) {
                     {expand: true, flatten: true, cwd: 'bower_components/angular-cached-resource/', src:'*.min.js', dest: 'angular/scripts/vendor/' },
                     {expand: true, flatten: true, cwd: 'bower_components/angular-cookies/', src:'*.min.js', dest: 'angular/scripts/vendor/' },
                     {expand: true, flatten: true, cwd: 'bower_components/angular-sanitize/', src:'*.min.js', dest: 'angular/scripts/vendor/' },
-                    {expand: true, flatten: true, cwd: 'bower_components/modernizr/', src:'*.js', dest: 'angular/scripts/vendor' },
+                    //css
+                    {expand: true, flatten: true, cwd: 'bower_components/modernizr/', src:'modernizr.js', dest: 'angular/scripts/vendor' },
                     {expand: true, cwd: 'bower_components/onsenui/build/css/', src:'**/*', dest: 'angular/styles/' },
                     {expand: true, flatten: true, cwd: 'bower_components/animate.css/', src:'animate.min.css', dest: 'angular/styles/' }
                 ]
