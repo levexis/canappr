@@ -29,6 +29,8 @@
     "grunt-mocha-cli": "~1.6.0",
     "grunt-contrib-copy": "~0.5.0",
     "grunt-contrib-jshint": "~0.8.0",
+    "grunt-contrib-uglify": "latest",
+    "grunt-contrib-concat": "latest",
     "grunt-karma": "0.7.1",
     "karma": "0.10.1",
     "karma-chrome-launcher": "~0.1.0",
@@ -44,6 +46,7 @@
     "karma-sinon-chai": "latest",
     "mocha": "latest",
     "nodemon": "latest",
-    "phantomjs": "1.9.7-1"
+    "phantomjs": "1.9.7-1",
+    "protractor": "~0.20.1"
   }
 }

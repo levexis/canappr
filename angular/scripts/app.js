@@ -8,7 +8,6 @@
                 $rootScope.$state = $state;
                 $rootScope.$stateParams = $stateParams;
             }]);
-
     myApp.config( [ '$stateProvider', '$urlRouterProvider' , function (stateRouter , urlRouter) {
         // For any unmatched url, redirect to /state1
         urlRouter.otherwise("/");
@@ -19,12 +18,12 @@
                 url: "/",
                 templateUrl: 'views/main.html',
                 controller: 'MainCtrl'
-            })
+/*          )
             .state('orgs', {
                 url : "/organizations",
                 templateUrl : 'views/organizations.html',
                 controller : 'OrgsCtrl'
-            });
+ */          });
     }]);
 })(angular);
 
