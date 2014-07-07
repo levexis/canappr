@@ -25,18 +25,18 @@ module.exports = function (grunt) {
         copy: {
             main: {
                 files: [
-                    {expand: true, flatten: true, cwd: 'bower_components/prefixfree/', src:'*.min.js', dest: 'client/scripts/vendor/' },
-                    {expand: true, flatten: true, cwd: 'bower_components/angular/', src:'*.min.js', dest: 'client/scripts/vendor/' },
-                    {expand: true, flatten: true, cwd: 'bower_components/angular-animate/', src:'*.min.js', dest: 'client/scripts/vendor/' },
-                    {expand: true, flatten: true, cwd: 'bower_components/angular-touch/', src:'*.min.js', dest: 'client/scripts/vendor/' },
-                    {expand: true, flatten: true, cwd: 'bower_components/angular-ui-router/release/', src:'*.min.js', dest: 'client/scripts/vendor/' },
-                    {expand: true, flatten: true, cwd: 'bower_components/angular-cordova-wrapper/release/', src:'*.min.js', dest: 'client/scripts/vendor/' },
+                    {expand: true, flatten: true, cwd: 'bower_components/prefixfree/', src:'*.min.js*', dest: 'client/scripts/vendor/' },
+                    {expand: true, flatten: true, cwd: 'bower_components/angular/', src:'*.min.js*', dest: 'client/scripts/vendor/' },
+                    {expand: true, flatten: true, cwd: 'bower_components/angular-animate/', src:'*.min.js*', dest: 'client/scripts/vendor/' },
+                    {expand: true, flatten: true, cwd: 'bower_components/angular-touch/', src:'*.min.js*', dest: 'client/scripts/vendor/' },
+                    {expand: true, flatten: true, cwd: 'bower_components/angular-ui-router/release/', src:'*.min.js*', dest: 'client/scripts/vendor/' },
+                    {expand: true, flatten: true, cwd: 'bower_components/angular-cordova-wrapper/release/', src:'*.min.js*', dest: 'client/scripts/vendor/' },
                     {expand: true, flatten: true, cwd: 'bower_components/onsenui/build/js/', src:'onsenui.js', dest: 'client/scripts/vendor/' },
                     {expand: true, flatten: true, cwd: 'bower_components/onsenui/build/js/', src:'onsenui.js', dest: 'client/scripts/vendor/' },
-                    {expand: true, flatten: true, cwd: 'bower_components/angular-resource/', src:'*.min.js', dest: 'client/scripts/vendor/' },
-                    {expand: true, flatten: true, cwd: 'bower_components/angular-cached-resource/', src:'*.min.js', dest: 'client/scripts/vendor/' },
-                    {expand: true, flatten: true, cwd: 'bower_components/angular-cookies/', src:'*.min.js', dest: 'client/scripts/vendor/' },
-                    {expand: true, flatten: true, cwd: 'bower_components/angular-sanitize/', src:'*.min.js', dest: 'client/scripts/vendor/' },
+                    {expand: true, flatten: true, cwd: 'bower_components/angular-resource/', src:'*.min.js*', dest: 'client/scripts/vendor/' },
+                    {expand: true, flatten: true, cwd: 'bower_components/angular-cached-resource/', src:'*.min.js*', dest: 'client/scripts/vendor/' },
+                    {expand: true, flatten: true, cwd: 'bower_components/angular-cookies/', src:'*.min.js*', dest: 'client/scripts/vendor/' },
+                    {expand: true, flatten: true, cwd: 'bower_components/angular-sanitize/', src:'*.min.js*', dest: 'client/scripts/vendor/' },
                     //css
                     {expand: true, flatten: true, cwd: 'bower_components/modernizr/', src:'modernizr.js', dest: 'client/scripts/vendor' },
                     {expand: true, cwd: 'bower_components/onsenui/build/css/', src:'**/*', dest: 'client/styles/' },

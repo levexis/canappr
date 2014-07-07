@@ -1,23 +1,23 @@
 [
     {
-        courseId : '1',
-        organizationId : '1',
-        name : 'Guided Mediations',
-        description: 'Guided mindfulness meditations for use at home, on the train or in the office',
-        startDate: '2014-06-08T00:00:00.000Z',
+        "id" : "1",
+        "orgId" : "1",
+        "name" : "Guided Mediations",
+        "description" : "Guided mindfulness meditations for use at home, on the train or in the office",
+        "startDate" : "2014-06-08T00:00:00.000Z"
     },
     {
-        courseId : '2',
-        organizationId : '1',
-        name : 'Triratna Liturgy',
-        description : 'Overview of customary practices of the Triratna order',
-        startDate: '2014-06-18T00:00:00.000Z',
+        "id" : "2",
+        "orgId" : "1",
+        "name" : "Triratna Liturgy",
+        "description" : "Overview of customary practices of the Triratna order",
+        "startDate" : "2014-06-18T00:00:00.000Z"
     },
     {
-        courseId : '3',
-        organizationId : '1',
-        name : 'Talks on Buddhism',
-        description : 'Buddhism from various perspectives',
-        startDate: '2014-06-28T00:00:00.000Z',
+        "id" : "3",
+        "orgId" : "1",
+        "name" : "Talks on Buddhism",
+        "description" : "Buddhism from various perspectives",
+        "startDate" : "2014-06-28T00:00:00.000Z"
     }
 ]

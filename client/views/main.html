@@ -1,4 +1,21 @@
-<div ng-controller="MainCtrl">
-        <h1>Welcome to Medit8 by canAppr</h1>
-        <p><a ui-sref="browser:orgs">Browse Organizations</a></p>
-</div>
+<!--    do the text with directives eg ca-welcome or ca-head:welcome? Just a template?
+        need to do an automatic translation so maybe put english in master template
+        there is a way of doing this ! -->
+<ons-page ng-controller="MainCtrl" height="100%">
+    <h1 align="center">State: {{state.name}}</h1>
+    <p align="center" class="ca-main-body">
+        Welcome to my new app, this is really just some placeholder text {{collection.length}}
+    <p>
+    <ons-navigator title="{{collectionName}}" ng-show="collection.length" class="ca-main-list">
+        <ons-list>
+                <ons-list-item
+                        ng-repeat="item in collection | orderBy : name"
+                        class="topcoat-list__item--tappable topcoat-list__item__line-height"
+                        ng-click="$state.go( target , { id: item.id } );">
+                    <i ng-class="['fa','fa-lg',collectionClass,'ca-right-arrow']">&nbsp;</i>
+                    {{item.name}}
+                </ons-list-item>
+        </ons-list>
+    </ons-navigator>
+</ons-page>
+
