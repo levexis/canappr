@@ -40,12 +40,12 @@
                     $scope.collectionName = 'Organizations';
                 } else if ( $scope.$state.current.options.list === 'courses' ) {
                     $scope.collectionClass = 'fa-book';
-                    courses.query( _queryCB( $scope )  );
+                    courses.query(  { organizationId : navParams.org.id } , _queryCB( $scope ) );
                     $scope.collectionName = 'Courses';
                     $scope.target = 'modules';
                 } else if ( $scope.$state.current.options.list === 'modules' ) {
                     $scope.collectionClass = 'fa-terminal';
-                    modules.query( _queryCB( $scope )  );
+                    modules.query(  { courseId : navParams.course.id } , _queryCB( $scope ) );
                     $scope.target = 'content';
                     $scope.collectionName = 'Modules';
                 } else if ( $scope.$state.current.options.list === 'content' ) {
