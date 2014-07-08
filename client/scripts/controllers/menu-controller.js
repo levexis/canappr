@@ -1,45 +1,59 @@
-(function (angular) {
+(function (angular, _ ) {
     "use strict";
 
     var myApp = angular.module( 'canAppr' );
 
 
     myApp.controller( 'MenuCtrl', function ( $scope, $location , $rootScope, orgs , courses, modules ) {
-        $scope.options = [];
-        /*
-            { label: 'Organizations', template:'views/main.html', class: 'fa-male' } ,
-            { label: 'Courses', template:'views/main.html', class: 'fa-book' } ,
-            { label: 'Modules', template:'views/main.html', class: 'fa-terminal' } ]; */
- //        actually need to fill this in as we go
-        $scope.options = [];
-//         watch rootscope for nav update, should this be a directive?
-        $rootScope.$watch('cannAppr.navParams' , function ( before , after) {
+        $scope.options = [ { name:'org', label: '', class: 'fa-male' } ,
+            { name: 'course', label: '', class: 'fa-book' } ,
+            { name: 'module', label: '', class: 'fa-terminal' } ];
+
+        $scope.models = { org: {} , course: {}, module: {} };
+//      watch rootscope for nav update, should this be a config service - YES it should!
+        $rootScope.$watch('cannAppr.navParams' , function ( after , before) {
             var navParams = $rootScope.cannAppr.navParams;
-            // should be a service?
+            console.log ( 'watch',navParams,before,after );
+            // should be a service? Returns true if changed
             function _getLabel (key , api ) {
-                if ( !after[key] || before[key].id !== navParams[key].id ) {
+                var option = _.findWhere( $scope.options ,{ name: key} );
+                if ( !api ) {
+                    // call to reset
+                    option.model={};
+                } else if ( !before || !before[key] ||  before[key].id !== navParams[key].id ) {
                     api.get( { id : navParams[key].id} ).$promise
                         .then( function ( result ) {
-                            $scope[ key + 'Name'] = result.name;
-                            console.log ( result.name );
+                            option.model = result;
+                            console.log ('set',key, $scope, result );
                         } );
+                    return true;
                 }
+                return false;
             }
-            $scope.options = [];
-            if ( navParams.org  ) {
-                $scope.options.push( { label : $scope.orgName, template : 'views/main.html', class : 'fa-male' } );
-                _getLabel ( 'org',orgs );
-                if ( navParams.course ) {
-                    $scope.options.push( { label : $scope.courseName, template : 'views/main.html', class : 'fa-book' } );
-                    _getLabel ( 'course',courses );
-                    if ( navParams.module ) {
-                        $scope.options.push( { label : $scope.moduleName, template : 'views/main.html', class : 'fa-terminal' } );
-                        _getLabel ( 'module',modules );
-                    }
-                }
+            /* resets parameters if you go back up tree */
+            if ( navParams.org  && _getLabel ( 'org',orgs ) ) {
+                navParams.course = {};
+                _getLabel ( 'course');
+                navParams.module = {};
+                _getLabel ( 'module');
+            } else if ( navParams.course && _getLabel ( 'course',courses ) ) {
+                navParams.module = {};
+                _getLabel ( 'module');
+            } else if ( navParams.module ) {
+                _getLabel( 'module', modules );
             }
         } , true );
 
+        $scope.listClick = function ( item ) {
+            var where;
+            if ( item.name === 'org' ) {
+                where = 'organizations';
+            } else {
+                where = item.name + 's';
+            }
+            $scope.$state.go ( where , { id : item.id } );
+        }
+
         console.log( 'Menu initialised', $scope, $location );
     } );
-})(angular);
+})(angular , _);

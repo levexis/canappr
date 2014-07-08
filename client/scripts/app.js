@@ -9,7 +9,7 @@
                 $rootScope.$stateParams = $stateParams;
                 // app global config, there is probably a service for this
                 $rootScope.cannAppr = { apiBase: 'api/0/',
-                                        navParams: {} };
+                                        navParams: { org: {}, module: {}, course:{} } };
                 $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
                     event.preventDefault();
                     console.log ('state change error',event, toState, toParams, fromState, fromParams);
