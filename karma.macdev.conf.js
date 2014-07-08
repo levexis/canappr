@@ -19,20 +19,20 @@ module.exports = function(config) {
 
         files : [
             'bower_components/angular/angular.js',
+            'bower_components/underscore/underscore.js',
             'client/scripts/**/*.js',
             'bower_components/angular-mocks/angular-mocks.js',
             'test/unit/**/*.js'
         ],
 
         exclude: [
-//            'app/lib/angular/angular-loader.js',
-            'app/lib/angular/angular.min.js'
-//            'app/lib/angular/angular-scenario.js'
+            'client/scripts/vendor/angular.min.js',
+            'client/scripts/vendor/underscore.js'
         ],
 
         // test results reporter to use
         // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-        reporters: ['progress'], // need to install spec using
+        reporters: ['spec','progress'], // need to install spec using
 
         // web server port
         port: 9876,
@@ -46,11 +46,10 @@ module.exports = function(config) {
         // level of logging
         // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
 //        logLevel: config.LOG_DEBUG,
-        logLevel: config.LOG_DEBUG,
+        logLevel: config.LOG_ERROR,
 
         // enable / disable watching file and executing tests whenever any file changes
-//        autoWatch: true, not for run once
-        autoWatch: false,
+        autoWatch: true,
 
         // Start these browsers, currently available:
         // - Chrome
@@ -98,7 +97,8 @@ module.exports = function(config) {
             'karma-phantomjs-launcher',
             'karma-ie-launcher',
             'karma-htmlfile-reporter',
-            'karma-coverage'
+            'karma-coverage',
+            'karma-reporter-spec'
         ]
 
     });

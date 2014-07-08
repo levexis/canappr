@@ -16,7 +16,8 @@
   "scripts": {
     "start": "server.js",
     "test": "./node_modules/karma/bin/karma start",
-    "build": "grunt"
+    "build": "grunt",
+    "karma": "./node_modules/karma/bin/karma start karma.macdev.conf.js"
   },
   "dependencies": {
     "express": "latest"

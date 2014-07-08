@@ -10,7 +10,7 @@
          Author:  Stefan Goessner/2006
          Web:     http://goessner.net/
          */
-        function xml2json(xml, tab) {
+        function _xmlParse(xml, format, tab) {
             var X = {
                 toObj: function(xml) {
                     var o = {};
@@ -153,12 +153,25 @@
                     return e;
                 }
             };
+            if (typeof xml === 'string' ) {
+                xml = DOMParser ? (new DOMParser()).parseFromString( xml, "text/xml" ) : ((new ActiveXObject( "Microsoft.XMLDOM" )).loadXML( xml ));
+            }
+            tab = tab || '';
+            format = format || 'object';
             if (xml.nodeType == 9) // document node
                 xml = xml.documentElement;
-            var json = X.toJson(X.toObj(X.removeWhite(xml)), xml.nodeName, "\t");
-            return "{\n" + tab + (tab ? json.replace(/\t/g, tab) : json.replace(/\t|\n/g, "")) + "\n}";
+            var xmlObj = X.toObj( X.removeWhite( xml ) );
+            if (format === 'json') {
+                var json = X.toJson( xmlObj, xml.nodeName, "\t" );
+                return "{\n" + tab + (tab ? json.replace( /\t/g, tab ) : json.replace( /\t|\n/g, "" )) + "\n}";
+            } else {
+                var returnObj = {};
+                returnObj[xml.nodeName] = xmlObj;
+                return returnObj;
+            }
         }
-        return { toJSON: xml2json };
+        return { toJSON: function (xml,tab) { return _xmlParse (xml,'json',tab); },
+            toObject: function (xml,tab) { return _xmlParse (xml,'object',tab); } };
     });
 
 })(angular);

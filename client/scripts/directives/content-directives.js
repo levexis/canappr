@@ -11,7 +11,7 @@
                     console.log('cdContent' , $scope, element, attributes);
                     if (attributes.playlist) {
                         // atob not compatible with IE
-                        console.log('playlist', xmlService.toJSON (atob(attributes.playlist)) );
+                        console.log('playlist', xmlService.toObject (atob(attributes.playlist)) );
                     }
                 };
                 return linkFunction;
