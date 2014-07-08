@@ -5,15 +5,13 @@
 
 
     myApp.controller( 'MenuCtrl', function ( $scope, $location , $rootScope, orgs , courses, modules ) {
-        $scope.options = [ { name:'org', label: '', class: 'fa-male' } ,
+        $scope.options = [ { name:'org', label: '', class: 'fa-male', model: {name: 'Organizations'} } ,
             { name: 'course', label: '', class: 'fa-book' } ,
             { name: 'module', label: '', class: 'fa-terminal' } ];
 
-        $scope.models = { org: {} , course: {}, module: {} };
 //      watch rootscope for nav update, should this be a config service - YES it should!
         $rootScope.$watch('cannAppr.navParams' , function ( after , before) {
             var navParams = $rootScope.cannAppr.navParams;
-            console.log ( 'watch',navParams,before,after );
             // should be a service? Returns true if changed
             function _getLabel (key , api ) {
                 var option = _.findWhere( $scope.options ,{ name: key} );
@@ -23,23 +21,23 @@
                 } else if ( !before || !before[key] ||  before[key].id !== navParams[key].id ) {
                     api.get( { id : navParams[key].id} ).$promise
                         .then( function ( result ) {
+                            navParams[key] = result;
                             option.model = result;
-                            console.log ('set',key, $scope, result );
                         } );
                     return true;
                 }
                 return false;
             }
             /* resets parameters if you go back up tree */
-            if ( navParams.org  && _getLabel ( 'org',orgs ) ) {
+            if ( navParams.org.id  && _getLabel ( 'org',orgs ) ) {
                 navParams.course = {};
                 _getLabel ( 'course');
                 navParams.module = {};
                 _getLabel ( 'module');
-            } else if ( navParams.course && _getLabel ( 'course',courses ) ) {
+            } else if ( navParams.course.id && _getLabel ( 'course',courses ) ) {
                 navParams.module = {};
                 _getLabel ( 'module');
-            } else if ( navParams.module ) {
+            } else if ( navParams.module.id ) {
                 _getLabel( 'module', modules );
             }
         } , true );
@@ -53,7 +51,5 @@
             }
             $scope.$state.go ( where , { id : item.id } );
         }
-
-        console.log( 'Menu initialised', $scope, $location );
     } );
 })(angular , _);

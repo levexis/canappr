@@ -38,7 +38,8 @@
                 controller: 'MainCtrl',
                 options: {
                     canSwipe: true,
-                    list: 'orgs'
+                    list: 'orgs',
+                    reset: true
                 }
             })
             .state('courses', {

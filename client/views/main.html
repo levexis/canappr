@@ -2,9 +2,9 @@
         need to do an automatic translation so maybe put english in master template
         there is a way of doing this ! -->
 <ons-page ng-controller="MainCtrl" height="100%">
-    <h1 align="center">State: {{state.name}}</h1>
+    <h1 align="center">{{model.name}}</h1>
     <p align="center" class="ca-main-body">
-        Welcome to my new app, this is really just some placeholder text {{collection.length}}
+        {{model.html}}
     <p>
     <ons-navigator title="{{collectionName}}" ng-show="collection.length" class="ca-main-list">
         <ons-list>

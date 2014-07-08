@@ -6,11 +6,13 @@
      */
     function _queryCB ($scope) {
         return function ( results ) {
-            console.log( 'fetched', results.length, results  );
             $scope.collection = results;
         }
     }
-
+    function _reset ($scope) {
+        $scope.model = { name: 'Organizations',
+                 html : 'Welcome to my new app, this is just placeholder text' };
+    };
 
     // how can we dynamically inject the resource, have hard coded organizations for now
     // need current model and then collection for list, eg collectionId 5 is model and courses is the collection etc
@@ -19,12 +21,15 @@
 
             /* deals with state changes from page elements via ui-router */
             $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
-                console.log ('state change event',event, toState, toParams, fromState, fromParams);
-                console.log ('stateParams',JSON.stringify($scope.$stateParams));
+                var navParams =  $rootScope['cannAppr']['navParams'];
                 if ( $scope.$stateParams && $scope.$state.current.options ) {
                     // set global root params? Update menu?
-                    $rootScope['cannAppr']['navParams'][ $scope.$state.current.options.key ] = { id: $scope.$stateParams.id };
-                    console.log( 'root.cannAppr.navParams', $rootScope['cannAppr']['navParams']);
+                    if ($scope.$state.current.options.reset ) {
+                        // this is to reset the menu to show organizations again
+                        navParams.org = {};
+                    } else {
+                        navParams[ $scope.$state.current.options.key ].id =  $scope.$stateParams.id;
+                    }
                 }
                 if ($scope.$state.current.options.list === 'orgs' ) {
                     $scope.collectionClass = 'fa-male';
@@ -34,13 +39,11 @@
                     $scope.target = 'courses';
                     $scope.collectionName = 'Organizations';
                 } else if ( $scope.$state.current.options.list === 'courses' ) {
-                    console.log('courses');
                     $scope.collectionClass = 'fa-book';
                     courses.query( _queryCB( $scope )  );
                     $scope.collectionName = 'Courses';
                     $scope.target = 'modules';
                 } else if ( $scope.$state.current.options.list === 'modules' ) {
-                    console.log('modules');
                     $scope.collectionClass = 'fa-terminal';
                     modules.query( _queryCB( $scope )  );
                     $scope.target = 'content';
@@ -52,6 +55,28 @@
                 } else {
                     throw new Error ('unrecognized list: ' + $scope.$state.current.options.list );
                 }
+                function setModel () {
+                    switch ( $scope.$state.current.name ) {
+                        case 'organizations':
+                            $scope.model = navParams.org;
+                            if ( !$scope.model.html ) {
+                                _reset( $scope );
+                            }
+                            break;
+                        case 'courses':
+                            $scope.model = navParams.org;
+                            break;
+                        case 'modules':
+                            $scope.model = navParams.course;
+                            break;
+                        case 'content':
+                            $scope.model = navParams.module;
+                            break;
+                    }
+                }
+                setModel();
+                // watch for changes if loading
+                $rootScope.$watch('cannAppr.navParams', setModel, true);
                 // do we need this code block?
                 switch (toParams.action) {
                     case 'push':
@@ -75,11 +100,9 @@
             $scope.collection = [];
             // default state
             $scope.collectionClass = 'fa-male';
+            _reset($scope);
             orgs.query( _queryCB ( $scope ) );
             $scope.target = 'courses';
             $scope.collectionName = 'Organizations';
-
-            console.log('MainCtrl init',$scope );
-
         } );
 })(angular);
