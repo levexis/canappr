@@ -10,6 +10,7 @@ module.exports = function(config) {
 
         files : [
             'bower_components/angular/angular.js',
+            'bower_components/underscore/underscore.js',
             'client/scripts/**/*.js',
             'bower_components/angular-mocks/angular-mocks.js',
             'test/unit/**/*.js'
@@ -17,7 +18,8 @@ module.exports = function(config) {
 
         exclude: [
 //            'app/lib/angular/angular-loader.js',
-              'app/lib/angular/angular.min.js'
+              'client/scripts/vendor/angular.min.js',
+            'client/scripts/vendor/underscore.js'
 //            'app/lib/angular/angular-scenario.js'
         ],
 

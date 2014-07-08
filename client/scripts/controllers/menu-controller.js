@@ -10,8 +10,8 @@
             { name: 'module', label: '', class: 'fa-terminal' } ];
 
 //      watch rootscope for nav update, should this be a config service - YES it should!
-        $rootScope.$watch('cannAppr.navParams' , function ( after , before) {
-            var navParams = $rootScope.cannAppr.navParams;
+        $rootScope.$watch('canAppr.navParams' , function ( after , before) {
+            var navParams = $rootScope.canAppr.navParams;
             // should be a service? Returns true if changed
             function _getLabel (key , api ) {
                 var option = _.findWhere( $scope.options ,{ name: key} );

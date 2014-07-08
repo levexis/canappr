@@ -2,21 +2,39 @@
     'use strict';
     var myApp = angular.module('canAppr', ['ui.router', 'angularCordovaWrapper', 'onsen.directives' , 'ngTouch', 'ngAnimate', 'ngCachedResource' ])
         .run(
-        [ '$rootScope', '$state', '$stateParams',
-            function ($rootScope,   $state,   $stateParams) {
-                // share current state globally
-                $rootScope.$state = $state;
-                $rootScope.$stateParams = $stateParams;
-                // app global config, there is probably a service for this
-                $rootScope.cannAppr = { apiBase: 'api/0/',
-                                        navParams: { org: {}, module: {}, course:{} } };
-                $rootScope.$on('$stateChangeError', function (event, toState, toParams, fromState, fromParams, error) {
-                    event.preventDefault();
-                    console.log ('state change error',event, toState, toParams, fromState, fromParams);
-                    return $state.go('error');
-                });
-
-            }]);
+         function ($rootScope,   $state,   $stateParams , $timeout) {
+             // share current state globally
+             $rootScope.$state = $state;
+             $rootScope.$stateParams = $stateParams;
+             // app global config, there is probably a service for this
+             $rootScope.canAppr = { apiBase : 'api/0/',
+                 navParams : { org : {}, module : {}, course : {} } };
+             $rootScope.$on( '$stateChangeError', function ( event, toState, toParams, fromState, fromParams, error ) {
+                 event.preventDefault();
+                 console.log( 'state change error', event, toState, toParams, fromState, fromParams );
+                 return $state.go( 'error' );
+             } );
+             /* connects ui-router and ons-navigator */
+             $rootScope.$on( '$stateChangeSuccess', function ( event, toState, toParams, fromState, fromParams ) {
+                 console.log('root change', event, toState, toParams, fromState, fromParams ,$rootScope);
+                 if ( fromState.templateUrl !== toState.templateUrl ) {
+                     switch ( toParams.action ) {
+                         case 'push':
+                             $rootScope.ons.navigator.pushPage( app.state.current.templateUrl );
+                             break;
+                         default:
+                             if ( $rootScope.ons.splitView ) {
+                                 $rootScope.ons.splitView.setMainPage( toState.templateUrl );
+                             }
+                     }
+                 }
+                 $timeout( function () {
+                     if ( $rootScope.ons.splitView && typeof $rootScope.ons.splitView.close === 'function' ) {
+                         $rootScope.ons.splitView.close();
+                     }
+                 }, 100 );
+             } );
+         });
     myApp.config( [ '$stateProvider', '$urlRouterProvider' , function (stateRouter , urlRouter) {
         // For any unmatched url, redirect to /state1
         urlRouter.otherwise("/");
@@ -64,11 +82,10 @@
             })
             .state('content', {
                 url: "/modules/:id",
-                templateUrl: 'views/main.html',
-                controller: 'MainCtrl',
+                templateUrl: 'views/content.html',
+                controller: 'ContentCtrl',
                 options: {
                     canSwipe: true,
-                    list: 'content',
                     key: 'module'
                 }
             });

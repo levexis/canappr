@@ -1,18 +1,22 @@
 var expect = chai.expect;
 
 describe('Main Controller', function () {
-    beforeEach(module('canAppr'));
 
-/*    describe('reverse', function () {
-        it('should reverse a string', inject(function (reverseFilter) {
-            expect(reverseFilter('ABCD')).to.equal('DCBA');
-            expect(reverseFilter('jonh')).to.equal('hnoj');
-        }));
-    });
-    */
-    it('should pass',function () {
-        expect(true).to.equal(true);
-    });
+    beforeEach( module( 'canAppr' ) );
 
+    describe( 'MainCtrl' , function () {
+        var ctrl, scope;
+
+        beforeEach(   inject( function ( $rootScope, $controller ) {
+            scope = $rootScope.$new();
+            ctrl = $controller( "MainCtrl", {$scope : scope } );
+            expect(ctrl).to.not.be.undefined;
+        }) );
+        it ('should create $scope.collectionClass', function() {
+            scope.collectionClass.should.exist;
+        });
+
+
+    });
 
 });

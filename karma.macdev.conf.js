@@ -7,6 +7,7 @@
  * karma start karma.macdev.conf.js
  */
 
+// basic Karma configuration for e2e testing use, runs once and uses phantomjs
 module.exports = function(config) {
     config.set({
 
@@ -16,21 +17,23 @@ module.exports = function(config) {
         // frameworks to use, these need to be specified in plugins below
         frameworks: [ 'mocha', 'sinon-chai'],
 
-        // list of ALL files / patterns needed by requireJS, if not loaded here will not work later
-        files: [
-            { pattern: 'www/**/*.js' , included: false },
-            { pattern: 'www/**/*.html' , included: false },
-            { pattern: 'test/**/*.test.js', included: false},
+        files : [
+            'bower_components/angular/angular.js',
+            'client/scripts/**/*.js',
+            'bower_components/angular-mocks/angular-mocks.js',
+            'test/unit/**/*.js'
         ],
 
         exclude: [
-//            'www/js/main.js'
+//            'app/lib/angular/angular-loader.js',
+            'app/lib/angular/angular.min.js'
+//            'app/lib/angular/angular-scenario.js'
         ],
 
         // test results reporter to use
         // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-//        reporters: ['progress', 'dots' ,'html' , 'coverage'], // need to install spec using
-        
+        reporters: ['progress'], // need to install spec using
+
         // web server port
         port: 9876,
 
@@ -43,10 +46,11 @@ module.exports = function(config) {
         // level of logging
         // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
 //        logLevel: config.LOG_DEBUG,
-        logLevel: config.LOG_ERROR,
+        logLevel: config.LOG_DEBUG,
 
         // enable / disable watching file and executing tests whenever any file changes
-        autoWatch: true,
+//        autoWatch: true, not for run once
+        autoWatch: false,
 
         // Start these browsers, currently available:
         // - Chrome
@@ -62,28 +66,32 @@ module.exports = function(config) {
         // If browser does not capture in given timeout [ms], kill it
         captureTimeout: 60000,
 
-        singleRun: false,
-//        singleRun: true,
+        // Continuous Integration mode
+        // if true, it capture browsers, run tests and exit
+        singleRun: false, // not for run once
 
-        preprocessors : {
-//            '**/www/*.js': 'coverage'
-        },
-
-        htmlReporter: {
+// disable reports these are produced on single run
+//        preprocessors : {
+//            '**/angular/scripts/controllers/*.js' : 'coverage',
+//            '**/angular/scripts/*.js' : 'coverage',
+//            '**/angular/directives/*.js' : 'coverage',
+//            '**/angular/filters/*.js' : 'coverage',
+//            '**/angular/services/*.js' : 'coverage'
+//        },
+//
+//        htmlReporter: {
 //            outputFile: 'test/report.html'
-        },
-        coverageReporter: {
-            type : 'html',
-            dir : 'coverage/',
-            file : 'coverage.html'
-        },
+//        },
+//        coverageReporter: {
+//            type : 'html',
+//            dir : 'coverage/',
+//           file : 'coverage.html'
+//        },
 
         // these need to be in your dev dependencies in package.json
         plugins: [
             "karma-mocha",
-            "karma-requirejs",
             "karma-sinon-chai",
-            "karma-chai-backbone",
             'karma-chrome-launcher',
             'karma-firefox-launcher',
             'karma-safari-launcher',

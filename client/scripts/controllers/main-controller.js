@@ -21,13 +21,14 @@
 
             /* deals with state changes from page elements via ui-router */
             $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
-                var navParams =  $rootScope['cannAppr']['navParams'];
+                console.log('main-change');
+                var navParams =  $rootScope['canAppr']['navParams'];
                 if ( $scope.$stateParams && $scope.$state.current.options ) {
                     // set global root params? Update menu?
                     if ($scope.$state.current.options.reset ) {
                         // this is to reset the menu to show organizations again
-                        navParams.org = {};
-                    } else {
+                        navParams.org = navParams.course = navParams.module = {};
+                    } else if ( $scope.$stateParams && $scope.$state.current.options.key ) {
                         navParams[ $scope.$state.current.options.key ].id =  $scope.$stateParams.id;
                     }
                 }
@@ -52,7 +53,7 @@
                     // change template
                     $scope.collectionName = 'Content';
                     $scope.collection = [];
-                } else {
+                } else if ( $scope.$state.current.options.list ) {
                     throw new Error ('unrecognized list: ' + $scope.$state.current.options.list );
                 }
                 function setModel () {
@@ -76,26 +77,7 @@
                 }
                 setModel();
                 // watch for changes if loading
-                $rootScope.$watch('cannAppr.navParams', setModel, true);
-                // do we need this code block?
-                switch (toParams.action) {
-                    case 'push':
-                        $scope.ons.navigator.pushPage(app.state.current.templateUrl);
-                        break;
-                    default:
-                        if ($scope.ons.splitView) {
-                            // $scope.ons.splitView.setMainPage(toState.templateUrl);
-                        }
-                }
-
-                $timeout(function () {
-                    if ($scope.ons.splitView && typeof $scope.ons.splitView.close === 'function') {
-                        $scope.ons.splitView.close();
-                    }
-                }, 100);
-
-                $scope.state = $state.current;
-                // end of block
+                $rootScope.$watch('canAppr.navParams', setModel, true);
             });
             $scope.collection = [];
             // default state
