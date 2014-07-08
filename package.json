@@ -50,7 +50,7 @@
     "mocha": "latest",
     "nodemon": "latest",
     "phantomjs": "~1.9.7",
-    "protractor": "~0.20.1"
-
+    "protractor": "~0.20.1",
+    "karma-spec-reporter": "latest"
   }
 }

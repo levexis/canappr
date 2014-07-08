@@ -25,7 +25,7 @@ module.exports = function(config) {
 
         // test results reporter to use
         // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-        reporters: ['progress', 'dots' ,'html' , 'coverage'], // need to install spec using
+        reporters: ['spec' ,'html' , 'coverage'],
 
         // web server port
         port: 9876,
@@ -91,7 +91,8 @@ module.exports = function(config) {
         'karma-phantomjs-launcher',
         'karma-ie-launcher',
         'karma-htmlfile-reporter',
-        'karma-coverage'
+        'karma-coverage',
+        'karma-spec-reporter'
     ]
 
     });
