@@ -10,7 +10,7 @@
                 var linkFunction = function ( $scope, element, attributes ) {
                     console.log('cdContent' , $scope, element, attributes);
                     if (attributes.playlist) {
-                        // atob not compatible with IE
+                        // atob is  base 64 ecoder but not compatible with IE
                         console.log('playlist', xmlService.toObject (atob(attributes.playlist)) );
                     }
                 };

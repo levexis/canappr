@@ -2,7 +2,7 @@
     "use strict";
     var myApp = angular.module( 'canAppr' );
 
-    myApp.factory('xmlService', function ()  {
+    myApp.factory('xmlService', function ( $log)  {
         /*	This work is licensed under Creative Commons GNU LGPL License.
 
          License: http://creativecommons.org/licenses/LGPL/2.1/
@@ -153,22 +153,32 @@
                     return e;
                 }
             };
-            if (typeof xml === 'string' ) {
-                xml = DOMParser ? (new DOMParser()).parseFromString( xml, "text/xml" ) : ((new ActiveXObject( "Microsoft.XMLDOM" )).loadXML( xml ));
+            try {
+                if ( typeof xml === 'string' ) {
+                    xml = DOMParser ? (new DOMParser()).parseFromString( xml, "text/xml" ) : ((new ActiveXObject( "Microsoft.XMLDOM" )).loadXML( xml ));
+                }
+                tab = tab || '';
+                format = format || 'object';
+                if ( xml.nodeType == 9 ) // document node
+                    xml = xml.documentElement;
+                var xmlObj = X.toObj( X.removeWhite( xml ) );
+                // check for parse errors
+                if ( JSON.stringify (xmlObj ).match(/parseerror|parsererror|Parsing.Error/i ) ) {
+                    throw new Error ( 'jsonService parser' + JSON.stringify (xmlObj ));
+                }
+                if ( format === 'json' ) {
+                    var json = X.toJson( xmlObj, xml.nodeName, "\t" );
+                    return "{\n" + tab + (tab ? json.replace( /\t/g, tab ) : json.replace( /\t|\n/g, "" )) + "\n}";
+                } else {
+                    var returnObj = {};
+                    returnObj[xml.nodeName] = xmlObj;
+                    return returnObj;
+                }
+            } catch (err) {
+                $log.warn( 'xml parse error',err,xml);
+                return null;
             }
-            tab = tab || '';
-            format = format || 'object';
-            if (xml.nodeType == 9) // document node
-                xml = xml.documentElement;
-            var xmlObj = X.toObj( X.removeWhite( xml ) );
-            if (format === 'json') {
-                var json = X.toJson( xmlObj, xml.nodeName, "\t" );
-                return "{\n" + tab + (tab ? json.replace( /\t/g, tab ) : json.replace( /\t|\n/g, "" )) + "\n}";
-            } else {
-                var returnObj = {};
-                returnObj[xml.nodeName] = xmlObj;
-                return returnObj;
-            }
+
         }
         return { toJSON: function (xml,tab) { return _xmlParse (xml,'json',tab); },
             toObject: function (xml,tab) { return _xmlParse (xml,'object',tab); } };

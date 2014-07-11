@@ -17,7 +17,7 @@
     // how can we dynamically inject the resource, have hard coded organizations for now
     // need current model and then collection for list, eg collectionId 5 is model and courses is the collection etc
     myApp.controller( 'MainCtrl',
-        function ( $scope, $location, $timeout, $state , $rootScope, orgs , courses, modules ) {
+        function ( $scope, $location, $timeout, $state , $rootScope, orgService , courseService, moduleService ) {
 
             /* deals with state changes from page elements via ui-router */
             $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){
@@ -35,18 +35,18 @@
                 if ($scope.$state.current.options.list === 'orgs' ) {
                     $scope.collectionClass = 'fa-male';
                     // get results, do we need to do a spinner icon?
-                    orgs.query( _queryCB( $scope ) );
+                    orgService.query( _queryCB( $scope ) );
                     // this ui text should be refactored out elsewhere and scope.name tells us what collection will be or options.list
                     $scope.target = 'courses';
                     $scope.collectionName = 'Organizations';
                 } else if ( $scope.$state.current.options.list === 'courses' ) {
                     $scope.collectionClass = 'fa-book';
-                    courses.query(  { organizationId : navParams.org.id } , _queryCB( $scope ) );
+                    courseService.query(  { organizationId : navParams.org.id } , _queryCB( $scope ) );
                     $scope.collectionName = 'Courses';
                     $scope.target = 'modules';
                 } else if ( $scope.$state.current.options.list === 'modules' ) {
                     $scope.collectionClass = 'fa-terminal';
-                    modules.query(  { courseId : navParams.course.id } , _queryCB( $scope ) );
+                    moduleService.query(  { courseId : navParams.course.id } , _queryCB( $scope ) );
                     $scope.target = 'content';
                     $scope.collectionName = 'Modules';
                 } else if ( $scope.$state.current.options.list === 'content' ) {
@@ -83,7 +83,7 @@
             // default state
             $scope.collectionClass = 'fa-male';
             _reset($scope);
-            orgs.query( _queryCB ( $scope ) );
+            orgService.query( _queryCB ( $scope ) );
             $scope.target = 'courses';
             $scope.collectionName = 'Organizations';
         } );

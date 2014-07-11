@@ -4,7 +4,7 @@
     var myApp = angular.module( 'canAppr' );
 
 
-    myApp.controller( 'MenuCtrl', function ( $scope, $location , $rootScope, orgs , courses, modules ) {
+    myApp.controller( 'MenuCtrl', function ( $scope, $location , $rootScope, orgService , courseService, moduleService ) {
         $scope.options = [ { name:'org', label: '', class: 'fa-male', model: {name: 'Organizations'} } ,
             { name: 'course', label: '', class: 'fa-book' } ,
             { name: 'module', label: '', class: 'fa-terminal' } ];
@@ -29,16 +29,16 @@
                 return false;
             }
             /* resets parameters if you go back up tree */
-            if ( navParams.org.id  && _getLabel ( 'org',orgs ) ) {
+            if ( navParams.org.id  && _getLabel ( 'org',orgService ) ) {
                 navParams.course = {};
                 _getLabel ( 'course');
                 navParams.module = {};
                 _getLabel ( 'module');
-            } else if ( navParams.course.id && _getLabel ( 'course',courses ) ) {
+            } else if ( navParams.course.id && _getLabel ( 'course',courseService ) ) {
                 navParams.module = {};
                 _getLabel ( 'module');
             } else if ( navParams.module.id ) {
-                _getLabel( 'module', modules );
+                _getLabel( 'module', moduleService );
             }
         } , true );
 
