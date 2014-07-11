@@ -7,6 +7,15 @@ var expect = chai.expect;
 // should we set the API url here? Maybe configure the factory?
 
 describe('main', function () {
+    it('should load a menu', function () {
+        // don't you just love opensource, fix to protractor phantomjs bug https://github.com/angular/protractor/issues/686
+        browser.ignoreSynchronization = true;
+        browser.get('index.html');
+        // page object please
+        expect (element(by.tagName('h1')).getText() ).to.eventually.contain('Medit8');
+        browser.ignoreSynchronization = false;
+    });
+
     it('should start with an intro to the app', function () {
         // don't you just love opensource, fix to protractor phantomjs bug https://github.com/angular/protractor/issues/686
         browser.ignoreSynchronization = true;

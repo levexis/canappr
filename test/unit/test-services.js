@@ -1,10 +1,10 @@
 var expect = chai.expect;
 
 var app = angular.module( 'canAppr' );
-/*
-    mockedApp = angular.module('mockAppr', ['canAppr', 'ngMockE2E']);
+mockedApp = angular.module('mockAppr', ['canAppr', 'ngMockE2E']);
+// this allows for passThrough via ngMockE2E but have to create a mock app module to call
 mockedApp.run(function($httpBackend) {
-/*
+    /*
     phones = [{name: 'phone1'}, {name: 'phone2'}];
 
     // returns the current list of phones
@@ -16,17 +16,19 @@ mockedApp.run(function($httpBackend) {
         phones.push(phone);
         return [200, phone, {}];
     });
-    $httpBackend.whenGET(/^\/templates\//).passThrough();
-    //...
-    $httpBackend.whenGET('/hello').respond(function(method, url, data) {
-        console.log('intercepted',method,url,data);
-    });
+     //...
+     $httpBackend.whenGET('/hello').respond(function(method, url, data) {
+     console.log('intercepted',method,url,data);
+     });
+    */
+    // passthrough is a nightmare... https://github.com/angular/angular.js/issues/1434
+    $httpBackend.whenGET(/^\/views\/.*/).passThrough();
 });
- */
 
 
 describe('Services', function() {
 
+//    beforeEach( module( 'mockAppr' ) );
     beforeEach( module( 'canAppr' ) );
 
     describe('libs', function() {
@@ -61,12 +63,18 @@ describe('Services', function() {
     })
 
     describe( 'api' , function () {
-        var backend, service, scope,ctrl;
+        var backend, service, scope,ctrl,apiBase,getSpy;
         // these mocks should all be one service
-        beforeEach( inject( function ( $httpBackend ) {
+        beforeEach( inject( function ( $httpBackend , $rootScope , $http ) {
             backend = $httpBackend;
+            // doesn't ever get called as we have httpBackend,
+//            backend.whenGET(/views\/.*/).passThrough();
+            // passthrough is a nightmare... https://github.com/angular/angular.js/issues/1434
+            // seems you cannot load local files in karma unit tests
+            getSpy = sinon.spy( $http.get );
+            apiBase = $rootScope.canAppr.apiBase;
+            backend.whenGET(/views\/.*/).respond(200,'mocking view');
             // ignore the views
-            backend.whenGET(/views\/.*/).respond(200,'i am mocking view');
             backend.flush();
             backend.verifyNoOutstandingExpectation();
             backend.verifyNoOutstandingRequest();
@@ -76,25 +84,27 @@ describe('Services', function() {
                 service = orgService;
                 expect(service).to.not.be.undefined;
                 // make sure we start clean
-                backend.expectGET('api/0/organizations').respond(200, [{mock: 'hello'}]);
+                backend.expectGET(apiBase + 'organizations').respond(200, [{mock: 'hello'}]);
             }) );
             afterEach(function() {
-                backend.flush();
                 backend.verifyNoOutstandingExpectation();
                 backend.verifyNoOutstandingRequest();
             });
             it('should be a cachedResource', function () {
                 service.query().$promise.should.be.an( 'object' );
+                backend.flush();
             });
             it('should return empty from cache', function () {
                 service.query().$promise.then ( function ( results ) {
                     results.length.should.equal(0);
                 } );
+                backend.flush();
             });
             it('should return 1 from server', function () {
                 service.query().$httpPromise.then ( function ( results ) {
                     results[0].mock.should.equal('hello');
                 } );
+                backend.flush();
             });
         });
         describe('courseService', function () {
@@ -102,25 +112,27 @@ describe('Services', function() {
                 service = courseService;
                 expect(service).to.not.be.undefined;
                 // make sure we start clean
-                backend.expectGET('api/0/courses').respond(200, [{mock: 'hello'}]);
+                backend.expectGET(apiBase + 'courses').respond(200, [{mock: 'hello'}]);
             }) );
             afterEach(function() {
-                backend.flush();
                 backend.verifyNoOutstandingExpectation();
                 backend.verifyNoOutstandingRequest();
             });
             it('should be a cachedResource', function () {
                 service.query().$promise.should.be.an( 'object' );
+                backend.flush();
             });
             it('should return empty from cache', function () {
                 service.query().$promise.then ( function ( results ) {
                     results.length.should.equal(0);
                 } );
+                backend.flush();
             });
             it('should return 1 from server', function () {
                 service.query().$httpPromise.then ( function ( results ) {
                     results[0].mock.should.equal('hello');
                 } );
+                backend.flush();
             });
         });
         describe('moduleService', function () {
@@ -128,25 +140,27 @@ describe('Services', function() {
                 service = moduleService;
                 expect(service).to.not.be.undefined;
                 // make sure we start clean
-                backend.expectGET('api/0/modules').respond(200, [{mock: 'hello'}]);
+                backend.expectGET(apiBase + 'modules').respond(200, [{mock: 'hello'}]);
             }) );
             afterEach(function() {
-                backend.flush();
                 backend.verifyNoOutstandingExpectation();
                 backend.verifyNoOutstandingRequest();
             });
             it('should be a cachedResource', function () {
                 service.query().$promise.should.be.an( 'object' );
+                backend.flush();
             });
             it('should return empty from cache', function () {
                 service.query().$promise.then ( function ( results ) {
                     results.length.should.equal(0);
                 } );
+                backend.flush();
             });
             it('should return 1 from server', function () {
                 service.query().$httpPromise.then ( function ( results ) {
                     results[0].mock.should.equal('hello');
                 } );
+                backend.flush();
             });
         });
 
