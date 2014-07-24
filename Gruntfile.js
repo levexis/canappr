@@ -18,7 +18,7 @@ module.exports = function (grunt) {
 //                runnerPort: 9100,
 //                browsers:   ['Chrome']
             },
-            dev:     {
+            e2e:     {
 //                reporters: 'dots'
             }
         },
@@ -64,11 +64,10 @@ module.exports = function (grunt) {
             }
         },
         connect: {
-            dev: {
+            e2e: {
                 options: {
                     port: 9000,
                     base: 'client',
-//                    keepalive: true,
                     hostname: '*'
 //                    middleware: function (connect) {
 //                        return [
@@ -76,11 +75,18 @@ module.exports = function (grunt) {
 //                        ];
 //                    }
                 }
+            },
+            dev: {
+                options: {
+                    port: 9000,
+                    base: 'client',
+                    hostname: '*',
+                    keepalive: true
+                }
             }
         },
         protractor: {
             options: {
-                keepAlive: true,
                 noColor: false,
                 configFile: 'protractor.conf.js'
             },
@@ -105,10 +111,23 @@ module.exports = function (grunt) {
 
     grunt.registerTask('e2e', [
         'selenium_phantom_hub',
-        'connect',
+        'connect:e2e',
         'protractor',
         'selenium_stop'
     ]);
+
+    // use this for testing via webstorm
+    grunt.registerTask('webstorm', [
+        'selenium_phantom_hub',
+        'connect:dev'
+    ]);
+
+    // use this for testing via webstorm
+    grunt.registerTask('procli', [
+        'selenium_start',
+        'connect:dev'
+    ]);
+
 
     // Default task.
     grunt.registerTask( 'default', ['bower', 'copy' , 'jshint' , 'karma' ] );

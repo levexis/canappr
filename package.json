@@ -19,7 +19,8 @@
     "build": "grunt"
   },
   "dependencies": {
-    "express": "latest"
+    "express": "latest",
+    "q": "latest"
   },
   "devDependencies": {
     "bower": "latest",
@@ -52,6 +53,7 @@
     "mocha": "latest",
     "nodemon": "latest",
     "phantomjs": "~1.9.7",
-    "protractor": "~0.20.1"
+    "protractor": "~0.20.1",
+    "underscore": "^1.6.0"
   }
 }

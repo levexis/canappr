@@ -11,7 +11,7 @@ describe('directives', function() {
             <file>
                 <owner>paul</owner>
                 <type>audio</type>
-            </file>
+            </filgit pue>
             */
             elm = angular.element(
                 '<cd-content playlist="PGZpbGU+DQogICAgPG93bmVyPnBhdWw8L293bmVyPg0KICAgIDx0eXBlPmF1ZGlvPC90eXBlPg0KPC9maWxlPiA="></cd-content>');

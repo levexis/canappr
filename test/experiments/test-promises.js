@@ -133,6 +133,10 @@ describe('main', function () {
             var pt = new PromiseTester();
             return expect ( pt.chainable(250,true ).chainable(300, pt.getElapsed) ).to.eventually.be.at.least(550);
         });
+        it( 'should allow long chaining into then', function () {
+            var pt = new PromiseTester();
+            return expect ( pt.chainable(100,true ).chainable(100, pt.getElapsed ).then(function() { return pt.simple(100,pt.getElapsed);} )) .to.eventually.be.at.least(300);
+        });
     });
     /*
          it('uses promises properly', function() {
