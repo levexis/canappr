@@ -56,32 +56,32 @@ describe('main', function () {
             main = new MainPage();
             menu = new MenuPage();
             deferred = Q.defer();
+            return main.get();
         } );
         afterEach( function () {
             browser.ignoreSynchronization = false;
             return takeScreenshot('test_' + new Date().getTime() );
         } );
         it( 'should create a valid menu', function () {
-            var menu = new MenuPage();
-            menu.get();
-            expect( menu.list.count() ).to.eventually.equal( 4 );
-            expect( menu.list.get( 0 ).getText() ).to.eventually.contain( 'Medit8' );
-            expect( menu.getHome().getText() ).to.eventually.contain( 'Medit8' );
-            expect( menu.getOrg().getText() ).to.eventually.contain( 'Organizations' );
-            expect( menu.getCourse().getText() ).to.eventually.equal( '' );
-            expect( menu.getModule().getText() ).to.eventually.equal( '' );
-            expect( menu.getList() ).to.eventually.have.length( 4 );
+            return Q.all([
+            expect( menu.list.count() ).to.eventually.equal( 4 ),
+            expect( menu.list.get( 0 ).getText() ).to.eventually.contain( 'Medit8' ),
+            expect( menu.getHome().getText() ).to.eventually.contain( 'Medit8' ),
+            expect( menu.getOrg().getText() ).to.eventually.contain( 'Organizations' ),
+            expect( menu.getCourse().getText() ).to.eventually.equal( '' ),
+            expect( menu.getModule().getText() ).to.eventually.equal( '' ),
+            expect( menu.getList() ).to.eventually.have.length( 4 )])
         } );
         it( 'should create a valid main page', function () {
-            var main = new MainPage();
-            main.get();
-            expect( main.getTitle().getText() ).to.eventually.contain( 'Organizations' );
-            expect( main.getDescription().getInnerHtml() ).to.eventually.contain( 'Welcome' );
-            expect( main.getListTitleText() ).to.eventually.contain( 'Organizations' );
-            expect( main.getList() ).to.eventually.have.length( 2 ).then(
-                function ( list) {
-                expect (list[0].getText() ).to.eventually.contain('Triratna East Surrey');
-            });
+            return Q.all([
+                expect( main.getTitle().getText() ).to.eventually.contain( 'Organizations' ),
+                expect( main.getDescription().getInnerHtml() ).to.eventually.contain( 'Welcome' ),
+                expect( main.getListTitleText() ).to.eventually.contain( 'Organizations' ),
+                expect( main.getList() ).to.eventually.have.length( 2 ).then(
+                    function ( list) {
+                    expect (list[0].getText() ).to.eventually.contain('Triratna East Surrey');
+                })
+            ]);
         } );
         it( 'should navigate to correct course use clickTo', function () {
             return expect( main.clickOn( 'surrey' )
@@ -114,15 +114,12 @@ describe('main', function () {
         });
 
         it( 'should navigate using navTo Macro', function () {
-            var main = new MainPage();
-            main.get();
             return expect( main.navTo( { organizations : 'surrey', courses : 'meditation' } ) )
                 .to.eventually.contain( 'modules' )
         });
 
         // should say navto
         it( 'should return blank if no list title on page navigatedTo', function () {
-            main.get();
             return expect ( main.navTo ( { organizations: 'surrey', courses: 'meditation', modules: 'breath' } ) )
                 .to.eventually.equal( '' );
 
