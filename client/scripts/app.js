@@ -1,6 +1,6 @@
 (function(angular) {
     'use strict';
-    var myApp = angular.module('canAppr', ['ui.router', 'angularCordovaWrapper', 'onsen.directives' , 'ngTouch', 'ngAnimate', 'ngCachedResource' ])
+    var myApp = angular.module('canAppr', ['ui.router', 'onsen.directives' , 'ngTouch', 'ngAnimate', 'ngCachedResource' ])
         .run(
          function ($rootScope,   $state,   $stateParams , $timeout , $window, $injector, $log) {
              // share current state globally
