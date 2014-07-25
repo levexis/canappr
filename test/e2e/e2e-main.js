@@ -4,7 +4,8 @@ var chai = require('chai' ),
     MainPage = require('./pages/main-page' ),
     fs = require ('fs' ),
     // set ARTIFACT_DIR for snapshots
-    ARTIFACT_DIR = process.env['ARTIFACT_DIR'],
+    // eg ARTIFACT_DIR=test.
+    ARTIFACT_DIR = process.env['ARTIFACT_DIR'] || process.env['CIRCLE_ARTIFACTS'],
     Q = require('q');
 
 // do I need this?
