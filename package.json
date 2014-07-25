@@ -14,9 +14,8 @@
     "node": "0.10.22"
   },
   "scripts": {
-    "start": "server.js",
-    "test": "./node_modules/karma/bin/karma start",
-    "build": "grunt"
+    "test": "grunt test",
+    "build": "grunt build "
   },
   "dependencies": {
     "express": "~4.6.1",

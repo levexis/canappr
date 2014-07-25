@@ -128,7 +128,13 @@ module.exports = function (grunt) {
         'connect:dev'
     ]);
 
+    // test task
+    grunt.registerTask( 'test', [ 'karma' , 'e2e' ] );
 
     // Default task.
-    grunt.registerTask( 'default', ['bower', 'copy' , 'jshint' , 'karma' ] );
+    grunt.registerTask( 'build', ['bower', 'copy' , 'jshint' ] );
+
+    // Default task.
+    grunt.registerTask( 'default', ['build','test' ] );
+
 };
