@@ -135,6 +135,6 @@ module.exports = function (grunt) {
     grunt.registerTask( 'build', ['bower', 'copy' , 'jshint' ] );
 
     // Default task.
-    grunt.registerTask( 'default', ['build','test' ] );
+    grunt.registerTask( 'default', ['build' ] );
 
 };
