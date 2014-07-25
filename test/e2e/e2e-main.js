@@ -56,7 +56,8 @@ describe('main', function () {
             main = new MainPage();
             menu = new MenuPage();
             deferred = Q.defer();
-            return main.get();
+            main.get();
+            return browser.waitForAngular();
         } );
         afterEach( function () {
             browser.ignoreSynchronization = false;
