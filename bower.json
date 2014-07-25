@@ -7,9 +7,8 @@
     "modernizr": null,
     "json3": null,
     "angular-resource": "~1.2.18",
-    "angular-cookies": null,
-    "angular-sanitize": null,
-    "angular-cordova-wrapper": "git@github.com:connectid/angular-cordova-wrapper.git",
+    "angular-cookies": "~1.2.18",
+    "angular-sanitize": "~1.2.18",
     "onsenui": "~1.0.4",
     "angular-ui-router": "~0.2.10",
     "angular-touch": "~1.2.18",
@@ -19,7 +18,19 @@
     "prefixfree": "*"
   },
   "devDependencies": {
-    "angular-mocks": null,
-    "angular-scenario": null
-  }
+    "angular-mocks": "~1.2.18",
+    "angular-scenario": "~1.2.18"
+  },
+  "homepage": "https://github.com/levexis/canappr",
+  "authors": [
+    "Paul Cook <paul.cook@adtechzen.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
 }
