@@ -2,9 +2,13 @@ var chai = require('chai' ),
     chaiAsPromised = require('chai-as-promised' ),
     MenuPage = require('./pages/menu-page' ),
     MainPage = require('./pages/main-page' ),
+    fs = require ('fs' ),
+    // set ARTIFACT_DIR for snapshots
+    ARTIFACT_DIR = process.env['ARTIFACT_DIR'],
     Q = require('q');
+
 // do I need this?
-require("mocha-as-promised")();
+//require("mocha-as-promised")();
 
 chai.use(chaiAsPromised);
 var expect = chai.expect;
@@ -12,16 +16,50 @@ var expect = chai.expect;
 // should we set the API url here? Maybe configure the factory?
 logIt = function (message) {
     console.trace(message);
-}
+};
+// takes a screenshot, optional filename and next
 
+// returns promise resolved on screenshot
+function takeScreenshot (filename, next) {
+    if ( ARTIFACT_DIR ) {
+        filename = filename || "webdriver_error.png";
+        filename = ARTIFACT_DIR + filename;
+        var deferred = new Q.defer();
+        browser.takeScreenshot().then( function ( img ) {
+            console.log( 'see [' + filename + '] for screenshot' );
+            fs.writeFileSync( filename, new Buffer( img, 'base64' ) );
+            if ( typeof next === 'function' ) {
+                next( 'filename' );
+                // promise
+            } else if ( typeof next === 'object' && typeof next.resolve === 'function' ) {
+                next.resolve( filename );
+            }
+            deferred.resolve();
+        } );
+        return deferred.promise;
+    }
+}
+// make the directory for screentshots
+if ( ARTIFACT_DIR ) {
+    try {
+        fs.mkdirSync( ARTIFACT_DIR );
+    } catch ( e ) {
+        if ( e.code != 'EEXIST' ) throw e;
+    }
+}
 describe('main', function () {
     describe ('Page Objects', function() {
+        var menu,main,deferred;
         beforeEach( function () {
             // don't you just love opensource, fix to protractor phantomjs bug https://github.com/angular/protractor/issues/686
             browser.ignoreSynchronization = true;
+            main = new MainPage();
+            menu = new MenuPage();
+            deferred = Q.defer();
         } );
         afterEach( function () {
             browser.ignoreSynchronization = false;
+            return takeScreenshot('test_' + new Date().getTime() );
         } );
         it( 'should create a valid menu', function () {
             var menu = new MenuPage();
@@ -45,82 +83,77 @@ describe('main', function () {
                 expect (list[0].getText() ).to.eventually.contain('Triratna East Surrey');
             });
         } );
-        it( 'should navigate to correct org', function () {
-            var main = new MainPage();
-            main.get();
-//            expect ( main.navTo ( { organizations: 'surrey', courses: 'meditation', modules: 'breath' } ) )
-//                .to.eventually.contain( 'Modules' );
-            return Q(expect ( main.clickOn ( 'surrey' ) ).to.eventually.equal( 'surrey' ));
-//            var defer = Q.defer();
-//            setTimeout(function() {
-//                defer.resolve(2);
-//            }, 1000);
-
- //           return expect ( Q.defer().promise ).to.eventually.equal(4);
-//            console.log ( 'q' , expect (defer.promise ) );
-  //          console.log ( 'main' , expect (main.getList()) );
-
-            /*            main.clickOn ( 'surrey' ).then( function ( message) {
-                            console.log( message );
-                        });
-                        main.clickOn ( 'kent' ).then( function ( message) {
-                            console.log( message );
-                        });
+        it( 'should navigate to correct course use clickTo', function () {
+            return expect( main.clickOn( 'surrey' )
+                .then( function ( what ) {
+                    return main.clickOn( 'meditation' );
+                } ) )
+                .to.eventually.equal( 'meditation' );
+            /* does not work yet see test-promise for syntax
+             return expect( main.clickOn( 'surrey' )
+             .clickOn( 'meditation' )
+             .getTitle().getText() )
+             .to.eventually.equal( 'meditation' );
              */
+            /* this will work
+             return expect( main.clickOn( 'surrey' )
+             .then( function(what) {
+             console.log ('firstClick',what);
+             return main.clickOn( 'meditation' ); }) )
+             .to.eventually.equal( 'meditation' );
+             main.clickOn( 'surrey' )
+             .then( function(what) {
+             console.log( 'firstClick', what );
+             main.clickOn( 'meditation' ).then( function ( what ) {
+             console.log( 'secondClick', what );
+             deferred.resolve( what );
+             } )
+             });
+             return expect( deferred.promise ).to.eventually.equal('meditation');
+             */
+        });
 
-            // check the menu items
-            // check they get reset if you choose a new org
-        } );
-        it( 'should navigate to correct course', function () {
+        it( 'should navigate using navTo Macro', function () {
             var main = new MainPage();
             main.get();
-//            expect ( main.navTo ( { organizations: 'surrey', courses: 'meditation', modules: 'breath' } ) )
-//                .to.eventually.contain( 'Modules' );
-            return Q( expect( main.clickOn( 'surrey' )
-                .then( function(what) { console.log ('firstClick',what); return Q(new MainPage().clickOn( 'meditation' )); } ) )
-                .to.eventually.equal( 'meditation' ) );
-//             return Q.all( [expect( main.clickOn( 'surrey' ) ).to.eventually.equal( 'surrey' ),
-//                 expect( new MainPage().clickOn( 'meditation' ) ).to.eventually.equal( 'meditation' )
-//             ]);
+            return expect( main.navTo( { organizations : 'surrey', courses : 'meditation' } ) )
+                .to.eventually.contain( 'modules' )
         });
+
+        // should say navto
+        it( 'should return blank if no list title on page navigatedTo', function () {
+            main.get();
+            return expect ( main.navTo ( { organizations: 'surrey', courses: 'meditation', modules: 'breath' } ) )
+                .to.eventually.equal( '' );
+
+        });
+
+        it( 'should return blank if navTo params misspelled');
+        it( 'should return blank if clickTo not found');
+        it( 'should allow me to chain methods without then');
 
     });
     describe ('Stories', function() {
 
+         it('should start with an intro to the app');
 /*
-        it( 'should  keep a promise', function () {
-
-//            expect ( main.navTo ( { organizations: 'surrey', courses: 'meditation', modules: 'breath' } ) )
-//                .to.eventually.contain( 'Modules' );
-//            expect ( main.clickOn ( 'surrey' ) ).to.eventually.equal( 'surreyz' );
-            var defer = Q.defer();
-            setTimeout( function () {
-                defer.resolve( 2 );
-            }, 1000 );
-
-            return  Q(expect( defer.promise ).to.eventually.equal( 4 )) ;
-//            expect( defer.promise ).to.eventually.equal( 4 ).notify(done);
-        });
-         it('should start with an intro to the app', function () {
+         , function () {
          // don't you just love opensource, fix to protractor phantomjs bug https://github.com/angular/protractor/issues/686
          browser.ignoreSynchronization = true;
          browser.get('index.html');
          expect (element(by.tagName('h1')).getText() ).to.eventually.contain('Medit8');
          browser.ignoreSynchronization = false;
-         });
+         }); */
         it( 'should allow me to select an organization' );
         it( 'should allow me to select a course' );
         it( 'should allow me to select a module' );
         it( 'should reset menu if I change organization or course' );
-
-
         it( 'should allow me to play module content' );
         it( 'should show enable new content' );
         it( 'should show allow users to remove watched content' );
         it( 'should show allow users to choose to autodownload' );
         it( 'should download current and next module content' );
         it( 'should notify when new module available' );
-         */
 
     });
     /* an example using promises

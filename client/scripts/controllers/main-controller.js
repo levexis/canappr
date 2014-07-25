@@ -86,5 +86,8 @@
             orgService.query( _queryCB ( $scope ) );
             $scope.target = 'courses';
             $scope.collectionName = 'Organizations';
+            $scope.$watch("collection", function(newValue, oldValue) {
+                console.log('collection change',newValue.length,oldValue.length,document.getElementsByTagName('li').length,newValue,oldValue);
+            });
         } );
 })(angular);

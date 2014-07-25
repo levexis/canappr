@@ -8,6 +8,10 @@ var chai = require('chai' ),
 chai.use(chaiAsPromised);
 var expect = chai.expect;
 
+if ( typeof protractor === 'undefined' ) {
+    var protractor = require('protractor');
+}
+
 // should we set the API url here? Maybe configure the factory?
 var logIt = function (message) {
     console.trace(message);
