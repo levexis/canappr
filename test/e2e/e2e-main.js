@@ -40,8 +40,8 @@ function takeScreenshot (filename, next) {
         return deferred.promise;
     }
 }
-// make the directory for screentshots
-if ( ARTIFACT_DIR ) {
+// make the directory for screentshot if local, if ci remaking this will destroy link to artifacts
+if ( process.env['ARTIFACT_DIR'] ) {
     try {
         fs.mkdirSync( ARTIFACT_DIR );
     } catch ( e ) {
