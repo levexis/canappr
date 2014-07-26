@@ -1,0 +1,47 @@
+body,html {
+    height: 100%;
+}
+.ca-submen {
+    padding: 0px 20px;
+    color: #666;
+}
+.ca-navcan {
+    background: darkorange;
+    color: white;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+.ca-navSearch {
+    color: #666;
+    padding: 2px;
+    height: 100%;
+    float: right;
+    width:75%;
+    display: block;
+}
+/* these need to autoresize */
+.ca-main-body {
+}
+.ca-main-list {
+    height:800px;
+}
+.ca-right-arrow:after {
+    border-width: 0;
+    height: 0.64rem;
+    width: 0.66rem;
+    border-color: #777777;
+    margin-top: -0.32rem;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    border-style: solid;
+    border-width: 0.24rem 0.24rem 0 0;
+    transform: rotate(45deg);
+    content: " ";
+    display: inline-block;
+    height: 0.5rem;
+    margin-left: -0.2rem;
+    vertical-align: middle;
+    width: 0.5rem;
+}
+
