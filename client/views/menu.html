@@ -1,0 +1,40 @@
+<ons-page style="background-color: white"  ng-controller="MenuCtrl" id="menu">
+
+    <ul class="topcoat-list">
+        <ons-list-item
+                class="topcoat-list__item--tappable topcoat-list__item__line-height ca-navcan"
+                ng-click="$state.go('settings');">
+            <i class="fa fa-gears fa-lg"></i>
+            &nbsp; Medit8 &nbsp;<!--<ons-search-input
+                    ng-model="searchText"
+                    placeholder="Search"
+                    style="width:60%; height: 40px; float:right; margin:2px;">
+            </ons-search-input> -->
+<!--            <ons-search-input
+                    ng-model="searchText"
+                    placeholder="Search"
+                    class="ca-navSearch"
+                    style="color:blue">
+            </ons-search-input>
+        </ons-list-item>
+        <ons-list-item
+                ng-repeat="item in options"
+                class="topcoat-list__item--tappable topcoat-list__item__line-height"
+                ng-click="ons.splitView.toggle();
+				ons.splitView.setMainPage('{{item.template}}');">
+            <i class="fa  {{item.class}} fa-lg ca-submen"></i>
+            {{item.label}}
+        </ons-list-item>
+!-->
+        </ons-list-item>
+        <ons-list-item
+                ng-repeat="item in options"
+                ng-show="item.model.name"
+                ng-click="listClick(item);"
+                class="topcoat-list__item--tappable topcoat-list__item__line-height"
+                >
+            <i class="fa fa-lg {{item.class}} ca-menu-item"></i>
+            &nbsp;{{item.model.name}}
+        </ons-list-item>
+    </ul>
+</ons-page>

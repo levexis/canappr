@@ -7,6 +7,7 @@
  * karma start karma.macdev.conf.js
  */
 
+// basic Karma configuration for e2e testing use, runs once and uses phantomjs
 module.exports = function(config) {
     config.set({
 
@@ -14,26 +15,25 @@ module.exports = function(config) {
         basePath: '',
 
         // frameworks to use, these need to be specified in plugins below
-        frameworks: [ 'mocha', 'requirejs' , 'sinon-chai', 'chai-backbone'],
+        frameworks: [ 'mocha', 'sinon-chai'],
 
-        // list of ALL files / patterns needed by requireJS, if not loaded here will not work later
-        files: [
-            { pattern: 'node_modules/chai/chai.js' , included: false },
-            { pattern: 'www/js/**/*.js' , included: false },
-            { pattern: 'www/js/**/*.html' , included: false },
-            { pattern: 'test/**/*.test.js', included: false},
-            'test/main.js'
+        files : [
+            'bower_components/angular/angular.js',
+            'bower_components/underscore/underscore.js',
+            'client/scripts/**/*.js',
+            'bower_components/angular-mocks/angular-mocks.js',
+            'test/unit/**/*.js'
         ],
 
-        // list of files to exclude - the original main.js is replaced with one that creates the test list and no bootstrap
         exclude: [
-            'www/js/main.js'
+            'client/scripts/vendor/angular.min.js',
+            'client/scripts/vendor/underscore.js'
         ],
 
         // test results reporter to use
         // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-//        reporters: ['progress', 'dots' ,'html' , 'coverage'], // need to install spec using
-        
+        reporters: ['spec','progress'], // need to install spec using
+
         // web server port
         port: 9876,
 
@@ -60,40 +60,45 @@ module.exports = function(config) {
         // - PhantomJS
         // - IE (only Windows)
         // browsers need to be in plugins below
-        browsers: ['Chrome', 'Firefox', 'Safari', 'PhantomJS'  ],
+        browsers: [ 'chrome' , 'firefox', 'phantomJS','Safari','Opera' ],
 
         // If browser does not capture in given timeout [ms], kill it
         captureTimeout: 60000,
 
-        singleRun: false,
-//        singleRun: true,
+        // Continuous Integration mode
+        // if true, it capture browsers, run tests and exit
+        singleRun: false, // not for run once
 
-        preprocessors : {
-//            '**/www/*.js': 'coverage'
-        },
-
-        htmlReporter: {
+// disable reports these are produced on single run
+//        preprocessors : {
+//            '**/angular/scripts/controllers/*.js' : 'coverage',
+//            '**/angular/scripts/*.js' : 'coverage',
+//            '**/angular/directives/*.js' : 'coverage',
+//            '**/angular/filters/*.js' : 'coverage',
+//            '**/angular/services/*.js' : 'coverage'
+//        },
+//
+//        htmlReporter: {
 //            outputFile: 'test/report.html'
-        },
-        coverageReporter: {
-            type : 'html',
-            dir : 'coverage/',
-            file : 'coverage.html'
-        },
+//        },
+//        coverageReporter: {
+//            type : 'html',
+//            dir : 'coverage/',
+//           file : 'coverage.html'
+//        },
 
         // these need to be in your dev dependencies in package.json
         plugins: [
             "karma-mocha",
-            "karma-requirejs",
             "karma-sinon-chai",
-            "karma-chai-backbone",
             'karma-chrome-launcher',
             'karma-firefox-launcher',
             'karma-safari-launcher',
             'karma-phantomjs-launcher',
             'karma-ie-launcher',
             'karma-htmlfile-reporter',
-            'karma-coverage'
+            'karma-coverage',
+            'karma-reporter-spec'
         ]
 
     });

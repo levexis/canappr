@@ -1,11 +1,36 @@
 {
-    "name" : "BowerBackbone",
-    "version" : "0.0.1",
-    "dependencies": {
-        "jquery": "1.10",
-        "backbone": null,
-        "underscore": null,
-        "requirejs": null,
-        "text": null
-    }
+  "name": "canappr",
+  "version": "0.0.2",
+  "dependencies": {
+    "underscore": null,
+    "angular": "~1.2.18",
+    "modernizr": null,
+    "json3": null,
+    "angular-resource": "~1.2.18",
+    "angular-cookies": "~1.2.18",
+    "angular-sanitize": "~1.2.18",
+    "onsenui": "~1.0.4",
+    "angular-ui-router": "~0.2.10",
+    "angular-touch": "~1.2.18",
+    "angular-animate": "~1.2.18",
+    "animate.css": "~3.1.1",
+    "angular-cached-resource": "~0.6.9",
+    "prefixfree": "*"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.2.18",
+    "angular-scenario": "~1.2.18"
+  },
+  "homepage": "https://github.com/levexis/canappr",
+  "authors": [
+    "Paul Cook <paul.cook@adtechzen.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
 }

@@ -1,0 +1,51 @@
+{
+    "node": true,
+    "browser": true,
+    "phantom": true,
+    "jquery": true,
+
+    "boss": false,
+    "curly": false,
+    "debug": true,
+    "devel": true,
+    "eqeqeq": true,
+    "evil": true,
+    "forin": false,
+    "immed": true,
+    "indent": 4,
+    "latedef": "nofunc",
+    "laxbreak": false,
+    "newcap": true,
+    "noarg": true,
+    "noempty": false,
+    "nonew": false,
+    "nomen": false,
+    "plusplus": false,
+    "quotmark": "single",
+    "regexp": false,
+    "undef": true,
+    "sub": true,
+    "strict": false,
+    "globals": {
+        /* BACKBONE */
+        "Backbone": false,
+
+        /* MOCHA */
+        "describe": false,
+        "it": false,
+        "before": false,
+        "beforeEach": false,
+        "after": false,
+        "afterEach": false,
+
+        /* EXPRESS */
+        "next": false,
+
+        /* REQUIREJS */
+        "define": false,
+
+        /* DEBUG & LOGGING */
+        "debug": false,
+        "error": false
+    }
+}

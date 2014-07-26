@@ -1,0 +1,23 @@
+[
+    {
+        "id" : "1",
+        "orgId" : "1",
+        "name" : "Guided Meditations",
+        "html" : "Guided mindfulness meditations for use at home, on the train or in the office",
+        "startDate" : "2014-06-08T00:00:00.000Z"
+    },
+    {
+        "id" : "2",
+        "orgId" : "1",
+        "name" : "Triratna Liturgy",
+        "html" : "Overview of customary practices of the Triratna order",
+        "startDate" : "2014-06-18T00:00:00.000Z"
+    },
+    {
+        "id" : "3",
+        "orgId" : "1",
+        "name" : "Talks on Buddhism",
+        "html" : "Buddhism from various perspectives",
+        "startDate" : "2014-06-28T00:00:00.000Z"
+    }
+]

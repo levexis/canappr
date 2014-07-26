@@ -6,25 +6,26 @@ module.exports = function(config) {
         basePath: '',
 
         // frameworks to use, these need to be specified in plugins below
-        frameworks: [ 'mocha', 'requirejs' , 'sinon-chai', 'chai-backbone'],
+        frameworks: [ 'mocha', 'sinon-chai'],
 
-        // list of ALL files / patterns needed by requireJS, if not loaded here will not work later
-        files: [
-            { pattern: 'node_modules/chai/chai.js' , included: false },
-            { pattern: 'www/js/**/*.js' , included: false },
-            { pattern: 'www/js/**/*.html' , included: false },
-            { pattern: 'test/**/*.test.js', included: false},
-            'test/main.js'
+        files : [
+            'bower_components/angular/angular.js',
+            'bower_components/underscore/underscore.js',
+            'client/scripts/**/*.js',
+            'bower_components/angular-mocks/angular-mocks.js',
+            'test/unit/**/*.js'
         ],
 
-        // list of files to exclude - the original main.js is replaced with one that creates the test list and no bootstrap
         exclude: [
-            'www/js/main.js'
+//            'app/lib/angular/angular-loader.js',
+              'client/scripts/vendor/angular.min.js',
+            'client/scripts/vendor/underscore.js'
+//            'app/lib/angular/angular-scenario.js'
         ],
 
         // test results reporter to use
         // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-        reporters: ['progress', 'dots' ,'html' , 'coverage'], // need to install spec using
+        reporters: ['spec' ,'html' , 'coverage'],
 
         // web server port
         port: 9876,
@@ -38,7 +39,7 @@ module.exports = function(config) {
         // level of logging
         // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
 //        logLevel: config.LOG_DEBUG,
-        logLevel: config.LOG_ERROR,
+        logLevel: config.LOG_DEBUG,
 
         // enable / disable watching file and executing tests whenever any file changes
 //        autoWatch: true, not for run once
@@ -64,7 +65,11 @@ module.exports = function(config) {
         singleRun: true,
 
         preprocessors : {
-            '**/www/*.js': 'coverage'
+            '**/angular/scripts/controllers/*.js' : 'coverage',
+            '**/angular/scripts/*.js' : 'coverage',
+            '**/angular/directives/*.js' : 'coverage',
+            '**/angular/filters/*.js' : 'coverage',
+            '**/angular/services/*.js' : 'coverage'
         },
 
         htmlReporter: {
@@ -79,16 +84,15 @@ module.exports = function(config) {
     // these need to be in your dev dependencies in package.json
     plugins: [
         "karma-mocha",
-        "karma-requirejs",
         "karma-sinon-chai",
-        "karma-chai-backbone",
         'karma-chrome-launcher',
         'karma-firefox-launcher',
         'karma-safari-launcher',
         'karma-phantomjs-launcher',
         'karma-ie-launcher',
         'karma-htmlfile-reporter',
-        'karma-coverage'
+        'karma-coverage',
+        'karma-spec-reporter'
     ]
 
     });
