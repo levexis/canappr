@@ -126,11 +126,15 @@ describe('main', function () {
                 .to.eventually.equal( '' );
 
         });
-
-        it( 'should return blank if navTo params misspelled');
-        it( 'should return blank if clickTo not found');
+        it( 'should return blank if navTo params misspelled', function () {
+            return expect ( main.navTo ( { organisations: 'surrey', couses: 'meditation', moduls: 'breath' } ) )
+                .to.eventually.equal( 'organizations' );
+        });
+        it( 'should return blank if clickTo not found', function () {
+            return expect ( main.ClickTo ( 'plant pot' ) )
+                .to.eventually.equal( '' );
+        });
         it( 'should allow me to chain methods without then');
-
     });
     describe ('Stories', function() {
 
