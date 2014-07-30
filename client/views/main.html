@@ -2,17 +2,17 @@
         need to do an automatic translation so maybe put english in master template
         there is a way of doing this ! -->
 <ons-page ng-controller="MainCtrl" height="100%" id="main">
-    <h1 align="center">{{model.name}}</h1>
-    <p align="center" class="ca-main-body">
-        {{model.html}}
-    <p>
+    <div id="blurb" style="height: 100px;" ng-show="showBlurb">
+        <h1 align="center">{{model.name}}</h1>
+        <p align="center" class="ca-main-body" ng-bind-html="model.html">
+        </p>
+    </div>
     <ons-navigator title="{{collectionName}}" ng-show="collection.length" class="ca-main-list">
         <ons-list>
             <span ng-repeat="item in collection | orderBy : name">
                 <ons-list-item
                         class="topcoat-list__item--tappable topcoat-list__item__line-height"
-                        ng-click="$state.go( target , { id: item.id } );"
-                        ng-cloak>
+                        ng-click="clickList( targetTemplate, { id: item.id , collection: target });">
                     <i ng-class="['fa','fa-lg',collectionClass,'ca-right-arrow']">&nbsp;</i>
                     {{item.name}}
                 </ons-list-item>

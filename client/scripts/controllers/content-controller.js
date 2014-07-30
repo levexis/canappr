@@ -1,3 +1,5 @@
+// am using main controller for now
+
 (function (angular) {
     "use strict";
     var myApp = angular.module( 'canAppr' );

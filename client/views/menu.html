@@ -27,14 +27,15 @@
         </ons-list-item>
 !-->
         </ons-list-item>
-        <ons-list-item
-                ng-repeat="item in options"
-                ng-show="item.model.name"
-                ng-click="listClick(item);"
-                class="topcoat-list__item--tappable topcoat-list__item__line-height"
-                >
-            <i class="fa fa-lg {{item.class}} ca-menu-item"></i>
-            &nbsp;{{item.model.name}}
-        </ons-list-item>
+        <span ng-repeat="item in options">
+            <ons-list-item
+                    ng-show="item.model.name"
+                    ng-click="listClick(item);"
+                    class="topcoat-list__item--tappable topcoat-list__item__line-height"
+                    >
+                <i class="fa fa-lg {{item.class}} ca-menu-item"></i>
+                &nbsp;{{item.model.name}}
+            </ons-list-item>
+        </span>
     </ul>
 </ons-page>

@@ -12,7 +12,8 @@ var chai = require('chai' ),
 //require("mocha-as-promised")();
 
 chai.use(chaiAsPromised);
-var expect = chai.expect;
+var expect = chai.expect,
+    should = chai.should();
 
 // should we set the API url here? Maybe configure the factory?
 logIt = function (message) {
@@ -91,12 +92,6 @@ describe('main', function () {
                     return main.clickOn( 'meditation' );
                 } ) )
                 .to.eventually.equal( 'meditation' );
-            /* does not work yet see test-promise for syntax
-             return expect( main.clickOn( 'surrey' )
-             .clickOn( 'meditation' )
-             .getTitle().getText() )
-             .to.eventually.equal( 'meditation' );
-             */
             /* this will work
              return expect( main.clickOn( 'surrey' )
              .then( function(what) {
@@ -130,27 +125,99 @@ describe('main', function () {
             return expect ( main.navTo ( { organisations: 'surrey', couses: 'meditation', moduls: 'breath' } ) )
                 .to.eventually.equal( 'organizations' );
         });
-        it( 'should return blank if clickTo not found', function () {
-            return expect ( main.ClickTo ( 'plant pot' ) )
-                .to.eventually.equal( '' );
+        it( 'should return blank if clickOn not found', function () {
+            return ( main.clickOn ( 'plant pot' ) )
+                .should.be.rejectedWith( 'unable to find plant pot' );
         });
-        it( 'should allow me to chain methods without then');
+        it( 'should allow me to chain methods without then' );
+        /* does not work yet see test-promise for syntax
+         return expect( main.clickOn( 'surrey' )
+         .clickOn( 'meditation' )
+         .getTitle().getText() )
+         .to.eventually.equal( 'meditation' );
+         */
     });
     describe ('Stories', function() {
+        var menu,main,deferred;
+        beforeEach( function () {
+            browser.ignoreSynchronization = true;
+            main = new MainPage();
+            menu = new MenuPage();
+            deferred = Q.defer();
+        } );
+        afterEach( function () {
+            browser.ignoreSynchronization = false;
+            return takeScreenshot('test_' + new Date().getTime() );
+        } );
+        it( 'should start with an intro to the app',function() {
+            main.get();
+            expect ( main.getDescription().getInnerHtml() ).to.eventually.contain('Welcome');
+        });
+        it( 'should allow me to select an organization from home list',function() {
+            main.get();
+            expect ( main.getListTitleText() ).to.eventually.contain('Organizations');
+        });
+        it( 'should allow me to select a course from orgs list' ,function() {
+            main.get();
+            expect ( main.navTo ( { organizations: 'surrey', courses: 'meditation' } )
+                .then ( function ( what ) {
+                return main.clickOn( 'meditation' );
+            })
+            ).to.eventually.contain('guided meditations');
+        });
+        it( 'should allow me to select a module from courses list',function() {
+            main.get();
+            expect ( main.navTo ( { organizations: 'surrey', courses: 'meditation' } )
+                .then ( function ( what ) {
+                return main.clickOn( 'breath' );
+            })
+            ).to.eventually.contain('awareness of breath meditation');
 
-         it('should start with an intro to the app');
-/*
-         , function () {
-         // don't you just love opensource, fix to protractor phantomjs bug https://github.com/angular/protractor/issues/686
-         browser.ignoreSynchronization = true;
-         browser.get('index.html');
-         expect (element(by.tagName('h1')).getText() ).to.eventually.contain('Medit8');
-         browser.ignoreSynchronization = false;
-         }); */
-        it( 'should allow me to select an organization' );
-        it( 'should allow me to select a course' );
-        it( 'should allow me to select a module' );
-        it( 'should reset menu if I change organization or course' );
+        });
+        it( 'should reset menu if I change organization' , function() {
+            // set the window size so you don't have to simulate swipe
+            // https://github.com/angular/protractor/issues/201
+            // browser.actions().mouseMove({x: 20, y: 0}).mouseMove({x: 20, y: 500}).perform()
+            browser.driver.manage().window().setSize(800, 600);
+            menu.get();
+            return expect ( main.navTo ( { organizations: 'surrey', courses: 'meditation', modules: 'breath' } )
+                    .then( function () {
+                    menu.getOrg().click()
+                        .then( function ( what ) {
+                            console.log ( 'org clicked', what );
+                            var main = new MainPage();
+                            main.clickOn( 'now project' )
+                                .then( function ( what ) {
+                                    console.log ( 'now clicked', what ) ;
+                                    return menu.getList().then ( function (list) {
+                                        console.log ( 'extra cb',list,menu.list,list.length);
+                                        return list;
+                                    });
+                                } );
+                        } );
+                })
+            ).to.eventually.have.length( 2 );
+        });
+        it( 'should change menu label when I change course' , function() {
+            browser.driver.manage().window().setSize(800, 600);
+            menu.get();
+            return expect ( main.navTo ( { organizations: 'surrey', courses: 'meditation', modules: 'breath' } )
+                    .then( function () {
+                        menu.getCourse().click()
+                            .then( function ( what ) {
+                                console.log ( 'course clicked', what );
+                                main.clickOn ( 'liturgy' )
+                                    .then( function ( what ) {
+                                        console.log ( 'liturgy clicked', what ) ;
+                                        menu.getCourse().getText().then( function (what) {
+                                            console.log ('menu label' , what );
+                                            return what;
+                                        });
+                                    } );
+                            } );
+                    })
+            ).to.eventually.equal( 'triratna liturgy' );
+        });
         it( 'should allow me to play module content' );
         it( 'should show enable new content' );
         it( 'should show allow users to remove watched content' );
@@ -159,17 +226,4 @@ describe('main', function () {
         it( 'should notify when new module available' );
 
     });
-    /* an example using promises
-    describe('the test suite', function() {
-        it('uses promises properly', function() {
-            var defer = Q.defer();
-            setTimeout(function() {
-                defer.resolve(2);
-            }, 1000);
-            return Q.all([
-                Q(expect(defer.promise).to.eventually.equal(0))
-            ]);
-        });
-    });
-     */
 });
