@@ -20,11 +20,20 @@ body,html {
     display: block;
 }
 /* these need to autoresize */
-.ca-main-body {
-}
 .ca-main-list {
     height:800px;
 }
+.ca-blurb {
+    font-size: 11pt;
+/*    box-shadow: 0 8px 6px -6px black; */
+}
+
+
+.ca-main-body p {
+    padding: 15px;
+
+}
+
 .ca-right-arrow:after {
     border-width: 0;
     height: 0.64rem;
@@ -56,6 +65,7 @@ body,html {
     width: 100%;
     display: inline-block;
     padding-bottom: 25px;
+    margin: 5px 0px;
 }
 .ca-even {
     background: lightblue;

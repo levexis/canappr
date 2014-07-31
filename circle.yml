@@ -3,4 +3,9 @@ machine:
     version: v0.10.22
 test:
   pre:
-    - grunt
+    - grunt build
+deployment:
+    master:
+        branch: master
+        heroku:
+          appname: medit8
