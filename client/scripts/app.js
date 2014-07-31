@@ -5,7 +5,8 @@
          function ($rootScope, $timeout , $window, $injector, $log) {
              // app global config, there is probably a service for this
              $rootScope.canAppr = { apiBase : 'api/0/',
-                 navParams : { org : {}, module : {}, course : {} } };
+                 navParams : { org : { name: 'Organizations' } , module : {}, course : {} },
+                config: { navType: 'push'} };
              // if in debug mode then expose rootScope and it's injector
              // eg canAppr.getService('orgService').query().$promise.then(function (results) { console.log('results',results); } ));
              $window.canAppr = { rootScope: $rootScope,

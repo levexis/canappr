@@ -4,46 +4,25 @@
     var myApp = angular.module( 'canAppr' );
     var intances = 1;
 
-    myApp.controller( 'MenuCtrl', function ( $scope, $location , $rootScope, $timeout, orgService , courseService, moduleService ) {
-        console.log ( 'menu instance',intances++);
-        $scope.options = [ { name:'org', label: '', class: 'fa-male', model: {name: 'Organizations'} } ,
-            { name: 'course', label: '', class: 'fa-book' } ,
-            { name: 'module', label: '', class: 'fa-terminal' } ];
+    myApp.controller( 'MenuCtrl', function ( $scope, $location , $rootScope, $timeout, orgService , courseService, moduleService , registryService ) {
+        var _navParams = registryService.getNavModels();
+        $scope.options = [ { name:'org',class: 'fa-male' , model: _navParams.org },
+            { name: 'course', class: 'fa-book' , model: _navParams.course } ,
+            { name: 'module', class: 'fa-terminal' , model: _navParams.module } ];
 
-//      watch rootscope for nav update, should this be a config service - YES it should!
+//      watch rootscope for nav update, TODO: watch the config service
         $rootScope.$watch('canAppr.navParams' , function ( after , before) {
-            console.log('navParams', after, before,$scope.options);
-            var navParams = $rootScope.canAppr.navParams;
-            // should be a service? Returns true if changed
-            function _getLabel (key , api ) {
-                var option = _.findWhere( $scope.options ,{ name: key} );
-                if ( !api ) {
-                    // call to reset
-                    option.model={};
-                } else if ( !before || !before[key] ||  before[key].id !== navParams[key].id ) {
-                    api.get( { id : navParams[key].id} ).$promise
-                        .then( function ( result ) {
-                            // append on the results
-                            _.extend(navParams[key] , result );
-                            option.model = result;
-                        } );
-                    return true;
-                }
-                return false;
-            }
+//          console.log('navParams', after, before);
             /* resets parameters if you go back up tree */
-            if ( navParams.org.id  && _getLabel ( 'org',orgService ) ) {
-                console.log ('blank course / module' , after , before);
-                navParams.course = {};
-                _getLabel ( 'course');
-                navParams.module = {};
-                _getLabel ( 'module');
-            } else if ( navParams.course.id && _getLabel ( 'course',courseService ) ) {
-                console.log ('blank course');
-                navParams.module = {};
-                _getLabel ( 'module');
-            } else if ( navParams.module.id ) {
-                _getLabel( 'module', moduleService );
+            if ( before && after ) {
+                if ( before.org.id != after.org.id ) {
+                    console.log( 'blank course / module', after, before );
+                    registryService.resetNavModel( 'course' );
+                    registryService.resetNavModel( 'module' );
+                } else if ( before.course.id != after.course.id ) {
+                    registryService.resetNavModel( 'module' );
+                } else {
+                }
             }
         } , true );
 

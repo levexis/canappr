@@ -1,56 +1,25 @@
-(function (angular , _) {
+(function (angular ) {
     "use strict";
     var myApp = angular.module( 'canAppr' );
+    // just resets the page model default home page
+    function _welcome ($scope) {
+        $scope.model = { name: 'Organizations',
+                 html : 'Welcome to my new app, this is just placeholder text' };
+    }
     /*
-     * should this be a service?
+     * sets the collection for the page
      */
     function _queryCB ($scope) {
         return function ( results ) {
             $scope.collection = results;
         }
     }
-    // just resets to default home page
-    function _reset ($scope) {
-        $scope.model = { name: 'Organizations',
-                 html : 'Welcome to my new app, this is just placeholder text' };
-    };
     // how can we dynamically inject the resource, have hard coded organizations for now
     // need current model and then collection for list, eg collectionId 5 is model and courses is the collection etc
     myApp.controller( 'MainCtrl',
-        function ( $scope, $location, $timeout, $rootScope, orgService , courseService, moduleService ) {
-            var navParams =  $rootScope['canAppr']['navParams'],
-                options;
-            function setModel( nParams ) {
-                console.log ('setModel', $scope.collectionName ,  nParams );
-                switch ( $scope.collectionName ) {
-                    case 'Organizations':
-                        $scope.model =  nParams.org;
-                        if ( !$scope.model.html ) {
-                            _reset( $scope );
-                        }
-                        break;
-                    case 'Courses':
-                        $scope.model =  nParams.org;
-                        break;
-                    case 'Modules':
-                        $scope.model =  nParams.course;
-                        break;
-                    case '':
-                        $scope.model =  nParams.module;
-                        break;
-                }
-            }
-
-            if ( $scope.ons.splitView && $scope.ons.splitView.options) {
-                options = $scope.ons.splitView.options;
-                delete $scope.ons.splitView.options;
-            } else {
-                try {
-                    options = $scope.ons.navigator.getCurrentPage().options;
-                } catch ( err ) {
-                    // ignore the error, navigator not ready
-                }
-            }
+        function ( $scope, $location, $timeout, $rootScope, orgService , courseService, moduleService , utilService , registryService) {
+            var navParams =  registryService.getNavModels(),
+                options = utilService.getRouteOptions($scope);
             $scope.collection = [];
             $scope.targetTemplate = 'views/main.html';
             if ( options ) {
@@ -62,55 +31,65 @@
                     // this ui text should be refactored out elsewhere and scope.name tells us what collection will be or options.list
                     $scope.target = 'course';
                     $scope.collectionName = 'Organizations';
+                    _welcome($scope);
                 } else if (options.collection === 'course' ) {
                     $scope.collectionClass = 'fa-book';
                     courseService.query( { organizationId : navParams.org.id }, _queryCB( $scope ) );
                     $scope.collectionName = 'Courses';
                     $scope.target = 'module';
-                    navParams.org.id = options.id;
+                    $scope.model = navParams[ 'org' ];
                 } else if ( options.collection === 'module' ) {
                     $scope.collectionClass = 'fa-terminal';
                     moduleService.query( { courseId : navParams.course.id }, _queryCB( $scope ) );
                     $scope.target = 'content';
                     $scope.collectionName = 'Modules';
-                    navParams.course.id = options.id;
                     $scope.targetTemplate = 'views/content.html';
+                    $scope.model = navParams[ 'course' ];
                 } else if ( options.collection === 'content' ) {
                     console.log ('setting mudule id', options.id );
-                    navParams.module.id = options.id;
                     $scope.collectionName = '';
+                    $scope.model = navParams[ 'module' ];
                 } else if (options.collection ) {
                     throw new Error( 'unrecognized list: ' + options.collection );
                 }
+                console.log ( 'model', $scope.model ,navParams ,  options.collection );
             } else {
-                console.log( 'loaded', $scope );
-                // default state
+                // initial state
                 $scope.collectionClass = 'fa-male';
-                _reset( $scope );
+                _welcome( $scope );
                 orgService.query( _queryCB( $scope ) );
                 $scope.target = 'course';
                 $scope.collectionName = 'Organizations';
             }
-            setModel(navParams);
-            $rootScope.$watch("canAppr.navParams", function(newValue, oldValue) {
-                console.log('changed navParams',newValue);
-                setModel(newValue);
-            });
 
-/*            $scope.$watch("collection", function(newValue, oldValue) {
-                console.log('collection change',newValue.length,oldValue.length,document.getElementsByTagName('li').length,newValue,oldValue);
-            });
-*/
             $scope.showBlurb=true;
             $scope.clickList = function ( template, options ) {
+                var target;
                 $scope.showBlurb=false;
+                console.log ('clicking options',options);
 
-// choose based on whether both views visible, screensize ?
-                $scope.ons.navigator.pushPage( template , options);
-//                $scope.ons.splitView.options = options;
-// add animation class when set main page?
-//                $scope.ons.splitView.setMainPage( template );
+                switch ( $scope.collectionName ) {
+                    case 'Organizations':
+                        target = 'org';
+                        break;
+                    case 'Courses':
+                        target = 'course';
+                        break;
+                    case 'Modules':
+                        target = 'module';
+                        break;
+                }
+                if (target && options && options.item ) registryService.setNavModel ( target , options.item);
+// choose based on whether both views visible, screensize, registry setting ?
+                // TODO: this could actually be a service too
+                if ( registryService.getConfig().navType === 'push') {
+                    $scope.ons.navigator.pushPage( template, options );
+                } else {
+                    $scope.ons.splitView.options = options;
+                    // add animation class when set main page?
+                    $scope.ons.splitView.setMainPage( template );
+                }
             }
 
         } );
-})(angular,_);
+})( angular );
