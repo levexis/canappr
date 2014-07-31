@@ -15,7 +15,7 @@
   },
   "scripts": {
     "test": "grunt test",
-    "build": "grunt build "
+    "postinstall": "grunt build"
   },
   "dependencies": {
     "express": "~4.6.1",
