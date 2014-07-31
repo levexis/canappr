@@ -2,7 +2,7 @@ var express = require('express'),
     app = express();
 // PORT is specified on heroku
 var SERVER= { PORT: process.env.PORT || 9000,
-			  maxAge: 0}; //no cache
+			  maxAge: 60*60*24}; // 24 hour cache
 
 /**
  * Middleware
