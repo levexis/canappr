@@ -3,6 +3,8 @@
     <div class="ca-blurb">
         <p align="center" class="ca-main-body" ng-bind-html="model.html"></p>
     </div>
-    <cd-playlist playlist="{{model.playlist}}" />
+    <div ng-repeat="item in content">
+        <cd-play-item src="{{item.file.url | cfurlDecode | cftrustUrl}}"/>
+    </div>
 </ons-page>
 

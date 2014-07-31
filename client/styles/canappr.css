@@ -70,6 +70,12 @@ body,html {
 .ca-even {
     background: lightblue;
 }
+.ca-duration {
+    float: right;
+    width: 9%;
+    color: olivedrab;
+    text-align: center;
+}
 
 .ca-progress .time {
     position: absolute;
@@ -84,7 +90,7 @@ body,html {
     margin: 0px 0px  !important;
 }
 .ca-play {
-    width: 10%;
+    width: 9%;
     text-align: center;
     float: left;
     color: olivedrab;
