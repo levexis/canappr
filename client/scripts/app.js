@@ -1,6 +1,6 @@
 (function(angular) {
     'use strict';
-    var myApp = angular.module('canAppr', ['onsen.directives' , 'ngTouch', 'ngAnimate', 'ngCachedResource', 'ngSanitize' ])
+    var myApp = angular.module('canAppr', ['onsen.directives' ,'mediaPlayer', 'ngTouch', 'ngAnimate', 'ngCachedResource', 'ngSanitize' ])
         .run(
          function ($rootScope, $timeout , $window, $injector, $log) {
              // app global config, there is probably a service for this

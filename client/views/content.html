@@ -1,6 +1,6 @@
 <ons-page ng-controller="MainCtrl" height="100%" id="main">
     <h1 align="center">{{model.name}}</h1>
     <p align="center" class="ca-main-body" ng-bind-html="model.html"></p>
-    <cd-content playlist="{{model.playlist}}"></cd-content>
+    <cd-playlist playlist="{{model.playlist}}" />
 </ons-page>
 

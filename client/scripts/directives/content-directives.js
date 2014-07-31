@@ -1,47 +1,75 @@
 (function (angular) {
     "use strict";
     var myApp = angular.module( 'canAppr' );
-    myApp.directive('cdContent', function( xmlService , $window) {
+    myApp.directive('cdPlaylist', function( xmlService , $window, $compile) {
         var directive = {
             restrict: 'E',
             scope: { playlist : '@',
                 playObj : '@'
             },
             compile : function ( scope, element, attributes ) {
-                // do one-time configuration of element.
-                /*
-                var linkFunction = function ( $scope, element, attributes ) {
-                    console.log ( 'PlayList',attributes.playlist );
-                    if (attributes.playlist && typeof $window.atob === 'function') {
-                        $scope.playObj = xmlService.toObject (atob(attributes.playlist));
-                    }
-                };
-                 */
                 var _doPlaylist = function ( scope ) {
                     if ( scope.playlist && typeof $window.atob === 'function' ) {
-//                        console.log ('playlist',scope.playlist);
                         var playObj = xmlService.toObject( atob( scope.playlist ) );
-//                        console.log ('PROCESSED', scope , playObj );
+                        console.log ('updated playObj',playObj);
                         scope.playObj = playObj;
                     }
-                }
+                };
                 var linkFunction = function ( scope, element, attributes ) {
                     _doPlaylist( scope );
-//                    console.log ( 'linked' , scope,element,attributes );
                     scope.$watch( 'playlist', function ( newer, older ) {
-//                        console.log ( 'changed', scope,  newer , older ,!older || newer !== older  );
                         if (!older || newer !== older) _doPlaylist( scope );
                     } );
-                    /*
-                    attributes.$observer ( 'playlist', function (value) {
-                        console.log ( 'changed playlist',value);
-                        _doPlaylist( scope );
-                    });
-                    */å
                 };
                 return linkFunction;
             },
-            template: '<div>{{playObj}}</div>'
+            template: function ( element, attribute ) {
+                var outHTML = '<div ngShow="{{playlist}}">';
+                outHTML += '<cd-play-item ng-repeat="item in playObj.organization.course.module.content" />';
+                outHTML += '</div>';
+                return outHTML;
+            }
+        };
+        return directive;
+    });
+    myApp.filter('cfurlDecode', function() {
+        return function ( what) {
+            return what ? decodeURIComponent( what ) : what;
+        }
+    });
+    myApp.filter('cftrustUrl', function ($sce) {
+            return function(url) {
+                return $sce.trustAsResourceUrl(url);
+            };
+    });
+    myApp.directive('cdPlayItem', function( xmlService , $window, $compile, $sce) {
+        $sce.trustAsResourceUrl('http://www.soundjay.com');
+        var directive = {
+            restrict: 'E',
+            compile : function ( $scope, element, attributes ) {
+                var linkFunction = function ( $scope, element, attributes ) {
+                    console.log ('playItem',$scope);
+                };
+                return linkFunction;
+            },
+            template: function ( element, attribute ) {
+                var outHTML = '';
+                // now add a custom media directive? this doesn't get picked up as scoped in new p
+                outHTML += '<audio media-player="audio{{$index}}" data-playlist="playlist{{$index}}">';// ng-show="{{item.file.type === \'audio\'}}">';
+//                outHTML += '<source src="{{item.file.url | cfurlDecode | cftrustUrl}}" type="audio/mp3">';
+                outHTML += '<source src="http://www.soundjay.com/human/fart-01.mp3" type="audio/mp3">';
+                outHTML += '</audio>';
+                outHTML += '<div class="ca-wrapper" ng-class="{ \'ca-even\': ($index % 2) !== 0}" >';
+                outHTML += '    <p class="ca-content-title {{item.file.type}} ">{{ $index+1 }}. {{item.description}}</p>';
+                outHTML += '    <div class="ca-play" ng-click="audio{{$index}}.playPause()">';
+                outHTML += '        <i class="fa fa-lg" ng-class="{ \'fa-pause\': audio{{$index}}.playing, \'fa-play\': !audio{{$index}}.playing }"></i>';
+                outHTML += '    </div>';
+                outHTML += '    <div class="ca-progress" ng-click="audio{{$index}}.seek(audio{{$index}}.duration * seekPercentage($event))">';
+                outHTML += '        <span class="ca-audio-bar topcoat-progress-bar" ng-style="{ width: audio{{$index}}.currentTime*100/audio{{$index}}.duration + \'%\' }" aria-valuemax="100" aria-valuemin="0" role="progressbar" style="width:0px"></span>';
+                outHTML += '    </div>';
+                outHTML += '</div>';
+                return outHTML;
+            }
         };
         return directive;
     });
