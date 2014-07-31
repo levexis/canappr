@@ -15,7 +15,8 @@
   },
   "scripts": {
     "test": "grunt test",
-    "postinstall": "./node_modules/grunt-cli/bin/grunt build"
+    "preinstall": "npm install -g grunt-cli",
+    "postinstall": "grunt build"
   },
   "dependencies": {
     "express": "~4.6.1",
