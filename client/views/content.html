@@ -1,10 +1,12 @@
-<ons-page ng-controller="ContentCtrl" height="100%" id="main">
-    <h1 align="center">{{model.name}}</h1>
-    <div class="ca-blurb">
-        <p align="center" class="ca-main-body" ng-bind-html="model.html"></p>
-    </div>
-    <div ng-repeat="item in content">
-        <cd-play-item src="{{item.file.url | cfurlDecode | cftrustUrl}}"/>
-    </div>
+<ons-page ng-controller="ContentCtrl" id="main">
+    <ons-scroller infinit-scroll-enable="true" >
+        <h1 align="center">{{model.name}}</h1>
+        <div class="ca-blurb">
+            <p align="center" class="ca-main-body" ng-bind-html="model.html"></p>
+        </div>
+        <div ng-repeat="item in content">
+            <cd-play-item src="{{item.file.url | cfurlDecode | cftrustUrl}}"/>
+        </div>
+    </ons-scroller>
 </ons-page>
 

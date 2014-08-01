@@ -1,13 +1,14 @@
 <!--    do the text with directives eg ca-welcome or ca-head:welcome? Just a template?
         need to do an automatic translation so maybe put english in master template
         there is a way of doing this ! -->
-<ons-page ng-controller="MainCtrl" height="100%" id="main">
+<ons-page ng-controller="MainCtrl" id="main">
+    <ons-scroller infinit-scroll-enable="true" >
     <div class="ca-blurb" ng-show="showBlurb">
         <h1 align="center">{{model.name}}</h1>
         <p align="center" class="ca-main-body" ng-bind-html="model.html">
         </p>
     </div>
-    <ons-navigator title="{{collectionName}}" ng-show="collection.length" class="ca-main-list">
+    <ons-navigator title="{{collectionName}}" ng-show="collection.length" class="ca-main-list" infinit-scroll-enable="true">
         <ons-list>
             <span ng-repeat="item in collection | orderBy : name">
                 <ons-list-item
@@ -19,5 +20,6 @@
             </span>
         </ons-list>
     </ons-navigator>
+    </ons-scroller>
 </ons-page>
 
