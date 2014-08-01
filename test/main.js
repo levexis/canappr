@@ -13,7 +13,7 @@ require({
         'jquery' : 'vendor/jquery/jquery.min',
         'underscore' : 'vendor/underscore/underscore',
         'backbone' : 'vendor/backbone/backbone',
-        'text' : 'vendor/text/text',
+        'text' : 'vendor/text/text'
     },
     shim: {
         underscore: {
