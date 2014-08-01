@@ -14,7 +14,7 @@
             $scope.model = navParams[ 'module' ];
             _setContent();
             // keep playObj up to dae
-            $scope.watch('model.playlist', function ( before , after ) {
+            $scope.$watch('model.playlist', function ( before , after ) {
                 if ( before !== after ) _setContent();
             });
             console.log('content',$scope);
