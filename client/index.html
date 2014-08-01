@@ -55,24 +55,10 @@
 <script src="scripts/controllers/menu-controller.js"></script>
 <script src="scripts/controllers/content-controller.js"></script>
 
-<ons-screen>
-    <script>var _isMobile = false</script>
-    <script ons-if-platform="ios">var _isMobile = true</script>
-    <script ons-if-platform="android">var _isMobile = true</script>
-    <ons-split-view
-            ng-show="!_isMobile"
-            secondary-page="views/menu.html"
-            main-page="views/main.html"
-            secondary-page-width="30%"
-            collapse="width 650px">
-    </ons-split-view>
-    <ons-sliding-menu
-            ng-show="_isMobile"
-            behind-page="views/menu.html"
-            above-page="views/main.html"
-            swipable="true">
-    </ons-sliding-menu>
- </ons-screen>
+<ons-screen page="views/sliding-menu.html"></ons-screen>
+<!-- <ons-screen page="views/split-view.html"></ons-screen> -->
+<script>
+</script>
 
 </body>
 </html>

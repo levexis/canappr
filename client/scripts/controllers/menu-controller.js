@@ -4,7 +4,7 @@
     var myApp = angular.module( 'canAppr' );
     var intances = 1;
 
-    myApp.controller( 'MenuCtrl', function ( $scope, $location , $rootScope, $timeout, orgService , courseService, moduleService , registryService ) {
+    myApp.controller( 'MenuCtrl', function ( $scope, $location , $rootScope, $timeout, orgService , courseService, moduleService , registryService, navService ) {
         var _navParams = registryService.getNavModels();
         $scope.options = [ { name:'org',class: 'fa-male' , model: _navParams.org },
             { name: 'course', class: 'fa-book' , model: _navParams.course } ,
@@ -27,10 +27,9 @@
         } , true );
 
         $scope.listClick = function ( item ) {
-//          $scope.$state.go ( where , { /* id : item.model.id */ }, { reload: true } );
-            $scope.ons.splitView.options = { collection : item.name};
-// add animation class when set main page?
-            $scope.ons.splitView.setMainPage( 'views/main.html' );
+            navService.go ( 'views/main.html' ,{ collection : item.name});
         }
     } );
+
 })(angular , _);
+

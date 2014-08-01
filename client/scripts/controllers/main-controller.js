@@ -4,7 +4,8 @@
     // just resets the page model default home page
     function _welcome ($scope) {
         $scope.model = { name: 'Organizations',
-                 html : 'Welcome to my new app, this is just placeholder text' };
+                 html : 'Welcome to my new app, this is just placeholder text',
+                isPlaceholder: true};
     }
     /*
      * sets the collection for the page
@@ -17,9 +18,9 @@
     // how can we dynamically inject the resource, have hard coded organizations for now
     // need current model and then collection for list, eg collectionId 5 is model and courses is the collection etc
     myApp.controller( 'MainCtrl',
-        function ( $scope, $location, $timeout, $rootScope, orgService , courseService, moduleService , utilService , registryService) {
+        function ( $scope, $location, $timeout, $rootScope, orgService , courseService, moduleService , registryService, navService) {
             var navParams =  registryService.getNavModels(),
-                options = utilService.getRouteOptions($scope);
+                options = navService.getRouteOptions($scope);
             $scope.collection = [];
             $scope.targetTemplate = 'views/main.html';
             if ( options ) {
@@ -52,7 +53,7 @@
                 } else if (options.collection ) {
                     throw new Error( 'unrecognized list: ' + options.collection );
                 }
-                console.log ( 'model', $scope.model ,navParams ,  options.collection );
+                console.log ( 'model', $scope.model ,navParams ,  options.collection ,$scope);
             } else {
                 // initial state
                 $scope.collectionClass = 'fa-male';
@@ -66,8 +67,7 @@
             $scope.clickList = function ( template, options ) {
                 var target;
                 $scope.showBlurb=false;
-                console.log ('clicking options',options);
-
+                console.log ('clicking options',options, $scope);
                 switch ( $scope.collectionName ) {
                     case 'Organizations':
                         target = 'org';
@@ -79,15 +79,13 @@
                         target = 'module';
                         break;
                 }
+                // update the central model so can be used on next view
                 if (target && options && options.item ) registryService.setNavModel ( target , options.item);
-// choose based on whether both views visible, screensize, registry setting ?
-                // TODO: this could actually be a service too
-                if ( registryService.getConfig().navType === 'push') {
-                    $scope.ons.navigator.pushPage( template, options );
+                // still pushing for now but seem to have some stack scoping problems, have tried a different template name but seems to be navigator nesting
+                if ( registryService.getConfig().navType === 'slide') {
+                    $rootScope.ons.navigator.pushPage( template, options );
                 } else {
-                    $scope.ons.splitView.options = options;
-                    // add animation class when set main page?
-                    $scope.ons.splitView.setMainPage( template );
+                    navService.go( template , options );
                 }
             }
 

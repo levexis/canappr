@@ -6,7 +6,8 @@
              // app global config, there is probably a service for this
              $rootScope.canAppr = { apiBase : 'api/0/',
                  navParams : { org : { name: 'Organizations' } , module : {}, course : {} },
-                config: { navType: 'push'} };
+                 config: {}
+             };
              // if in debug mode then expose rootScope and it's injector
              // eg canAppr.getService('orgService').query().$promise.then(function (results) { console.log('results',results); } ));
              $window.canAppr = { rootScope: $rootScope,
@@ -16,6 +17,7 @@
                                     return $injector.get( what );
                                 }};
          });
+
     // this is just an example
     myApp.factory ( 'myInterceptor', function( $q ) {
         return {
