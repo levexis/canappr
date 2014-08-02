@@ -26,8 +26,7 @@ browser.driver.manage().window().setSize(800, 600);
 // returns promise resolved on screenshot
 function takeScreenshot (filename, next) {
     if ( ARTIFACT_DIR ) {
-        filename = filename || "webdriver_error.png";
-        filename = ARTIFACT_DIR + filename;
+        filename = ARTIFACT_DIR + '/' + filename;
         var deferred = new Q.defer();
         browser.takeScreenshot().then( function ( img ) {
             console.log( 'see [' + filename + '] for screenshot' );
