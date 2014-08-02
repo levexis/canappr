@@ -12,7 +12,11 @@ if ( typeof protractor === 'undefined' ) {
 module.exports = function () {
     var _that = this;
     this.menu = element( by.id('menu') );
-    this.list = this.menu.element.all( by.tagName ('li') );
+    try {
+        this.list = this.menu.element.all( by.tagName( 'li' ) );
+    } catch (err) {
+        // menu not yet loaded / visible
+    }
     /* a little promise practice */
     this.getList = function () {
         var _outList= [];
@@ -26,21 +30,27 @@ module.exports = function () {
                 // example that returns a chainable list so you can say list[0].getText() etc
                 return Q.all( _outList );
             });
-    }
+    };
     this.getHome = function() {
         return this.list.get(0);
-    }
+    };
     this.getOrg = function() {
         return this.list.get(1);
-    }
+    };
     this.getCourse = function() {
         return this.list.get(2);
-    }
+    };
     this.getModule = function() {
         return this.list.get(3);
-    }
-    this.get = function() {
+    };
+    this.get = function( navTo ) {
+        var _deferred = new Q.defer();
         browser.get('/');
+        return browser.waitForAngular().then ( function ( resolved ) {
+            _that.list = _that.menu.element.all( by.tagName ('li') );
+            _deferred.resolve( resolved);
+        });
+        return _deferred.promise;
     };
     return this;
 };

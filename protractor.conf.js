@@ -15,7 +15,9 @@ exports.config = {
     framework: 'mocha',
     mochaOpts: {
         reporter: "spec",
-        slow: 3000
+        slow: 3000,
+        timeout: 1000
     },
-    rootElement: 'body'
+    rootElement: 'body',
+    allScriptsTimeout: 60000
 };

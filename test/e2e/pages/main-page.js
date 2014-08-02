@@ -8,7 +8,13 @@ module.exports = function () {
         navQ;
     /* get the page */
     this.get = function( navTo ) {
+        var _deferred = new Q.defer();
         browser.get('/');
+        return browser.waitForAngular().then ( function ( resolved ) {
+            _that.list = _that.main.element.all( by.tagName ('li') );
+            _deferred.resolve( resolved);
+        });
+        return _deferred.promise;
     };
     /* allows you to set where you want to nave to
      * eg organizations:Triratna, courses: Meditations, modules: Breathing
@@ -157,7 +163,6 @@ module.exports = function () {
 
     var _that = this;
     this.main = element( by.id('main') );
-    this.list = this.main.element.all( by.tagName ('li') );
     /* a little promise practice */
     this.getList = function () {
         var _promises= [] ,
@@ -188,10 +193,15 @@ module.exports = function () {
         return this.main.element( by.binding('{{model.name}}') );
     };
     this.getDescription = function() {
-        return this.main.element( by.binding('{{model.html}}') );
+        return this.main.element( by.binding('model.html') );
     };
     this.getListTitleText = function() {
         return this.main.element( by.css('.ca-main-list') ).getAttribute('title');
     };
+    try {
+        this.list = this.main.element.all( by.tagName( 'li' ) );
+    } catch (err) {
+        // main not yet loaded / visible
+    }
     return this;
 };
