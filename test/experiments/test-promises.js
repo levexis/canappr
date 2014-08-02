@@ -110,6 +110,17 @@ describe('main', function () {
             return expect (pt.simple(250,false ) ).to.eventually.be.rejected;
             // need to test time of chained promises
         });
+        it( 'should work then', function () {
+            var pt = new PromiseTester();
+            return expect (pt.simple(250,true ).then (
+                  function() {
+                      return pt.simple( 250, pt.getElapsed ).then(
+                          function () {
+                              return 'recursive testing';
+                          } );
+                  }) ).to.eventually.equal('recursive testing');
+            // need to test time of chained promises
+        });
         it( 'should allow for chains', function () {
             var pt = new PromiseTester();
             return expect (pt.simple(250,true ).then ( function () { return pt.simple(250, pt.getElapsed); } )).to.eventually.be.at.least(500);
