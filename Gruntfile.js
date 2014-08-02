@@ -109,7 +109,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-jshint' );
     grunt.loadNpmTasks('grunt-selenium-webdriver' );
-    grunt.loadNpmTasks('grunt-mocha-protractor' );
 
     grunt.registerTask('e2e', [
         'selenium_phantom_hub',
