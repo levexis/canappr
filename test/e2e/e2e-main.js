@@ -144,6 +144,7 @@ describe('main', function () {
         beforeEach( function () {
             browser.ignoreSynchronization = true;
             main = new MainPage();
+            main.get();
             menu = new MenuPage();
             deferred = Q.defer();
             testPromise = deferred.promise;
@@ -153,7 +154,7 @@ describe('main', function () {
             return takeScreenshot('test_' + new Date().getTime() );
         } );
         it( 'should start with an intro to the app',function() {
-            main.get();
+
             expect ( main.getDescription().getInnerHtml() ).to.eventually.contain('Welcome');
         });
         it( 'should allow me to select an organization from home list',function() {
@@ -186,6 +187,7 @@ describe('main', function () {
 // expect seems to resolve after getOrg even though console statements continue
 // could be due to mix of promise types or could be me being dumb about what is
 // being returned by this chain, fix is to be explicit about the promise
+-- it's probably what gets return by .click() that causese the problems
             return expect ( main.navTo ( { organizations: 'surrey', courses: 'meditation', modules: 'breath' } )
                     .then( function () {
                     menu.getOrg().click()
@@ -231,6 +233,13 @@ describe('main', function () {
                         } );
                 });
             return testPromise.should.eventually.contain( 'Triratna Liturgy' );
+        });
+        it( 'should show nothing available message if no list' ,function() {
+            return expect( main.clickOn( 'now' )
+                .then( function ( what ) {
+                    return main.getListEmpty().getText();
+                } ) )
+                .to.eventually.contain( 'there are no' );
         });
         it( 'should allow me to play module content' );
         it( 'should show enable new content' );

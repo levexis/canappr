@@ -13,14 +13,16 @@
     function _queryCB ($scope) {
         return function ( results ) {
             $scope.collection = results;
+            // this someFiltered thing is for the UI and should be refactored into a directive!
+            $scope.someFiltered = !!_.findWhere ( results , $scope.filterWhere );
         }
     }
     // how can we dynamically inject the resource, have hard coded organizations for now
     // need current model and then collection for list, eg collectionId 5 is model and courses is the collection etc
     myApp.controller( 'MainCtrl',
         function ( $scope, $location, $timeout, $rootScope, orgService , courseService, moduleService , registryService, navService) {
-            var navParams =  registryService.getNavModels(),
-                options = navService.getRouteOptions($scope);
+            var navParams =  $scope.navParams ||  registryService.getNavModels(),
+                options = $scope.options || navService.getRouteOptions($scope); // the scope.options / navParams is there to allow test to set these in karma
             $scope.collection = [];
             $scope.targetTemplate = 'views/main.html';
             if ( options ) {
@@ -35,13 +37,16 @@
                     _welcome($scope);
                 } else if (options.collection === 'course' ) {
                     $scope.collectionClass = 'fa-book';
-                    courseService.query( { organizationId : navParams.org.id }, _queryCB( $scope ) );
+                    courseService.query( { orgId : navParams.org.id }, _queryCB( $scope ) );
+                    // this filter is only really needed when working with local static test data
+                    $scope.filterWhere = { orgId : navParams.org.id };
                     $scope.collectionName = 'Courses';
                     $scope.target = 'module';
                     $scope.model = navParams[ 'org' ];
                 } else if ( options.collection === 'module' ) {
                     $scope.collectionClass = 'fa-terminal';
                     moduleService.query( { courseId : navParams.course.id }, _queryCB( $scope ) );
+                    $scope.filterWhere = { courseId : navParams.course.id };
                     $scope.target = 'content';
                     $scope.collectionName = 'Modules';
                     $scope.targetTemplate = 'views/content.html';

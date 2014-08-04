@@ -195,6 +195,9 @@ module.exports = function () {
     this.getDescription = function() {
         return this.main.element( by.binding('model.html') );
     };
+    this.getListEmpty = function() {
+        return this.main.element( by.css('.ca-main-empty') );
+    };
     this.getListTitleText = function() {
         return this.main.element( by.css('.ca-main-list') ).getAttribute('title');
     };

@@ -5,12 +5,12 @@
 <ons-scroller infinit-scroll-enable="true" >
 <div class="ca-blurb" ng-show="showBlurb">
     <h1 align="center">{{model.name}}</h1>
-    <p align="center" class="ca-main-body" ng-bind-html="model.html">
-    </p>
+    <p align="center" class="ca-main-body" ng-bind-html="model.html"></p>
 </div>
-<ons-navigator title="{{collectionName}}" ng-show="collection.length" class="ca-main-list" >
-    <ons-list scrollane>
-        <span ng-repeat="item in collection | orderBy : name">
+<div class="ca-main-empty" ng-show="!someFiltered"><p>Sorry, there are no {{collectionName}} from {{model.name}} available to you right now.</p></div>
+<ons-navigator title="{{collectionName}}" ng-show="someFiltered" class="ca-main-list" >
+    <ons-list scrollabe>
+        <span ng-repeat="item in collection | filter:filterWhere | orderBy : name">
             <ons-list-item
                     class="topcoat-list__item--tappable topcoat-list__item__line-height"
                     ng-click="clickList( targetTemplate, { id: item.id , collection: target, item: item });">
