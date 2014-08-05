@@ -20,8 +20,14 @@ module.exports = function (grunt) {
             },
             e2e : {
 //                reporters: 'dots'
+            },
+            dev : {
+//                reporters: 'dots'
+                configFile : 'karma.macdev.conf.js'
             }
         },
+        // note clean with / on the end as without the * removes the directory, which I see as a bug
+        clean:       ['test/artifacts/*', 'client/scripts/vendor'],
         copy : {
             main : {
                 files : [
@@ -98,7 +104,7 @@ module.exports = function (grunt) {
                     }
                 }
             }
-        },
+        }
    });
 
     grunt.loadNpmTasks('grunt-contrib-connect');
@@ -109,6 +115,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-jshint' );
     grunt.loadNpmTasks('grunt-selenium-webdriver' );
+    grunt.loadNpmTasks( 'grunt-contrib-clean' );
 
     grunt.registerTask('e2e', [
         'selenium_phantom_hub',
@@ -133,7 +140,7 @@ module.exports = function (grunt) {
     grunt.registerTask( 'test', [ 'karma' , 'e2e' ] );
 
     // Default task.
-    grunt.registerTask( 'build', ['bower', 'copy' , 'jshint' ] );
+    grunt.registerTask( 'build', ['clean', 'bower', 'copy' , 'jshint' ] );
 
     // Default task.
     grunt.registerTask( 'default', ['build' ] );

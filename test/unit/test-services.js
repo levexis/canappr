@@ -53,11 +53,11 @@ describe('Services', function() {
                 service.toObject( xml ).file.url.should.equal( 'https://dropbox.com/19382/breathing.mp4' );
             } );
             it( 'should return null if xml invalid', function () {
-                expect( service.toJSON( '<poo><cock></cock>' ) ).to.be.null;
+                expect( service.toJSON( '<pea><cock></cock>' ) ).to.be.null;
                 expect( service.toObject( '' ) ).to.be.null;
                 expect( service.toObject() ).to.be.null;
                 expect( service.toObject( null ) ).to.be.null;
-                expect( service.toObject( '<poo><cock></cock>' ) ).to.be.null;
+                expect( service.toObject( '<ea><cock></cock>' ) ).to.be.null;
             } );
         } );
     })
@@ -65,7 +65,9 @@ describe('Services', function() {
     describe( 'api' , function () {
         var backend, service, scope,ctrl,apiBase,getSpy;
         // these mocks should all be one service
-        beforeEach( inject( function ( $httpBackend , $rootScope , $http ) {
+        beforeEach( inject( function ( $httpBackend , $rootScope , $http , $log ) {
+            // this is a fix to a bug with angular-cached-resource where it uses $log out of scope
+            window.$log = $log;
             backend = $httpBackend;
             // doesn't ever get called as we have httpBackend,
 //            backend.whenGET(/views\/.*/).passThrough();

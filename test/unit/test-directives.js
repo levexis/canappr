@@ -31,7 +31,7 @@ describe('directives', function() {
             $httpBackend.whenGET(/views\/.*/).respond(200,'mocking view');
             /* heres the encoded xml
              <file>
-             <owner>paul</owner>
+             <owner>paul</owner>ss
              <type>audio</type>
              </filgit pue>
              */

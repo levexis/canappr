@@ -17,6 +17,9 @@ module.exports = function(config) {
         // frameworks to use, these need to be specified in plugins below
         frameworks: [ 'mocha', 'sinon-chai'],
 
+        // frameworks to use, these need to be specified in plugins below
+        frameworks: [ 'mocha', 'sinon-chai'],
+
         files : [
             'bower_components/angular/angular.js',
             'bower_components/underscore/underscore.js',
@@ -26,8 +29,10 @@ module.exports = function(config) {
         ],
 
         exclude: [
+//            'app/lib/angular/angular-loader.js',
             'client/scripts/vendor/angular.min.js',
             'client/scripts/vendor/underscore.js'
+//            'app/lib/angular/angular-scenario.js'
         ],
 
         // test results reporter to use
@@ -60,7 +65,7 @@ module.exports = function(config) {
         // - PhantomJS
         // - IE (only Windows)
         // browsers need to be in plugins below
-        browsers: [ 'chrome' , 'firefox', 'phantomJS','Safari','Opera' ],
+        browsers: [ 'Chrome' , 'Firefox', 'PhantomJS','Safari','Opera' ],
 
         // If browser does not capture in given timeout [ms], kill it
         captureTimeout: 60000,
