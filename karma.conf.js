@@ -13,8 +13,6 @@ module.exports = function(config) {
             'bower_components/underscore/underscore.js',
             'client/scripts/**/*.js',
             'bower_components/angular-mocks/angular-mocks.js',
-            'bower_components/sinon/lib/*.js',
-            'bower_components/sinon-chai/lib/sinon-chai.js',
             'test/unit/**/*.js'
         ],
 

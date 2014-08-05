@@ -41,13 +41,13 @@
         return directive;
     });
      */
-    myApp.directive('cdPlayItem', function( xmlService , $window, $compile, $sce) {
+    myApp.directive('cdPlayItem', function( xmlService , $window, $compile ,$log) {
         var directive = {
             restrict: 'E',
             /* link is called after rendering*/
             link : function ( $scope, element, attributes ) {
-                console.log ('playItem','audio' + $scope.$index,$scope['audio' + $scope.$index],$scope );
-                console.log ('playItem element',element,attributes );
+                $log.debug ('playItem','audio' + $scope.$index,$scope['audio' + $scope.$index],$scope );
+                $log.debug ('playItem element',element,attributes );
 //                $scope['audio' + $scope.$index].$playlist.push ( { src: attributes.src, type: 'audio/mp3'} );
                 $scope['playlist' + $scope.$index]= [{ src: attributes.src, type: 'audio/mp3'}];
             },
