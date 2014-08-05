@@ -6,6 +6,7 @@
     myApp.factory('registryService', function($rootScope) {
         var _navParams =  $rootScope.canAppr.navParams,
             _config = $rootScope.canAppr.config;
+
         // this gets the model for the selected Id
         /*
         $rootScope.$watch('canAppr.navParams' , function ( before , after ) {
@@ -63,6 +64,12 @@
             },
             getConfig: function () {
                 return _config;
+            },
+            setConfig: function ( name , value ) {
+                if ( name ) {
+                    _config[name] = value;
+                    return _config;
+                }
             }
         };
     });

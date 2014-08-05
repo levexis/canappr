@@ -31,7 +31,7 @@
                     $rootScope.ons.splitView.setMainPage( where );
                 }
             },
-            getRouteOptions: function ($scope  ) {
+            getRouteOptions: function ($scope ) {
                 var options;
                 if ( _config.navOptions ) {
                     options = _config.navOptions;
@@ -40,10 +40,15 @@
                     try {
                         options = $scope.ons.navigator.getCurrentPage().options;
                     } catch ( err ) {
-                        // ignore the error, navigator not ready
+                        // ignore the error, navigator not ready or not in compatible mode
                     }
                 }
                 return options;
+            },
+            setRouteOptions: function ( options ) {
+                if (options) {
+                    _config.navOptions = options;
+                }
             }
         };
     });

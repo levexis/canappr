@@ -171,5 +171,163 @@ describe('Services', function() {
         });
 
     });
+    describe('registryService',function() {
+        var service , rootScope;
+        beforeEach( inject( function ( registryService , $rootScope) {
+            service = registryService;
+            rootScope = $rootScope;
+            expect(service).to.not.be.undefined;
+        }) );
+        describe('getNavModels', function () {
+            it('should be a method', function () {
+                service.getNavModels.should.be.a( 'function' );
+            });
+        });
+        describe('resetNavModel', function () {
+            it('should be a method', function () {
+                service.resetNavModel.should.be.a( 'function' );
+            });
+        });
+        describe('setNavModel', function () {
+            it('should be a method', function () {
+                service.setNavModel.should.be.a( 'function' );
+            });
+        });
+        describe('setNavId', function () {
+            it('should be a method', function () {
+                service.setNavId.should.be.a( 'function' );
+            });
+        });
+        describe('getConfig', function () {
+            it('should be a method', function () {
+                service.getConfig.should.be.a( 'function' );
+            });
+            it('should return config from rootScope', function () {
+                rootScope.canAppr.config.hello = 'world';
+                service.getConfig().hello.should.equal ('world');
+            });
+        });
+        describe('setConfig', function () {
+            it('should be a method', function () {
+                service.setConfig.should.be.a( 'function' );
+            });
+            it('should return config from rootScope', function () {
+                service.setConfig ( 'hello' , [ 'how','can','i','help' ] );
+                service.getConfig().hello.should.have.lengthOf(4);
+            });
+        });
+        /*
+        getNavModels: function( type ) {
+            if (type) {
+                return _navParams[type];
+            } else {
+                return _navParams;
+            }
+        },
+        resetNavModel: function( type ) {
+            if (type) {
+                // delete all properties
+                _.keys ( _navParams[type] ).forEach ( function (key) {
+                    delete _navParams[type][key];
+                });
+            }
+            return _navParams[type];
+        },
+        setNavModel: function( type , properties ) {
+            if (type && properties) {
+                // delete existing then extend new
+                this.resetNavModel(type);
+                _.extend ( _navParams[type]  , properties );
+            }
+            return _navParams[type];
+        },
+        setNavId: function( type , id ) {
+            if (type && id) {
+                // delete existing then extend new
+                this.resetNavModel(type);
+                _navParams.id=id;
+            }
+            return _navParams[type];
+        },
+        getConfig: function () {
+            return _config;
+        }
+        */
+    });
+    describe('navService',function() {
+        var service;
+        beforeEach( inject( function ( navService , $rootScope ) {
+            service = navService;
+            rootScope = $rootScope;
+            expect(service).to.not.be.undefined;
+            // mocks - this could be a service in itself as likely to be re-needed
+            rootScope.ons = { navigator : { getCurrentPage : sinon.stub(),
+                                            resetToPage : sinon.stub() },
+                slidingMenu : { setAbovePage : sinon.stub() },
+                splitView : { setMainPage : sinon.stub() }
+            };
+        }) );
+        describe('getNavType', function () {
+            it('should be a method', function () {
+                service.getNavType.should.be.a( 'function' );
+            });
+            it('should return navType', function () {
+                rootScope.canAppr.config.navType = 'split';
+                service.getNavType().should.equal('split');
+            });
+        });
+        describe('go', function () {
+            it( 'should be a method', function () {
+                service.go.should.be.a( 'function' );
+            } );
+            it( 'should use slidingMenu if navType slide', function () {
+                rootScope.canAppr.config.navType = 'slide';
+                service.go ( 'postal.html' );
+                rootScope.ons.slidingMenu.setAbovePage.should.have.been.calledOnce;
+            } );
+            it( 'should use splitMenu if navType split', function () {
+                rootScope.canAppr.config.navType = 'split';
+                service.go ( 'postal.html' );
+                rootScope.ons.splitView.setMainPage.should.have.been.calledOnce;
+            } );
+            it( 'should set NavOptions', function () {
+                rootScope.canAppr.config.navType = 'split';
+                service.go ( 'postal.html' , { test: 'passed'} );
+                rootScope.canAppr.config.navOptions.test.should.equal('passed');
+            } );
+        });
+        describe('getRouteOptions', function () {
+            beforeEach( function () {
+                service.setRouteOptions({ big: 'hello'});
+            });
+            it( 'should be a method', function () {
+                service.getRouteOptions.should.be.a( 'function' );
+            } );
+            it('should get the options if they are set', function () {
+                service.getRouteOptions(rootScope ).big.should.equal('hello');
+            })
+            it('should pop the options ', function () {
+                service.getRouteOptions(rootScope );
+                _.keys(rootScope.canAppr.config.navOptions ).length.should.equal(0);
+            })
+        });
+    });
+
+    describe('domUtils',function() {
+        var service;
+        beforeEach( inject( function ( domUtils ) {
+            service = domUtils;
+            expect(service).to.not.be.undefined;
+        }) );
+        describe('offset',function() {
+            it ('should return left offset', function () {
+                expect ( service.offset( angular.element( angular.element( document.getElementsByTagName('body') )) ) ).to.exist;
+                service.offset( angular.element( angular.element( document.getElementsByTagName('body') )) ).left.should.be.above(0);
+            });
+            it ('should return top offset', function () {
+                service.offset( angular.element( angular.element( document.getElementsByTagName('body') )) ).top.should.be.above(0);
+            });
+        });
+    });
 
 });
