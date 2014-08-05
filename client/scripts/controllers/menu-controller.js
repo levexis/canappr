@@ -4,7 +4,7 @@
     var myApp = angular.module( 'canAppr' );
     var intances = 1;
 
-    myApp.controller( 'MenuCtrl', function ( $scope, $location , $rootScope, $timeout, orgService , courseService, moduleService , registryService, navService ) {
+    myApp.controller( 'MenuCtrl', function ( $scope, $location , $rootScope, $log, orgService , courseService, moduleService , registryService, navService ) {
         var _navParams = registryService.getNavModels();
         $scope.options = [ { name:'org',class: 'fa-male' , model: _navParams.org },
             { name: 'course', class: 'fa-book' , model: _navParams.course } ,
@@ -16,7 +16,7 @@
             /* resets parameters if you go back up tree */
             if ( before && after ) {
                 if ( before.org.id != after.org.id ) {
-                    console.log( 'blank course / module', after, before );
+                    $log.debug( 'blank course / module', after, before );
                     registryService.resetNavModel( 'course' );
                     registryService.resetNavModel( 'module' );
                 } else if ( before.course.id != after.course.id ) {

@@ -20,13 +20,13 @@
     // how can we dynamically inject the resource, have hard coded organizations for now
     // need current model and then collection for list, eg collectionId 5 is model and courses is the collection etc
     myApp.controller( 'MainCtrl',
-        function ( $scope, $location, $timeout, $rootScope, orgService , courseService, moduleService , registryService, navService) {
+        function ( $scope, $rootScope, $log, orgService , courseService, moduleService , registryService, navService) {
             var navParams =  $scope.navParams ||  registryService.getNavModels(),
                 options = $scope.options || navService.getRouteOptions($scope); // the scope.options / navParams is there to allow test to set these in karma
             $scope.collection = [];
             $scope.targetTemplate = 'views/main.html';
             if ( options ) {
-                console.log ('options',options,options.collection, options);
+                $log.debug ('options',options,options.collection, options);
                 if ( options.collection === 'org' ) {
                     $scope.collectionClass = 'fa-male';
                     // get results, do we need to do a spinner icon?
@@ -52,13 +52,13 @@
                     $scope.targetTemplate = 'views/content.html';
                     $scope.model = navParams[ 'course' ];
                 } else if ( options.collection === 'content' ) {
-                    console.log ('setting mudule id', options.id );
+                    $log.debug ('setting mudule id', options.id );
                     $scope.collectionName = '';
                     $scope.model = navParams[ 'module' ];
                 } else if (options.collection ) {
                     throw new Error( 'unrecognized list: ' + options.collection );
                 }
-                console.log ( 'model', $scope.model ,navParams ,  options.collection ,$scope);
+                $log.debug ( 'model', $scope.model ,navParams ,  options.collection ,$scope);
             } else {
                 // initial state
                 $scope.collectionClass = 'fa-male';
@@ -72,7 +72,7 @@
             $scope.clickList = function ( template, options ) {
                 var target;
                 $scope.showBlurb=false;
-                console.log ('clicking options',options, $scope);
+                $log.debug ('clicking options',options, $scope);
                 switch ( $scope.collectionName ) {
                     case 'Organizations':
                         target = 'org';
