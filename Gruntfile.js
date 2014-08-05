@@ -137,7 +137,7 @@ module.exports = function (grunt) {
     ]);
 
     // test task
-    grunt.registerTask( 'test', [ 'karma' , 'e2e' ] );
+    grunt.registerTask( 'test', [ 'karma:e2e' , 'e2e' ] );
 
     // Default task.
     grunt.registerTask( 'build', ['clean', 'bower', 'copy' , 'jshint' ] );

@@ -31,7 +31,7 @@ describe('Services', function() {
 //    beforeEach( module( 'mockAppr' ) );
     beforeEach( module( 'canAppr' ) );
 
-    describe('libs', function() {
+    describe( 'libs', function () {
 
         describe( 'xml', function () {
             var service,
@@ -60,12 +60,12 @@ describe('Services', function() {
                 expect( service.toObject( '<ea><cock></cock>' ) ).to.be.null;
             } );
         } );
-    })
+    } )
 
-    describe( 'api' , function () {
-        var backend, service, scope,ctrl,apiBase,getSpy;
+    describe( 'api', function () {
+        var backend, service, scope, ctrl, apiBase, getSpy;
         // these mocks should all be one service
-        beforeEach( inject( function ( $httpBackend , $rootScope , $http , $log ) {
+        beforeEach( inject( function ( $httpBackend, $rootScope, $http, $log ) {
             // this is a fix to a bug with angular-cached-resource where it uses $log out of scope
             window.$log = $log;
             backend = $httpBackend;
@@ -75,259 +75,270 @@ describe('Services', function() {
             // seems you cannot load local files in karma unit tests
             getSpy = sinon.spy( $http.get );
             apiBase = $rootScope.canAppr.apiBase;
-            backend.whenGET(/views\/.*/).respond(200,'mocking view');
+            backend.whenGET( /views\/.*/ ).respond( 200, 'mocking view' );
             // ignore the views
             try {
                 backend.flush();
-            } catch( err ) {
+            } catch ( err ) {
 
             }
             backend.verifyNoOutstandingExpectation();
             backend.verifyNoOutstandingRequest();
-        }));
-        describe('orgService', function () {
+        } ) );
+        describe( 'orgService', function () {
             beforeEach( inject( function ( orgService ) {
                 service = orgService;
-                expect(service).to.not.be.undefined;
+                expect( service ).to.not.be.undefined;
                 // make sure we start clean
-                backend.expectGET(apiBase + 'organizations').respond(200, [{mock: 'hello'}]);
-            }) );
-            afterEach(function() {
+                backend.expectGET( apiBase + 'organizations' ).respond( 200, [
+                    {mock : 'hello'}
+                ] );
+            } ) );
+            afterEach( function () {
                 backend.verifyNoOutstandingExpectation();
                 backend.verifyNoOutstandingRequest();
-            });
-            it('should be a cachedResource', function () {
+            } );
+            it( 'should be a cachedResource', function () {
                 service.query().$promise.should.be.an( 'object' );
                 backend.flush();
-            });
-            it('should return empty from cache', function () {
-                service.query().$promise.then ( function ( results ) {
-                    results.length.should.equal(0);
+            } );
+            it( 'should return empty from cache', function () {
+                service.query().$promise.then( function ( results ) {
+                    results.length.should.equal( 0 );
                 } );
                 backend.flush();
-            });
-            it('should return 1 from server', function () {
-                service.query().$httpPromise.then ( function ( results ) {
-                    results[0].mock.should.equal('hello');
+            } );
+            it( 'should return 1 from server', function () {
+                service.query().$httpPromise.then( function ( results ) {
+                    results[0].mock.should.equal( 'hello' );
                 } );
                 backend.flush();
-            });
-        });
-        describe('courseService', function () {
+            } );
+        } );
+        describe( 'courseService', function () {
             beforeEach( inject( function ( courseService ) {
                 service = courseService;
-                expect(service).to.not.be.undefined;
+                expect( service ).to.not.be.undefined;
                 // make sure we start clean
-                backend.expectGET(apiBase + 'courses').respond(200, [{mock: 'hello'}]);
-            }) );
-            afterEach(function() {
+                backend.expectGET( apiBase + 'courses' ).respond( 200, [
+                    {mock : 'hello'}
+                ] );
+            } ) );
+            afterEach( function () {
                 backend.verifyNoOutstandingExpectation();
                 backend.verifyNoOutstandingRequest();
-            });
-            it('should be a cachedResource', function () {
+            } );
+            it( 'should be a cachedResource', function () {
                 service.query().$promise.should.be.an( 'object' );
                 backend.flush();
-            });
-            it('should return empty from cache', function () {
-                service.query().$promise.then ( function ( results ) {
-                    results.length.should.equal(0);
+            } );
+            it( 'should return empty from cache', function () {
+                service.query().$promise.then( function ( results ) {
+                    results.length.should.equal( 0 );
                 } );
                 backend.flush();
-            });
-            it('should return 1 from server', function () {
-                service.query().$httpPromise.then ( function ( results ) {
-                    results[0].mock.should.equal('hello');
+            } );
+            it( 'should return 1 from server', function () {
+                service.query().$httpPromise.then( function ( results ) {
+                    results[0].mock.should.equal( 'hello' );
                 } );
                 backend.flush();
-            });
-        });
-        describe('moduleService', function () {
+            } );
+        } );
+        describe( 'moduleService', function () {
             beforeEach( inject( function ( moduleService ) {
                 service = moduleService;
-                expect(service).to.not.be.undefined;
+                expect( service ).to.not.be.undefined;
                 // make sure we start clean
-                backend.expectGET(apiBase + 'modules').respond(200, [{mock: 'hello'}]);
-            }) );
-            afterEach(function() {
+                backend.expectGET( apiBase + 'modules' ).respond( 200, [
+                    {mock : 'hello'}
+                ] );
+            } ) );
+            afterEach( function () {
                 backend.verifyNoOutstandingExpectation();
                 backend.verifyNoOutstandingRequest();
-            });
-            it('should be a cachedResource', function () {
+            } );
+            it( 'should be a cachedResource', function () {
                 service.query().$promise.should.be.an( 'object' );
                 backend.flush();
-            });
-            it('should return empty from cache', function () {
-                service.query().$promise.then ( function ( results ) {
-                    results.length.should.equal(0);
+            } );
+            it( 'should return empty from cache', function () {
+                service.query().$promise.then( function ( results ) {
+                    results.length.should.equal( 0 );
                 } );
                 backend.flush();
-            });
-            it('should return 1 from server', function () {
-                service.query().$httpPromise.then ( function ( results ) {
-                    results[0].mock.should.equal('hello');
+            } );
+            it( 'should return 1 from server', function () {
+                service.query().$httpPromise.then( function ( results ) {
+                    results[0].mock.should.equal( 'hello' );
                 } );
                 backend.flush();
-            });
-        });
+            } );
+        } );
 
-    });
-    describe('registryService',function() {
+    } );
+    describe( 'registryService', function () {
         var service , rootScope;
-        beforeEach( inject( function ( registryService , $rootScope) {
+        beforeEach( inject( function ( registryService, $rootScope ) {
             service = registryService;
             rootScope = $rootScope;
-            expect(service).to.not.be.undefined;
-        }) );
-        describe('getNavModels', function () {
-            it('should be a method', function () {
+            expect( service ).to.not.be.undefined;
+        } ) );
+        describe( 'getNavModels', function () {
+            it( 'should be a method', function () {
                 service.getNavModels.should.be.a( 'function' );
-            });
-        });
-        describe('resetNavModel', function () {
-            it('should be a method', function () {
+            } );
+        } );
+        describe( 'resetNavModel', function () {
+            it( 'should be a method', function () {
                 service.resetNavModel.should.be.a( 'function' );
-            });
-        });
-        describe('setNavModel', function () {
-            it('should be a method', function () {
+            } );
+        } );
+        describe( 'setNavModel', function () {
+            it( 'should be a method', function () {
                 service.setNavModel.should.be.a( 'function' );
-            });
-        });
-        describe('setNavId', function () {
-            it('should be a method', function () {
+            } );
+        } );
+        describe( 'setNavId', function () {
+            it( 'should be a method', function () {
                 service.setNavId.should.be.a( 'function' );
-            });
-        });
-        describe('getConfig', function () {
-            it('should be a method', function () {
+            } );
+        } );
+        describe( 'getConfig', function () {
+            it( 'should be a method', function () {
                 service.getConfig.should.be.a( 'function' );
-            });
-            it('should return config from rootScope', function () {
+            } );
+            it( 'should return config from rootScope', function () {
                 rootScope.canAppr.config.hello = 'world';
-                service.getConfig().hello.should.equal ('world');
-            });
-        });
-        describe('setConfig', function () {
-            it('should be a method', function () {
+                service.getConfig().hello.should.equal( 'world' );
+            } );
+        } );
+        describe( 'setConfig', function () {
+            it( 'should be a method', function () {
                 service.setConfig.should.be.a( 'function' );
-            });
-            it('should return config from rootScope', function () {
-                service.setConfig ( 'hello' , [ 'how','can','i','help' ] );
-                service.getConfig().hello.should.have.lengthOf(4);
-            });
-        });
+            } );
+            it( 'should return config from rootScope', function () {
+                service.setConfig( 'hello', [ 'how', 'can', 'i', 'help' ] );
+                service.getConfig().hello.should.have.lengthOf( 4 );
+            } );
+        } );
         /*
-        getNavModels: function( type ) {
-            if (type) {
-                return _navParams[type];
-            } else {
-                return _navParams;
-            }
-        },
-        resetNavModel: function( type ) {
-            if (type) {
-                // delete all properties
-                _.keys ( _navParams[type] ).forEach ( function (key) {
-                    delete _navParams[type][key];
-                });
-            }
-            return _navParams[type];
-        },
-        setNavModel: function( type , properties ) {
-            if (type && properties) {
-                // delete existing then extend new
-                this.resetNavModel(type);
-                _.extend ( _navParams[type]  , properties );
-            }
-            return _navParams[type];
-        },
-        setNavId: function( type , id ) {
-            if (type && id) {
-                // delete existing then extend new
-                this.resetNavModel(type);
-                _navParams.id=id;
-            }
-            return _navParams[type];
-        },
-        getConfig: function () {
-            return _config;
-        }
-        */
-    });
-    describe('navService',function() {
+         getNavModels: function( type ) {
+         if (type) {
+         return _navParams[type];
+         } else {
+         return _navParams;
+         }
+         },
+         resetNavModel: function( type ) {
+         if (type) {
+         // delete all properties
+         _.keys ( _navParams[type] ).forEach ( function (key) {
+         delete _navParams[type][key];
+         });
+         }
+         return _navParams[type];
+         },
+         setNavModel: function( type , properties ) {
+         if (type && properties) {
+         // delete existing then extend new
+         this.resetNavModel(type);
+         _.extend ( _navParams[type]  , properties );
+         }
+         return _navParams[type];
+         },
+         setNavId: function( type , id ) {
+         if (type && id) {
+         // delete existing then extend new
+         this.resetNavModel(type);
+         _navParams.id=id;
+         }
+         return _navParams[type];
+         },
+         getConfig: function () {
+         return _config;
+         }
+         */
+    } );
+    describe( 'navService', function () {
         var service;
-        beforeEach( inject( function ( navService , $rootScope ) {
+        beforeEach( inject( function ( navService, $rootScope ) {
             service = navService;
             rootScope = $rootScope;
-            expect(service).to.not.be.undefined;
+            expect( service ).to.not.be.undefined;
             // mocks - this could be a service in itself as likely to be re-needed
             rootScope.ons = { navigator : { getCurrentPage : sinon.stub(),
-                                            resetToPage : sinon.stub() },
+                resetToPage : sinon.stub() },
                 slidingMenu : { setAbovePage : sinon.stub() },
                 splitView : { setMainPage : sinon.stub() }
             };
-        }) );
-        describe('getNavType', function () {
-            it('should be a method', function () {
+        } ) );
+        describe( 'getNavType', function () {
+            it( 'should be a method', function () {
                 service.getNavType.should.be.a( 'function' );
-            });
-            it('should return navType', function () {
+            } );
+            it( 'should return navType', function () {
                 rootScope.canAppr.config.navType = 'split';
-                service.getNavType().should.equal('split');
-            });
-        });
-        describe('go', function () {
+                service.getNavType().should.equal( 'split' );
+            } );
+        } );
+        describe( 'go', function () {
             it( 'should be a method', function () {
                 service.go.should.be.a( 'function' );
             } );
             it( 'should use slidingMenu if navType slide', function () {
                 rootScope.canAppr.config.navType = 'slide';
-                service.go ( 'postal.html' );
+                service.go( 'postal.html' );
                 rootScope.ons.slidingMenu.setAbovePage.should.have.been.calledOnce;
             } );
             it( 'should use splitMenu if navType split', function () {
                 rootScope.canAppr.config.navType = 'split';
-                service.go ( 'postal.html' );
+                service.go( 'postal.html' );
                 rootScope.ons.splitView.setMainPage.should.have.been.calledOnce;
             } );
             it( 'should set NavOptions', function () {
                 rootScope.canAppr.config.navType = 'split';
-                service.go ( 'postal.html' , { test: 'passed'} );
-                rootScope.canAppr.config.navOptions.test.should.equal('passed');
+                service.go( 'postal.html', { test : 'passed'} );
+                rootScope.canAppr.config.navOptions.test.should.equal( 'passed' );
             } );
-        });
-        describe('getRouteOptions', function () {
+        } );
+        describe( 'getRouteOptions', function () {
             beforeEach( function () {
-                service.setRouteOptions({ big: 'hello'});
-            });
+                service.setRouteOptions( { big : 'hello'} );
+            } );
             it( 'should be a method', function () {
                 service.getRouteOptions.should.be.a( 'function' );
             } );
-            it('should get the options if they are set', function () {
-                service.getRouteOptions(rootScope ).big.should.equal('hello');
-            })
-            it('should pop the options ', function () {
-                service.getRouteOptions(rootScope );
-                _.keys(rootScope.canAppr.config.navOptions ).length.should.equal(0);
-            })
-        });
-    });
+            it( 'should get the options if they are set', function () {
+                service.getRouteOptions( rootScope ).big.should.equal( 'hello' );
+            } )
+            it( 'should pop the options ', function () {
+                service.getRouteOptions( rootScope );
+                _.keys( rootScope.canAppr.config.navOptions ).length.should.equal( 0 );
+            } )
+        } );
+    } );
 
-    describe('domUtils',function() {
+    describe( 'domUtils', function () {
         var service;
         beforeEach( inject( function ( domUtils ) {
             service = domUtils;
-            expect(service).to.not.be.undefined;
-        }) );
-        describe('offset',function() {
-            it ('should return left offset', function () {
-                expect ( service.offset( angular.element( angular.element( document.getElementsByTagName('body') )) ) ).to.exist;
-                service.offset( angular.element( angular.element( document.getElementsByTagName('body') )) ).left.should.be.above(0);
-            });
-            it ('should return top offset', function () {
-                service.offset( angular.element( angular.element( document.getElementsByTagName('body') )) ).top.should.be.above(0);
-            });
-        });
-    });
+            expect( service ).to.not.be.undefined;
+        } ) );
+        describe( 'offset', function () {
+            it( 'should return left offset', function () {
+                expect( service.offset( angular.element( angular.element( document.getElementsByTagName( 'body' ) ) ) ) ).to.exist;
+                service.offset( angular.element( angular.element( document.getElementsByTagName( 'body' ) ) ) ).left.should.be.above( 0 );
+            } );
+            it( 'should return top offset', function () {
+                service.offset( angular.element( angular.element( document.getElementsByTagName( 'body' ) ) ) ).top.should.be.above( 0 );
+            } );
+        } );
+    } );
 
+    describe( 'prefService', function () {
+        it( 'should remember which courses the user has subscribed to' );
+        it( 'should allow the user to pick which course content files to keep' );
+        it( 'should store preferences on the device');
+    } );
 });
