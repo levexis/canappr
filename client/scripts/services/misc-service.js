@@ -46,9 +46,26 @@
                 return options;
             }
         };
-
-    })
-
+    });
+/* finds the offset of an angular element as not provided in jquery lite
+eg offset(angular.element (document.querySelector( '.ca-progress')));
+@param angular.element
+ */
+    myApp.factory('domUtils', function() {
+        function offset(elm) {
+            try {return elm.offset();} catch(e) {}
+            var rawDom = elm[0];
+            var _x = 0;
+            var _y = 0;
+            var body = document.documentElement || document.body;
+            var scrollX = window.pageXOffset || body.scrollLeft;
+            var scrollY = window.pageYOffset || body.scrollTop;
+            _x = rawDom.getBoundingClientRect().left + scrollX;
+            _y = rawDom.getBoundingClientRect().top + scrollY;
+            return { left: _x, top:_y };
+        }
+        return { offset: offset }
+    });
 })(angular);
 
 

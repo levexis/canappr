@@ -47,6 +47,7 @@
             /* link is called after rendering*/
             link : function ( $scope, element, attributes ) {
                 console.log ('playItem','audio' + $scope.$index,$scope['audio' + $scope.$index],$scope );
+                console.log ('playItem element',element,attributes );
 //                $scope['audio' + $scope.$index].$playlist.push ( { src: attributes.src, type: 'audio/mp3'} );
                 $scope['playlist' + $scope.$index]= [{ src: attributes.src, type: 'audio/mp3'}];
             },
