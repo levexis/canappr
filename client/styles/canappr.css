@@ -28,7 +28,6 @@ body,html {
 /*    box-shadow: 0 8px 6px -6px black; */
 }
 
-
 .ca-main-body p {
     padding: 15px;
 
@@ -53,7 +52,14 @@ body,html {
     vertical-align: middle;
     width: 0.5rem;
 }
-
+.ca-switch {
+    margin: 0px 10px;
+}
+.ca-subscribe {
+    font-style: italic;
+    font-color: gray;
+    text-align: center;
+}
 .ca-progress {
     height: 20px;
     width: 80%;

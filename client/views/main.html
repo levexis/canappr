@@ -4,7 +4,7 @@
 <ons-page ng-controller="MainCtrl" id="main">
 <ons-scroller infinit-scroll-enable="true" >
 <div class="ca-blurb" ng-show="showBlurb">
-    <h1 align="center">{{model.name}}</h1>
+    <h1 align="center">{{model.name}}<cd-switch ng-show="collectionName==='Modules'" model="model.subscribed"></cd-switch></h1>
     <p align="center" class="ca-main-body" ng-bind-html="model.html"></p>
 </div>
 <div class="ca-main-empty" ng-show="!someFiltered"><p>Sorry, there are no {{collectionName}} from {{model.name}} available to you right now.</p></div>
