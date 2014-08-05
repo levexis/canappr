@@ -58,7 +58,7 @@
 //                outHTML += '<source src="http://www.soundjay.com/human/fart-01.mp3" type="audio/mp3">';
                 outHTML += '</audio>';
                 outHTML += '<div class="ca-wrapper" ng-class="{ \'ca-even\': ($index % 2) !== 0}" >';
-                outHTML += '    <p class="ca-content-title {{item.file.type}} ">{{ $index+1 }}. {{item.description}}</p>';
+                outHTML += '    <p class="ca-content-title {{item.file.type}} ">{{ $index+1 }}. {{item.description}} (<span ng-bind-html="audio{{$index}}.formatTime"></span>)</p>';
                 outHTML += '    <div class="ca-play" ng-click="audio{{$index}}.playPause()">';
                 outHTML += '        <i class="fa fa-lg" ng-class="{ \'fa-pause\': audio{{$index}}.playing, \'fa-play\': !audio{{$index}}.playing }"></i>';
                 outHTML += '    </div>';
