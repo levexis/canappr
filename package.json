@@ -3,7 +3,7 @@
   "name": "canappr",
   "description": "Micro training / content distribution app",
   "repository": "http://www.github.com/levexis/canappr.git",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Paul Cook",
   "homepage": "http://linkedin.com/in/adtechzen",
   "private": false,
@@ -54,5 +54,8 @@
     "protractor": "~0.20.1",
     "q": "~1.0.1",
     "underscore": "^1.6.0"
+  },
+  "devDependencies": {
+    "grunt-phonegap": "^0.15.2"
   }
 }

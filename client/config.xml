@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- config.xml reference: https://build.phonegap.com/docs/config-xml -->
+<widget xmlns     = "http://www.w3.org/ns/widgets"
+        xmlns:gap = "http://phonegap.com/ns/1.0"
+        id        = "com.daddyswork.canappr"
+        version   = "0.0.1">
+    <name>Medit8</name>
+
+    <description>
+        Canappr (bite sized training) for meditation vertical
+    </description>
+
+	<author href="http://linedin.com/in/adtechzen" email="levexis@googlemail.com">
+        Paul Cook et Al
+    </author>
+<preference name="phonegap-version" value="3.1.0" />
+
+
+<gap:platform name="android" />
+<gap:platform name="ios" />
+
+
+<!-- subdomains = true not working on android so added * !-->
+	<access origin="http://*.segment.io" subdomains="true" />
+	<access origin="http://*.licdn.com" subdomains="true" /> <!-- allows photos to appear -->
+	<access origin="http://*.akamaihd.net" subdomains="true" /> <!-- facebook photos -->
+	<access origin="https://*.dropboxusercontent.com" subdomains="true" /> <!-- dropbox public link -->
+
+</widget>
