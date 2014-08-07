@@ -30,7 +30,6 @@ body,html {
 
 .ca-main-body p {
     padding: 15px;
-
 }
 
 .ca-right-arrow:after {
@@ -68,16 +67,16 @@ body,html {
     margin-right: 5px;
 }
 .ca-wrapper {
-    width: 100%;
+    width: 90%;
     display: inline-block;
     padding-bottom: 25px;
-    margin: 5px 0px;
 }
 .ca-even {
     background: lightblue;
 }
 .ca-duration {
     float: right;
+    font-size: 10pt;
     width: 9%;
     color: olivedrab;
     text-align: center;
@@ -106,8 +105,11 @@ body,html {
     float: left;
     color: olivedrab;
 }
-.ca-content-title {
+.ca-content {
     text-align: center;
+}
+.ca-content p {
+    padding: 5px;
 }
 .topcoat-progress-bar {
     overflow: hidden;

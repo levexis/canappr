@@ -114,6 +114,7 @@ module.exports = function (grunt) {
                 path: 'phonegap',
                 cleanBeforeBuild: true, // when false the build path doesn't get regenerated
 //                plugins: ['/local/path/to/plugin', 'http://example.com/path/to/plugin.git'],
+                plugins: ['org.apache.cordova.device' , 'org.apache.cordova.statusbar' , 'org.apache.cordova.network-information'],
                 platforms: ['android' , 'ios'],
                 maxBuffer: 200, // You may need to raise this for iOS.
                 verbose: false,
@@ -122,7 +123,7 @@ module.exports = function (grunt) {
                     var pkg = grunt.file.readJSON('package.json');
                     return(pkg.name + '-' + pkg.version);
                 },
-                debuggable: false,
+                debuggable: true,
 
                 // Must be set for ios to work.
                 // Should return the app name.

@@ -4,8 +4,18 @@
     var myApp = angular.module( 'canAppr' );
 
     myApp.factory('registryService', function($rootScope) {
-        var _navParams =  $rootScope.canAppr.navParams,
-            _config = $rootScope.canAppr.config;
+        var _navParams, _config;
+
+        if ( !$rootScope.canAppr) {
+            // initialize if not already
+            // app global config, there is probably a service for this
+            $rootScope.canAppr = { apiBase : 'api/0/',
+                navParams : { org : { name : 'Organizations' }, module : {}, course : {} },
+                config : { navType : 'split'}
+            };
+        }
+        _navParams =  $rootScope.canAppr.navParams;
+        _config = $rootScope.canAppr.config;
 
         // this gets the model for the selected Id
         /*

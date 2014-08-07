@@ -1,13 +1,9 @@
-(function(angular) {
+(function(angular , document, window) {
     'use strict';
     var myApp = angular.module('canAppr', ['onsen.directives' ,'mediaPlayer', 'ngTouch', 'ngAnimate', 'ngCachedResource', 'ngSanitize' ])
         .run(
-         function ($rootScope, $timeout , $window, $injector, $log) {
-             // app global config, there is probably a service for this
-             $rootScope.canAppr = { apiBase : 'api/0/',
-                 navParams : { org : { name: 'Organizations' } , module : {}, course : {} },
-                 config: {}
-             };
+         function ($rootScope, $timeout , $window, $injector, $log , registryService) {
+
              // if in debug mode then expose rootScope and it's injector
              // eg canAppr.getService('orgService').query().$promise.then(function (results) { console.log('results',results); } ));
              $window.canAppr = { rootScope: $rootScope,
@@ -16,10 +12,18 @@
                                 getService: function ( what ) {
                                     return $injector.get( what );
                                 }};
+             // phonegap stuff - where to put?
+             var onDeviceReady = function() {
+                 $log.debug('CORDOVA VERSION: ' + window.device.cordova);
+                // stops app bleading into phone network status bar
+                 window.StatusBar.overlaysWebView(false);
+                // set the navtype here or mabe in config section instead of hard coding into index.html
+             };
+             document.addEventListener('deviceready', onDeviceReady, false);
          });
 
     // this is just an example
-    myApp.factory ( 'myInterceptor', function( $q ) {
+    myApp.factory ( 'myInterceptor', function( $q , $log) {
         return {
 /*            // optional method
             'request': function(config) {
@@ -41,12 +45,12 @@
             */
             // mock api repsponse errors?
             'responseError': function(rejection) {
-//                console.log('reserr',rejection);
+                $log.debug('http response err',rejection);
                 return $q.reject(rejection);
             }
         };
     });
-    myApp.config( function ( $httpProvider ) {
+    myApp.config( function ( $httpProvider  ) {
         $httpProvider.interceptors.push('myInterceptor');
 
         // if none of the above states are matched, use this as the fallback
@@ -54,5 +58,5 @@
 //            redirectTo: '/'
 //        });
     } );
-})(angular);
+})(angular, document, window);
 
