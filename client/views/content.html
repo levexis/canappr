@@ -1,6 +1,6 @@
 <ons-page ng-controller="ContentCtrl" id="main" class="ca-content">
     <ons-scroller infinit-scroll-enable="true" >
-        <h1 align="center">{{model.name}} <cd-switch model="saveOffline" disabled="true"></cd-switch></h1>
+        <h1 align="center">{{model.name}} <cd-switch model="isDownloaded" disabled="canDownload"></cd-switch></h1>
         <div class="ca-blurb">
             <p align="center" class="ca-main-body" ng-bind-html="model.html"></p>
         </div>

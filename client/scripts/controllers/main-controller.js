@@ -20,7 +20,7 @@
     // how can we dynamically inject the resource, have hard coded organizations for now
     // need current model and then collection for list, eg collectionId 5 is model and courses is the collection etc
     myApp.controller( 'MainCtrl',
-        function ( $scope, $rootScope, $log, orgService , courseService, moduleService , registryService, navService) {
+        function ( $scope, $rootScope, $log, orgService , courseService, moduleService , registryService, navService, prefService) {
             var navParams =  $scope.navParams ||  registryService.getNavModels(),
                 options = $scope.options || navService.getRouteOptions($scope); // the scope.options / navParams is there to allow test to set these in karma
             $scope.collection = [];
@@ -51,8 +51,17 @@
                     $scope.collectionName = 'Modules';
                     $scope.targetTemplate = 'views/content.html';
                     $scope.model = navParams[ 'course' ];
+                    $scope.canSubscribe = true;
+                    $scope.subscribed = prefService.isSubscribed ( navParams.course.id );
+                    $scope.$watch('subscribed', function () {
+                        if ( $scope.subscribed ) {
+                            prefService.subscribeCourse( navParams.course.id );
+                        } else {
+                            prefService.unsubscribeCourse( navParams.course.id );
+                        }
+                    });
                 } else if ( options.collection === 'content' ) {
-                    $log.debug ('setting mudule id', options.id );
+                    $log.debug ('setting module id', options.id );
                     $scope.collectionName = '';
                     $scope.model = navParams[ 'module' ];
                 } else if (options.collection ) {

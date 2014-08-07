@@ -1,20 +1,21 @@
-(function (angular , _) {
+(function (angular , _ , window) {
     "use strict";
     // this can be used to replace the rootScope nonsense
     var myApp = angular.module( 'canAppr' );
 
-    myApp.factory('prefService', function($rootScope ,fileService) {
+    myApp.factory('prefService', function($rootScope , $log, fileService) {
         // retrieve from local storage
         var _prefs;
         $rootScope.canAppr.prefs = JSON.parse ( window.localStorage.getItem('canAppr.prefs') ) || {
-             course: {}
+            course : {}
         };
-        $rootScope.$watch('canAppr.prefs', function ( before , after) {
-            if ( _.isEqual(before,after) ) {
-                $log.debug( 'pref change saved', after );
+        $rootScope.$watch('canAppr.prefs', function ( after, before) {
+            if ( !_.isEqual(before,after) ) {
+                $log.debug( 'pref change saved', before, after );
                 window.localStorage.setItem( 'canAppr.prefs', JSON.stringify( _prefs) );
             }
-        });
+        // don't forget object comparison
+        }, true);
         _prefs = $rootScope.canAppr.prefs;
         // which courses am I on
         // which content should be downloaded
@@ -29,7 +30,7 @@
                         _prefs.course[ courseId ] = {};
                     }
                     // resubscribing
-                    _prefs.course[ courseId ].subscribed = new Date();
+                      _prefs.course[ courseId ].subscribed = new Date();
                 }
             },
             unsubscribeCourse: function (courseId) {
@@ -86,5 +87,5 @@
 
     });
 
-})(angular , _);
+})(angular , _ , window);
 

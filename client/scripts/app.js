@@ -21,6 +21,7 @@
                 // set the navtype here or mabe in config section instead of hard coding into index.html
              };
              document.addEventListener('deviceready', onDeviceReady, false);
+
          });
 
     // this is just an example

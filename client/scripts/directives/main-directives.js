@@ -5,6 +5,7 @@
         var templateFn = function (elemente,attributes ) {
             var outTemplate = '<label class="topcoat-switch">';
                 outTemplate += '<input type="checkbox" class="topcoat-switch__input"';
+// maybe add a click event just for testing in karma?
                 outTemplate += ' ng-model="' + attributes.model + '"';
                 outTemplate += ' ng-disabled="' + (!!attributes.disabled ) + '">';
                 outTemplate += '<span class="topcoat-switch__toggle ca-switch"></span>';

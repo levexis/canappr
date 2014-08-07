@@ -4,8 +4,9 @@
     // how can we dynamically inject the resource, have hard coded organizations for now
     // need current model and then collection for list, eg collectionId 5 is model and courses is the collection etc
     myApp.controller( 'ContentCtrl',
-        function ( $scope , registryService, xmlService , domUtils , $log ) {
-            var navParams =  registryService.getNavModels();
+        function ( $scope , registryService, xmlService , domUtils , $log , prefService ) {
+            var navParams =  registryService.getNavModels(),
+                downloadStatus = prefService.isDownloaded ( navParams.course.id , navParams.module.id );
             function _setContent() {
                 $scope.playObj = xmlService.toObject( atob( $scope.model.playlist ) );
                 if ( $scope.playObj ) {
@@ -21,6 +22,10 @@
             $scope.$watch('model.playlist', function ( before , after ) {
                 if ( before !== after ) _setContent();
             });
+            $scope.isDownloaded = ( downloadStatus === true);
+            // will return null or downloading false if delete, true if completed
+            $scope.canDownload = typeof downloadStatus === 'boolean';
+
             $log.debug('content',$scope);
             /* media player seeking */
             $scope.seekPercentage = function ($event) {

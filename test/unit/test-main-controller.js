@@ -79,6 +79,12 @@ describe('Main Controller', function () {
             it ('should set collectionClass to fa-terminal' , function () {
                 scope.collectionClass.should.equal ( 'fa-terminal');
             });
+            it ('should set canSubscribe' , function () {
+                expect ( scope.canSubscribe ).to.exist;
+            });
+            it ('should set subscribed' , function () {
+                expect ( scope.subscribed ).to.exist;
+            });
         });
     });
 
