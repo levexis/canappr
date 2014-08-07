@@ -71,7 +71,6 @@
             $scope.showBlurb=true;
             $scope.clickList = function ( template, options ) {
                 var target;
-                $scope.showBlurb=false;
                 $log.debug ('clicking options',options, $scope);
                 switch ( $scope.collectionName ) {
                     case 'Organizations':
@@ -88,6 +87,7 @@
                 if (target && options && options.item ) registryService.setNavModel ( target , options.item);
                 // still pushing for now but seem to have some stack scoping problems, have tried a different template name but seems to be navigator nesting
                 if ( registryService.getConfig().navType === 'slide') {
+                    $scope.showBlurb=false;
                     $rootScope.ons.navigator.pushPage( template, options );
                 } else {
                     navService.go( template , options );

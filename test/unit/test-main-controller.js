@@ -7,6 +7,13 @@ describe('Main Controller', function () {
     describe( 'MainCtrl' , function () {
         var ctrl, scope, controller;
         beforeEach(   inject( function ( $rootScope, $controller ) {
+            // mocks - this could be a service in itself as likely to be re-needed
+            $rootScope.ons = { navigator : { getCurrentPage : sinon.stub(),
+                resetToPage : sinon.stub(),
+                pushPage : sinon.stub() },
+                slidingMenu : { setAbovePage : sinon.stub() },
+                splitView : { setMainPage : sinon.stub() }
+            };
             scope = $rootScope.$new();
             controller = $controller;
             ctrl = controller( "MainCtrl", {$scope : scope } );
@@ -20,6 +27,18 @@ describe('Main Controller', function () {
         });
         // blurb stuff should be in a directive!
         it ('should show blurb by default' , function () {
+            scope.showBlurb.should.be.ok;
+        });
+        // blurb stuff should be in a directive!
+        it ('should hide blurb on list click if in push or slide nav mode' , function () {
+            scope.canAppr.config.navType='slide';
+            scope.clickList( '#' );
+            scope.showBlurb.should.not.be.ok;
+        });
+        // blurb stuff should be in a directive!
+        it ('should not hide blurb on list click if in split nav mode' , function () {
+            scope.canAppr.config.navType='split';
+            scope.clickList( '#' );
             scope.showBlurb.should.be.ok;
         });
         describe ( 'Organizations View' , function () {
