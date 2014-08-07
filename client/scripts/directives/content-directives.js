@@ -45,6 +45,9 @@
         var directive = {
             restrict: 'E',
             /* link is called after rendering*/
+//do I need to attach fast click for this to work on mobile?
+//            fastclick.attach(document.body)
+
             link : function ( $scope, element, attributes ) {
                 $log.debug ('playItem','audio' + $scope.$index,$scope['audio' + $scope.$index],$scope );
                 $log.debug ('playItem element',element,attributes );

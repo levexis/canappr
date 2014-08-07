@@ -335,10 +335,64 @@ describe('Services', function() {
             } );
         } );
     } );
+    describe( 'fileService', function () {
+        var service;
+        beforeEach( inject( function ( fileService ) {
+            service = fileService;
+            expect( service ).to.not.be.undefined;
+        } ) );
+        it( 'should return original url if not found' , function() {
+            service.getFileUrl('http://notfound.com' ).should.equal('http://notfound.com');
+        })
+        it( 'should return local file path if found' );
+    } );
 
     describe( 'prefService', function () {
-        it( 'should remember which courses the user has subscribed to' );
-        it( 'should allow the user to pick which course content files to keep' );
-        it( 'should store preferences on the device');
+        var service, rootScope;
+        beforeEach( inject( function ( prefService , $rootScope) {
+            window.localStorage.clear();
+            service = prefService;
+            rootScope = $rootScope;
+            expect( service ).to.not.be.undefined;
+        } ) );
+        it( 'should return fals if Ive not subscribe to a courses' , function () {
+            service.isSubscribed(3).should.not.be.ok;
+            service.isSubscribed('3').should.not.be.ok;
+
+        });
+        it( 'should remember if I subscribe to a courses', function () {
+            service.subscribeCourse(3);
+            service.isSubscribed(3).should.be.ok;
+            service.isSubscribed('3').should.be.ok;
+        });
+        it( 'should allow me to unsubscribe to a course', function () {
+            service.subscribeCourse(3);
+            service.unsubscribeCourse(3);
+            service.isSubscribed(3).should.not.be.ok;
+        });
+        it( 'should allow me to mark events against modules', function () {
+            service.setModuleEvent(3,3,'hello');
+            service.getEventTime(3,3,'hello').getTime.should.be.a.function;
+        });
+
+        it( 'should allow me to mark files for download', function () {
+            service.setModuleEvent(3,3,'hello');
+            service.downloadContent(3,3);
+            service.isDownloaded(3,3).should.equal('pending');
+        });
+        it( 'should allow me to remove downloaded files', function () {
+            service.setModuleEvent(3,3,'hello');
+            service.downloadContent(3,3);
+            service.deleteContent(3,3);
+            service.isDownloaded(3,3 ).should.not.be.ok;
+        });
+        it( 'should store preferences from localstorage', function () {
+            service.setModuleEvent(3,3,'hello');
+            // trigger the events
+            rootScope.$apply();
+            localStorage.getItem('canAppr.prefs' ).should.contain('hello');
+        });
+        // would need to reconfigure the factory?
+        it( 'should retrieve preferences from localstorage');
     } );
 });
