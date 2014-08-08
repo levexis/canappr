@@ -115,7 +115,13 @@ module.exports = function (grunt) {
                 path: 'phonegap',
                 cleanBeforeBuild: true, // when false the build path doesn't get regenerated
 //                plugins: ['/local/path/to/plugin', 'http://example.com/path/to/plugin.git'],
-                plugins: ['org.apache.cordova.device' , 'org.apache.cordova.statusbar' , 'org.apache.cordova.network-information'],
+                plugins: ['org.apache.cordova.device' ,
+                           'org.apache.cordova.statusbar' ,
+                           'org.apache.cordova.network-information',
+                           'org.apache.cordova.AudioHandler',
+                            'CDVSound' // IOS audio
+
+                ],
                 platforms: ['android' , 'ios'],
                 maxBuffer: 200, // You may need to raise this for iOS.
                 verbose: false,

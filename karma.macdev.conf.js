@@ -23,6 +23,7 @@ module.exports = function(config) {
         files : [
             'bower_components/angular/angular.js',
             'bower_components/underscore/underscore.js',
+            'bower_components/fastclick/lib/fastclick.js',
             'client/scripts/**/*.js',
             'bower_components/angular-mocks/angular-mocks.js',
             'bower_components/jquery/dist/jquery.min.js',
@@ -32,7 +33,8 @@ module.exports = function(config) {
         exclude: [
 //            'app/lib/angular/angular-loader.js',
             'client/scripts/vendor/angular.min.js',
-            'client/scripts/vendor/underscore.js'
+            'client/scripts/vendor/underscore.js',
+            'client/scripts/vendor/fastclick.js'
 //            'app/lib/angular/angular-scenario.js'
         ],
 
