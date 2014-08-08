@@ -42,6 +42,10 @@ describe('directives', function() {
         it( 'should return audio player', function() {
             elm.html().should.contain('<audio media-player="');
         });
+        it( 'should create click function', function() {
+            scope.seekPercentage.should.be.a('function');
+        });
+
     });
     describe('cdSwitch', function() {
         beforeEach( inject( function ( $rootScope, $compile ) {

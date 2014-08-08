@@ -3,7 +3,8 @@
     var myApp = angular.module( 'canAppr' );
     myApp.directive('cdSwitch', function( registryService ) {
         var templateFn = function (elemente,attributes ) {
-            var outTemplate = '<label class="topcoat-switch">';
+            var outTemplate;
+            outTemplate = '<label class="topcoat-switch">';
                 outTemplate += '<input type="checkbox" class="topcoat-switch__input"';
 // maybe add a click event just for testing in karma?
                 outTemplate += ' ng-model="' + attributes.model + '"';
@@ -12,11 +13,28 @@
                 outTemplate += '</label>';
             return outTemplate;
         };
+
         var directive = {
+
             restrict: 'E',
             template : templateFn
         };
         return directive;
     });
+    myApp.directive('cdBody', function( registryService ) {
+        var outTemplate;
+        if ( registryService.getConfig('isPhoneGap')) {
+            outTemplate = '<ons-screen page="views/sliding-menu.html"></ons-screen>'
+            registryService.setConfig('navType','slide');
+        } else {
+            outTemplate = '<ons-screen page="views/split-view.html"></ons-screen>';
+            registryService.setConfig('navType','split');
+        }
+        return {
+            restrict: "E",
+            template : outTemplate
+        };
+    });
+
 })(angular);
 

@@ -212,6 +212,13 @@ describe('Services', function() {
                 rootScope.canAppr.config.hello = 'world';
                 service.getConfig().hello.should.equal( 'world' );
             } );
+            it( 'should return the value value if name passed', function () {
+                rootScope.canAppr.config.hello = 'world';
+                service.getConfig('hello').should.equal( 'world' );
+            } );
+            it( 'should return false if name not defined ', function () {
+                service.getConfig('wibble' ).should.equal(false);
+            })
         } );
         describe( 'setConfig', function () {
             it( 'should be a method', function () {

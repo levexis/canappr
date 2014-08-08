@@ -11,7 +11,7 @@
             // app global config, there is probably a service for this
             $rootScope.canAppr = { apiBase : 'api/0/',
                 navParams : { org : { name : 'Organizations' }, module : {}, course : {} },
-                config : { navType : 'split'}
+                config : { isPhoneGap : ( typeof window.cordova !== 'undefined' ) }
             };
         }
         _navParams =  $rootScope.canAppr.navParams;
@@ -72,8 +72,12 @@
                 }
                 return _navParams[type];
             },
-            getConfig: function () {
-                return _config;
+            getConfig: function (name) {
+                if ( name ) {
+                    return _config[name] || false;
+                } else {
+                    return _config;
+                }
             },
             setConfig: function ( name , value ) {
                 if ( name ) {

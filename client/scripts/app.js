@@ -13,15 +13,16 @@
                                     return $injector.get( what );
                                 }};
              // phonegap stuff - where to put?
-             var onDeviceReady = function() {
-                 $log.debug('CORDOVA VERSION: ' + window.device.cordova);
-                // stops app bleading into phone network status bar
-                 window.StatusBar.overlaysWebView(false);
-                 registryService.setConfig('isPhoneGap',true);
-                // set the navtype here or mabe in config section instead of hard coding into index.html
-             };
-             document.addEventListener('deviceready', onDeviceReady, false);
-
+             if ( typeof window.cordova !== 'undefined' ) {
+                 var onDeviceReady = function () {
+                     $log.debug( 'CORDOVA VERSION: ' + window.device.cordova );
+                     // stops app bleading into phone network status bar
+                     window.StatusBar.overlaysWebView( false );
+                     registryService.setConfig( 'isPhoneGap', true );
+                     // set the navtype here or mabe in config section instead of hard coding into index.html
+                 };
+                 document.addEventListener( 'deviceready', onDeviceReady, false );
+             }
          });
 
     // this is just an example

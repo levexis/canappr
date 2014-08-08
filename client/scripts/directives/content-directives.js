@@ -41,7 +41,7 @@
         return directive;
     });
      */
-    myApp.directive('cdPlayItem', function( xmlService , $window, $compile ,$log) {
+    myApp.directive('cdPlayItem', function( xmlService , $window, $compile ,$log, domUtils) {
         var directive = {
             restrict: 'E',
             /* link is called after rendering*/
@@ -53,6 +53,17 @@
                 $log.debug ('playItem element',element,attributes );
 //                $scope['audio' + $scope.$index].$playlist.push ( { src: attributes.src, type: 'audio/mp3'} );
                 $scope['playlist' + $scope.$index]= [{ src: attributes.src, type: 'audio/mp3'}];
+
+                /* media player seeking */
+                $scope.seekPercentage = function ($event) {
+                    var offsetX = domUtils.offset(angular.element($event.target)).left,
+                        percentage = ( ( $event.clientX - offsetX) / $event.target.offsetWidth);
+                    if (percentage <= 1) {
+                        return percentage;
+                    } else {
+                        return 0;
+                    }
+                };
             },
             template: function ( element, attribute ) {
                 var outHTML = '';

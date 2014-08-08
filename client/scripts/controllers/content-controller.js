@@ -27,15 +27,6 @@
             $scope.canDownload = typeof downloadStatus === 'boolean';
 
             $log.debug('content',$scope);
-            /* media player seeking */
-            $scope.seekPercentage = function ($event) {
-                var offsetX = domUtils.offset(angular.element($event.target)).left,
-                    percentage = ( ( $event.clientX - offsetX) / $event.target.offsetWidth);
-                if (percentage <= 1) {
-                    return percentage;
-                } else {
-                    return 0;
-                }
-            }
+
         } );
 })(angular,_);
