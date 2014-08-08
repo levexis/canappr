@@ -118,9 +118,8 @@ module.exports = function (grunt) {
                 plugins: ['org.apache.cordova.device' ,
                            'org.apache.cordova.statusbar' ,
                            'org.apache.cordova.network-information',
-                           'org.apache.cordova.AudioHandler',
-                            'CDVSound' // IOS audio
-
+                           'org.apache.cordova.media',
+                           'org.apache.cordova.file-transfer'
                 ],
                 platforms: ['android' , 'ios'],
                 maxBuffer: 200, // You may need to raise this for iOS.

@@ -1,4 +1,4 @@
-(function (angular , FastClick) {
+(function (angular) {
     "use strict";
     var myApp = angular.module( 'canAppr' );
     myApp.filter('cfurlDecode', function() {
@@ -64,12 +64,6 @@
                         return 0;
                     }
                 };
-                try {
-                    // experiment speed up click events on touch screen devices?
-                    FastClick.attach( element );
-                } catch (err) {
-                    // getting errors in karam
-                }
             },
             template: function ( element, attribute ) {
                 var outHTML = '';
@@ -92,4 +86,4 @@
         };
         return directive;
     });
-})(angular ,FastClick);
+})(angular);
