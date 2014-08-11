@@ -18,7 +18,7 @@
                      $log.debug( 'CORDOVA VERSION: ' + window.device.cordova );
                      // stops app bleading into phone network status bar
                      window.StatusBar.overlaysWebView( false );
-                     registryService.setConfig( 'isPhoneGap', true );
+                     registryService.setConfig( 'isPhonegap', true );
                      // set the navtype here or mabe in config section instead of hard coding into index.html
                  };
                  document.addEventListener( 'deviceready', onDeviceReady, false );
@@ -61,5 +61,5 @@
 //            redirectTo: '/'
 //        });
     } );
-})(angular, document, window);
+})(angular, document, window); // jshint ignore:line
 
