@@ -19,7 +19,7 @@
             /* loads the main page */
             go: function ( where, options ) {
                 // add a timestamp
-                where += '#' + new Date().getTime()
+                where += '#' + new Date().getTime();
                 if (_config.navType === 'slide' ) {
                     // force a refresh
                     _config.navOptions = options;
@@ -69,8 +69,33 @@ eg offset(angular.element (document.querySelector( '.ca-progress')));
             _y = rawDom.getBoundingClientRect().top + scrollY;
             return { left: _x, top:_y };
         }
-        return { offset: offset }
+        return { offset: offset };
     });
-})(angular);
+/*
+  formats seconds into HH:MM:SS, omits hours if not relevant
+  @param seconds
+ */
+    myApp.factory('timeUtils', function() {
+
+        return {secShow : function ( totalSec ) {
+
+            var hours = parseInt( totalSec / 3600 ) % 24,
+                minutes = parseInt( totalSec / 60 ) % 60,
+                seconds = totalSec % 60,
+                result = (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
+            if ( typeof totalSec !== 'number' ) {
+                return '';
+            } else {
+                // include hours if its a long one
+                if ( hours ) {
+                    result = (hours < 10 ? "0" + hours : hours) + ":" + result;
+                }
+                return result;
+            }
+        }
+        };
+    });
+
+})(angular); // jshint ignore:line
 
 

@@ -403,4 +403,27 @@ describe('Services', function() {
         // would need to reconfigure the factory?
         it( 'should retrieve preferences from localstorage');
     } );
+    describe( 'timeUtils', function () {
+        var service;
+        beforeEach( inject( function ( timeUtils ) {
+            service = timeUtils;
+            expect( service ).to.not.be.undefined;
+        } ) );
+        describe ( 'secShow' , function () {
+            it( 'should return blank string if not passed a value', function () {
+                service.secShow().should.equal( '' );
+            } );
+            it( 'should return 00:00 if not passed 0', function () {
+                service.secShow( 0 ).should.equal( '00:00' );
+            } );
+            it( 'should return 30:05 if passed 1805', function () {
+                service.secShow( 1805 ).should.equal( '30:05' );
+            } );
+            it( 'should return 01:00:00 if passed 3600', function () {
+                service.secShow( 3600 ).should.equal( '01:00:00' );
+            } );
+        });
+    });
+
 });
+
