@@ -422,6 +422,9 @@ describe('Services', function() {
             it( 'should return 01:00:00 if passed 3600', function () {
                 service.secShow( 3600 ).should.equal( '01:00:00' );
             } );
+            it( 'should return 01:00 if passed 60.43435', function () {
+                service.secShow( 60.43435 ).should.equal( '01:00' );
+            } );
         });
     });
 

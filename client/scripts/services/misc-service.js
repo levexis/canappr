@@ -79,20 +79,20 @@ eg offset(angular.element (document.querySelector( '.ca-progress')));
 
         return {secShow : function ( totalSec ) {
 
-            var hours = parseInt( totalSec / 3600 ) % 24,
-                minutes = parseInt( totalSec / 60 ) % 60,
-                seconds = totalSec % 60,
-                result = (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
-            if ( typeof totalSec !== 'number' ) {
-                return '';
-            } else {
-                // include hours if its a long one
-                if ( hours ) {
-                    result = (hours < 10 ? "0" + hours : hours) + ":" + result;
+                var hours = parseInt( totalSec / 3600 ) % 24,
+                    minutes = parseInt( totalSec / 60 ) % 60,
+                    seconds = parseInt (totalSec) % 60,
+                    result = (minutes < 10 ? "0" + minutes : minutes) + ":" + (seconds < 10 ? "0" + seconds : seconds);
+                if ( typeof totalSec !== 'number' ) {
+                    return '';
+                } else {
+                    // include hours if its a long one
+                    if ( hours ) {
+                        result = (hours < 10 ? "0" + hours : hours) + ":" + result;
+                    }
+                    return result;
                 }
-                return result;
             }
-        }
         };
     });
 
