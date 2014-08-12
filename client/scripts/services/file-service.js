@@ -18,7 +18,9 @@
             _fileManager,
             _dirManager,
             _fileTable = {},
-            APP_DIR='';
+            APP_DIR='',
+            // store files on external storage or in library directory on IOS, else they show up in itunes!
+            LOCAL_ROOT;
 
         try {
             var tmp = window.LocalFileSystem.PERSISTENT;
@@ -182,6 +184,8 @@
                     0,
                     function ( fileSystem ) {
                         fileSystemSingleton.fileSystem = fileSystem;
+                        // set the root file path
+                        fileSystemSingleton.fileSystem.root.nativeURL = window.cordova.file.dataDirectory;
                         callback( fileSystemSingleton.fileSystem );
                     },
                     function ( err ) {
@@ -428,9 +432,11 @@
         return {
             // call on device ready
             init : function init ( app_dir ) {
+                LOCAL_ROOT = window.cordova.file.externalDataDirectory || window.cordova.file.dataDirectory;
                 _dirManager = new DirManager();
                 _fileManager = new FileManager();
                 APP_DIR = (app_dir || APP_DIR );
+
                 _getTable();
                 // for debugging!
                 window.fileManager = _fileManager;
