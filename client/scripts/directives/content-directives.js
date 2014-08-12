@@ -158,8 +158,9 @@
                     // convert to ms
                     $scope['audio'+$index].seek = function ( position ) {
                         // this doesn't seem to do much
-                        gapAudio.seekTo (position*500);
+                        gapAudio.seekTo (position * 1000);
                         $scope['audio' + $index].currentTime = position;
+                        $scope['audio' + $index].formatTime = timeUtils.secShow ( position );
 
                     };
                     $scope['audio'+$index].playPause = function () {
