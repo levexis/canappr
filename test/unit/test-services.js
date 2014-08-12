@@ -1,6 +1,6 @@
 var expect = chai.expect;
 
-var app = angular.module( 'canAppr' );
+var app = angular.module( 'canAppr' ),
 mockedApp = angular.module('mockAppr', ['canAppr', 'ngMockE2E']);
 // this allows for passThrough via ngMockE2E but have to create a mock app module to call
 mockedApp.run(function($httpBackend) {
@@ -349,7 +349,7 @@ describe('Services', function() {
             expect( service ).to.not.be.undefined;
         } ) );
         it( 'should return original url if not found' , function() {
-            service.getFileUrl('http://notfound.com' ).should.equal('http://notfound.com');
+            service.getURL('http://notfound.com' ).should.equal('http://notfound.com');
         })
         it( 'should return local file path if found' );
     } );
@@ -427,6 +427,42 @@ describe('Services', function() {
             } );
         });
     });
+    describe(' fileService', function () {
+        it( 'should have some tests' );
+        /**
+         * these were the "tests" form the library I borrowed!
+         //TEST CODE:
+         var start=    function(){
+    //
+    //CREATE A DIRECTORY RECURSEVLY
+    var a = new DirManager(); // Initialize a Folder manager
+    a.create_r('folder_a/folder_b',Log('complete/jorge'));
 
+    //LIST A DIRECTORY
+    a.list('cosa', Log('List'));
+
+    //REMOVE A DIRECTORY RECURSEVLY
+    a.remove('folder_a/folder_b',Log('complete delte'), Log('delete fail'));
+
+    //
+    //FILES MANAGEMENT:
+    //
+    var b = new FileManager();
+    // create an empty  FILE (simialr unix touch command), directory will be created recursevly if it doesnt exist
+    b.load_file('dira/dirb/dirc','demofile.txt',Log('file created'),Log('something went wrong'));
+
+    // WRITE TO A FILE
+    b.write_file('dira/dirb/dirc/dird','demofile_2.txt','this is demo content',Log('wrote sucessful!'));
+
+    // READ A FILE
+    b.read_file('dira/dirb/dirc/dird','demofile_2.txt',Log('file contents: '),Log('something went wrong'));
+
+    // download a file from a remote location and store it localy
+    b.download_file('http://www.greylock.com/teams/42-Josh-Elman','filder_a/dwonloads_folder/','target_name.html',Log('downloaded sucess'));
+
+ }
+         document.addEventListener('deviceready', start, false);
+         */
+    });
 });
 

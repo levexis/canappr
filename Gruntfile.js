@@ -117,9 +117,10 @@ module.exports = function (grunt) {
 //                plugins: ['/local/path/to/plugin', 'http://example.com/path/to/plugin.git'],
                 plugins: ['org.apache.cordova.device' ,
                            'org.apache.cordova.statusbar' ,
-//                           'org.apache.cordova.network-information',
-                           'org.apache.cordova.media'
-//                           'org.apache.cordova.file-transfer'
+                           'org.apache.cordova.network-information',
+                           'org.apache.cordova.media',
+                            'org.apache.cordova.file',
+                            'org.apache.cordova.file-transfer'
                 ],
                 platforms: ['android' , 'ios'],
                 maxBuffer: 200, // You may need to raise this for iOS.

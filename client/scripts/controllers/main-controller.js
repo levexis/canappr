@@ -1,4 +1,4 @@
-(function (angular ) {
+(function (angular , _) {
     "use strict";
     var myApp = angular.module( 'canAppr' );
     // just resets the page model default home page
@@ -20,7 +20,7 @@
     // how can we dynamically inject the resource, have hard coded organizations for now
     // need current model and then collection for list, eg collectionId 5 is model and courses is the collection etc
     myApp.controller( 'MainCtrl',
-        function ( $scope, $rootScope, $log, orgService , courseService, moduleService , registryService, navService, prefService) {
+        function ( $scope, $rootScope, $log, orgService , courseService, moduleService , registryService, navService, prefService , fileService) {
             var navParams =  $scope.navParams ||  registryService.getNavModels(),
                 options = $scope.options || navService.getRouteOptions($scope); // the scope.options / navParams is there to allow test to set these in karma
             $scope.collection = [];
@@ -101,7 +101,7 @@
                 } else {
                     navService.go( template , options );
                 }
-            }
+            };
 
         } );
-})( angular );
+})( angular , _ ); // jshint ignore:line

@@ -2,7 +2,7 @@
     'use strict';
     var myApp = angular.module('canAppr', ['onsen.directives' ,'mediaPlayer', 'ngTouch', 'ngAnimate', 'ngCachedResource', 'ngSanitize' ])
         .run(
-         function ($rootScope, $timeout , $window, $injector, $log , registryService) {
+         function ($rootScope, $timeout , $window, $injector, $log , registryService, fileService) {
 
              // if in debug mode then expose rootScope and it's injector
              // eg canAppr.getService('orgService').query().$promise.then(function (results) { console.log('results',results); } ));
@@ -19,6 +19,8 @@
                      // stops app bleading into phone network status bar
                      window.StatusBar.overlaysWebView( false );
                      registryService.setConfig( 'isPhonegap', true );
+                     fileService.init('canappr');
+                     $window.canAppr.fileService = fileService;
                      // set the navtype here or mabe in config section instead of hard coding into index.html
                  };
                  document.addEventListener( 'deviceready', onDeviceReady, false );

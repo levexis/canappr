@@ -28,7 +28,7 @@
 
         $scope.listClick = function ( item ) {
             navService.go ( 'views/main.html' ,{ collection : item.name});
-        }
+        };
     } );
 
 })(angular , _);
