@@ -68,6 +68,7 @@
                 }
             },
             // subscribed to a course
+            // TO:DO THESE SHOULD WORK OF CURRENT NAV PARAMS AND BE ORG, COURSE, MODULE!
             isSubscribed: function ( courseId) {
                 if ( courseId && _prefs.course[ courseId ] && _prefs.course[ courseId ].subscribed ) {
                     return true;
@@ -87,5 +88,5 @@
 
     });
 
-})(angular , _ , window);
+})(angular , _ , window);//jshint ignore:line
 

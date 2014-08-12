@@ -216,9 +216,6 @@
                 fail = (typeof fail === 'undefined') ? Log( 'FileManager', 'load file fail' ) : fail;
                 var full_file_path = dir + '/' + file;
                 var object = this;
-                // well, here it will be a bit of diharrea code,
-                // but, this requires to be this chain of crap, thanks to phonegap file creation async stuff
-                // get fileSystem
                 fileSystemSingleton.load(
                     function ( fs ) {
                         var dont_repeat_inner = dont_repeat;
@@ -480,14 +477,15 @@
                         function ( file ) {
                             $log.debug('created file',file);
                             _fileTable[url].status = 'cached';
-                            _fileTable[url].local = file.toURL();
+//                            _fileTable[url].local = file.toNativeURL(); not in android need local url
                             // get the filesize, it's not actually a file that is returned!
                             file.file( function ( file ) {
                                 // save in MB to 1 decimal place
+                                _fileTable[url].local = file.localURL;
                                 _fileTable[url].size = (file.size / 1000000 ).toFixed(1);
                                 _saveTable();
+                                deferred.resolve( file.localURL );
                             });
-                            deferred.resolve( file.toURL() );
                         },
                         function ( error) {
                             _fileTable[url].status='failed';

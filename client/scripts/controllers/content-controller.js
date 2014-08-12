@@ -26,9 +26,11 @@
                     _setContent();
                 }
             });
-            $scope.isDownloaded = ( downloadStatus === true);
+            $scope.isDownloaded = ( downloadStatus === true );
             // will return null or downloading false if delete, true if completed
             $scope.canDownload = typeof downloadStatus === 'boolean';
+
+            $scope.isSubscribed = prefService.isSubscribed( navParams.course.id );
 
             $log.debug('content',$scope);
 

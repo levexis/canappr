@@ -50,7 +50,7 @@
         return directive;
     });
      */
-    myApp.directive('cdPlayItem', function( xmlService , $window, $compile ,$log, $timeout, domUtils , registryService, timeUtils) {
+    myApp.directive('cdPlayItem', function( xmlService , $window, $compile ,$log, $timeout, domUtils , registryService, timeUtils ,fileService) {
         var directive = {
             restrict: 'E',
             /* link is called after rendering*/
@@ -60,6 +60,8 @@
             link : function ( $scope, element, attributes ) {
                 var $index = ($scope.$index+'') || '',
                     gapAudio,
+                    navParams = registryService.getNavModels(),
+                    hasBuffered = false, // helps with UI lag on first play
                 /* track elapsed time for phone gap */
                     ticTock = function () {
                         if ( $scope['audio'+$index].playing ) {
@@ -76,10 +78,41 @@
                             }, 1000 );
                         }
                 };
+
+                function _setGapAudio ( src ) {
+                    gapAudio = new Media( src , // jshint ignore:line
+                        // success callback at end
+                        function audio_success() {
+                            $log.debug( "playAudio():Audio Completed" );
+                            $scope['audio' + $index].playing = false;
+                            // can we now now copy the file to a temporary cache if from remote?
+                        },
+                        // error callback at end
+                        function audio_error( err ) {
+                            $log.debug( "playAudio():Audio Error: " + JSON.stringify( err ) );
+                        },
+                        // status callback at end
+                        function audio_status( status ) {
+                            $log.debug( "playAudio():Audio status: " + status );
+                            /*
+                             Media.MEDIA_NONE = 0;
+                             Media.MEDIA_STARTING = 1;
+                             Media.MEDIA_RUNNING = 2;
+                             Media.MEDIA_PAUSED = 3;
+                             Media.MEDIA_STOPPED = 4;
+                             */
+                            if ( status === 2 ) {
+                                // start the clock
+                                ticTock();
+                            } else {
+                                $scope['audio' + $index].playing = false;
+                            }
+                        }
+                    );
+                    $log.debug ( 'gap Audio Create',src,gapAudio);
+                }
                 $log.debug ('playItem',registryService.getConfig( 'isPhonegap' ),'audio' + $index,$scope['audio' + $index],$scope );
                 $log.debug ('playItem element',element,attributes );
-//                $scope['audio' + $scope.$index].$playlist.push ( { src: attributes.src, type: 'audio/mp3'} );
-                $scope['playlist' + $index]= [{ src: attributes.src, type: 'audio/mp3'}];
 
                 /* media player seeking */
                 $scope.seekPercentage = function ($event) {
@@ -102,57 +135,56 @@
                 if ( registryService.getConfig( 'isPhonegap' ) ) {
                     $scope['audio'+$index] = {};
                     $scope['audio'+$index].playing = false;
-                    gapAudio = new Media( attributes.src , // jshint ignore:line
-                        // success callback at end
-                        function audio_success() { $log.debug ("playAudio():Audio Completed"); $scope['audio'+$index].playing = false; },
-                        // error callback at end
-                        function audio_error(err) { $log.debug ( "playAudio():Audio Error: " + JSON.stringify(err) ); },
-                        // status callback at end
-                        function audio_status(status) {
-                            $log.debug ("playAudio():Audio status: " + status);
-/*
-                            Media.MEDIA_NONE = 0;
-                            Media.MEDIA_STARTING = 1;
-                            Media.MEDIA_RUNNING = 2;
-                            Media.MEDIA_PAUSED = 3;
-                            Media.MEDIA_STOPPED = 4;
-                            */
-                            if ( status === 2) {
-//                                $scope['audio'+$index].duration = gapAudio.getDuration();
-//                                $scope['audio'+$index].formatDuration = timeUtils.secShow($scope['audio'+$index].duration);
-//                                $scope['audio' + $index].playing = true;
-                                ticTock();
-                            } else {
-                                $scope['audio' + $index].playing = false;
-                            }
-                        }
-                    );
-                    $log.debug ( 'gap Audio Create',gapAudio);
-                    $scope['audio'+$index].play = gapAudio.play;
+                    // if they are registered for the course then download before playing
+                    // this will do as POC for now!
+
+                    if ( $scope.isSubscribed ) {
+                        $scope['audio'+$index].playing = 'buffering';
+                        // play from cache if not already downloaded
+                        fileService.downloadURL( attributes.src,
+                            navParams.org.id + '-' + navParams.course.id,
+                            navParams.course.id + '.mp3' )
+                            .then ( function ( localUrl ) {
+                                $scope['audio'+$index].playing = false;
+                                _setGapAudio( localUrl);
+                                $scope['audio'+$index].play = gapAudio.play;
+                                hasBuffered = true;
+                        });
+                    } else {
+                        // direct download
+                        _setGapAudio ( attributes.src );
+                        $scope['audio'+$index].play = gapAudio.play;
+                    }
                     // convert to ms
                     $scope['audio'+$index].seek = function ( position ) {
                         // this doesn't seem to do much
-                        gapAudio.seekTo (position*1000);
+                        gapAudio.seekTo (position*500);
                         $scope['audio' + $index].currentTime = position;
 
                     };
                     $scope['audio'+$index].playPause = function () {
                         $log.debug('playPause',$scope['audio'+$index],gapAudio);
-                        if ( $scope['audio'+$index].playing ) {
-                            gapAudio.pause();
-                            $scope['audio'+$index].playing = false;
-                        } else {
-                            $scope['audio'+$index].playing = 'buffering';
-                            // freezes the app whilst it waits on initial load, use time out so scope is applied
-                            $timeout ( function () {
-                                gapAudio.play();
-                                $scope['audio' + $index].playing = true;
-                            } , 100);
+                        if ( $scope['audio'+$index].playing !== 'buffering' ) {
+                            if ( $scope['audio' + $index].playing ) {
+                                gapAudio.pause();
+                                $scope['audio' + $index].playing = false;
+                            } else {
+                                $scope['audio' + $index].playing = hasBuffered ? true : 'buffering';
+                                // freezes the app whilst it waits on initial load, use time out so scope is applied
+                                $timeout( function () {
+                                    gapAudio.play();
+                                    hasBuffered = true;
+                                    $scope['audio' + $index].playing = true;
+                                }, 50 );
+                            }
                         }
                     };
                     $scope['audio' + $index].currentTime = 0;
                     $scope['audio' + $index].formatTime = timeUtils.secShow(0);
                     $scope['audio'+$index].duration = $scope.item.time;
+                } else {
+                    // web player
+                    $scope['playlist' + $index]= [{ src: attributes.src, type: 'audio/mp3'}];
                 }
             },
             template: function ( element, attribute ) {

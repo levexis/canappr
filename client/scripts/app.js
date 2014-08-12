@@ -19,7 +19,7 @@
                      // stops app bleading into phone network status bar
                      window.StatusBar.overlaysWebView( false );
                      registryService.setConfig( 'isPhonegap', true );
-                     fileService.init('canappr');
+                     fileService.init('tmp');
                      $window.canAppr.fileService = fileService;
                      // set the navtype here or mabe in config section instead of hard coding into index.html
                  };
