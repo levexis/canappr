@@ -20,44 +20,13 @@
             return timeUtils.secShow( secs * 1);
         };
     });
-    /*
-    myApp.directive('cdPlaylist', function( xmlService , $window, $compile) {
+
+    myApp.directive('cdPlayItem', function( xmlService , $window, $compile ,$log, $timeout, domUtils , registryService, timeUtils ,fileService, prefService) {
         var directive = {
             restrict: 'E',
-            /*compile : function ( scope, element, attributes ) {
-                var _doPlaylist = function ( scope ) {
-                    if ( scope.playlist && typeof $window.atob === 'function' ) {
-                        var playObj = xmlService.toObject( atob( scope.playlist ) );
-                        console.log ('updated playObj',playObj);
-                        scope.playObj = playObj;
-                    }
-                };
-                var linkFunction = function ( scope, element, attributes ) {
-                    _doPlaylist( scope );
-                    scope.$watch( 'playlist', function ( newer, older ) {
-                        if (!older || newer !== older) _doPlaylist( scope );
-                    } );
-                };
-                return linkFunction;
-            },
-            template: function ( element, attribute ) {
-                var outHTML = '<div ngShow="{{ !!playlist  }}">';
-                outHTML += '<cd-play-item ng-repeat="item in playObj.organization.course.module.content" />';
-                outHTML += '</div>';
-                return outHTML;
-            }
-        };
-        return directive;
-    });
-     */
-    myApp.directive('cdPlayItem', function( xmlService , $window, $compile ,$log, $timeout, domUtils , registryService, timeUtils ,fileService) {
-        var directive = {
-            restrict: 'E',
-            /* link is called after rendering*/
-//do I need to attach fast click for this to work on mobile?
-//            fastclick.attach(document.body)
 
             link : function ( $scope, element, attributes ) {
+                // TODO: should this be a controller as it has application caching logic in it
                 var $index = ($scope.$index+'') || '',
                     gapAudio,
                     navParams = registryService.getNavModels(),
@@ -146,6 +115,7 @@
                             navParams.course.id + '.mp3' )
                             .then ( function ( localUrl ) {
                                 $scope['audio'+$index].playing = false;
+                                prefService.fileDownloaded();
                                 _setGapAudio( localUrl);
                                 $scope['audio'+$index].play = gapAudio.play;
                                 hasBuffered = true;

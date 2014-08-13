@@ -3,12 +3,15 @@
     // this can be used to replace the rootScope nonsense
     var myApp = angular.module( 'canAppr' );
 
-    myApp.factory('prefService', function($rootScope , $log, fileService) {
+    myApp.factory('prefService', function($rootScope , $log, registryService ,  fileService ) {
         // retrieve from local storage
-        var _prefs;
+        var _prefs, _navParams, _courseId, _moduleId, _orgId;
+
         $rootScope.canAppr.prefs = JSON.parse ( window.localStorage.getItem('canAppr.prefs') ) || {
-            course : {}
+            course : {},
+            module : {}
         };
+
         $rootScope.$watch('canAppr.prefs', function ( after, before) {
             if ( !_.isEqual(before,after) ) {
                 $log.debug( 'pref change saved', before, after );
@@ -17,73 +20,91 @@
         // don't forget object comparison
         }, true);
         _prefs = $rootScope.canAppr.prefs;
+        _navParams = registryService.getNavModels();
+        $rootScope.$watch('canAppr.navParams', function () {
+            _courseId = registryService.getCourseId ();
+            _moduleId = registryService.getModuleId ();
+            _orgId =_navParams.org.id+'';
+        }, true);
+
+        // returns a string of org-course
+
         // which courses am I on
         // which content should be downloaded
         // which content should not be download
         // which content have I consumed - when / how often / when last?
         // final part to jigsaw is filecache, is this where i store the local filename?
         return {
-            subscribeCourse: function (courseId) {
-                if ( courseId ) {
+            subscribeCourse: function () {
+                // all based on current navParams
+                if ( _courseId ) {
                     // first time
-                    if ( !_prefs.course[ courseId ] ) {
-                        _prefs.course[ courseId ] = {};
+                    if ( !_prefs.course[ _courseId ] ) {
+                        _prefs.course[ _courseId ] = {};
                     }
-                    // resubscribing
-                      _prefs.course[ courseId ].subscribed = new Date();
+                    if (typeof _prefs.course[ _courseId ].subscribed !== 'object' ) {
+                        _prefs.course[ _courseId ].subscribed = new Date();
+                    }
                 }
             },
-            unsubscribeCourse: function (courseId) {
-                if ( courseId  && _prefs.course[ courseId ] ) {
-                    _prefs.course[ courseId ].subscribed = false;
+            unsubscribeCourse: function () {
+                if ( _courseId ) {
+                    _prefs.course[ _courseId ].subscribed = false;
                 }
             },
             // deletes offline content
-            deleteContent: function (courseId , moduleId) {
-                if ( courseId && _prefs.course[ courseId ] && _prefs.course[ courseId ][ moduleId ] ) {
-                    _prefs.course[ courseId ][ moduleId ].downloaded = false;
-// clear all the files
-//                    course[courseId][moduleId].files.forEach ( function (file) { delete file.localURL } )
-                }
+            deleteContent: function () {
+                if ( _moduleId ) {
+                    _prefs.module[ _moduleId ].downloaded = false;
+// TODO clear all the files
+               }
             },
             // track what's been viewed and what hasnt, whats completed etc
             // creates the stub and allows events to be added via the @what param
-            setModuleEvent: function (courseId , moduleId , eventName ) {
-                if ( courseId && !_prefs.course[ courseId ] )  _prefs.course [ courseId ] = {};
-                if ( moduleId && !_prefs.course[ courseId ][moduleId] )  _prefs.course [ courseId ] [ moduleId ] = {};
+            setModuleEvent: function ( eventName ) {
+                if ( _moduleId && !_prefs.module[_moduleId] ) {
+                    _prefs.module [ _moduleId ] = {};
+                }
                 if ( eventName ) {
-                    _prefs.course [ courseId ] [ moduleId ] [ eventName ] = new Date();
+                    _prefs.module [ _moduleId ] [ eventName ] = new Date();
                 }
             },
-            getEventTime: function (courseId , moduleId , eventName ) {
-                if ( courseId &&  moduleId && _prefs.course[ courseId ][moduleId] ) {
-                    return _prefs.course [ courseId ] [ moduleId ] [eventName];
+            getEventTime: function (eventName ) {
+                if ( _moduleId && _prefs.module[_moduleId ] ) {
+                    return _prefs.module [ _moduleId ] [eventName];
                 }
             },
-
             // can be used to download content if deleted offline
-            downloadContent: function (courseId , moduleId) {
-                if ( courseId && _prefs.course[ courseId ] && _prefs.course[ courseId ][ moduleId] && !_prefs.course[ courseId ][ moduleId ].downloaded  ) {
-                    _prefs.course[ courseId ][ moduleId ].downloaded = 'pending';
+            //TODO: needs to actually do some work here
+            downloadContent: function (moduleId) {
+                moduleId = moduleId || _moduleId;
+                if ( moduleId && typeof _prefs.module[ moduleId ].downloaded !== 'object' ) {
+                    _prefs.module[ moduleId ].downloaded = 'pending';
                 }
             },
-            // subscribed to a course
-            // TO:DO THESE SHOULD WORK OF CURRENT NAV PARAMS AND BE ORG, COURSE, MODULE!
-            isSubscribed: function ( courseId) {
-                if ( courseId && _prefs.course[ courseId ] && _prefs.course[ courseId ].subscribed ) {
-                    return true;
-                } else {
-                    return false;
+            // sets the flag to say content has been downloaded - should it broadcast an event?
+            // takes a parameter as this can be called outside of service
+            fileDownloaded: function ( moduleId ) {
+                // TODO: this will need to check all files for a module content are in the filecache
+                // but at the moment it's one file per module so we can cheet
+                moduleId = moduleId || _moduleId;
+                if ( moduleId && typeof _prefs.module[ moduleId ].downloaded !== 'object' ) {
+                    _prefs.module[ moduleId ].downloaded = new Date();
                 }
+            },
+            // optional courseId
+            isSubscribed: function (courseId) {
+                courseId = courseId || _courseId;
+                return  !!( courseId && _prefs.course[ courseId ] && _prefs.course[ courseId ].subscribed );
             },
             // downloaded all the files for a module?
-            isDownloaded: function ( courseId , moduleId ) {
-                if ( courseId && _prefs.course[ courseId ] && _prefs.course[ courseId ][ moduleId ]  ) {
-                    // just return download flag for now
-                    return _prefs.course[ courseId ][ moduleId ].downloaded;
-                }
+            isDownloaded: function ( ) {
+                return !!(_moduleId &&  typeof _prefs.module[ _moduleId ].downloaded === 'object');
+            },
+            // indicates that a file has been removed
+            wasDeleted: function ( ) {
+                return !!(_moduleId &&  typeof _prefs.module[ _moduleId ].downloaded === false);
             }
-
         };
 
     });

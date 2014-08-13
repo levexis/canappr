@@ -84,9 +84,24 @@
                     _config[name] = value;
                     return _config;
                 }
+            },
+            // returns a string of org-course-module
+            getModuleId: function () {
+                if (_navParams.org.id && _navParams.course.id && _navParams.module.id ) {
+                    return this.getCourseId() + '-' + _navParams.module.id;
+                } else {
+                    return null;
+                }
+            },
+            getCourseId: function () {
+                if (_navParams.org.id &&  _navParams.course.id) {
+                    return _navParams.org.id + '-' + _navParams.course.id;
+                } else {
+                    return null;
+                }
             }
         };
     });
 
-})(angular , _);
+})(angular , _);// jshint ignore:line
 

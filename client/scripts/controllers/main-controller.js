@@ -53,13 +53,13 @@
                     $scope.targetTemplate = 'views/content.html';
                     $scope.model = navParams.course;
                     $scope.canSubscribe = true;
-                    $scope.subscribed = prefService.isSubscribed ( navParams.course.id );
+                    $scope.subscribed = prefService.isSubscribed ();
                     $scope.last = 'Courses';
-                    $scope.$watch('subscribed', function () {
-                        if ( $scope.subscribed ) {
-                            prefService.subscribeCourse( navParams.course.id );
+                    $scope.$watch('subscribed', function ( subscribed) {
+                        if ( subscribed ) {
+                            prefService.subscribeCourse( );
                         } else {
-                            prefService.unsubscribeCourse( navParams.course.id );
+                            prefService.unsubscribeCourse( );
                         }
                     });
                 } else if ( options.collection === 'content' ) {
@@ -79,8 +79,6 @@
                 $scope.target = 'course';
                 $scope.collectionName = 'Organizations';
             }
-            // was being used to hack around push issue where stacking up
-            $scope.showBlurb=true;
             $scope.clickList = function ( template, options ) {
                 var target;
                 options.navDir = 'forward';
