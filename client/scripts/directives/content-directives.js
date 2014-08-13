@@ -198,7 +198,8 @@
                 }
                 outHTML += '<div class="ca-wrapper" ng-class="{ \'ca-even\': ($index % 2) !== 0}" >';
                 outHTML += '    <p class="ca-content-title {{item.file.type}} ">{{ $index+1 }}. {{item.description}} (<span ng-bind-html="audio{{$index}}.formatTime"></span>)</p>';
-                outHTML += '    <div class="ca-play" ng-click="audio{{$index}}.playPause()">';
+                // have added a pulse to make it obvious something is happening as safari is laggy particularly on ipad etc
+                outHTML += '    <div class="ca-play animate" style="animation-duration: 0.5s;" ng-click="pulse=true; audio{{$index}}.playPause()" ng-class="{ \'pulse\' : pulse } ">';
                 outHTML += '        <i class="fa fa-lg" ng-class="{ \'fa-pause\': audio{{$index}}.playing===true ,\'fa-spinner\': audio{{$index}}.playing===\'buffering\', \'fa-spin\': audio{{$index}}.playing===\'buffering\', \'fa-play\': !audio{{$index}}.playing }"></i>';
                 outHTML += '    </div>';
                 outHTML += '    <div class="ca-progress" ng-click="audio{{$index}}.seek(audio{{$index}}.duration * seekPercentage($event))">';
