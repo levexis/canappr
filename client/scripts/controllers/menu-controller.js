@@ -15,21 +15,21 @@
 //          console.log('navParams', after, before);
             /* resets parameters if you go back up tree */
             if ( before && after ) {
-                if ( before.org.id != after.org.id ) {
+                if ( before.org.id !== after.org.id ) {
                     $log.debug( 'blank course / module', after, before );
                     registryService.resetNavModel( 'course' );
                     registryService.resetNavModel( 'module' );
-                } else if ( before.course.id != after.course.id ) {
+                } else if ( before.course.id !== after.course.id ) {
                     registryService.resetNavModel( 'module' );
-                } else {
                 }
             }
         } , true );
 
         $scope.listClick = function ( item ) {
-            navService.go ( 'views/main.html' ,{ collection : item.name});
+            navService.go ( 'views/main.html' ,{ collection : item.name ,
+                                                navDir: 'new'});
         };
     } );
 
-})(angular , _);
+})(angular , _); // jshint ignore:line
 

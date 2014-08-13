@@ -1,9 +1,10 @@
 <!--    do the text with directives eg ca-welcome or ca-head:welcome? Just a template?
         need to do an automatic translation so maybe put english in master template
         there is a way of doing this ! -->
-<ons-page ng-controller="MainCtrl" id="main">
+<ons-page ng-controller="MainCtrl" id="main" cd-transition>
 <ons-scroller infinit-scroll-enable="true" >
-<div class="ca-blurb" ng-show="showBlurb">
+<cd-nav-bar></cd-nav-bar>
+    <div class="ca-blurb">
     <h1 align="center">{{model.name}}<cd-switch ng-show="canSubscribe" model="subscribed"></cd-switch></h1>
     <p align="center" class="ca-main-body" ng-bind-html="model.html"></p>
 </div>
@@ -14,7 +15,7 @@
             <ons-list-item
                     class="topcoat-list__item--tappable topcoat-list__item__line-height"
                     ng-click="clickList( targetTemplate, { id: item.id , collection: target, item: item });">
-                <i ng-class="['fa','fa-lg',collectionClass,'ca-right-arrow']">&nbsp;</i>
+                <i ng-class="['fa','fa-lg',collectionClass,'ca-arrow-right']">&nbsp;</i>
                 {{item.name}}
             </ons-list-item>
         </span>

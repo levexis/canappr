@@ -15,17 +15,17 @@
             $scope.collection = results;
             // this someFiltered thing is for the UI and should be refactored into a directive!
             $scope.someFiltered = !!_.findWhere ( results , $scope.filterWhere );
-        }
+        };
     }
     // how can we dynamically inject the resource, have hard coded organizations for now
     // need current model and then collection for list, eg collectionId 5 is model and courses is the collection etc
     myApp.controller( 'MainCtrl',
         function ( $scope, $rootScope, $log, orgService , courseService, moduleService , registryService, navService, prefService , fileService) {
             var navParams =  $scope.navParams ||  registryService.getNavModels(),
-                options = $scope.options || navService.getRouteOptions($scope); // the scope.options / navParams is there to allow test to set these in karma
+                options = $scope.options || navService.getRouteOptions($scope) || {}; // the scope.options / navParams is there to allow test to set these in karma
             $scope.collection = [];
             $scope.targetTemplate = 'views/main.html';
-            if ( options ) {
+            if ( options.collection ) {
                 $log.debug ('options',options,options.collection, options);
                 if ( options.collection === 'org' ) {
                     $scope.collectionClass = 'fa-male';
@@ -42,7 +42,8 @@
                     $scope.filterWhere = { orgId : navParams.org.id };
                     $scope.collectionName = 'Courses';
                     $scope.target = 'module';
-                    $scope.model = navParams[ 'org' ];
+                    $scope.model = navParams.org;
+                    $scope.last = 'Organizations';
                 } else if ( options.collection === 'module' ) {
                     $scope.collectionClass = 'fa-terminal';
                     moduleService.query( { courseId : navParams.course.id }, _queryCB( $scope ) );
@@ -50,9 +51,10 @@
                     $scope.target = 'content';
                     $scope.collectionName = 'Modules';
                     $scope.targetTemplate = 'views/content.html';
-                    $scope.model = navParams[ 'course' ];
+                    $scope.model = navParams.course;
                     $scope.canSubscribe = true;
                     $scope.subscribed = prefService.isSubscribed ( navParams.course.id );
+                    $scope.last = 'Courses';
                     $scope.$watch('subscribed', function () {
                         if ( $scope.subscribed ) {
                             prefService.subscribeCourse( navParams.course.id );
@@ -63,7 +65,8 @@
                 } else if ( options.collection === 'content' ) {
                     $log.debug ('setting module id', options.id );
                     $scope.collectionName = '';
-                    $scope.model = navParams[ 'module' ];
+                    $scope.model = navParams.module;
+                    $scope.last = 'Modules';
                 } else if (options.collection ) {
                     throw new Error( 'unrecognized list: ' + options.collection );
                 }
@@ -76,24 +79,18 @@
                 $scope.target = 'course';
                 $scope.collectionName = 'Organizations';
             }
-
+            // was being used to hack around push issue where stacking up
             $scope.showBlurb=true;
             $scope.clickList = function ( template, options ) {
                 var target;
+                options.navDir = 'forward';
                 $log.debug ('clicking options',options, $scope);
-                switch ( $scope.collectionName ) {
-                    case 'Organizations':
-                        target = 'org';
-                        break;
-                    case 'Courses':
-                        target = 'course';
-                        break;
-                    case 'Modules':
-                        target = 'module';
-                        break;
-                }
+                target = navService.getCollection ( $scope.collectionName );
+
                 // update the central model so can be used on next view
-                if (target && options && options.item ) registryService.setNavModel ( target , options.item);
+                if (target && options && options.item ) {
+                    registryService.setNavModel( target, options.item );
+                }
                 // still pushing for now but seem to have some stack scoping problems, have tried a different template name but seems to be navigator nesting
                 if ( registryService.getConfig().navType === 'slide') {
                     $scope.showBlurb=false;
@@ -102,6 +99,7 @@
                     navService.go( template , options );
                 }
             };
-
+            // used to trigger transitions as onsen not using router
+            $scope.navDir=options.navDir || 'new';
         } );
 })( angular , _ ); // jshint ignore:line

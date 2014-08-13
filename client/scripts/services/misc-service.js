@@ -29,6 +29,10 @@
                     _config.navOptions = options;
                     // add animation class when set main page?
                     $rootScope.ons.splitView.setMainPage( where );
+                    // if the direction is new then toggle the menu
+                    if ( options.navDir && options.navDir === 'new' ) {
+                        $rootScope.ons.splitView.toggle();
+                    }
                 }
             },
             getRouteOptions: function ($scope ) {
@@ -48,6 +52,42 @@
             setRouteOptions: function ( options ) {
                 if (options) {
                     _config.navOptions = options;
+                }
+            },
+            /*
+             translates names to collections
+             @returns string
+             */
+            getCollection: function ( collectionName ) {
+                switch (collectionName ) {
+
+                    case 'Organizations':
+                        return 'org';
+                    case 'Courses':
+                        return 'course';
+                    case 'Modules':
+                        return 'module';
+                    default :
+                        return '';
+                }
+            },
+            toggleMenu: function ( options) {
+                if ( _config.navType === 'slide' ) {
+                    // force a refresh
+                    _config.navOptions = options;
+                    $rootScope.ons.slidingMenu.toggle();
+                } else if ( _config.navType === 'split' ) {
+                    _config.navOptions = options;
+                    // add animation class when set main page?
+                    $rootScope.ons.splitView.toggle();
+                }
+            },
+            // returns true if splitview is collapsed
+            isSingle: function () {
+                if ( _config.navType === 'split' ) {
+                    return angular.element (document.querySelector('.secondary')).css('width') === '100%';
+                } else {
+                    return null;
                 }
             }
         };

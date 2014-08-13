@@ -4,9 +4,10 @@
     // how can we dynamically inject the resource, have hard coded organizations for now
     // need current model and then collection for list, eg collectionId 5 is model and courses is the collection etc
     myApp.controller( 'ContentCtrl',
-        function ( $scope , registryService, xmlService , domUtils , $log , prefService ) {
+        function ( $scope , registryService, xmlService , domUtils , $log , prefService , navService) {
             var navParams =  registryService.getNavModels(),
-                downloadStatus = prefService.isDownloaded ( navParams.course.id , navParams.module.id );
+                downloadStatus = prefService.isDownloaded ( navParams.course.id , navParams.module.id ),
+                options = $scope.options || navService.getRouteOptions($scope) || {};
             function _setContent() {
                 $scope.playObj = xmlService.toObject( atob( $scope.model.playlist ) );
                 if ( $scope.playObj ) {
@@ -31,8 +32,6 @@
             $scope.canDownload = typeof downloadStatus === 'boolean';
 
             $scope.isSubscribed = prefService.isSubscribed( navParams.course.id );
-
-            $log.debug('content',$scope);
-
+            $scope.navDir=options.navDir || 'new';
         } );
 })(angular,_)// jshint ignore:line
