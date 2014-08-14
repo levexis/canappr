@@ -34,5 +34,13 @@
             });
             $scope.isSubscribed = prefService.isSubscribed();
             $scope.navDir=options.navDir || 'new';
+            $scope.last = 'Modules';
+            $scope.$watch ('isDownloaded', function ( now, before ) {
+                if ( now === true && before === false ) {
+                    fileService.downloadURL( $scope.content.src,
+                        registryService.getModuleId,
+                        registryService.getCourseId + '.mp3' );
+                }
+            });
         } );
 })(angular,_)// jshint ignore:line
