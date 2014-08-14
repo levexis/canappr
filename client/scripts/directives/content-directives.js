@@ -111,11 +111,10 @@
                         $scope['audio'+$index].playing = 'buffering';
                         // play from cache if not already downloaded
                         fileService.downloadURL( attributes.src,
-                            navParams.org.id + '-' + navParams.course.id,
-                            navParams.course.id + '.mp3' )
+                            registryService.getModuleId,
+                            registryService.getCourseId + '.mp3' )
                             .then ( function ( localUrl ) {
                                 $scope['audio'+$index].playing = false;
-                                prefService.fileDownloaded();
                                 _setGapAudio( localUrl);
                                 $scope['audio'+$index].play = gapAudio.play;
                                 hasBuffered = true;

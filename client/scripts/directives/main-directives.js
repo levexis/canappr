@@ -70,11 +70,11 @@
                         el.addClass( 'animated' );
                         $log.debug('ready',navDir);
                         if ( navDir ==='back' ) {
-                                el.addClass( 'bounceInLeft' );
+                                el.addClass( 'slideInLeft' );
                         } else if ( navDir ==='new' ) {
                                 el.addClass( 'fadeIn' );
                         } else if ( navDir ==='forward' ) {
-                            el.addClass( 'bounceInRight' );
+                            el.addClass( 'slideInRight' );
                         } else if ( navDir) {
                             // allow explicit transition
                             el.addClass( navDir );

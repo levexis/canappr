@@ -1,9 +1,9 @@
-(function ( angular ) {
+(function ( angular , _) {
     "use strict";
     // this can be used to replace the rootScope nonsense
     var myApp = angular.module( 'canAppr' );
 
-    myApp.factory( 'fileService', function ( $rootScope, $log , $q) {
+    myApp.factory( 'fileService', function ( $rootScope, $log , $q, $timeout ) {
 
         /**
 
@@ -20,7 +20,9 @@
             _fileTable = {},
             APP_DIR='',
             // store files on external storage or in library directory on IOS, else they show up in itunes!
-            LOCAL_ROOT;
+            LOCAL_ROOT,
+            _cancel,
+            _isDownloading;
 
         try {
             var tmp = window.LocalFileSystem.PERSISTENT;
@@ -429,6 +431,37 @@
            return resolved.promise;
         }
 
+        function promiseSuccess( deferred , message ) {
+            return function ( success) {
+                if (message) {
+                    $log.debug( message, success );
+                }
+                deferred.resolve( success );
+            };
+        }
+        function promiseError( deferred , message ) {
+            return function ( error) {
+                if (message) {
+                    $log.debug( message, error );
+                }
+                deferred.reject( error );
+            };
+        }
+        // returns an array of files that match the expression
+        function getFiles ( key , value ) {
+            var _outArr = [];
+            function _addMatch ( url ) {
+                var obj = _fileTable[url];
+                if ( obj[key] === [value] ) {
+                    _outArr.push( _.extend( obj, {url : url} ) );
+                }
+            }
+            _.keys (_fileTable ).forEach ( _addMatch );
+            return _outArr;
+        }
+
+// TODO: Only over wifi?
+// TODO: Donwload multiple files at once?
         return {
             // call on device ready
             init : function init ( app_dir ) {
@@ -436,11 +469,12 @@
                 _dirManager = new DirManager();
                 _fileManager = new FileManager();
                 APP_DIR = (app_dir || APP_DIR );
-
                 _getTable();
                 // for debugging!
                 window.fileManager = _fileManager;
                 window.dirManager = _dirManager;
+                _cancel = false;
+                _isDownloading = false;
             },
             // get url to use
             getURL : function (url) {
@@ -465,20 +499,25 @@
                     };
                     _saveTable();
                 }
-                return url;
+                return false;
             },
-            //download and wait, returns a promise that resolves to url to use
-            //returns a promise
-
+            //download and wait, returns a promise that resolves to a local url to use
             downloadURL : function ( url, dir , name) {
-                var deferred;
+                var deferred,
+                    // manuel is our waiter
+                    manuel,
+                    startTime = new Date(),
+                    _self = this;
                 if ( url && _fileTable[url] && _fileTable[url].status === 'cached') {
                     return qresolved(_fileTable[url].local );
                 } else if ( url && dir && name && !_fileTable[url] ) {
                     _fileTable[url] = {
-                        status : 'downloading'
+                        status : 'downloading',
+                        dir: dir,
+                        filename: name
                     };
                     deferred = $q.defer();
+                    _isDownloading = true;
                     _fileManager.download_file( url , APP_DIR + '/' + dir , name ,
                         function ( file ) {
                             $log.debug('created file',file);
@@ -491,6 +530,9 @@
                                 _fileTable[url].size = (file.size / 1000000 ).toFixed(1);
                                 _saveTable();
                                 deferred.resolve( file.localURL );
+                                _isDownloading = false;
+                                // always tries to download any other queued files
+                                _self.downloadQueued();
                             });
                         },
                         function ( error) {
@@ -499,18 +541,92 @@
                             deferred.reject( error );
                         });
                     return deferred.promise;
-                } else {
-                    return qresolved(url);
+                } else if ( _fileTable[url] === 'downloading' ) {
+                    // check every 10s and wait TODO should we time out? Need to be able to reset
+                    startTime = new Date();
+                    manuel = function (url) {
+                        $timeout( function ( url ) {
+                            if ( _fileTable[url].status === 'cached' ) {
+                                deferred.resolve( _fileTable[url].local );
+                            } else if ( _fileTable[url].status === 'failed' ) {
+                                deferred.reject( 'download error' );
+                            // give it 5 mins
+                            } else if ( new Date().getTime - startTime > 300*1000 ) {
+                                // could return the actual URL if online?
+                                deferred.reject( 'timed out after ' + ( new Date().getTime - startTime) + 'ms ');
+                            } else {
+                                manuel(url);
+                            }
+                        }, 10000 );
+                    };
                 }
             },
+            downloadQueued: function ( TBD ) {
+                var queued = TBD,
+                    next,
+                    _self = this;
+                if ( !_isDownloading ) {
+                    if (!queued || !queued.length) {
+                        queued = getFiles( 'status', 'queued' );
+                        if ( !queued.length ) {
+                            // retry failures
+                            queued = getFiles( 'status', 'failed' );
+                        }
+                        if (queued.length) {
+                            // should maybe do these in some sort of order, presume shift will be order they were put in
+                            next = queued.shift();
+                            this.downloadURL ( next.url, next.dir, next.filename)
+                            .then( function () {
+                                _self.downloadQueued( queued );
+                            });
+                        }
+                    }
+                    return queued.length;
+                }
+            },
+            // clear everything to do with filemanager, returns a promise
+            clearAll : function () {
+                return this.clearDir ('');
+            },
             // clear cache by URL
-            clear : {},
+            clearFile : function (url) {
+                if (url && _fileTable[url].status === 'cached' ) {
+                    var deferred = $q.defer();
+                    _fileManager.remove_file( APP_DIR + '/' + _fileTable[url].dir,_fileTable[url].filename,
+                        function ( success) {
+                            delete _fileTable[url];
+                            promiseSuccess( deferred, url + ' cleared' )(success);
+                        },
+                        promiseError( deferred ) );
+                    return deferred.promise;
+                } else {
+                    qresolved( false );
+                }
+           },
             // clear cache by directory (effectively an entire module )
-            clearDir : {},
+            clearDir : function (dir) {
+                // TODO - need to clear up file table!
+                if (dir) {
+                    var deferred = $q.defer();
+                    _dirManager.remove( APP_DIR + '/' + dir , promiseSuccess( deferred, dir + ' cleared' ), promiseError( deferred ) );
+                    return deferred.promise;
+                } else {
+                    qresolved( false );
+                }
+            },
             // getStatus of a URL
-            cacheStatus  : {}
+            getStatus  : function (url) {
+                if ( url && _fileTable[url] ) {
+                    return _fileTable[url].status;
+                } else {
+                    return false;
+                }
+            },
+            isDownloading: function () {
+                return _isDownloading;
+            }
         };
 
     } );
-})(angular); // jshint ignore:line
+})(angular , _); // jshint ignore:line
 
