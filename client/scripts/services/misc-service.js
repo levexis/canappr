@@ -30,7 +30,7 @@
                     // add animation class when set main page?
                     $rootScope.ons.splitView.setMainPage( where );
                     // if the direction is new then toggle the menu
-                    if ( options.navDir && options.navDir === 'new' ) {
+                    if ( options && options.navDir && options.navDir === 'new' ) {
                         $rootScope.ons.splitView.toggle();
                     }
                 }

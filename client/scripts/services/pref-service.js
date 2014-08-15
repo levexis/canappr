@@ -3,7 +3,7 @@
     // this can be used to replace the rootScope nonsense
     var myApp = angular.module( 'canAppr' );
 
-    myApp.factory('prefService', function($rootScope , $log, registryService ,  fileService , xmlService ) {
+    myApp.factory('prefService', function($rootScope , $log, registryService ,  fileService , xmlService, moduleService ) {
         // retrieve from local storage
         var _prefs, _navParams, _courseId, _moduleId, _orgId;
 
@@ -30,12 +30,12 @@
         // returns number of items added to the queue
         function queueContentFiles( module ) {
             var content,
-                playObj = xmlService.toObject( atob( $scope.model.playlist ) );
+                playObj = xmlService.toObject( atob( module.playlist ) );
             function queueURL ( item ) {
                 fileService.cacheURL( item.src , _courseId , _moduleId + 'mp3' );
             }
             if ( playObj ) {
-                content = $scope.playObj.organization.course.module.content;
+                content = playObj.organization.course.module.content;
                 // expects an array of things to play
                 if ( !_.isArray( content ) ) {
                     content = [ content ];
@@ -55,40 +55,61 @@
         // final part to jigsaw is filecache, is this where i store the local filename?
         return {
             // if passed modules then will queue all the files for download
-            subscribeCourse: function ( modules ) {
+            subscribeCourse: function ( courseId , modules ) {
+                courseId = courseId || _courseId;
                 // all based on current navParams
-                if ( _courseId ) {
+                if ( courseId ) {
                     // first time
-                    if ( !_prefs.course[ _courseId ] ) {
-                        _prefs.course[ _courseId ] = {};
+                    if ( !_prefs.course[ courseId ] ) {
+                        _prefs.course[ courseId ] = {};
                     }
-                    if (typeof _prefs.course[ _courseId ].subscribed !== 'object' ) {
-                        _prefs.course[ _courseId ].subscribed = new Date();
+                    if (typeof _prefs.course[ courseId ].subscribed !== 'object' ) {
+                        _prefs.course[ courseId ].subscribed = new Date();
                     }
-                    if ( modules) {
-                        modules.forEach( queueContentFiles );
+                    if ( modules ) {
+                        this.checkFiles( courseId , modules );
                     }
-
                 }
             },
-            unsubscribeCourse: function () {
-                if ( _courseId ) {
-                    _prefs.course[ _courseId ].subscribed = false;
-                    // remove all files
-                    fileService.clearDir ( _courseId );
+            /*
+             * checks if files have been downloaded or new files for download
+             * updates status for module if all downloaded
+             */
+            checkFiles : function ( courseId , modules ) {
+                // could check files and mark as all downloaded if done
+                if ( modules) {
+                    modules.forEach( queueContentFiles );
                 }
+                // if they are all their then mark module as completely dowloaded?
+            },
+            // courseId optional or uses navParams
+            unsubscribeCourse: function ( courseId) {
+                courseId = courseId || _courseId;
+                if ( courseId && _prefs.course[ courseId ] ) {
+                    _prefs.course[ courseId ].subscribed = false;
+                    // remove all files
+                    // TODO: this needs looking at as throws an error if not on phonegap
+//                    if ( refileService.clearDir ( courseId );
+                }
+            },
+            // courseId optional or uses navParams
+            clearFiles: function ( moduleId) {
+                moduleId = moduleId || _moduleId;
+                // TODO the rest
             },
             // track what's been viewed and what hasnt, whats completed etc
             // creates the stub and allows events to be added via the @what param
-            setModuleEvent: function ( eventName ) {
-                if ( _moduleId && !_prefs.module[_moduleId] ) {
-                    _prefs.module [ _moduleId ] = {};
+            setModuleEvent: function ( eventName ,moduleId ) {
+                moduleId = moduleId || _moduleId;
+                if ( moduleId && !_prefs.module[moduleId] ) {
+                    _prefs.module [ moduleId ] = {};
                 }
-                if ( eventName ) {
-                    _prefs.module [ _moduleId ] [ eventName ] = new Date();
+                if ( eventName && moduleId ) {
+                    _prefs.module [ moduleId ] [ eventName ] = new Date();
                 }
             },
-            getEventTime: function (eventName ) {
+            getEventTime: function (eventName , moduleId ) {
+                moduleId = moduleId || _moduleId;
                 if ( _moduleId && _prefs.module[_moduleId ] ) {
                     return _prefs.module [ _moduleId ] [eventName];
                 } else {
@@ -105,8 +126,13 @@
                 // TODO: this will need to check all files for a module content are in the filecache
                 // but at the moment it's one file per module so we can cheet
                 moduleId = moduleId || _moduleId;
-                if ( moduleId && typeof _prefs.module[ moduleId ].downloaded !== 'object' ) {
-                    _prefs.module[ moduleId ].downloaded = new Date();
+                if ( moduleId) {
+                    if (  !_prefs.module[moduleId] ) {
+                        _prefs.module [ moduleId ] = {};
+                    }
+                    if ( typeof _prefs.module[ moduleId ].downloaded !== 'object' ) {
+                        _prefs.module[ moduleId ].downloaded = new Date();
+                    }
                 }
             },
             // optional courseId otherwise will use current navParams

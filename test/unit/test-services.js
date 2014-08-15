@@ -356,45 +356,49 @@ describe('Services', function() {
 
     describe( 'prefService', function () {
         var service, rootScope;
-        beforeEach( inject( function ( prefService , $rootScope) {
+        beforeEach( inject( function ( prefService , $rootScope ) {
             window.localStorage.clear();
             service = prefService;
             rootScope = $rootScope;
             expect( service ).to.not.be.undefined;
+            // set current nav params
+            rootScope.canAppr.navParams.org.id=1;
+            rootScope.canAppr.navParams.course.id=1;
+            rootScope.canAppr.navParams.module.id=3;
+            // prefService only updates on watch which requires a digest loop
+           rootScope.$apply();
         } ) );
-        it( 'should return fals if Ive not subscribe to a courses' , function () {
-            service.isSubscribed(3).should.not.be.ok;
-            service.isSubscribed('3').should.not.be.ok;
-
+        it( 'should return false if Ive not subscribe to a courses' , function () {
+            service.isSubscribed().should.not.be.ok;
+            service.isSubscribed('1-3').should.not.be.ok;
         });
-        it( 'should remember if I subscribe to a courses', function () {
+        it( 'should remember if I explicitly subscribe to a courses', function () {
             service.subscribeCourse(3);
             service.isSubscribed(3).should.be.ok;
             service.isSubscribed('3').should.be.ok;
         });
         it( 'should allow me to unsubscribe to a course', function () {
-            service.subscribeCourse(3);
-            service.unsubscribeCourse(3);
-            service.isSubscribed(3).should.not.be.ok;
+            service.subscribeCourse();
+            service.unsubscribeCourse();
+            service.isSubscribed().should.not.be.ok;
+        });
+        it( 'should use navParams implicitly' , function () {
+            service.subscribeCourse();
+            service.isSubscribed('1-1').should.be.ok;
+            service.unsubscribeCourse();
+            service.isSubscribed('1-1').should.not.be.ok;
         });
         it( 'should allow me to mark events against modules', function () {
-            service.setModuleEvent(3,3,'hello');
-            service.getEventTime(3,3,'hello').getTime.should.be.a.function;
+            service.setModuleEvent('hello');
+            service.getEventTime('hello').getTime.should.be.a.function;
         });
-
-        it( 'should allow me to mark files for download', function () {
-            service.setModuleEvent(3,3,'hello');
-            service.downloadContent(3,3);
-            service.isDownloaded(3,3).should.equal('pending');
-        });
-        it( 'should allow me to remove downloaded files', function () {
-            service.setModuleEvent(3,3,'hello');
-            service.downloadContent(3,3);
-            service.deleteContent(3,3);
-            service.isDownloaded(3,3 ).should.not.be.ok;
-        });
+        it( 'should return a promise that resolves to a URL if I use downloadAndWait');
+        it( 'should allow me to mark files as downloaded');
+        it( 'should allow me to remove downloaded files');
+        it( 'should add files to queue if modules passed with subscription');
+        it( 'should lookup files and add to queue if checkFiles called without modules');
         it( 'should store preferences from localstorage', function () {
-            service.setModuleEvent(3,3,'hello');
+            service.setModuleEvent('hello');
             // trigger the events
             rootScope.$apply();
             // not sure why this isn't working

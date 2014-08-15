@@ -25,22 +25,6 @@ describe('Main Controller', function () {
         it ('should load place holder / welcome text by default' , function () {
             scope.model.isPlaceholder.should.be.ok;
         });
-        // blurb stuff should be in a directive!
-        it ('should show blurb by default' , function () {
-            scope.showBlurb.should.be.ok;
-        });
-        // blurb stuff should be in a directive!
-        it ('should hide blurb on list click if in push or slide nav mode' , function () {
-            scope.canAppr.config.navType='slide';
-            scope.clickList( '#' );
-            scope.showBlurb.should.not.be.ok;
-        });
-        // blurb stuff should be in a directive!
-        it ('should not hide blurb on list click if in split nav mode' , function () {
-            scope.canAppr.config.navType='split';
-            scope.clickList( '#' );
-            scope.showBlurb.should.be.ok;
-        });
         describe ( 'Organizations View' , function () {
             beforeEach(  function () {
                 scope.options = { collection : 'org'};

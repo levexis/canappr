@@ -27,7 +27,7 @@
                     _setContent();
                 }
             });
-            $rootScope.watch('canAppr.prefs.module', function () {
+            $rootScope.$watch('canAppr.prefs.module', function () {
                 $scope.isDownloaded = prefService.isDownloaded();
                 // will return null or downloading false if delete, true if completed
                 $scope.canDownload = $scope.isDownloaded() || prefService.wasDeleted();

@@ -60,7 +60,7 @@
             restrict : "A",
             compile: function(el,attr) {
                 el.removeAttr( 'cd-transition' ); // necessary to avoid infinite compile loop
-                attr.$set ('style' , 'animation-duration: 0.5s;');
+                attr.$set ('style' , 'animation-duration: 0.25s;');
 //              had problems compiling this but this was probably a scope issue as transclude errors. if scope is defined as 1 way binding then
 //              could probably call compile safely. Anyway have added classes manually which does the trick
 //                attr.$set ('ng-class' , '{ \'animated\': ready ,\'bounceInRight\': ready && !options.goneBack ,\'bounceInLeft\': ready && options.goneBack }');
