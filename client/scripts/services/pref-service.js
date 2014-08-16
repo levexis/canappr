@@ -5,7 +5,8 @@
 
     myApp.factory('prefService', function($rootScope , $log, registryService ,  fileService , xmlService, moduleService ) {
         // retrieve from local storage
-        var _prefs, _navParams, _courseId, _moduleId, _orgId;
+        var _prefs, _navParams, _courseId, _moduleId, _orgId,
+            _isMobile = registryService.getConfig('isPhoneGap');
 
         $rootScope.canAppr.prefs = JSON.parse ( window.localStorage.getItem('canAppr.prefs') ) || {
             course : {},
@@ -25,6 +26,8 @@
             _courseId = registryService.getCourseId ();
             _moduleId = registryService.getModuleId ();
             _orgId =_navParams.org.id+'';
+            // this is refreshed here to make it possible to set for karma testing
+            _isMobile = registryService.getConfig('isPhoneGap');
         }, true);
 
         // returns number of items added to the queue
@@ -41,6 +44,7 @@
                     content = [ content ];
                 }
                 content.forEach ( queueURL );
+                // kick of queue
                 fileService.downloadQueued();
                 return content.length;
             }
@@ -74,13 +78,18 @@
             /*
              * checks if files have been downloaded or new files for download
              * updates status for module if all downloaded
+             * adds new modules
              */
             checkFiles : function ( courseId , modules ) {
-                // could check files and mark as all downloaded if done
-                if ( modules) {
-                    modules.forEach( queueContentFiles );
+                if ( _isMobile ) {
+                    // could check files and mark as all downloaded if done
+                    if ( modules ) {
+                        modules.forEach( queueContentFiles );
+                    }
+                    // if they are all their then mark module as completely dowloaded?
+                } else {
+                    return false;
                 }
-                // if they are all their then mark module as completely dowloaded?
             },
             // courseId optional or uses navParams
             unsubscribeCourse: function ( courseId) {
@@ -92,10 +101,14 @@
 //                    if ( refileService.clearDir ( courseId );
                 }
             },
-            // courseId optional or uses navParams
+            // moduleId optional or uses navParams
             clearFiles: function ( moduleId) {
                 moduleId = moduleId || _moduleId;
-                // TODO the rest
+                if ( _isMobile && moduleId ) {
+                    fileService.clearDir( moduleId );
+                } else {
+                    return false;
+                }
             },
             // track what's been viewed and what hasnt, whats completed etc
             // creates the stub and allows events to be added via the @what param

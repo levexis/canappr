@@ -463,7 +463,7 @@
 // TODO: Only over wifi?
 // TODO: Donwload multiple files at once?
         return {
-            // call on device ready
+            // must be called on device ready to initialize module, also makes mocking easier
             init : function init ( app_dir ) {
                 LOCAL_ROOT = window.cordova.file.externalDataDirectory || window.cordova.file.dataDirectory;
                 _dirManager = new DirManager();

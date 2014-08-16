@@ -1,10 +1,13 @@
 var expect = chai.expect;
 
-var app = angular.module( 'canAppr' ),
-mockedApp = angular.module('mockAppr', ['canAppr', 'ngMockE2E']);
+var app = angular.module( 'canAppr' );
+/*
+,mockedApp = angular.module('mockAppr', ['canAppr', 'ngMockE2E']);
 // this allows for passThrough via ngMockE2E but have to create a mock app module to call
 mockedApp.run(function($httpBackend) {
-    /*
+    // 1) this is for e2e mocking and there is no server running when karma runs on CI?
+    // 2) I cant seem to get passThrough to work in any case
+    // this is supposed to all passthrough and automatically flush requests
     phones = [{name: 'phone1'}, {name: 'phone2'}];
 
     // returns the current list of phones
@@ -20,16 +23,19 @@ mockedApp.run(function($httpBackend) {
      $httpBackend.whenGET('/hello').respond(function(method, url, data) {
      console.log('intercepted',method,url,data);
      });
-    */
     // passthrough is a nightmare... https://github.com/angular/angular.js/issues/1434
-    $httpBackend.whenGET(/^\/views\/.*/).passThrough();
-});
+*/
+//    $httpBackend.whenGET(/^\/views\/.*/).passThrough();
+//    $httpBackend.whenGET('/^\/api\/.*/').passThrough();
+
+    // I could build a complete mock for the phonegap modules here - Media, file etc
+//});
 
 
 describe('Services', function() {
 
-//    beforeEach( module( 'mockAppr' ) );
     beforeEach( module( 'canAppr' ) );
+//    beforeEach( module( 'mockAppr' ) ); not getting joy from mockAppr
 
     describe( 'libs', function () {
 
@@ -218,7 +224,7 @@ describe('Services', function() {
             } );
             it( 'should return false if name not defined ', function () {
                 service.getConfig('wibble' ).should.equal(false);
-            })
+            });
         } );
         describe( 'setConfig', function () {
             it( 'should be a method', function () {
@@ -355,55 +361,99 @@ describe('Services', function() {
     } );
 
     describe( 'prefService', function () {
-        var service, rootScope;
-        beforeEach( inject( function ( prefService , $rootScope ) {
+        var service, rootScope, _fileService;
+        beforeEach( inject( function ( $rootScope , fileService , $injector , prefService , registryService) {
             window.localStorage.clear();
-            service = prefService;
             rootScope = $rootScope;
+            service = prefService;
+            // stub file service that pref depends on, amazingly this works just like this
+            fileService= sinon.stub ( fileService);
+            registryService.setConfig( 'isPhoneGap', true );
             expect( service ).to.not.be.undefined;
             // set current nav params
             rootScope.canAppr.navParams.org.id=1;
             rootScope.canAppr.navParams.course.id=1;
             rootScope.canAppr.navParams.module.id=3;
-            // prefService only updates on watch which requires a digest loop
-           rootScope.$apply();
+            // this updates all the watches so navParams & configs set
+            rootScope.$apply();
+            _fileService = fileService;
         } ) );
-        it( 'should return false if Ive not subscribe to a courses' , function () {
-            service.isSubscribed().should.not.be.ok;
-            service.isSubscribed('1-3').should.not.be.ok;
+        it( 'should stub fileService for tests' , function () {
+            service.clearFiles('1-1');
+            // check spy works
+            _fileService.clearDir.should.have.been.calledOnce;
         });
-        it( 'should remember if I explicitly subscribe to a courses', function () {
-            service.subscribeCourse(3);
-            service.isSubscribed(3).should.be.ok;
-            service.isSubscribed('3').should.be.ok;
+        describe ( 'subscribe / unsubscribe / isSubscribed'  , function () {
+            it( 'should return false if Ive not subscribe to a courses' , function () {
+                service.isSubscribed().should.not.be.ok;
+                service.isSubscribed('1-3').should.not.be.ok;
+            });
+            it( 'should remember if I explicitly subscribe to a courses', function () {
+                service.subscribeCourse(3);
+                service.isSubscribed(3).should.be.ok;
+                service.isSubscribed('3').should.be.ok;
+            });
+            it( 'should allow me to unsubscribe to a course', function () {
+                service.subscribeCourse();
+                service.unsubscribeCourse();
+                service.isSubscribed().should.not.be.ok;
+            });
+            it( 'should use navParams implicitly' , function () {
+                service.subscribeCourse();
+                service.isSubscribed('1-1').should.be.ok;
+                service.unsubscribeCourse();
+                service.isSubscribed('1-1').should.not.be.ok;
+            });
         });
-        it( 'should allow me to unsubscribe to a course', function () {
-            service.subscribeCourse();
-            service.unsubscribeCourse();
-            service.isSubscribed().should.not.be.ok;
+        describe ( 'events'  , function () {
+            it( 'should allow me to mark events against modules', function () {
+                service.setModuleEvent( 'hello' );
+                service.getEventTime( 'hello' ).getTime.should.be.a.function;
+            } );
         });
-        it( 'should use navParams implicitly' , function () {
-            service.subscribeCourse();
-            service.isSubscribed('1-1').should.be.ok;
-            service.unsubscribeCourse();
-            service.isSubscribed('1-1').should.not.be.ok;
+        describe ( 'files'  , function () {
+            // this is a nice cheat to get the module data without having to wrestle with e2e backend, it's in a js file
+            // that karma includes
+            var modules = window.mockModules,
+                _moduleService,
+                apiBase,
+                httpBackend;
+            beforeEach( function (next ) {
+                inject( function ( moduleService , $httpBackend , $http ) {
+                    var  apiBase = rootScope.canAppr.apiBase;
+                    // read api - illustrates how to use th mock
+                    httpBackend = $httpBackend;
+                    httpBackend.expectGET( apiBase + 'modules' ).respond ( 200 , window.mockModules );
+                    _moduleService = moduleService;
+                    _moduleService.query(function ( results ) {
+                        modules = results;
+                        next();
+                    } );
+                    httpBackend.flush();
+                } );
+            });
+            it( 'should lookup files and add to queue if checkFiles called without modules' , function () {
+                httpBackend.expectGET( apiBase + 'modules' ).respond ( 200 , window.mockModules );
+                service.checkFiles();
+//                httpBackend.flush();
+            });
+            it( 'should add files if checkfiles called with modules collection');
+            it( 'should add files to queue if modules collection passed with subscription');
+            it( 'should allow mark module as downloaded if all files cached');
+            it( 'should allow me to delete module files');
+            it( 'should not attempt to redownload a deleted file unless explicity set to redownload');
         });
-        it( 'should allow me to mark events against modules', function () {
-            service.setModuleEvent('hello');
-            service.getEventTime('hello').getTime.should.be.a.function;
-        });
-        it( 'should return a promise that resolves to a URL if I use downloadAndWait');
-        it( 'should allow me to mark files as downloaded');
-        it( 'should allow me to remove downloaded files');
-        it( 'should add files to queue if modules passed with subscription');
-        it( 'should lookup files and add to queue if checkFiles called without modules');
         it( 'should store preferences from localstorage', function () {
             service.setModuleEvent('hello');
-            // trigger the events
+            // trigger the events which should lead to local storage write
             rootScope.$apply();
             // not sure why this isn't working
-            //localStorage.getItem('canAppr.prefs' ).should.contain('hello');
+//            sinon.spy(localStorage , 'setItem');
+//            localStorage.setItem.should.have.been.calledOnce;
+//            localStorage.setItem('canAppr.prefs' ).should.contain('hello');
         });
+        // not implemented
+        it( 'should return a promise that resolves to a URL if I use downloadAndWait');
         // would need to reconfigure the factory?
         it( 'should retrieve preferences from localstorage');
     } );

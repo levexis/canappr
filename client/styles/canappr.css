@@ -98,7 +98,12 @@ body,html {
     color: olivedrab;
     text-align: center;
 }
-
+.ca-progress:hover {
+    cursor: pointer;
+}
+.ca-wrapper i:hover {
+    cursor: pointer;
+}
 .ca-progress .time {
     position: absolute;
     left: 50%;

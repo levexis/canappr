@@ -25,6 +25,7 @@ module.exports = function(config) {
             'bower_components/underscore/underscore.js',
             'bower_components/fastclick/lib/fastclick.js',
             'client/scripts/**/*.js',
+            'client/api/**/*.js', // this is a cheat to get some api data loaded in
             'bower_components/angular-mocks/angular-mocks.js',
             'bower_components/jquery/dist/jquery.min.js',
             'test/unit/**/*.js'
