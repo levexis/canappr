@@ -3,7 +3,7 @@
     // this can be used to replace the rootScope nonsense
     var myApp = angular.module( 'canAppr' );
 
-    myApp.factory( 'fileService', function ( $rootScope, $log , $q, $timeout ) {
+    myApp.factory( 'fileService', function ( $rootScope, $log , $q, $timeout , qutils) {
 
         /**
 
@@ -425,28 +425,7 @@
                 JSON.stringify (_fileTable));
         }
 
-        function qresolved ( what ) {
-           var resolved = $q.defer();
-           resolved.resolve(what);
-           return resolved.promise;
-        }
 
-        function promiseSuccess( deferred , message ) {
-            return function ( success) {
-                if (message) {
-                    $log.debug( message, success );
-                }
-                deferred.resolve( success );
-            };
-        }
-        function promiseError( deferred , message ) {
-            return function ( error) {
-                if (message) {
-                    $log.debug( message, error );
-                }
-                deferred.reject( error );
-            };
-        }
         // returns an array of files that match the expression
         function getFiles ( key , value ) {
             var _outArr = [];
@@ -509,7 +488,7 @@
                     startTime = new Date(),
                     _self = this;
                 if ( url && _fileTable[url] && _fileTable[url].status === 'cached') {
-                    return qresolved(_fileTable[url].local );
+                    return qutils.resolved(_fileTable[url].local );
                 } else if ( url && dir && name && !_fileTable[url] ) {
                     _fileTable[url] = {
                         status : 'downloading',
@@ -595,12 +574,12 @@
                     _fileManager.remove_file( APP_DIR + '/' + _fileTable[url].dir,_fileTable[url].filename,
                         function ( success) {
                             delete _fileTable[url];
-                            promiseSuccess( deferred, url + ' cleared' )(success);
+                            qutils.promiseSuccess( deferred, url + ' cleared' )(success);
                         },
-                        promiseError( deferred ) );
+                        qutils.promiseError( deferred ) );
                     return deferred.promise;
                 } else {
-                    qresolved( false );
+                    return qutils.resolved( false );
                 }
            },
             // clear cache by directory (effectively an entire module )
@@ -608,10 +587,10 @@
                 // TODO - need to clear up file table!
                 if (dir) {
                     var deferred = $q.defer();
-                    _dirManager.remove( APP_DIR + '/' + dir , promiseSuccess( deferred, dir + ' cleared' ), promiseError( deferred ) );
+                    _dirManager.remove( APP_DIR + '/' + dir , qutils.promiseSuccess( deferred, dir + ' cleared' ), qutils.promiseError( deferred ) );
                     return deferred.promise;
                 } else {
-                    qresolved( false );
+                    return qutils.resolved( false );
                 }
             },
             // getStatus of a URL

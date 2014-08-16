@@ -136,6 +136,35 @@ eg offset(angular.element (document.querySelector( '.ca-progress')));
         };
     });
 
+    myApp.factory('qutils', function ($log,$q) {
+
+        return {
+            resolved : function ( what ) {
+                var resolved = $q.defer();
+                resolved.resolve( what );
+                return resolved.promise;
+            },
+
+            promiseSuccess : function ( deferred, message ) {
+                return function ( success ) {
+                    if ( message ) {
+                        $log.debug( message, success );
+                    }
+                    deferred.resolve( success );
+                };
+            },
+
+            promiseError : function ( deferred, message ) {
+                return function ( error ) {
+                    if ( message ) {
+                        $log.debug( message, error );
+                    }
+                    deferred.reject( error );
+                };
+            }
+        };
+    });
+
 })(angular); // jshint ignore:line
 
 

@@ -79,9 +79,13 @@
              * checks if files have been downloaded or new files for download
              * updates status for module if all downloaded
              * adds new modules
+             * @returns a promise true if all download, string if downloading, false on error
+             *
              */
             checkFiles : function ( courseId , modules ) {
-                if ( _isMobile ) {
+                var deferred =
+                courseId = courseId || _courseId;
+                if ( _isMobile && courseId ) {
                     // could check files and mark as all downloaded if done
                     if ( modules ) {
                         modules.forEach( queueContentFiles );
