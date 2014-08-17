@@ -489,7 +489,7 @@
                     _self = this;
                 if ( url && _fileTable[url] && _fileTable[url].status === 'cached') {
                     return qutils.resolved(_fileTable[url].local );
-                } else if ( url && dir && name && !_fileTable[url] ) {
+                } else if ( url && dir && name && !_fileTable[url] || _fileTable[url] === 'deleted'  ) {
                     _fileTable[url] = {
                         status : 'downloading',
                         dir: dir,
@@ -573,7 +573,7 @@
                     var deferred = $q.defer();
                     _fileManager.remove_file( APP_DIR + '/' + _fileTable[url].dir,_fileTable[url].filename,
                         function ( success) {
-                            delete _fileTable[url];
+                            _fileTable[url].status = 'deleted';
                             qutils.promiseSuccess( deferred, url + ' cleared' )(success);
                         },
                         qutils.promiseError( deferred ) );

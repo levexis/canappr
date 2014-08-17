@@ -139,6 +139,11 @@ eg offset(angular.element (document.querySelector( '.ca-progress')));
     myApp.factory('qutils', function ($log,$q) {
 
         return {
+            /*
+             * returns a resolved promise
+             * note that angular does not resolve promise until digest runs
+             * so you will need to do rootScope.apply in tests
+             */
             resolved : function ( what ) {
                 var resolved = $q.defer();
                 resolved.resolve( what );

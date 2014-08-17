@@ -3,7 +3,7 @@
     // this can be used to replace the rootScope nonsense
     var myApp = angular.module( 'canAppr' );
 
-    myApp.factory('prefService', function($rootScope , $log, registryService ,  fileService , xmlService, moduleService ) {
+    myApp.factory('prefService', function($rootScope , $log, $q ,registryService , fileService , xmlService, moduleService , qutils ) {
         // retrieve from local storage
         var _prefs, _navParams, _courseId, _moduleId, _orgId,
             _isMobile = registryService.getConfig('isPhoneGap');
@@ -35,7 +35,11 @@
             var content,
                 playObj = xmlService.toObject( atob( module.playlist ) );
             function queueURL ( item ) {
-                fileService.cacheURL( item.src , _courseId , _moduleId + 'mp3' );
+                if (item.file.type === 'audio' ) {
+                    fileService.cacheURL( item.file.src, _courseId, _moduleId + '.mp3' );
+                } else {
+                    $log.error( 'undrecognised file type', item.type );
+                }
             }
             if ( playObj ) {
                 content = playObj.organization.course.module.content;
@@ -44,9 +48,38 @@
                     content = [ content ];
                 }
                 content.forEach ( queueURL );
-                // kick of queue
-                fileService.downloadQueued();
                 return content.length;
+            }
+        }
+
+        // returns true if all downloaded, delete or failed
+        // false if downloading or pending remaining or not found at all
+        // @param modules array or single module definition
+        function checkStatus ( modules ) {
+            // returns the aggregate status of one of more modules
+            var outStatus = true;
+            function aggregateStatus( module ) {
+                var playObj = xmlService.toObject( atob( module.playlist ) ),
+                    content = playObj.organization.course.module.content;
+                function _doURLStatus ( item ) {
+                    var status = fileService.getStatus( item.file.src );
+                    if ( outStatus && ( !status || status === 'downloading'|| status === 'queued' || status === 'pending' ) ) {
+                        outStatus = false;
+                    }
+                }
+                if ( !_.isArray( content ) ) {
+                    content = [ content ];
+                }
+                content.forEach ( _doURLStatus );
+            }
+            if (  typeof modules === 'object' ) {
+                if ( !_.isArray ( modules ) ) {
+                    modules = [ modules ];
+                }
+                modules.forEach ( aggregateStatus );
+                return outStatus;
+            } else {
+                return false;
             }
         }
 
@@ -61,7 +94,7 @@
             // if passed modules then will queue all the files for download
             subscribeCourse: function ( courseId , modules ) {
                 courseId = courseId || _courseId;
-                // all based on current navParams
+                // else based on current navParams
                 if ( courseId ) {
                     // first time
                     if ( !_prefs.course[ courseId ] ) {
@@ -79,20 +112,68 @@
              * checks if files have been downloaded or new files for download
              * updates status for module if all downloaded
              * adds new modules
-             * @returns a promise true if all download, string if downloading, false on error
+             * @returns a promise true if all downloaded, false if files to be downloaded
              *
              */
             checkFiles : function ( courseId , modules ) {
-                var deferred =
+                var deferred;
                 courseId = courseId || _courseId;
                 if ( _isMobile && courseId ) {
                     // could check files and mark as all downloaded if done
                     if ( modules ) {
                         modules.forEach( queueContentFiles );
+                        // kick off queue
+                        if ( checkStatus (modules ) ) {
+                            // todo: how do we get the status of all the files? Another method I think
+                            return qutils.resolved(true);
+                        } else {
+                            fileService.downloadQueued();
+                            return qutils.resolved( false );
+                        }
+                    } else {
+                        deferred = $q.defer();
+                        moduleService.query ( { courseId : _navParams.course.id } ,
+                            function ( modules) {
+                                modules.forEach( queueContentFiles );
+                                // kick off queue
+                                if ( checkStatus (modules ) ) {
+                                    // todo: how do we get the status of all the files? Another method I think
+                                    deferred.resolve(true);
+                                } else {
+                                    fileService.downloadQueued();
+                                    deferred.resolve( false );
+                                }
+                            }
+                        );
+                        return deferred.promise;
                     }
                     // if they are all their then mark module as completely dowloaded?
+                    return deferred;
                 } else {
-                    return false;
+                    return qutils.resolved ( false );
+                }
+            },
+            /*
+             * checks module status
+             * @returns a promise true if all downloaded, false if files to be downloaded
+             *
+             */
+            getModuleStatus: function ( moduleId , module ) {
+                var deferred = $q.defer();
+                moduleId = moduleId || _moduleId;
+                // else based on current navParams
+                if ( !moduleId ) {
+                    return qutils.resolved( false );
+                } else {
+                    if ( module) {
+                        return deferred.resolve( checkStatus( result ) );
+                    } else {
+                        moduleService.query ( { id: _navParams.module.id} , function ( result ) {
+                            console.log('result',result);
+                            return deferred.resolve( checkStatus( result ) );
+                        });
+                    }
+                    return deferred.promise;
                 }
             },
             // courseId optional or uses navParams
@@ -110,6 +191,8 @@
                 moduleId = moduleId || _moduleId;
                 if ( _isMobile && moduleId ) {
                     fileService.clearDir( moduleId );
+                    // TODO: check files after so its marked in correct state ie downloaded?
+                    // or can I just ignore
                 } else {
                     return false;
                 }
