@@ -55,7 +55,7 @@
             template: outTemplate
         };
     });
-    myApp.directive('cdTransition', function ( $log ) {
+    myApp.directive('cdTransition', function ( $log ,registryService ) {
         return {
             restrict : "A",
             compile: function(el,attr) {
@@ -66,20 +66,24 @@
 //                attr.$set ('ng-class' , '{ \'animated\': ready ,\'bounceInRight\': ready && !options.goneBack ,\'bounceInLeft\': ready && options.goneBack }');
                 // return link function
                 return function( $scope,element,attribute) {
-                    $scope.$watch('navDir', function ( navDir ) {
-                        el.addClass( 'animated' );
-                        $log.debug('ready',navDir);
-                        if ( navDir ==='back' ) {
+                    // as these transitions are not being done using ngAnimate angular does not wait for them
+                    // and errors occur. Plus removing transitions will speed up e2e tests in any case
+                    if ( !registryService.getConfig('isE2E' ) ) {
+                        $scope.$watch( 'navDir', function ( navDir ) {
+                            el.addClass( 'animated' );
+                            $log.debug( 'ready', navDir );
+                            if ( navDir === 'back' ) {
                                 el.addClass( 'slideInLeft' );
-                        } else if ( navDir ==='new' ) {
+                            } else if ( navDir === 'new' ) {
                                 el.addClass( 'fadeIn' );
-                        } else if ( navDir ==='forward' ) {
-                            el.addClass( 'slideInRight' );
-                        } else if ( navDir) {
-                            // allow explicit transition
-                            el.addClass( navDir );
-                        }
-                    });
+                            } else if ( navDir === 'forward' ) {
+                                el.addClass( 'slideInRight' );
+                            } else if ( navDir ) {
+                                // allow explicit transition
+                                el.addClass( navDir );
+                            }
+                        } );
+                    }
                 };
 
             }
