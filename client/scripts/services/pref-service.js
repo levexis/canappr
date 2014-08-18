@@ -6,17 +6,39 @@
     myApp.factory('prefService', function($rootScope , $log, $q ,registryService , fileService , xmlService, moduleService , qutils ) {
         // retrieve from local storage
         var _prefs, _navParams, _courseId, _moduleId, _orgId,
-            _isMobile = registryService.getConfig('isPhoneGap');
+            _isNative = registryService.getConfig('isNative');
 
         $rootScope.canAppr.prefs = JSON.parse ( window.localStorage.getItem('canAppr.prefs') ) || {
             course : {},
-            module : {}
+            module : {},
+            canDownload : [ 'WIFI','ETHERNET','3G','4G' ]
         };
 
+        function _canDownloadCurry ( options ) {
+            if ( _.isArray ( options ) ) {
+                return function () {
+                    var _canDownload=false;
+                    function _checkOption (option ) {
+                        if ( navigator.connection.type.toUpperCase() === option.toUpperCase() ) {
+                            _canDownload = true;
+                        }
+                    }
+                    options.forEach ( _checkOption );
+                    return _canDownload;
+                };
+            } else {
+                return undefined;
+            }
+        }
+
+        /* watches pref changes, saves and processes certain prefs like downloadable */
         $rootScope.$watch('canAppr.prefs', function ( after, before) {
             if ( !_.isEqual(before,after) ) {
                 $log.debug( 'pref change saved', before, after );
                 window.localStorage.setItem( 'canAppr.prefs', JSON.stringify( _prefs) );
+                if ( registryService.getConfig ('isNative') ) {
+                    fileService.canDownload( _canDownloadCurry( after.canDownload ) );
+                }
             }
         // don't forget object comparison
         }, true);
@@ -27,7 +49,7 @@
             _moduleId = registryService.getModuleId ();
             _orgId =_navParams.org.id+'';
             // this is refreshed here to make it possible to set for karma testing
-            _isMobile = registryService.getConfig('isPhoneGap');
+            _isNative = registryService.getConfig('isNative');
         }, true);
 
         // returns number of items added to the queue
@@ -118,7 +140,7 @@
             checkFiles : function ( courseId , modules ) {
                 var deferred;
                 courseId = courseId || _courseId;
-                if ( _isMobile && courseId ) {
+                if ( _isNative && courseId ) {
                     // could check files and mark as all downloaded if done
                     if ( modules ) {
                         modules.forEach( queueContentFiles );
@@ -166,10 +188,9 @@
                     return qutils.resolved( false );
                 } else {
                     if ( module) {
-                        return deferred.resolve( checkStatus( result ) );
+                        return deferred.resolve( checkStatus( module ) );
                     } else {
                         moduleService.query ( { id: _navParams.module.id} , function ( result ) {
-                            console.log('result',result);
                             return deferred.resolve( checkStatus( result ) );
                         });
                     }
@@ -189,7 +210,7 @@
             // moduleId optional or uses navParams
             clearFiles: function ( moduleId) {
                 moduleId = moduleId || _moduleId;
-                if ( _isMobile && moduleId ) {
+                if ( _isNative && moduleId ) {
                     fileService.clearDir( moduleId );
                     // TODO: check files after so its marked in correct state ie downloaded?
                     // or can I just ignore
@@ -249,8 +270,8 @@
             wasDeleted: function ( ) {
                 return !!(_moduleId &&  typeof _prefs.module[ _moduleId ].downloaded === false);
             }
-        };
 
+        };
     });
 
 })(angular , _ , window);//jshint ignore:line

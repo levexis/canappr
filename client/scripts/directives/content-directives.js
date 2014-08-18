@@ -80,7 +80,7 @@
                     );
                     $log.debug ( 'gap Audio Create',src,gapAudio);
                 }
-                $log.debug ('playItem',registryService.getConfig( 'isPhonegap' ),'audio' + $index,$scope['audio' + $index],$scope );
+                $log.debug ('playItem',registryService.getConfig( 'isNative' ),'audio' + $index,$scope['audio' + $index],$scope );
                 $log.debug ('playItem element',element,attributes );
 
                 /* media player seeking */
@@ -101,7 +101,7 @@
                     }
                 };
                 // if phonegap need playyer functions
-                if ( registryService.getConfig( 'isPhonegap' ) ) {
+                if ( registryService.getConfig( 'isNative' ) ) {
                     $scope['audio'+$index] = {};
                     $scope['audio'+$index].playing = false;
                     // if they are registered for the course then download before playing
@@ -159,7 +159,7 @@
             },
             template: function ( element, attribute ) {
                 var outHTML = '';
-                if ( !registryService.getConfig('isPhonegap') ) {
+                if ( !registryService.getConfig('isNative') ) {
                     // use native media player
                     outHTML += '<audio media-player="audio{{$index}}" data-playlist="playlist{{$index}}">';// ng-show="{{item.file.type === \'audio\'}}">';
                     //                outHTML += '<source src="http://www.soundjay.com/human/fart-01.mp3" type="audio/mp3">';

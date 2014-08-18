@@ -5,30 +5,6 @@ describe('directives', function() {
     var elm,scope,
         isPhantom = !( navigator.userAgent.indexOf('PhantomJS'===-1) );
     beforeEach ( module('canAppr') );
-//    describe('cdContent', function() {
-//        beforeEach( inject( function ( $rootScope, $compile , $httpBackend) {
-             // stub the views or you get errors
-            // $httpBackend.whenGET(/views\/.*/).respond(200,'mocking view');
-            /*
-            /* heres the encoded xml
-            <file>
-                <owner>paul</owner>
-                <type>audio</type>
-            </filgit pue>
-            elm = angular.element(
-                '<cd-content playlist="PGZpbGU+DQogICAgPG93bmVyPnBhdWw8L293bmVyPg0KICAgIDx0eXBlPmF1ZGlvPC90eXBlPg0KPC9maWxlPiA="></cd-content>');
-
-            scope = $rootScope;
-            $compile( elm )( scope );
-            scope.$digest();
-        } ) );
-        it( 'should decode the playlist', function() {
-            elm.scope().playObj.should.exist;
-            elm.scope().playObj.should.deep.equal( { file: { owner: "paul" , type: "audio" } } );
-            JSON.parse (elm.find('div').text()).should.deep.equal( { file: { owner: "paul" , type: "audio" } } );
-        });
-    });
-    */
     describe ('content directives' , function () {
         describe( 'cdPlayItem', function () {
             beforeEach( inject( function ( $rootScope, $compile ) {

@@ -18,11 +18,13 @@
             _fileManager,
             _dirManager,
             _fileTable = {},
-            APP_DIR='',
+            APP_DIR='file-service',// this is where files are stored, should be set to something app specific on  init
             // store files on external storage or in library directory on IOS, else they show up in itunes!
             LOCAL_ROOT,
             _cancel,
-            _isDownloading;
+            _isDownloading,
+            DOWNLOAD_WAIT_MAX = 5*60*1000, // max 5 mins waiting for download to finish
+            _canDownload = ( typeof navigator.onLine !== 'undefined' ) ? navigator.onLine : undefined;
 
         try {
             var tmp = window.LocalFileSystem.PERSISTENT;
@@ -32,7 +34,7 @@
             var LocalFileSystem = {PERSISTENT : window.PERSISTENT, TEMPORARY : window.TEMPORARY};
             window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
         }
-
+        // used by FileManager and Debug Manager to log what it's doing, still quite noisy!
         var Log = function ( bucket, tag ) {
             return function ( message ) {
                 if ( typeof bucket !== 'undefined' ) {
@@ -49,7 +51,7 @@
                 }
             };
         };
-
+        // Directory Manager Object
         var DirManager = function () {
 
             var current_object = this;
@@ -168,7 +170,7 @@
             };
 
         };
-
+        // used to create file system handle shared between FileManager and DirManager options
         var fileSystemSingleton = {
             fileSystem : false,
             load : function ( callback, fail ) {
@@ -186,8 +188,8 @@
                     0,
                     function ( fileSystem ) {
                         fileSystemSingleton.fileSystem = fileSystem;
-                        // set the root file path
-                        fileSystemSingleton.fileSystem.root.nativeURL = window.cordova.file.dataDirectory;
+                        // set the root file LOCAL_ROOT is done in fileService.init() but have left old default to data Directory
+                        fileSystemSingleton.fileSystem.root.nativeURL = LOCAL_ROOT || window.cordova.file.dataDirectory;
                         callback( fileSystemSingleton.fileSystem );
                     },
                     function ( err ) {
@@ -197,7 +199,7 @@
                 );
             }
         };
-
+        // FileManager Object
         var FileManager = function () {
 
             this.get_path = function ( todir, tofilename, success, fail ) {
@@ -352,7 +354,7 @@
                 );
             };
         };
-        /* not sure what this, not being used? */
+        /* Commented out as seems to be unused, there are no docs to say why / whether it worked.
         var ParallelAgregator = function ( count, success, fail, bucket ) {
             ////System.log('success: aggregator count:'+count);
             var success_results = [];
@@ -403,9 +405,15 @@
                 this.call_success_or_fail();
             };
         };
+        */
 
-
-// file table should be a service
+// End of code from https://github.com/torrmal/cordova-simplefilemanagement/
+// file table could be a service, it is saved to local directory specified on init so we know which urls are downloaded to where.
+// or at least an object so when values are get or set it saves / flushes to disk.
+        /*
+         * gets contents of file table
+         * @returns object keyed on url.
+         */
         function _getTable () {
             _fileManager.read_file( APP_DIR , 'file_table.txt' ,
                 function ( table ) {
@@ -418,20 +426,29 @@
                     $log.debug('fileTable',_fileTable);
                 });
         }
-
+        /*
+         * saves file table
+         * @private
+         */
         function _saveTable () {
             _fileManager.write_file( APP_DIR ,
                 'file_table.txt' ,
                 JSON.stringify (_fileTable));
         }
-
-
-        // returns an array of files that match the expression
+        /*
+         * returns an array of files that match the expression
+         * @param key to search for
+         * @param value that must match if to be added to results
+         * @return array of module elements
+         * @private
+         */
+        //
         function getFiles ( key , value ) {
             var _outArr = [];
             function _addMatch ( url ) {
                 var obj = _fileTable[url];
                 if ( obj[key] === [value] ) {
+                    // url is added back onto element
                     _outArr.push( _.extend( obj, {url : url} ) );
                 }
             }
@@ -442,7 +459,12 @@
 // TODO: Only over wifi?
 // TODO: Donwload multiple files at once?
         return {
-            // must be called on device ready to initialize module, also makes mocking easier
+            /*
+             * inits file service
+             * should be called on device ready to initialize module
+             * @param app_dir
+             * @returns {boolean} initialised successfully
+             */
             init : function init ( app_dir ) {
                 LOCAL_ROOT = window.cordova.file.externalDataDirectory || window.cordova.file.dataDirectory;
                 _dirManager = new DirManager();
@@ -452,35 +474,50 @@
                 // for debugging!
                 window.fileManager = _fileManager;
                 window.dirManager = _dirManager;
-                _cancel = false;
+                _cancel = false; // TODO: not implemented cancel yet
                 _isDownloading = false;
+                return true;
             },
-            // get url to use
+            /*
+             * gets URL to use
+             * @param {string} target url
+             * @returns {string} will return local url if already cached or target url if not cached
+             */
             getURL : function (url) {
-                if ( url && _fileTable[url] && _fileTable[url] === 'cached') {
+                if ( url && _fileTable[url] && _fileTable[url].status === 'cached') {
                     return _fileTable[url].local;
                 } else {
                     return url;
                 }
             },
             /* cache if not already in file system
-                @param URL
-                @param directory
-                */
-// this all needs to be more clever re status etc. should create an object
+                @param {string} URL
+                @param {string} directory
+                @param {string} filename to use
+                @returns {string || boolean} returns local URL if in cache of false if not cached or no url passed;
+            */
+// this could be more elegent re status etc. Maybe a FileCache object with proper methods
             cacheURL  : function ( url, dir , name) {
                 if ( url && _fileTable[url] && _fileTable[url].status === 'cached') {
                     return _fileTable[url].local;
                 } else if ( url && dir && name && !_fileTable[url] ) {
                     _fileTable[url] = {
-                        local : dir + '/' + name ,
+                        dir : dir ,
+                        filename : name,
                         status : 'queued'
                     };
                     _saveTable();
                 }
                 return false;
             },
-            //download and wait, returns a promise that resolves to a local url to use
+            /*
+             * download and wait
+             * if already downloading then polls every 5 seconds for completed download
+             * @param {string} url to download
+             * @param {string} dir directory to download it to
+             * @name {string} filename to use
+             * @returns {object} promise that resolves to local filename on completion
+             */
             downloadURL : function ( url, dir , name) {
                 var deferred,
                     // manuel is our waiter
@@ -489,57 +526,69 @@
                     _self = this;
                 if ( url && _fileTable[url] && _fileTable[url].status === 'cached') {
                     return qutils.resolved(_fileTable[url].local );
-                } else if ( url && dir && name && !_fileTable[url] || _fileTable[url] === 'deleted'  ) {
-                    _fileTable[url] = {
-                        status : 'downloading',
-                        dir: dir,
-                        filename: name
-                    };
+                } else if ( url && dir && name && this.canDownload() ) {
                     deferred = $q.defer();
-                    _isDownloading = true;
-                    _fileManager.download_file( url , APP_DIR + '/' + dir , name ,
-                        function ( file ) {
-                            $log.debug('created file',file);
-                            _fileTable[url].status = 'cached';
-//                            _fileTable[url].local = file.toNativeURL(); not in android need local url
-                            // get the filesize, it's not actually a file that is returned!
-                            file.file( function ( file ) {
-                                // save in MB to 1 decimal place
-                                _fileTable[url].local = file.localURL;
-                                _fileTable[url].size = (file.size / 1000000 ).toFixed(1);
+                    if ( !_fileTable[url] || _fileTable[url] === 'deleted'  ) {
+                        _fileTable[url] = {
+                            status : 'downloading',
+                            dir: dir,
+                            filename: name
+                        };
+                        _isDownloading = true;
+                        _fileManager.download_file( url , APP_DIR + '/' + dir , name ,
+                            function ( file ) {
+                                $log.debug('created file',file);
+                                _fileTable[url].status = 'cached';
+    //                            _fileTable[url].local = file.toNativeURL(); not in android need local url
+                                // get the filesize, it's not actually a file that is returned!
+                                file.file( function ( file ) {
+                                    // save in MB to 1 decimal place
+                                    _fileTable[url].local = file.localURL;
+                                    _fileTable[url].size = (file.size / 1000000 ).toFixed(1);
+                                    _saveTable();
+                                    deferred.resolve( file.localURL );
+                                    _isDownloading = false;
+                                    // always tries to download any other queued files
+                                    _self.downloadQueued();
+                                });
+                            },
+                            function ( error) {
+                                _fileTable[url].status='failed';
                                 _saveTable();
-                                deferred.resolve( file.localURL );
-                                _isDownloading = false;
-                                // always tries to download any other queued files
-                                _self.downloadQueued();
+                                deferred.reject( error );
                             });
-                        },
-                        function ( error) {
-                            _fileTable[url].status='failed';
-                            _saveTable();
-                            deferred.reject( error );
-                        });
-                    return deferred.promise;
-                } else if ( _fileTable[url] === 'downloading' ) {
-                    // check every 10s and wait TODO should we time out? Need to be able to reset
-                    startTime = new Date();
-                    manuel = function (url) {
-                        $timeout( function ( url ) {
-                            if ( _fileTable[url].status === 'cached' ) {
-                                deferred.resolve( _fileTable[url].local );
-                            } else if ( _fileTable[url].status === 'failed' ) {
-                                deferred.reject( 'download error' );
-                            // give it 5 mins
-                            } else if ( new Date().getTime - startTime > 300*1000 ) {
-                                // could return the actual URL if online?
-                                deferred.reject( 'timed out after ' + ( new Date().getTime - startTime) + 'ms ');
-                            } else {
-                                manuel(url);
-                            }
-                        }, 10000 );
-                    };
+                        return deferred.promise;
+                    } else if ( _fileTable[url] && _fileTable[url].status === 'downloading' ) {
+                        // check every second to see if download complete
+                        deferred = $q.defer();
+                        startTime = new Date();
+                        manuel = function () {
+                            $timeout( function () {
+                                if ( _fileTable[url].status === 'cached' ) {
+                                    deferred.resolve( _fileTable[url].local );
+                                } else if ( _fileTable[url].status === 'failed' ) {
+                                    deferred.reject( 'download error' );
+                                // give it 5 mins total before timing out
+                                } else if ( new Date().getTime - startTime > DOWNLOAD_WAIT_MAX ) {
+                                    // could return the actual URL if online?
+                                    deferred.reject( 'timed out after ' + ( new Date().getTime - startTime) + 'ms ');
+                                } else {
+                                    manuel(url);
+                                }
+                            }, 1000 );
+                        };
+                        manuel();
+                        return deferred.promise;
+                    }
+                } else {
+                return qutils.resolved(false);
                 }
             },
+            /*
+             * downloads file queue, calls itself until queue is empty
+             * @param TBD list of files to be downloaded
+             * @returns queue length
+             */
             downloadQueued: function ( TBD ) {
                 var queued = TBD,
                     next,
@@ -563,10 +612,19 @@
                     return queued.length;
                 }
             },
-            // clear everything to do with filemanager, returns a promise
+            /*
+             * clears everything to do with filemanager, including file table
+             *  @returns a promise
+             */
             clearAll : function () {
+                _fileManager = {};
+                _saveTable();
                 return this.clearDir ('');
             },
+            /*
+             * clears everything to do with filemanager, including file table
+             *  @returns a promise
+             */
             // clear cache by URL
             clearFile : function (url) {
                 if (url && _fileTable[url].status === 'cached' ) {
@@ -574,6 +632,7 @@
                     _fileManager.remove_file( APP_DIR + '/' + _fileTable[url].dir,_fileTable[url].filename,
                         function ( success) {
                             _fileTable[url].status = 'deleted';
+                            _fileTable.save();
                             qutils.promiseSuccess( deferred, url + ' cleared' )(success);
                         },
                         qutils.promiseError( deferred ) );
@@ -581,11 +640,15 @@
                 } else {
                     return qutils.resolved( false );
                 }
-           },
-            // clear cache by directory (effectively an entire module )
+            },
+            /*
+             * clear cache by directory
+             * (effectively an entire module or everything if passed '' )
+             * @param {string}
+             * @returns {promise} resolves on completion
+             */
             clearDir : function (dir) {
-                // TODO - need to clear up file table!
-                if (dir) {
+                if (typeof dir === 'string') {
                     var deferred = $q.defer();
                     _dirManager.remove( APP_DIR + '/' + dir , qutils.promiseSuccess( deferred, dir + ' cleared' ), qutils.promiseError( deferred ) );
                     return deferred.promise;
@@ -593,7 +656,11 @@
                     return qutils.resolved( false );
                 }
             },
-            // getStatus of a URL
+            /*
+             * gets current status of url in cache
+             * @param {string} URL to look for
+             * @returns {boolean | string} return false if not find, otherwise status string. status of cached if downloaded and saved
+             */
             getStatus  : function (url) {
                 if ( url && _fileTable[url] ) {
                     return _fileTable[url].status;
@@ -601,8 +668,52 @@
                     return false;
                 }
             },
-            isDownloading: function () {
+            /*
+             * gets current state of downloadManager
+             * @param {boolean} can be used to set isDownloanding for tests
+             * @returns {boolean} true if currently downloading
+             */
+            isDownloading: function (isDownloading) {
+                if ( typeof isDownloading === 'boolean' ) {
+                    _isDownloading = isDownloading;
+                }
                 return _isDownloading;
+            },
+            /*
+             * allows fileManager to be access directly or mocked
+             * @returns {object} Initialised FileManager instance
+             */
+            getFileManager: function () {
+                return _fileManager;
+            },
+            /*
+             * allows fileManager to be access directly or mocked
+             * @returns {object} Initialised DirManager instance
+             */
+            getDirManager: function () {
+                return _dirManager;
+            },
+            /*
+             * sets / returns canDownload flag
+             * @param {string | function} Can be set to function or string or nothing to return current state
+             * @returns {boolean} current status
+             */
+            canDownload: function ( setFlag ) {
+                if ( typeof setFlag !== 'undefined' ) {
+                    _canDownload = setFlag;
+                }
+                if ( typeof _canDownload === 'function' ) {
+                    return _canDownload();
+                } else {
+                    return !!_canDownload;
+                }
+            },
+            /*
+             * gets the fileTable only use for testing
+             * @returns object
+             */
+            getFileTable: function () {
+                return _fileTable;
             }
         };
 

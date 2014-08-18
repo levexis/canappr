@@ -2,7 +2,7 @@ var expect = chai.expect;
 
 
 describe('filters', function() {
-
+    beforeEach ( module('canAppr') );
     describe ('generic example',function () {
         var filter;
         beforeEach( function () {

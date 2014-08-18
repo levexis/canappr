@@ -398,13 +398,13 @@ describe('Services', function() {
 
     describe( 'prefService', function () {
         var service, rootScope, _fileService;
-        beforeEach( inject( function ( $rootScope , fileService , $injector , prefService , registryService) {
+        beforeEach( inject( function ( $rootScope , fileService,  prefService , registryService) {
             window.localStorage.clear();
             rootScope = $rootScope;
             service = prefService;
             // stub file service that pref depends on, amazingly this works just like this
             fileService= sinon.stub ( fileService);
-            registryService.setConfig( 'isPhoneGap', true );
+            registryService.setConfig( 'isNative', true );
             expect( service ).to.not.be.undefined;
             // set current nav params
             rootScope.canAppr.navParams.org.id=1;
@@ -505,16 +505,16 @@ describe('Services', function() {
             it( 'should allow me to delete module files');
             it( 'should not attempt to redownload a deleted file unless explicity set to redownload');
         });
-        it( 'should store preferences from localstorage', function () {
-/*            // not sure why this isn't working
+        it( 'should store preferences from localstorage');/* , function () {
+           // not sure why this test isn't working
             service.setModuleEvent('hello');
             // trigger the events which should lead to local storage write
             rootScope.$apply();
 //            sinon.spy(localStorage , 'setItem');
 //            localStorage.setItem.should.have.been.calledOnce;
 //            localStorage.setItem('canAppr.prefs' ).should.contain('hello');
-*/
         });
+         */
         // not implemented
         it( 'should return a promise that resolves to a URL if I use downloadAndWait');
         // would need to reconfigure the factory?
@@ -545,41 +545,283 @@ describe('Services', function() {
         });
     });
     describe(' fileService', function () {
-        it( 'should have some tests' );
-        /**
-         * these were the "tests" form the library I borrowed!
-         //TEST CODE:
-         var start=    function(){
-    //
-    //CREATE A DIRECTORY RECURSEVLY
-    var a = new DirManager(); // Initialize a Folder manager
-    a.create_r('folder_a/folder_b',Log('complete/jorge'));
+        var service, rootScope, _fileService;
+        beforeEach( inject( function ( $rootScope , $timeout, fileService ,registryService ) {
+            rootScope = $rootScope;
+            service = fileService;
+            _timeout = $timeout;
+            // stub file service that pref depends on, amazingly this works just like this
+            registryService.setConfig( 'isNative', true );
+            // stub cordova services, this should be a service in its own right!
+            window.cordova = window.cordova || {};
+            window.cordova.file = { externalDataDirectory : '/sdcard' };
+            window.FileTransfer = window.LocalTransfer || {};
+            window.LocalFileSystem = window.LocalFileSystem || { PERSISTENT : true };
+            window.RequestFileSystem = sinon.stub();
 
-    //LIST A DIRECTORY
-    a.list('cosa', Log('List'));
+        } ) );
+        it( 'should not initialise until init called', function () {
+            expect ( service.getFileManager() ).to.be.undefined;
+        });
+        it( 'should initialise' , function () {
+            service.init();
+            expect ( service.getFileManager() ).to.be.defined;
+        });
+        describe ('downloading' ,function () {
+            var _fileManager,_dirManager,_fileTable, _url;
+            beforeEach ( function () {
+                service.init('canappr');
+                _fileManager = service.getFileManager();
+                _dirManager = service.getDirManager();
+                _fileTable = service.getFileTable();
+                _fileManager = sinon.stub(_fileManager);
+                _dirManager = sinon.stub(_dirManager);
+                _url = 'http://test.com/test.mp3';
+            });
+            describe ('getURL' ,function () {
+                it( 'should return the target url if not in cache', function () {
+                    expect( service.getURL() ).to.be.undefined;
+                    service.getURL( _url ).should.equal( _url );
+                } );
+                it( 'should return the target url if downloading', function () {
+                    _fileTable[_url] = { status : 'downloading'}
+                    service.getURL( _url ).should.equal( _url );
+                } );
+                it( 'should return the local url if cached', function () {
+                    _fileTable[_url] = { status : 'cached',
+                        local : 'cdv://local/test.mp3' };
+                    service.getURL( _url ).should.equal( 'cdv://local/test.mp3' );
+                } );
+            });
+            describe ('cacheURL' ,function () {
+                beforeEach ( function () {
+                    delete _fileTable[_url];
+                });
+                it('should return false if not in cache' , function () {
+                    service.cacheURL( _url, '1-1','test.mp3' ).should.equal(false);
+                });
+                it('should add to queue if url and directory specified' , function () {
+                    service.cacheURL( _url ).should.equal(false);
+                    expect ( _fileTable[_url] ).to.be.undefined;
+                    service.cacheURL( _url , '1-1' , 'name.mp3').should.equal(false);
+                    expect (_fileTable[_url] ).to.be.defined;
+                    _fileTable[_url].dir.should.equal('1-1');
+                    _fileTable[_url].filename.should.equal('name.mp3');
+                    _fileTable[_url].status.should.equal('queued');
+                });
+                it('should return local URL if in cache' , function () {
+                    _fileTable[_url] = { status : 'cached',
+                                local: 'cdv://local/name.mp3'};
+                    service.cacheURL( _url , '1-1' , 'name.mp3').should.equal('cdv://local/name.mp3');
+                });
+            });
+            describe ('downloadURL' , function () {
+                beforeEach ( function () {
+                    delete _fileTable[_url];
+                    service.canDownload( true );
+                    _fileManager.download_file.reset();
+                });
+                it('should return a promise' , function () {
+                    service.downloadURL().should.be.an('object')
+                    service.downloadURL().then.should.be.a('function');
+                });
+                it('should resolve to false if url,dir or name missing', function (done) {
+                    service.downloadURL(_url).then( function ( what ) {
+                        what.should.be.false;
+                        done();
+                    } );
+                    rootScope.$apply();
+                });
+                it('should download file if url,dir and wait', function () {
+                    service.downloadURL(_url , '1-1' , 'name.mp3');
+                    _fileManager.download_file.should.have.been.calledOnce;
+                });
+                it('should resolve to local url if in cache', function (done) {
+                    _fileTable[_url] = { status : 'cached',
+                        local : 'cdv://local/test.mp3' };
+                    service.downloadURL(_url).then( function ( what ) {
+                        what.should.equal ('cdv://local/test.mp3');
+                        done();
+                    } );
+                    rootScope.$apply();
+                });
+                it('should resolve immediately to false if canDownload is false and not cached', function (done) {
+                    _fileTable[_url] = { status : 'downloading',
+                        local : 'cdv://local/test.mp3' };
+                    service.canDownload( false );
+                    service.downloadURL(_url).then( function ( what ) {
+                        what.should.be.false;
+                        done();
+                    } );
+                    rootScope.$apply();
+                });
+                it('should poll for completion if currently downloading', function ( done ) {
+                    var _waited = false;
+                    _fileTable[_url] = {
+                        status : 'downloading',
+                        local : 'cdv://local/test.mp3' };
+                    service.downloadURL(_url , '1-1' , 'name.mp3' ).then( function(result) {
+                        _waited.should.be.ok;
+                        result.should.equal( 'cdv://local/test.mp3' );
+                        done();
+                    });
+                    _timeout.flush();
+                    rootScope.$apply();
+                    _waited=true;
+                    _fileTable[_url].status = 'cached';
+                    _timeout.flush();
+                    rootScope.$apply();
+                });
+                it('should only wait for 5 mins'); // not got a way of mocking these
+                // can't test these as FileManager is stubbed, would need to mock
+                it('should set local and size on succesful download');
+                it('should reset isDownloading and call downloadQueue on completion');
 
-    //REMOVE A DIRECTORY RECURSEVLY
-    a.remove('folder_a/folder_b',Log('complete delte'), Log('delete fail'));
-
-    //
-    //FILES MANAGEMENT:
-    //
-    var b = new FileManager();
-    // create an empty  FILE (simialr unix touch command), directory will be created recursevly if it doesnt exist
-    b.load_file('dira/dirb/dirc','demofile.txt',Log('file created'),Log('something went wrong'));
-
-    // WRITE TO A FILE
-    b.write_file('dira/dirb/dirc/dird','demofile_2.txt','this is demo content',Log('wrote sucessful!'));
-
-    // READ A FILE
-    b.read_file('dira/dirb/dirc/dird','demofile_2.txt',Log('file contents: '),Log('something went wrong'));
-
-    // download a file from a remote location and store it localy
-    b.download_file('http://www.greylock.com/teams/42-Josh-Elman','filder_a/dwonloads_folder/','target_name.html',Log('downloaded sucess'));
-
- }
-         document.addEventListener('deviceready', start, false);
-         */
+            })
+            /*
+            downloadURL : function ( url, dir , name) {
+                var deferred,
+                // manuel is our waiter
+                    manuel,
+                    startTime = new Date(),
+                    _self = this;
+                if ( url && _fileTable[url] && _fileTable[url].status === 'cached') {
+                    return qutils.resolved(_fileTable[url].local );
+                } else if ( url && dir && name && !_fileTable[url] || _fileTable[url] === 'deleted'  ) {
+                    _fileTable[url] = {
+                        status : 'downloading',
+                        dir: dir,
+                        filename: name
+                    };
+                    deferred = $q.defer();
+                    _isDownloading = true;
+                    _fileManager.download_file( url , APP_DIR + '/' + dir , name ,
+                        function ( file ) {
+                            $log.debug('created file',file);
+                            _fileTable[url].status = 'cached';
+                            //                            _fileTable[url].local = file.toNativeURL(); not in android need local url
+                            // get the filesize, it's not actually a file that is returned!
+                            file.file( function ( file ) {
+                                // save in MB to 1 decimal place
+                                _fileTable[url].local = file.localURL;
+                                _fileTable[url].size = (file.size / 1000000 ).toFixed(1);
+                                _saveTable();
+                                deferred.resolve( file.localURL );
+                                _isDownloading = false;
+                                // always tries to download any other queued files
+                                _self.downloadQueued();
+                            });
+                        },
+                        function ( error) {
+                            _fileTable[url].status='failed';
+                            _saveTable();
+                            deferred.reject( error );
+                        });
+                    return deferred.promise;
+                } else if ( _fileTable[url] === 'downloading' ) {
+                    // check every 10s and wait TODO should we time out? Need to be able to reset
+                    startTime = new Date();
+                    manuel = function (url) {
+                        $timeout( function ( url ) {
+                            if ( _fileTable[url].status === 'cached' ) {
+                                deferred.resolve( _fileTable[url].local );
+                            } else if ( _fileTable[url].status === 'failed' ) {
+                                deferred.reject( 'download error' );
+                                // give it 5 mins
+                            } else if ( new Date().getTime - startTime > 300*1000 ) {
+                                // could return the actual URL if online?
+                                deferred.reject( 'timed out after ' + ( new Date().getTime - startTime) + 'ms ');
+                            } else {
+                                manuel(url);
+                            }
+                        }, 10000 );
+                    };
+                }
+            },
+            downloadQueued: function ( TBD ) {
+                var queued = TBD,
+                    next,
+                    _self = this;
+                if ( !_isDownloading ) {
+                    if (!queued || !queued.length) {
+                        queued = getFiles( 'status', 'queued' );
+                        if ( !queued.length ) {
+                            // retry failures
+                            queued = getFiles( 'status', 'failed' );
+                        }
+                        if (queued.length) {
+                            // should maybe do these in some sort of order, presume shift will be order they were put in
+                            next = queued.shift();
+                            this.downloadURL ( next.url, next.dir, next.filename)
+                                .then( function () {
+                                    _self.downloadQueued( queued );
+                                });
+                        }
+                    }
+                    return queued.length;
+                }
+            },
+            clearAll : function () {
+                _fileManager = {};
+                _saveTable();
+                return this.clearDir ('');
+            },
+            clearFile : function (url) {
+                if (url && _fileTable[url].status === 'cached' ) {
+                    var deferred = $q.defer();
+                    _fileManager.remove_file( APP_DIR + '/' + _fileTable[url].dir,_fileTable[url].filename,
+                        function ( success) {
+                            _fileTable[url].status = 'deleted';
+                            _fileTable.save();
+                            qutils.promiseSuccess( deferred, url + ' cleared' )(success);
+                        },
+                        qutils.promiseError( deferred ) );
+                    return deferred.promise;
+                } else {
+                    return qutils.resolved( false );
+                }
+            },
+            clearDir : function (dir) {
+                if (typeof dir === 'string') {
+                    var deferred = $q.defer();
+                    _dirManager.remove( APP_DIR + '/' + dir , qutils.promiseSuccess( deferred, dir + ' cleared' ), qutils.promiseError( deferred ) );
+                    return deferred.promise;
+                } else {
+                    return qutils.resolved( false );
+                }
+            },
+            getStatus  : function (url) {
+                if ( url && _fileTable[url] ) {
+                    return _fileTable[url].status;
+                } else {
+                    return false;
+                }
+            },
+            isDownloading: function (isDownloading) {
+                if ( typeof isDownloading === 'boolean' ) {
+                    _isDownloading = isDownloading;
+                }
+                return _isDownloading;
+            },
+            getFileManager: function () {
+                return _fileManager;
+            },
+            getDirManager: function () {
+                return _dirManager;
+            },
+            canDownload: function ( setFlag ) {
+                if ( setFlag ) {
+                    _canDownload = setFlag;
+                }
+                if ( typeof _canDownload === 'function' ) {
+                    return _canDownload();
+                } else {
+                    return !!_canDownload;
+                }
+            }
+            getFileTable
+            */
+        });
     });
 });
 

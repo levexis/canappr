@@ -23,7 +23,7 @@
     myApp.directive('cdBody', function( registryService ) {
         var outTemplate;
         // push thing didn't go very will so disabled
-        if ( false && registryService.getConfig('isPhoneGap')) {
+        if ( false && registryService.getConfig('isNative')) {
             outTemplate = '<ons-screen page="views/sliding-menu.html"></ons-screen>';
             registryService.setConfig('navType','slide');
         } else {

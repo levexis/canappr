@@ -11,7 +11,7 @@
             // app global config, there is probably a service for this
             $rootScope.canAppr = { apiBase : 'api/0/',
                 navParams : { org : { name : 'Organizations' }, module : {}, course : {} },
-                config : { isPhoneGap : ( typeof window.cordova !== 'undefined' ) }
+                config : { isNative : ( typeof window.cordova !== 'undefined' ) }
             };
         }
         _navParams =  $rootScope.canAppr.navParams;
@@ -85,7 +85,7 @@
                     return _config;
                 }
             },
-            // returns a string of org-course-module
+            // returns a string of org-course-module ( NOT NECESSARY AS WE WILL USE UNIQUE IDS FOR EACH SO JUST NEED MODULE ID!)
             getModuleId: function () {
                 if (_navParams.org.id && _navParams.course.id && _navParams.module.id ) {
                     return this.getCourseId() + '-' + _navParams.module.id;
@@ -93,6 +93,7 @@
                     return null;
                 }
             },
+            // returns a string of org-course ( NOT NECESSARY AS WE WILL USE UNIQUE IDS FOR EACH SO JUST NEED COURSE ID!)
             getCourseId: function () {
                 if (_navParams.org.id &&  _navParams.course.id) {
                     return _navParams.org.id + '-' + _navParams.course.id;
