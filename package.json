@@ -34,7 +34,7 @@
     "grunt-karma": "~0.8.0",
     "grunt-mocha-cli": "~1.6.0",
     "grunt-protractor-runner": "~1.0.1",
-    "grunt-selenium-webdriver": "0.2.421",
+    "grunt-selenium-webdriver": "0.2.422",
     "karma": "~0.12",
     "karma-chai-plugins": "^0.2.1",
     "karma-chrome-launcher": "~0.1.0",

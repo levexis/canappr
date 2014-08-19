@@ -447,7 +447,7 @@
             var _outArr = [];
             function _addMatch ( url ) {
                 var obj = _fileTable[url];
-                if ( obj[key] === [value] ) {
+                if ( obj[key] === value ) {
                     // url is added back onto element
                     _outArr.push( _.extend( obj, {url : url} ) );
                 }
@@ -476,6 +476,10 @@
                 window.dirManager = _dirManager;
                 _cancel = false; // TODO: not implemented cancel yet
                 _isDownloading = false;
+                // start download queue if not already
+                if ( _.keys(_fileTable) ) {
+                    this.downloadQueued();
+                }
                 return true;
             },
             /*
@@ -528,7 +532,9 @@
                     return qutils.resolved(_fileTable[url].local );
                 } else if ( url && dir && name && this.canDownload() ) {
                     deferred = $q.defer();
-                    if ( !_fileTable[url] || _fileTable[url] === 'deleted'  ) {
+                    if ( !_fileTable[url] ||
+                        _fileTable[url].status === 'deleted' ||
+                        _fileTable[url].status === 'queued') {
                         _fileTable[url] = {
                             status : 'downloading',
                             dir: dir,
@@ -559,7 +565,7 @@
                             });
                         return deferred.promise;
                     } else if ( _fileTable[url] && _fileTable[url].status === 'downloading' ) {
-                        // check every second to see if download complete
+                        // check every 5 seconds to see if download complete
                         deferred = $q.defer();
                         startTime = new Date();
                         manuel = function () {
@@ -575,7 +581,7 @@
                                 } else {
                                     manuel(url);
                                 }
-                            }, 1000 );
+                            }, 5000 );
                         };
                         manuel();
                         return deferred.promise;
@@ -593,31 +599,29 @@
                 var queued = TBD,
                     next,
                     _self = this;
-                if ( !_isDownloading ) {
-                    if (!queued || !queued.length) {
-                        queued = getFiles( 'status', 'queued' );
-                        if ( !queued.length ) {
-                            // retry failures
-                            queued = getFiles( 'status', 'failed' );
-                        }
-                        if (queued.length) {
-                            // should maybe do these in some sort of order, presume shift will be order they were put in
-                            next = queued.shift();
-                            this.downloadURL ( next.url, next.dir, next.filename)
-                            .then( function () {
-                                _self.downloadQueued( queued );
-                            });
-                        }
+                if (!queued || !queued.length) {
+                    queued = getFiles( 'status', 'queued' );
+                    if ( !queued.length ) {
+                        // retry failures
+                        queued = getFiles( 'status', 'failed' );
                     }
-                    return queued.length;
                 }
+                if (queued.length && !_isDownloading) {
+                    // should maybe do these in some sort of order, presume shift will be order they were put in
+                    next = queued.shift();
+                    _self.downloadURL ( next.url, next.dir, next.filename)
+                    .then( function () {
+                        _self.downloadQueued( queued );
+                    });
+                }
+                return queued.length;
             },
             /*
-             * clears everything to do with filemanager, including file table
+             * clears everything to do with filemanager, including file table so will lose record of what has been "deleted"
              *  @returns a promise
              */
-            clearAll : function () {
-                _fileManager = {};
+            resetAll : function () {
+                _fileTable = {};
                 _saveTable();
                 return this.clearDir ('');
             },
@@ -629,9 +633,10 @@
             clearFile : function (url) {
                 if (url && _fileTable[url].status === 'cached' ) {
                     var deferred = $q.defer();
+                    // this was in callback but have moved out to make testing easier
+                    _fileTable[url].status = 'deleted';
                     _fileManager.remove_file( APP_DIR + '/' + _fileTable[url].dir,_fileTable[url].filename,
                         function ( success) {
-                            _fileTable[url].status = 'deleted';
                             _fileTable.save();
                             qutils.promiseSuccess( deferred, url + ' cleared' )(success);
                         },
@@ -649,7 +654,16 @@
              */
             clearDir : function (dir) {
                 if (typeof dir === 'string') {
-                    var deferred = $q.defer();
+                    var deferred = $q.defer(),
+                        // delete file table entries that match
+                        fileList;
+                    if ( dir ) { // dir = '' is special case of resetAll
+                        fileList = getFiles( 'dir', dir );
+                        fileList.forEach( function ( file ) {
+                            delete _fileTable[file.url];
+                        } );
+                        _saveTable();
+                    }
                     _dirManager.remove( APP_DIR + '/' + dir , qutils.promiseSuccess( deferred, dir + ' cleared' ), qutils.promiseError( deferred ) );
                     return deferred.promise;
                 } else {
