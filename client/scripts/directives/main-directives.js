@@ -37,7 +37,7 @@
     });
     myApp.directive('cdNavBar', function( navService ) {
         var outTemplate='';
-            outTemplate += '<div style="margin: 1px 0px;" class="topcoat-list__item__line-height ca-navcan topcoat-list__item" ng-show="isSingle">';
+            outTemplate += '<div style="margin: 1px 0px; z-index: 999; display: block;" class="topcoat-list__item__line-height ca-navcan topcoat-list__item" ng-show="isSingle">';
             outTemplate += '<i class="fa fa-chevron-left" ng-show="last" ng-click="goBack()">';
             outTemplate += '<span class="ca-back">{{last}}</span></i>';
             outTemplate += '<i class="fa fa-lg fa-bars ca-menu-icon" ng-click="toggleMenu()">&nbsp;</i></div>';
@@ -52,7 +52,14 @@
                 console.log ('isSingle',$scope.isSingle);
                 $scope.toggleMenu = navService.toggleMenu;
             },
-            template: outTemplate
+            template: function ( element, attributes) {
+                // looking at how to prevent navBar animating, here I try to put this underneath the original but
+                // not doing the trick
+                if ( attributes.spacer ) {
+                    outTemplate = '<div style="margin: 1px 0px; display: block;" class="topcoat-list__item__line-height ca-navcan topcoat-list__item" ng-show="isSingle"></div>';
+                }
+                return outTemplate;
+            }
         };
     });
     myApp.directive('cdTransition', function ( $log ,registryService ) {

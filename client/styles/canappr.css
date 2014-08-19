@@ -127,6 +127,9 @@ body,html {
     float: left;
     color: olivedrab;
 }
+.ca-not-available {
+    color: gray;
+}
 .ca-content p {
     text-align: center;
     padding: 5px;

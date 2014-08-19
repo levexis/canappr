@@ -106,7 +106,6 @@
                     $scope['audio'+$index].playing = false;
                     // if they are registered for the course then download before playing
                     // this will do as POC for now!
-
                     if ( $scope.isSubscribed ) {
                         $scope['audio'+$index].playing = 'buffering';
                         // play from cache if not already downloaded
@@ -152,9 +151,14 @@
                     $scope['audio' + $index].currentTime = 0;
                     $scope['audio' + $index].formatTime = timeUtils.secShow(0);
                     $scope['audio'+$index].duration = $scope.item.time;
+                    if ( fileService.getStatus ( attributes.src ) !== 'cached' &&
+                        !fileService.canDownload() ) {
+                        $scope.notAvailable = true;
+                    }
                 } else {
                     // web player
                     $scope['playlist' + $index]= [{ src: attributes.src, type: 'audio/mp3'}];
+                    $scope.notAvailable = fileService.canDownload();
                 }
             },
             template: function ( element, attribute ) {
@@ -168,7 +172,7 @@
                 outHTML += '<div class="ca-wrapper" ng-class="{ \'ca-even\': ($index % 2) !== 0}" >';
                 outHTML += '    <p class="ca-content-title {{item.file.type}} ">{{ $index+1 }}. {{item.description}} (<span ng-bind-html="audio{{$index}}.formatTime"></span>)</p>';
                 // have added a pulse to make it obvious something is happening as safari is laggy particularly on ipad etc
-                outHTML += '    <div class="ca-play animate" style="animation-duration: 0.5s;" ng-click="pulse=true; audio{{$index}}.playPause()" ng-class="{ \'pulse\' : pulse } ">';
+                outHTML += '    <div class="ca-play animate" style="animation-duration: 0.5s;" ng-click="pulse=true; audio{{$index}}.playPause()" ng-class="{ \'pulse\' : pulse , \'ca-not-available\' : notAvailable }">';
                 outHTML += '        <i class="fa fa-lg" ng-class="{ \'fa-pause\': audio{{$index}}.playing===true ,\'fa-spinner\': audio{{$index}}.playing===\'buffering\', \'fa-spin\': audio{{$index}}.playing===\'buffering\', \'fa-play\': !audio{{$index}}.playing }"></i>';
                 outHTML += '    </div>';
                 outHTML += '    <div class="ca-progress" ng-click="audio{{$index}}.seek(audio{{$index}}.duration * seekPercentage($event))">';
