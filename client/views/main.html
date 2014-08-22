@@ -2,25 +2,27 @@
         need to do an automatic translation so maybe put english in master template
         there is a way of doing this ! -->
 
-<ons-page ng-controller="MainCtrl" id="main" cd-transition>
-<ons-scroller infinit-scroll-enable="true" >
-    <cd-nav-bar></cd-nav-bar> <!-- this is a hack to prevent navbar transition -->
-    <div class="ca-blurb">
-        <h1 align="center">{{model.name}}<cd-switch ng-show="canSubscribe" model="subscribed"></cd-switch></h1>
-        <p align="center" class="ca-main-body" ng-bind-html="model.html"></p>
+<ons-page ng-controller="MainCtrl" id="main"><!-- as soon as I add my transition I can't scroll any more! -->
+<ons-scroller>
+    <cd-nav-bar></cd-nav-bar>
+    <div class="animated fadeIn"><!-- had a problem with cd-transition on ons-page seemed to kill scroller !-->
+        <div class="ca-blurb">
+            <h1 align="center">{{model.name}}<cd-switch ng-show="canSubscribe" model="subscribed"></cd-switch></h1>
+            <p align="center" class="ca-main-body" ng-bind-html="model.html"></p>
+        </div>
+        <div class="ca-main-empty" ng-show="!someFiltered"><p>Sorry, there are no {{collectionName}} from {{model.name}} available to you right now.</p></div>
+        <ons-navigator title="{{collectionName}}" ng-show="someFiltered" class="ca-main-list" >
+            <ons-list>
+                <span ng-repeat="item in collection | filter:filterWhere | orderBy : name">
+                    <ons-list-item
+                            class="topcoat-list__item--tappable topcoat-list__item__line-height"
+                            ng-click="clickList( targetTemplate, { id: item.id , collection: target, item: item });">
+                        <i ng-class="['fa','fa-lg',collectionClass,'ca-arrow-right']">&nbsp;</i>
+                        {{item.name}}
+                    </ons-list-item>
+                </span>
+            </ons-list>
+        </ons-navigator>
     </div>
-    <div class="ca-main-empty" ng-show="!someFiltered"><p>Sorry, there are no {{collectionName}} from {{model.name}} available to you right now.</p></div>
-    <ons-navigator title="{{collectionName}}" ng-show="someFiltered" class="ca-main-list" >
-        <ons-list scrollabe>
-            <span ng-repeat="item in collection | filter:filterWhere | orderBy : name">
-                <ons-list-item
-                        class="topcoat-list__item--tappable topcoat-list__item__line-height"
-                        ng-click="clickList( targetTemplate, { id: item.id , collection: target, item: item });">
-                    <i ng-class="['fa','fa-lg',collectionClass,'ca-arrow-right']">&nbsp;</i>
-                    {{item.name}}
-                </ons-list-item>
-            </span>
-        </ons-list>
-    </ons-navigator>
 </ons-scroller>
 </ons-page>
