@@ -55,12 +55,14 @@
         // returns number of items added to the queue
         function queueContentFiles( module ) {
             var content,
-                playObj = xmlService.toObject( atob( module.playlist ) );
+                findex = 0,
+                playObj = xmlService.toObject( atob( module.playlist ) ); // this should be a custom type!
             function queueURL ( item ) {
-                if (item.file.type === 'audio' ) {
-                    fileService.cacheURL( item.file.src, _courseId, _moduleId + '.mp3' );
+                if (  item.file && item.file.type === 'audio' ) {
+                    fileService.cacheURL( decodeURIComponent(item.file.url), module.courseId , module.id + '-' + findex + '.mp3' );
+                    findex += 1;
                 } else {
-                    $log.error( 'undrecognised file type', item.type );
+                    $log.error( 'unrecognised file type', item.type );
                 }
             }
             if ( playObj ) {
@@ -73,19 +75,45 @@
                 return content.length;
             }
         }
+        // clears all the files in a module
+        function _clearFiles( module ) {
+            var content,
+                promises = [],
+                playObj = xmlService.toObject( atob( module.playlist ) ); // this should be a custom type!
+            function clearURL ( item ) {
+                if ( item.file.url ) {
+                    promises.push( fileService.clearFile( decodeURIComponent( item.file.url ) ) );
+                }
+            }
+            if ( playObj ) {
+                content = playObj.organization.course.module.content;
+                // expects an array of things to play
+                if ( !_.isArray( content ) ) {
+                    content = [ content ];
+                }
+                content.forEach ( clearURL );
+                return $q.all(promises);
+            } else {
+                // nothing found
+                qutils.resolved( false );
+            }
+        }
 
         // returns true if all downloaded, delete or failed
         // false if downloading or pending remaining or not found at all
         // @param modules array or single module definition
-        function checkStatus ( modules ) {
+        function checkStatus ( modules , allCached) {
             // returns the aggregate status of one of more modules
             var outStatus = true;
             function aggregateStatus( module ) {
                 var playObj = xmlService.toObject( atob( module.playlist ) ),
                     content = playObj.organization.course.module.content;
                 function _doURLStatus ( item ) {
-                    var status = fileService.getStatus( item.file.src );
-                    if ( outStatus && ( !status || status === 'downloading'|| status === 'queued' || status === 'pending' ) ) {
+                    var status = fileService.getStatus( decodeURIComponent( item.file.url ) );
+                    // return true if cached or deleted unless all cacehed in which case only true if in cache
+                    // all other downloading , queued etc returns false
+                    if ( outStatus && ( !status || ( status !== 'cached' &&
+                        (status !== 'deleted' || allCached) ) ) ) {
                         outStatus = false;
                     }
                 }
@@ -126,7 +154,7 @@
                         _prefs.course[ courseId ].subscribed = new Date();
                     }
                     if ( modules ) {
-                        this.checkFiles( courseId , modules );
+                        this.checkCourseFiles( courseId , modules );
                     }
                 }
             },
@@ -137,12 +165,15 @@
              * @returns a promise true if all downloaded, false if files to be downloaded
              *
              */
-            checkFiles : function ( courseId , modules ) {
+            checkCourseFiles : function ( courseId , modules ) {
                 var deferred;
                 courseId = courseId || _courseId;
                 if ( _isNative && courseId ) {
                     // could check files and mark as all downloaded if done
                     if ( modules ) {
+                        if ( !_.isArray ( modules ) ) {
+                            modules = [ modules ];
+                        }
                         modules.forEach( queueContentFiles );
                         // kick off queue
                         if ( checkStatus (modules ) ) {
@@ -154,12 +185,11 @@
                         }
                     } else {
                         deferred = $q.defer();
-                        moduleService.query ( { courseId : _navParams.course.id } ,
+                        moduleService.query ( { courseId : courseId } ,
                             function ( modules) {
-                                modules.forEach( queueContentFiles );
+                                 modules.forEach( queueContentFiles );
                                 // kick off queue
                                 if ( checkStatus (modules ) ) {
-                                    // todo: how do we get the status of all the files? Another method I think
                                     deferred.resolve(true);
                                 } else {
                                     fileService.downloadQueued();
@@ -176,46 +206,107 @@
                 }
             },
             /*
-             * checks module status
-             * @returns a promise true if all downloaded, false if files to be downloaded
+             * master method that checks for files for all courses
+             * will find new files and download accordingly
+             * updates status for each course if new files found
+             * @returns a promise that resolves to isDownloaded for all files
+             */
+            checkFiles : function () {
+                var _self = this,
+                    all = [],
+                    deferred;
+
+                _.keys(_prefs.course ).forEach ( function ( courseId ) {
+                    all.push( _self.checkCourseFiles( courseId ) );
+                });
+                if ( all.length ) {
+                    deferred = $q.defer();
+                    // when they are all resolved then return true if no false results
+                    $q.all(all , function ( results ) {
+                        var out = true;
+                        results.forEach( function ( result ) {
+                            out = out && result;
+                        } );
+                        deferred.resolve(out);
+                    });
+                    return deferred.promise;
+                } else {
+                    // true if nothing to do
+                    return qutils.resolved( true );
+                }
+
+            },
+            /*
+             * checks status of module files, anythingTBD
+             * @param string moduleId
+             * @param module actual record
+             * @param allDownloaded return false if file has been deleted
+             * @returns a promise / boolean if module passed in - true if all downloaded, false if files to be downloaded / deleted
              *
              */
-            getModuleStatus: function ( moduleId , module ) {
+            isModuleReady: function ( moduleId , module , allDownloaded ) {
                 var deferred = $q.defer();
                 moduleId = moduleId || _moduleId;
                 // else based on current navParams
                 if ( !moduleId ) {
-                    return qutils.resolved( false );
+                    return false;
                 } else {
                     if ( module) {
-                        return deferred.resolve( checkStatus( module ) );
+                        return checkStatus( module , allDownloaded );
                     } else {
                         moduleService.query ( { id: _navParams.module.id} , function ( result ) {
-                            return deferred.resolve( checkStatus( result ) );
+                            return deferred.resolve ( checkStatus( result , allDownloaded  ) );
                         });
                     }
                     return deferred.promise;
                 }
             },
             // courseId optional or uses navParams
-            unsubscribeCourse: function ( courseId) {
+            // @param courseId to unsubscribe from or uses navParams
+            // returns a promise
+            unsubscribeCourse: function ( courseId ) {
+                var _self = this;
                 courseId = courseId || _courseId;
                 if ( courseId && _prefs.course[ courseId ] ) {
                     _prefs.course[ courseId ].subscribed = false;
                     // remove all files
-                    // TODO: this needs looking at as throws an error if not on phonegap
-//                    if ( refileService.clearDir ( courseId );
+                    return fileService.clearDir( courseId );
+                } else {
+                    return qutils.resolved(false);
                 }
             },
+            /*
+             * deletes all the files for current modules
+             * @param modules
+             * @return promise
+             */
             // moduleId optional or uses navParams
-            clearFiles: function ( moduleId) {
-                moduleId = moduleId || _moduleId;
-                if ( _isNative && moduleId ) {
-                    fileService.clearDir( moduleId );
-                    // TODO: check files after so its marked in correct state ie downloaded?
-                    // or can I just ignore
+            clearFiles: function ( modules ) {
+                var deferred,
+                    moduleId,
+                    promises = [];
+                if ( typeof modules === 'object' &&
+                   !_.isArray ( modules ) ) {
+                    modules = [ modules ];
+                }
+                if ( _isNative && ( moduleId || modules ) ) {
+                    if ( modules ) {
+                        modules.forEach( function ( module ) {
+                            promises.push( _clearFiles( module ) );
+                        });
+                        return $q.all(promises);
+                    } else {
+                        deferred = $q.defer();
+                            moduleService.get( {id : moduleId} , function (result) {
+                                _clearFiles (result ).then( function () {
+                                    deferred.resolve( moduleId );
+                                });
+                            } , qutils.promiseError (deferred, 'get module ' + moduleId)
+                        );
+                        return deferred.promise;
+                    }
                 } else {
-                    return false;
+                    return qutils.resolved( false );
                 }
             },
             // track what's been viewed and what hasnt, whats completed etc
@@ -237,38 +328,23 @@
                     return false;
                 }
             },
-            // sets the flag to say content has been downloaded - should it broadcast an event?
-            // takes a parameter as this can be called outside of service
-            fileDownloaded: function ( moduleId ) {
-                // TODO: Have removed this from download file-service
-                // TODO this should maybe be a callback function and separated out
-                // prefService.fileDownloaded ( dir , url );
-
-                // TODO: this will need to check all files for a module content are in the filecache
-                // but at the moment it's one file per module so we can cheet
-                moduleId = moduleId || _moduleId;
-                if ( moduleId) {
-                    if (  !_prefs.module[moduleId] ) {
-                        _prefs.module [ moduleId ] = {};
-                    }
-                    if ( typeof _prefs.module[ moduleId ].downloaded !== 'object' ) {
-                        _prefs.module[ moduleId ].downloaded = new Date();
-                    }
-                }
-            },
             // optional courseId otherwise will use current navParams
             isSubscribed: function (courseId) {
                 courseId = courseId || _courseId;
                 return  !!( courseId && _prefs.course[ courseId ] && _prefs.course[ courseId ].subscribed );
             },
-            // returns true if all files for module have been download
-            isDownloaded: function ( ) {
-                // should be a date, ie an object will do
-                return !!(_moduleId &&  typeof _prefs.module[ _moduleId ].downloaded === 'object');
-            },
-            // indicates a file has been removed, this allows for it to be manually downloaded
-            wasDeleted: function ( ) {
-                return !!(_moduleId &&  typeof _prefs.module[ _moduleId ].downloaded === false);
+            /*
+             * returns true if all files for a module have been download
+             * @param module compulsary
+             * @return is syncronous true if donwload, false if not
+             */
+            isDownloaded: function ( module ) {
+                if ( module && module.id ) {
+                    return this.isModuleReady( module.id , module, true);
+                } else {
+                    $log.debug( 'requires module data' );
+                    return false;
+                }
             }
 
         };

@@ -20,6 +20,8 @@
                      window.StatusBar.overlaysWebView( false );
                      registryService.setConfig( 'isNative', true );
                      fileService.init('canappr');
+                     // check for new files for all subscribed courses and add to queue
+                     prefService.checkFiles();
                      $window.canAppr.fileService = fileService;
                      // set the navtype here or mabe in config section instead of hard coding into index.html
                  };

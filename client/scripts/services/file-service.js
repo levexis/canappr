@@ -23,7 +23,7 @@
             LOCAL_ROOT,
             _cancel,
             _isDownloading,
-            DOWNLOAD_WAIT_MAX = 5*60*1000, // max 5 mins waiting for download to finish
+            DOWNLOAD_WAIT_MAX = 5*60*1000,// max 5 mins waiting for download to finish for a download and wait request
             _canDownload = ( typeof navigator.onLine !== 'undefined' ) ? navigator.onLine : undefined;
 
         try {
@@ -466,6 +466,7 @@
              * @returns {boolean} initialised successfully
              */
             init : function init ( app_dir ) {
+                var failed;
                 LOCAL_ROOT = window.cordova.file.externalDataDirectory || window.cordova.file.dataDirectory;
                 _dirManager = new DirManager();
                 _fileManager = new FileManager();
@@ -475,6 +476,13 @@
                 window.fileManager = _fileManager;
                 window.dirManager = _dirManager;
                 _cancel = false; // TODO: not implemented cancel yet
+                // should not be already downloading anything, fail files that have been downloading
+                if ( !_isDownloading ) {
+                    failed = getFiles( { status : 'downloading' } );
+                    failed.forEach ( function ( failure ) {
+                        failure.status = 'failed';
+                    });
+                }
                 _isDownloading = false;
                 // start download queue if not already
                 if ( _.keys(_fileTable) ) {
@@ -592,27 +600,36 @@
             },
             /*
              * downloads file queue, calls itself until queue is empty
-             * @param TBD list of files to be downloaded
+             * @param TBD list of files to be downloaded optional
+             * @param attempts used for callbacks to prevent death by recursion
              * @returns queue length
              */
-            downloadQueued: function ( TBD ) {
-                var queued = TBD,
+            downloadQueued: function ( TBD , attempts ) {
+                var queued = TBD || [],
                     next,
-                    _self = this;
-                if (!queued || !queued.length) {
+                    _self = this,
+                    _queueAttempts = attempts || 0;
+                if ( !queued.length ) {
                     queued = getFiles( 'status', 'queued' );
                     if ( !queued.length ) {
                         // retry failures
                         queued = getFiles( 'status', 'failed' );
                     }
                 }
-                if (queued.length && !_isDownloading) {
+                if ( queued.length && !_isDownloading && _canDownload ) {
                     // should maybe do these in some sort of order, presume shift will be order they were put in
                     next = queued.shift();
-                    _self.downloadURL ( next.url, next.dir, next.filename)
-                    .then( function () {
-                        _self.downloadQueued( queued );
-                    });
+                    if ( _queueAttempts < 250 ) {
+                        _self.downloadURL( next.url, next.dir, next.filename )
+                            .then( function () {
+                                // add a little delay so file download failures don't free the screen
+                                $timeout ( function () {
+                                    _self.downloadQueued( queued , _queueAttempts++ );
+                                } ,100 );
+                            } );
+                    } else {
+                        $log.error( _queueAttempts + ' recursions', queued );
+                    }
                 }
                 return queued.length;
             },
@@ -631,7 +648,7 @@
              */
             // clear cache by URL
             clearFile : function (url) {
-                if (url && _fileTable[url].status === 'cached' ) {
+                if (url && _fileTable[url] && _fileTable[url].status !== 'deleted' ) {
                     var deferred = $q.defer();
                     // this was in callback but have moved out to make testing easier
                     _fileTable[url].status = 'deleted';

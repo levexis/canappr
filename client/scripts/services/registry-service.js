@@ -87,19 +87,25 @@
             },
             // returns a string of org-course-module ( NOT NECESSARY AS WE WILL USE UNIQUE IDS FOR EACH SO JUST NEED MODULE ID!)
             getModuleId: function () {
+
+                return _navParams.module.id + '';
+                /*
                 if (_navParams.org.id && _navParams.course.id && _navParams.module.id ) {
                     return this.getCourseId() + '-' + _navParams.module.id;
                 } else {
                     return null;
                 }
+                */
             },
             // returns a string of org-course ( NOT NECESSARY AS WE WILL USE UNIQUE IDS FOR EACH SO JUST NEED COURSE ID!)
             getCourseId: function () {
-                if (_navParams.org.id &&  _navParams.course.id) {
+                return _navParams.course.id + '';
+               /* if (_navParams.org.id &&  _navParams.course.id) {
                     return _navParams.org.id + '-' + _navParams.course.id;
                 } else {
                     return null;
                 }
+                */
             }
         };
     });

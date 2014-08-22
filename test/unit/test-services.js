@@ -38,7 +38,7 @@ describe('Services', function() {
 //    beforeEach( module( 'mockAppr' ) ); not getting joy from mockAppr
 
     describe( 'libs', function () {
-
+    var apibase;
         describe( 'xml', function () {
             var service,
                 xml = '<file><type>video</type><url>https://dropbox.com/19382/breathing.mp4</url></file>';
@@ -69,9 +69,9 @@ describe('Services', function() {
     } )
 
     describe( 'api', function () {
-        var backend, service, scope, ctrl, apiBase, getSpy;
+        var backend, service, scope, ctrl;
         // these mocks should all be one service
-        beforeEach( inject( function ( $httpBackend, $rootScope, $http, $log ) {
+        beforeEach( inject( function ( $httpBackend, $rootScope,  $log ) {
             // this is a fix to a bug with angular-cached-resource where it uses $log out of scope
             window.$log = $log;
             backend = $httpBackend;
@@ -79,7 +79,6 @@ describe('Services', function() {
 //            backend.whenGET(/views\/.*/).passThrough();
             // passthrough is a nightmare... https://github.com/angular/angular.js/issues/1434
             // seems you cannot load local files in karma unit tests
-            getSpy = sinon.spy( $http.get );
             apiBase = $rootScope.canAppr.apiBase;
             backend.whenGET( /views\/.*/ ).respond( 200, 'mocking view' );
             // ignore the views
@@ -415,8 +414,10 @@ describe('Services', function() {
             _fileService = fileService;
         } ) );
         it( 'should stub fileService for tests' , function () {
-            service.clearFiles('1-1');
+            service.clearFiles();
             // check spy works
+            service.subscribeCourse();
+            service.unsubscribeCourse();
             _fileService.clearDir.should.have.been.calledOnce;
         });
         describe ( 'subscribe / unsubscribe / isSubscribed'  , function () {
@@ -436,9 +437,9 @@ describe('Services', function() {
             });
             it( 'should use navParams implicitly' , function () {
                 service.subscribeCourse();
-                service.isSubscribed('1-1').should.be.ok;
+                service.isSubscribed('1').should.be.ok;
                 service.unsubscribeCourse();
-                service.isSubscribed('1-1').should.not.be.ok;
+                service.isSubscribed('1').should.not.be.ok;
             });
         });
         describe ( 'events'  , function () {
@@ -455,7 +456,7 @@ describe('Services', function() {
                 apiBase,
                 httpBackend;
             beforeEach( function (next ) {
-                inject( function ( moduleService , $httpBackend , $http ) {
+                inject( function ( moduleService , $httpBackend ) {
                     apiBase = rootScope.canAppr.apiBase;
                     // read api - illustrates how to use th mock
                     httpBackend = $httpBackend;
@@ -468,18 +469,18 @@ describe('Services', function() {
                     //} );
                     //httpBackend.flush();
                     // reset spies
-                    _fileService.reset()
+                    _fileService.reset();
                 } );
             });
-            it( 'should lookup files and add to queue if checkFiles called without modules' , function () {
+            it( 'should lookup files and add to queue if checkCourseFiles called without modules' , function () {
                 httpBackend.expectGET( apiBase + 'modules?courseId=1' ).respond ( 200 , window.mockModules );
-                service.checkFiles();
+                service.checkCourseFiles();
                 httpBackend.flush();
                 _fileService.cacheURL.callCount.should.equal(5);
                 _fileService.downloadQueued.should.have.been.calledOnce;
             });
             it( 'should add files if checkfiles called with modules collection' , function ( next ) {
-                service.checkFiles('1-1',modules ).then ( function (downloaded) {
+                service.checkCourseFiles('1',modules ).then ( function (downloaded) {
                     downloaded.should.not.be.ok;
                     _fileService.cacheURL.callCount.should.equal( 5 );
                     _fileService.downloadQueued.should.have.been.calledOnce;
@@ -493,17 +494,26 @@ describe('Services', function() {
                 // otherwise I get a bad array error if I don't put the record in an array
                 var response = JSON.stringify([ mockModules[2] ]);
                 httpBackend.expectGET( apiBase + 'modules/3' ).respond ( 200 , response );
-                service.getModuleStatus('1-1' ).then ( function ( status ) {
+                service.isModuleReady('1' ).then ( function ( status ) {
                     status.should.not.be.ok;
                     next();
                 });
                 rootScope.$apply();
                 httpBackend.flush();
             });
-            it( 'should add files to queue if modules collection passed with subscription');
-            it( 'should allow mark module as downloaded if all files cached');
-            it( 'should allow me to delete module files');
-            it( 'should not attempt to redownload a deleted file unless explicity set to redownload');
+            it( 'should add files to queue if modules collection passed with subscription' , function () {
+                service.subscribeCourse ( null, mockModules);
+                _fileService.getStatus.callCount.should.equal(5);
+            });
+            it( 'should clear files using module or navParams' , function() {
+                service.clearFiles().should.be.an('object');
+                // always returns a promise
+                service.clearFiles().then.should.be.a('function');
+            });
+            it( 'checkFiles should populate cache status by module' , function () {
+                service.checkFiles();
+                service.isModuleReady(1).should.be.ok;
+            });
         });
         it( 'should store preferences from localstorage');/* , function () {
            // not sure why this test isn't working
@@ -545,10 +555,11 @@ describe('Services', function() {
         });
     });
     describe(' fileService', function () {
-        var service, rootScope, _fileService;
-        beforeEach( inject( function ( $rootScope , $timeout, fileService ,registryService ) {
+        var service, rootScope, _fileService, httpBackend;
+        beforeEach( inject( function ( $rootScope , $timeout, fileService ,registryService , $httpBackend) {
             rootScope = $rootScope;
             service = fileService;
+            httpBackend = $httpBackend;
             _timeout = $timeout;
             // stub file service that pref depends on, amazingly this works just like this
             registryService.setConfig( 'isNative', true );
@@ -558,7 +569,6 @@ describe('Services', function() {
             window.FileTransfer = window.LocalTransfer || {};
             window.LocalFileSystem = window.LocalFileSystem || { PERSISTENT : true };
             window.RequestFileSystem = sinon.stub();
-
         } ) );
         it( 'should not initialise until init called', function () {
             expect ( service.getFileManager() ).to.be.undefined;
@@ -598,21 +608,21 @@ describe('Services', function() {
                     delete _fileTable[_url];
                 } );
                 it( 'should return false if not in cache', function () {
-                    service.cacheURL( _url, '1-1', 'test.mp3' ).should.equal( false );
+                    service.cacheURL( _url, '1', 'test.mp3' ).should.equal( false );
                 } );
                 it( 'should add to queue if url and directory specified', function () {
                     service.cacheURL( _url ).should.equal( false );
                     expect( _fileTable[_url] ).to.be.undefined;
-                    service.cacheURL( _url, '1-1', 'name.mp3' ).should.equal( false );
+                    service.cacheURL( _url, '1', 'name.mp3' ).should.equal( false );
                     expect( _fileTable[_url] ).to.be.defined;
-                    _fileTable[_url].dir.should.equal( '1-1' );
+                    _fileTable[_url].dir.should.equal( '1' );
                     _fileTable[_url].filename.should.equal( 'name.mp3' );
                     _fileTable[_url].status.should.equal( 'queued' );
                 } );
                 it( 'should return local URL if in cache', function () {
                     _fileTable[_url] = { status : 'cached',
                         local : 'cdv://local/name.mp3'};
-                    service.cacheURL( _url, '1-1', 'name.mp3' ).should.equal( 'cdv://local/name.mp3' );
+                    service.cacheURL( _url, '1', 'name.mp3' ).should.equal( 'cdv://local/name.mp3' );
                 } );
             } );
             describe( 'downloadURL', function () {
@@ -633,7 +643,7 @@ describe('Services', function() {
                     rootScope.$apply();
                 } );
                 it( 'should download file if url,dir and wait', function () {
-                    service.downloadURL( _url, '1-1', 'name.mp3' );
+                    service.downloadURL( _url, '1', 'name.mp3' );
                     _fileManager.download_file.should.have.been.calledOnce;
                 } );
                 it( 'should resolve to local url if in cache', function ( done ) {
@@ -660,7 +670,7 @@ describe('Services', function() {
                     _fileTable[_url] = {
                         status : 'downloading',
                         local : 'cdv://local/test.mp3' };
-                    service.downloadURL( _url, '1-1', 'name.mp3' ).then( function ( result ) {
+                    service.downloadURL( _url, '1', 'name.mp3' ).then( function ( result ) {
                         _waited.should.be.ok;
                         result.should.equal( 'cdv://local/test.mp3' );
                         done();
@@ -672,7 +682,7 @@ describe('Services', function() {
                     _timeout.flush();
                     rootScope.$apply();
                 } );
-                it( 'should only wait for 5 mins' ); // not got a way of mocking these
+                // not got a way of mocking these, timer.flush fluses immediatelyit( 'should only wait for 5 mins' );
                 // can't test these as FileManager is stubbed, would need to mock
                 it( 'should set local and size on succesful download' );
                 it( 'should reset isDownloading and call downloadQueue on completion' );
@@ -687,18 +697,19 @@ describe('Services', function() {
                 } );
                 it( 'should accept queue as argument', function () {
                     service.downloadQueued( [
-                        {url : _url, status : 'queued', dir : '1-1', filename : 'test.mp3'} ,
-                        {url : _url, status : 'queued', dir : '1-1', filename : 'test.mp3'}
+                        {url : _url, status : 'queued', dir : '1', filename : 'test.mp3'} ,
+                        {url : _url, status : 'queued', dir : '1', filename : 'test.mp3'}
                     ] ).should.equal( 1 );
                 } );
                 it( 'should pop off the queue and start downloading', function () {
+                    console.log('debug');
                     service.downloadQueued( [
-                        {url : _url, status : 'queued', dir : '1-1', filename : 'test.mp3'}
+                        {url : _url, status : 'queued', dir : '1', filename : 'test.mp3'}
                     ] ).should.equal( 0 );
                     service.isDownloading().should.be.ok;
                 } );
                 it( 'should use filetable if no queue passed in', function () {
-                    _fileTable[_url] = {url : _url, status : 'queued', dir : '1-1', filename : 'test.mp3'};
+                    _fileTable[_url] = {url : _url, status : 'queued', dir : '1', filename : 'test.mp3'};
                     service.isDownloading().should.not.be.ok;
                     service.downloadQueued().should.equal( 0 ); // popped
                     service.isDownloading().should.be.ok;
@@ -753,7 +764,7 @@ describe('Services', function() {
                 beforeEach( function () {
                     _fileTable[_url] = {
                         status : 'cached',
-                        dir : '1-1',
+                        dir : '1',
                         filename : 'test.mp3',
                         local : 'cdv://local/test.mp3' };
                     _fileTable[_url + '2' ] = {
@@ -761,18 +772,17 @@ describe('Services', function() {
                         dir : '1-2',
                         filename : 'test.mp3',
                         local : 'cdv://local/test2.mp3' };
-
                 } );
                 it( 'should return a promise', function () {
-                    service.clearDir( '1-1' ).then.should.be.a( 'function' );
+                    service.clearDir( '1' ).then.should.be.a( 'function' );
                 } );
                 it( 'should delete files in that directory', function () {
-                    service.clearDir( '1-1' );
+                    service.clearDir( '1' );
                     _dirManager.remove.should.have.been.calledOnce;
                     expect( _fileTable [ _url ] ).to.not.exist;
                 } );
                 it( 'should return status of false for getStatus', function () {
-                    service.clearDir( '1-1' );
+                    service.clearDir( '1' );
                     service.getStatus( _url ).should.equal( false );
                     service.getStatus( _url + '2' ).should.equal( 'cached' );
                 } );
@@ -780,6 +790,13 @@ describe('Services', function() {
                     service.resetAll();
                     service.getURL( _url ).should.equal( _url );
                 } );
+                it( 'should set downloading files to failed on initialise' , function () {
+                    _fileTable[_url] = { status : 'downloading',
+                        local : 'cdv://local/test.mp3' };
+                    service.init();
+                    _fileTable[_url];
+                });
+
             } );
             describe ('flags, getters and setters' , function() {
                 it('should return status or false if not found', function () {
@@ -814,6 +831,7 @@ describe('Services', function() {
                     };
                     service.canDownload (toggler).should.be.ok;
                     service.canDownload ().should.not.be.ok;
+
                 });
                 /*
                 canDownload: function ( setFlag ) {
@@ -827,6 +845,68 @@ describe('Services', function() {
                     }
                 }
                 */
+            });
+            describe ('prefService.checkFiles' , function () {
+                var _prefService;
+                beforeEach( inject( function ( prefService) {
+                    _prefService = prefService;
+                    _prefService.subscribeCourse( 1 , mockModules[0] );
+                    _url = _.keys(_fileTable)[0];
+                } ) );
+                afterEach( function () {
+                    _prefService.unsubscribeCourse( 1 );
+                });
+                it( 'should return true if isDownloaded passed a module' , function () {
+                    _prefService.isModuleReady( 1 , mockModules[0] ).should.not.be.ok;
+                    _prefService.isDownloaded( 1  , mockModules[0] ).should.not.be.ok;
+                });
+                it( 'should return true if isDownloaded passed a module' , function () {
+                    _fileTable[_url].status='cached';
+                    _prefService.isDownloaded(mockModules[0]).should.be.ok;
+                });
+                it( 'should return false if isDownloaded not passed a module' , function () {
+                    _fileTable[_url].status='cached';
+                    _prefService.isDownloaded().should.not.be.ok;
+                });
+                it( 'should mark module ready if cached or deleted' , function () {
+                    _fileTable[_url].status='deleted';
+                    _prefService.isModuleReady( 1 , mockModules[0] ).should.be.ok;
+                    _prefService.isDownloaded( 1  , mockModules[0] ).should.not.be.ok;
+                });
+                it('should return a promise if not passed module(s) for isReady' , function () {
+                    _prefService.isModuleReady(1).then.should.be.a('function');
+                });
+                it( 'should still be ready if I delete module files' , function () {
+                    // should be ready by
+                    _prefService.clearFiles( mockModules );
+                    _prefService.isModuleReady( 1 , mockModules[0] ).should.be.ok;
+                    _prefService.isDownloaded( 1  , mockModules[0] ).should.not.be.ok;
+                    _fileManager.remove_file.should.have.been.calledOnce;
+                    _fileManager.remove_file.args[0][0].should.equal('canappr/1');
+                    _fileManager.remove_file.args[0][1].should.equal('1-0.mp3');
+                });
+                it( 'should but not ready or downloaded if I unsubscribe', function () {
+                    _prefService.unsubscribeCourse( 1 , mockModules );
+                    _prefService.isModuleReady( 1 , mockModules[0] ).should.not.be.ok;
+                    _prefService.isDownloaded( 1  , mockModules[0] ).should.not.be.ok;
+                });
+                it( 'should check all files for modules are in queue' , function () {
+                    _prefService.subscribeCourse(2);
+                    _prefService.checkFiles();
+                    httpBackend.expectGET( apiBase + 'modules?courseId=1' ).respond( 200, [
+                        mockModules[0]
+                    ] );
+                    httpBackend.expectGET( apiBase + 'modules?courseId=2' ).respond( 200, [
+                        mockModules[1]
+                    ] );
+                    //httpBackend.flush();
+                });
+                it( 'should not attempt to re-download module files unless explicity set cacheURL' , function () {
+                    _prefService.clearFiles();
+                    _prefService.checkFiles();
+                });
+                // must test  fileService.downloadQueued
+
             });
         });
     });
