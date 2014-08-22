@@ -46,7 +46,8 @@
             link : function ( $scope, element, attributes ) {
                 $scope.goBack = function () {
                     navService.go ( 'views/main.html' ,{ collection : navService.getCollection( $scope.last ) ,
-                                                        navDir : 'back' });
+                                                        navDir : 'back',
+                                                        oldScope: $scope });
                 };
                 $scope.isSingle=navService.isSingle();
                 console.log ('isSingle',$scope.isSingle);

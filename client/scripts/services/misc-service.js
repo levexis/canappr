@@ -20,6 +20,7 @@
             go: function ( where, options ) {
                 // add a timestamp
                 where += '#' + new Date().getTime();
+                // this is the one phone gap uses - single screen
                 if (_config.navType === 'slide' ) {
                     // force a refresh
                     _config.navOptions = options;
@@ -33,6 +34,11 @@
                     if ( options && options.navDir && options.navDir === 'new' ) {
                         $rootScope.ons.splitView.toggle();
                     }
+                }
+                try {
+                    options.oldScope.$remove();
+                } catch (err) {
+                    // something doesn't exist
                 }
             },
             getRouteOptions: function ($scope ) {
