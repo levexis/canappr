@@ -158,7 +158,7 @@
                 } else {
                     // web player
                     $scope['playlist' + $index]= [{ src: attributes.src, type: 'audio/mp3'}];
-                    $scope.notAvailable = fileService.canDownload();
+                    $scope.notAvailable = !fileService.canDownload();
                 }
             },
             template: function ( element, attribute ) {

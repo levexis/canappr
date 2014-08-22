@@ -8,6 +8,7 @@
             var navParams =  registryService.getNavModels(),
                 options = $scope.options || navService.getRouteOptions($scope) || {};
             function _setContent() {
+                // todo: the whole area of coverting content xml should be a service as we keep redoing the same things to the same files
                 $scope.playObj = xmlService.toObject( atob( $scope.model.playlist ) );
                 if ( $scope.playObj ) {
                     $scope.content = $scope.playObj.organization.course.module.content;
@@ -27,10 +28,10 @@
                     _setContent();
                 }
             });
-            $rootScope.$watch('canAppr.prefs.module', function () {
-                $scope.isDownloaded = prefService.isDownloaded();
+            $rootScope.$watch('canAppr.prefs.module', function ( module ) {
+                $scope.isDownloaded = prefService.isDownloaded( module );
                 // will return null or downloading false if delete, true if completed
-                $scope.canDownload = $scope.isDownloaded() || prefService.wasDeleted();
+                $scope.canDownload = prefService.isModuleReady( module.id, module );
             });
             $scope.isSubscribed = prefService.isSubscribed();
             $scope.navDir=options.navDir || 'new';

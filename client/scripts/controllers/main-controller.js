@@ -57,7 +57,8 @@
                     $scope.last = 'Courses';
                     $scope.$watch('subscribed', function ( subscribed) {
                         if ( subscribed ) {
-                            prefService.subscribeCourse( );
+                            // pass in current module list so downloading can start
+                            prefService.subscribeCourse( $scope.model.id , $scope.collection );
                         } else {
                             prefService.unsubscribeCourse( );
                         }

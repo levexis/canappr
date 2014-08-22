@@ -2,7 +2,7 @@
     'use strict';
     var myApp = angular.module('canAppr', ['onsen.directives' ,'mediaPlayer', 'ngTouch', 'ngAnimate', 'ngCachedResource', 'ngSanitize' ])
         .run(
-         function ($rootScope, $timeout , $window, $injector, $log , registryService , fileService ) {
+         function ($rootScope, $timeout , $window, $injector, $log , registryService , fileService ,prefService ) {
 
              // if in debug mode then expose rootScope and it's injector
              // eg canAppr.getService('orgService').query().$promise.then(function (results) { console.log('results',results); } ));
@@ -22,6 +22,7 @@
                      fileService.init('canappr');
                      // check for new files for all subscribed courses and add to queue
                      prefService.checkFiles();
+                     document.addEventListener("online", prefService.checkFiles, false);
                      $window.canAppr.fileService = fileService;
                      // set the navtype here or mabe in config section instead of hard coding into index.html
                  };

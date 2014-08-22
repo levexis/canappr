@@ -24,8 +24,7 @@
             _cancel,
             _isDownloading,
             DOWNLOAD_WAIT_MAX = 5*60*1000,// max 5 mins waiting for download to finish for a download and wait request
-            _canDownload = ( typeof navigator.onLine !== 'undefined' ) ? navigator.onLine : undefined;
-
+            _canDownload = ( typeof navigator.onLine !== 'undefined' ) ? function () { return navigator.onLine; } : undefined;
         try {
             var tmp = window.LocalFileSystem.PERSISTENT;
             tmp = null;
@@ -538,16 +537,17 @@
                     _self = this;
                 if ( url && _fileTable[url] && _fileTable[url].status === 'cached') {
                     return qutils.resolved(_fileTable[url].local );
-                } else if ( url && dir && name && this.canDownload() ) {
+                } else if ( this.canDownload() ) {
                     deferred = $q.defer();
-                    if ( !_fileTable[url] ||
-                        _fileTable[url].status === 'deleted' ||
-                        _fileTable[url].status === 'queued') {
+                    if ( !_fileTable[url] && dir && name) {
                         _fileTable[url] = {
-                            status : 'downloading',
-                            dir: dir,
-                            filename: name
+                            dir : dir,
+                            filename : name
                         };
+                    }
+                    // single download queue for now
+                    if ( _fileTable[url] && _fileTable[url].status !== 'deleted' && !this.isDownloading() ) {
+                        _fileTable[url].status = 'downloading';
                         _isDownloading = true;
                         _fileManager.download_file( url , APP_DIR + '/' + dir , name ,
                             function ( file ) {
@@ -591,12 +591,13 @@
                                 }
                             }, 5000 );
                         };
+                        // call the spanish waiter
                         manuel();
                         return deferred.promise;
                     }
-                } else {
-                return qutils.resolved(false);
                 }
+                // can't download, either offline or no directory and filename specified
+                return qutils.resolved(url);
             },
             /*
              * downloads file queue, calls itself until queue is empty
@@ -616,7 +617,7 @@
                         queued = getFiles( 'status', 'failed' );
                     }
                 }
-                if ( queued.length && !_isDownloading && _canDownload ) {
+                if ( queued.length && !_isDownloading && this.canDownload() ) {
                     // should maybe do these in some sort of order, presume shift will be order they were put in
                     next = queued.shift();
                     if ( _queueAttempts < 250 ) {
