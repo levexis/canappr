@@ -714,6 +714,10 @@ describe('Services', function() {
                     service.downloadQueued().should.equal( 0 ); // popped
                     service.isDownloading().should.be.ok;
                 } );
+                it.only( 'should raise error if downloadQueued reaches 250 recrusions' , function (  ) {
+                    service.downloadQueued(window.mockModules, 251).should.equal(false);
+                });
+
             } );
             describe( 'resetAll', function () {
                 beforeEach( function () {
@@ -905,7 +909,6 @@ describe('Services', function() {
                     _prefService.clearFiles();
                     _prefService.checkFiles();
                 });
-                // must test  fileService.downloadQueued
 
             });
         });

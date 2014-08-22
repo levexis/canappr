@@ -629,6 +629,7 @@
                             } );
                     } else {
                         $log.error( _queueAttempts + ' recursions', queued );
+                        return false;
                     }
                 }
                 return queued.length;
