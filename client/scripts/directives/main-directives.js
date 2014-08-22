@@ -3,12 +3,13 @@
     var myApp = angular.module( 'canAppr' );
     myApp.directive('cdSwitch', function( registryService ) {
         var templateFn = function (elemente,attributes ) {
+            console.log ( 'disabled' , attributes.disabled);
             var outTemplate='';
             outTemplate = '<label class="topcoat-switch">';
                 outTemplate += '<input type="checkbox" class="topcoat-switch__input"';
 // maybe add a click event just for testing in karma?
                 outTemplate += ' ng-model="' + attributes.model + '"';
-                outTemplate += ' ng-disabled="' + (!!attributes.disabled ) + '">';
+                outTemplate += ' ng-disabled="' + attributes.disabled + '">';
                 outTemplate += '<span class="topcoat-switch__toggle ca-switch"></span>';
                 outTemplate += '</label>';
             return outTemplate;
@@ -68,7 +69,7 @@
             restrict : "A",
             compile: function(el,attr) {
                 el.removeAttr( 'cd-transition' ); // necessary to avoid infinite compile loop
-                attr.$set ('style' , 'animation-duration: 0.25s;');
+                attr.$set ('style' , 'animation-duration: 0.1s;');
 //              had problems compiling this but this was probably a scope issue as transclude errors. if scope is defined as 1 way binding then
 //              could probably call compile safely. Anyway have added classes manually which does the trick
 //                attr.$set ('ng-class' , '{ \'animated\': ready ,\'bounceInRight\': ready && !options.goneBack ,\'bounceInLeft\': ready && options.goneBack }');

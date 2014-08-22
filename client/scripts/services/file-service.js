@@ -470,11 +470,12 @@
                 _dirManager = new DirManager();
                 _fileManager = new FileManager();
                 APP_DIR = (app_dir || APP_DIR );
+                // populate file table
                 _getTable();
-                // for debugging!
+                // expose raw fileManager for debugging!
                 window.fileManager = _fileManager;
                 window.dirManager = _dirManager;
-                _cancel = false; // TODO: not implemented cancel yet
+                //_cancel = false;  TODO: not implemented cancel yet
                 // should not be already downloading anything, fail files that have been downloading
                 if ( !_isDownloading ) {
                     failed = getFiles( { status : 'downloading' } );
@@ -509,15 +510,22 @@
             */
 // this could be more elegent re status etc. Maybe a FileCache object with proper methods
             cacheURL  : function ( url, dir , name) {
-                if ( url && _fileTable[url] && _fileTable[url].status === 'cached') {
-                    return _fileTable[url].local;
-                } else if ( url && dir && name && !_fileTable[url] ) {
-                    _fileTable[url] = {
-                        dir : dir ,
-                        filename : name,
-                        status : 'queued'
-                    };
-                    _saveTable();
+                if ( url ) {
+                    if ( _fileTable[url] && _fileTable[url].status === 'cached' ) {
+                        return _fileTable[url].local;
+                    } else {
+                        if ( !_fileTable[url] && dir && name) {
+                            _fileTable[url] = {
+                                dir : dir,
+                                filename : name
+                            };
+                        }
+                        if ( _fileTable[url] && (!_fileTable[url].status || _fileTable[url].status === 'deleted') ) {
+                            _fileTable[url].status = 'queued';
+                             _saveTable();
+                            this.downloadQueued();
+                        }
+                    }
                 }
                 return false;
             },
@@ -656,7 +664,7 @@
                     _fileTable[url].status = 'deleted';
                     _fileManager.remove_file( APP_DIR + '/' + _fileTable[url].dir,_fileTable[url].filename,
                         function ( success) {
-                            _fileTable.save();
+                            _saveTable();
                             qutils.promiseSuccess( deferred, url + ' cleared' )(success);
                         },
                         qutils.promiseError( deferred ) );

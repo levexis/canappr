@@ -3,7 +3,7 @@
     // this can be used to replace the rootScope nonsense
     var myApp = angular.module( 'canAppr' );
 
-    myApp.factory('navService', function($rootScope , registryService) {
+    myApp.factory('navService', function($rootScope , $log, registryService) {
 
         var _config = registryService.getConfig();
 
@@ -36,9 +36,12 @@
                     }
                 }
                 try {
-                    options.oldScope.$remove();
+                    if ( options && options.oldScope) {
+                        options.oldScope.$remove();
+                    }
                 } catch (err) {
                     // something doesn't exist
+                    $log.debug('scoped remove error',where,options,err);
                 }
             },
             getRouteOptions: function ($scope ) {
@@ -91,7 +94,8 @@
             // returns true if splitview is collapsed
             isSingle: function () {
                 if ( _config.navType === 'split' ) {
-                    return angular.element (document.querySelector('.secondary')).css('width') === '100%';
+                    // css selection not always available but always single page on mobile
+                    return registryService.getConfig('isNative') || angular.element (document.querySelector('.secondary')).css('width') === '100%';
                 } else {
                     return null;
                 }

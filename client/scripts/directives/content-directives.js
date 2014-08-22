@@ -106,7 +106,7 @@
                     $scope['audio'+$index].playing = false;
                     // if they are registered for the course then download before playing
                     // this will do as POC for now!
-                    if ( $scope.isSubscribed ) {
+                    if ( $scope.isSubscribed && fileService.getStatus( attributes.src) !=='deleted'  ) {
                         $scope['audio'+$index].playing = 'buffering';
                         // play from cache if not already downloaded
                         fileService.downloadURL( attributes.src,
@@ -121,7 +121,9 @@
                     } else {
                         // direct download
                         _setGapAudio ( attributes.src );
+                        // hangs before it plays so display buffering icon
                         $scope['audio'+$index].play = gapAudio.play;
+                        hasBuffered = false;
                     }
                     // convert to ms
                     $scope['audio'+$index].seek = function ( position ) {
@@ -144,7 +146,7 @@
                                     gapAudio.play();
                                     hasBuffered = true;
                                     $scope['audio' + $index].playing = true;
-                                }, 50 );
+                                }, 100 );
                             }
                         }
                     };

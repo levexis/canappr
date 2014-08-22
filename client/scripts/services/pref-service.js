@@ -102,7 +102,7 @@
         // returns true if all downloaded, delete or failed
         // false if downloading or pending remaining or not found at all
         // @param modules array or single module definition
-        function checkStatus ( modules , allCached) {
+        function _checkStatus ( modules , allCached) {
             // returns the aggregate status of one of more modules
             var outStatus = true;
             function aggregateStatus( module ) {
@@ -176,7 +176,7 @@
                         }
                         modules.forEach( queueContentFiles );
                         // kick off queue
-                        if ( checkStatus (modules ) ) {
+                        if ( _checkStatus (modules ) ) {
                             // todo: how do we get the status of all the files? Another method I think
                             return qutils.resolved(true);
                         } else {
@@ -189,7 +189,7 @@
                             function ( modules) {
                                  modules.forEach( queueContentFiles );
                                 // kick off queue
-                                if ( checkStatus (modules ) ) {
+                                if ( _checkStatus (modules ) ) {
                                     deferred.resolve(true);
                                 } else {
                                     fileService.downloadQueued();
@@ -252,13 +252,14 @@
                     return false;
                 } else {
                     if ( module) {
-                        return checkStatus( module , allDownloaded );
+                        return _checkStatus( module , allDownloaded );
                     } else {
-                        moduleService.query ( { id: _navParams.module.id} , function ( result ) {
-                            return deferred.resolve ( checkStatus( result , allDownloaded  ) );
+                        moduleService.query ( { id: moduleId } , function ( module ) {
+                            $log.debug( 'is module cb', module)
+                            return deferred.resolve ( _checkStatus( module , allDownloaded  ) );
                         });
+                        return deferred.promise;
                     }
-                    return deferred.promise;
                 }
             },
             // courseId optional or uses navParams

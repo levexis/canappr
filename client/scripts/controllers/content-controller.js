@@ -19,6 +19,7 @@
                 } else {
                     $scope.playObj = {};
                 }
+                $log.debug('content',$scope.content);
             }
             $scope.model = navParams.module;
             _setContent();
@@ -28,19 +29,34 @@
                     _setContent();
                 }
             });
-            $rootScope.$watch('canAppr.prefs.module', function ( module ) {
-                $scope.isDownloaded = prefService.isDownloaded( module );
-                // will return null or downloading false if delete, true if completed
-                $scope.canDownload = prefService.isModuleReady( module.id, module );
-            });
+            if ( registryService.getConfig ('isNative') ) {
+                $rootScope.$watch( 'canAppr.prefs.module', function ( module ) {
+                    $scope.isDownloaded = prefService.isDownloaded( $scope.model );
+                    // will return null or downloading false if delete, true if completed
+                    $scope.disableDownload = !prefService.isModuleReady( null, $scope.model );
+                    $log.debug( 'module status', $scope.isDownloaded, $scope.canDownload, module );
+                } );
+            } else {
+                $scope.isDownloaded = true;
+                $scope.disableDownload = false;
+            }
             $scope.isSubscribed = prefService.isSubscribed();
             $scope.navDir=options.navDir || 'new';
             $scope.last = 'Modules';
+            // handles download / delete switch
             $scope.$watch ('isDownloaded', function ( now, before ) {
                 if ( now === true && before === false ) {
-                    fileService.downloadURL( $scope.content.src,
-                        registryService.getModuleId,
-                        registryService.getCourseId + '.mp3' );
+                    _.forEach ($scope.content , function ( item) {
+                        if ( item.file ) {
+                            fileService.cacheURL( decodeURIComponent( item.file.url ) );
+                        }
+                    });
+                } else if ( now === false && before === true ) {
+                    _.forEach ($scope.content , function ( item) {
+                        if ( item.file ) {
+                            fileService.clearFile( decodeURIComponent( item.file.url ) );
+                        }
+                    });
                 }
             });
         } );
