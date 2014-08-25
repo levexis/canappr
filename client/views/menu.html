@@ -1,8 +1,7 @@
 <ons-page style="background-color: white"  ng-controller="MenuCtrl" id="menu">
 
     <ul class="topcoat-list">
-        <ons-list-item class="topcoat-list__item--tappable topcoat-list__item__line-height ca-navcan">
-
+        <ons-list-item class="topcoat-list__item--tappable topcoat-list__item__line-height ca-navcan  ca-menu-item" ng-click="goHome()">
         <i class="fa fa-gears fa-lg"></i>
             &nbsp; Medit8 &nbsp;<!--<ons-search-input
                     ng-model="searchText"
@@ -30,9 +29,9 @@
             <ons-list-item
                     ng-show="item.model.name"
                     ng-click="listClick(item);"
-                    class="topcoat-list__item--tappable topcoat-list__item__line-height"
+                    class="topcoat-list__item--tappable topcoat-list__item__line-height  ca-menu-item"
                     >
-                <i class="fa fa-lg {{item.class}} ca-menu-item"></i>
+                <i class="fa fa-lg {{item.class}}"></i>
                 &nbsp;{{item.model.name}}
             </ons-list-item>
         </span>

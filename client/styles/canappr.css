@@ -11,8 +11,15 @@ body,html {
     font-weight: bold;
     font-size: 1.5rem;
 }
-.ca-navcan i:hover {
-    cursor: pointer;
+.ca-menu-icon {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    text-align: right;
+    width: 100px;
+}
+.ca-home h1 {
+    color:darkorange;
 }
 
 .ca-back {
@@ -62,12 +69,8 @@ body,html {
     transform: rotate(45deg);
 }
 
-.ca-menu-icon {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    text-align: right;
-    width: 100px;
+.ca-menu-item:hover {
+    cursor: pointer;
 }
 .ca-switch {
     margin: 2px 5px;

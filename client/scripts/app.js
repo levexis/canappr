@@ -31,8 +31,6 @@
                  // triggers web app initialisation
                  registryService.setConfig( 'isNative', false );
              }
-
-
              if ( window.location.port === '9000' ) {
                  registryService.setConfig( 'isE2E', true );
              }

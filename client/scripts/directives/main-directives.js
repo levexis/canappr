@@ -37,7 +37,7 @@
     });
     myApp.directive('cdNavBar', function( navService ) {
         var outTemplate='';
-            outTemplate += '<div style="margin: 1px 0px; z-index: 999; display: block;" class="topcoat-list__item__line-height ca-navcan topcoat-list__item" ng-show="isSingle">';
+            outTemplate += '<div style="margin: 1px 0px; display: block;" class="topcoat-list__item__line-height ca-navcan topcoat-list__item" ng-show="isSingle">';
             outTemplate += '<i class="fa fa-chevron-left" ng-show="last" ng-click="goBack()">';
             outTemplate += '<span class="ca-back">{{last}}</span></i>';
             outTemplate += '<i class="fa fa-lg fa-bars ca-menu-icon" ng-click="toggleMenu()">&nbsp;</i></div>';
@@ -45,7 +45,8 @@
             restrict : "E",
             link : function ( $scope, element, attributes ) {
                 $scope.goBack = function () {
-                    navService.go ( 'views/main.html' ,{ collection : navService.getCollection( $scope.last ) ,
+                    var template = ( $scope.last === 'Home') ? 'views/home.html' : 'views/main.html';
+                    navService.go ( template ,{ collection : navService.getCollection( $scope.last ) ,
                                                         navDir : 'back',
                                                         oldScope: $scope });
                 };

@@ -4,9 +4,9 @@
     // just resets the page model default home page
     function _welcome ($scope) {
         $scope.model = { name: 'Organizations',
-                 html : '<p>Select an organization, you can then subscribe to their courses which will trigger automatic download of their content so its available offline.</p>' +
-                        '<p>You can remove individual files using the switch which becomes available once initial download.</p>' +
-                        '<p>You can use modules without subscribing and play them directly from the internet</p>',
+                 html : '<p>Select an organization and then subscribe to their courses which interest you. Media for modules will then be downloaded automatically for offline playback.</p>' +
+                        '<p>You can remove module files using the switch which becomes enabled after the initial download has finished.</p>' +
+                        '<p>You can access modules without subscribing and play them directly from the internet.</p>',
                 isPlaceholder: true};
     }
     /*
@@ -37,6 +37,7 @@
                     $scope.target = 'course';
                     $scope.collectionName = 'Organizations';
                     _welcome($scope);
+                    $scope.last = 'Home';
                 } else if (options.collection === 'course' ) {
                     $scope.collectionClass = 'fa-book';
                     courseService.query( { orgId : navParams.org.id }, _queryCB( $scope ) );
@@ -75,7 +76,7 @@
                 }
                 $log.debug ( 'model', $scope.model ,navParams ,  options.collection ,$scope);
             } else {
-                // initial state
+                // initial state - THIS SHOULD NOW BE REDUNDANT AS IT STARTS AT HOME
                 $scope.collectionClass = 'fa-male';
                 _welcome( $scope );
                 orgService.query( _queryCB( $scope ) );

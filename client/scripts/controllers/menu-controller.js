@@ -29,6 +29,10 @@
             navService.go ( 'views/main.html' ,{ collection : item.name ,
                                                 navDir: 'new'});
         };
+        $scope.goHome = function () {
+            navService.go ( 'views/home.html' ,{
+                navDir: 'new'} );
+        };
     } );
 
 })(angular , _); // jshint ignore:line
