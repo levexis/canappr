@@ -37,10 +37,10 @@
         // used by FileManager and Debug Manager to log what it's doing, still quite noisy!
         var Log = function ( bucket, tag ) {
             return function ( message ) {
-                if ( typeof bucket !== 'undefined' ) {
+                if ( typeof bucket !== 'undefined' && bucket ) {
                     $log.debug( ' ' + bucket + ':' );
                 }
-                if ( typeof tag !== 'undefined' ) {
+                if ( typeof tag !== 'undefined' && tag ) {
                     $log.debug( ' ' + tag + ':' );
                 }
                 if ( typeof message !== 'object' ) {
@@ -757,7 +757,7 @@
              * @returns {boolean} current status
              */
             canDownload: function ( setFlag , setReady ) {
-                if ( typeof setFlag !== 'undefined' ) {
+                if ( typeof setFlag !== 'undefined'&& setFlag !== null ) {
                     _canDownload = setFlag;
                 }
                 if ( typeof setReady === 'boolean' ) {

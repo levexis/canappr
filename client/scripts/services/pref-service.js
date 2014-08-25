@@ -23,7 +23,12 @@
                             _canDownload = true;
                         }
                     }
-                    options.forEach ( _checkOption );
+                    // will always return true if doesn't exist as this helps with testing
+                    if ( navigator.connection ) {
+                        options.forEach( _checkOption );
+                    } else {
+                        _canDownload = true;
+                    }
                     return _canDownload;
                 };
             } else {
@@ -33,20 +38,21 @@
 
         /* watches pref changes, saves and processes certain prefs like downloadable */
         $rootScope.$watch('canAppr.prefs', function ( after, before) {
+            console.log(registryService.getConfig ('isNative'));
             if ( !_.isEqual(before,after) ) {
                 $log.debug( 'pref change saved', before, after );
                 window.localStorage.setItem( 'canAppr.prefs', JSON.stringify( _prefs) );
-                if ( registryService.getConfig ('isNative') === 'boolean' ) {
-                    if ( registryService.getConfig ('isNative') ) {
-                        _isNative = true;
-                        fileService.canDownload( _canDownloadCurry( after.canDownload ) );
-                    } else {
-                        // if it's not native then no need to init file service so set isReady
-                        fileService.canDownload ( null , true);
-                    }
+            }
+            if ( typeof registryService.getConfig ('isNative') === 'boolean' ) {
+                if ( registryService.getConfig ('isNative') ) {
+                    _isNative = true;
+                    fileService.canDownload( _canDownloadCurry( after.canDownload ) );
+                } else {
+                    // if it's not native then no need to init file service so set isReady
+                    fileService.canDownload ( null , true);
                 }
             }
-        // don't forget object comparison
+            // don't forget object comparison
         }, true);
         _prefs = $rootScope.canAppr.prefs;
         _navParams = registryService.getNavModels();

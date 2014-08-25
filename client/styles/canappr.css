@@ -39,7 +39,7 @@ body,html {
 }
 
 .ca-main-body p {
-    padding: 15px;
+    padding: 5px;
 }
 
 .ca-arrow-right:after {
@@ -77,14 +77,13 @@ body,html {
     text-align: center;
 }
 .ca-progress {
-    height: 20px;
+    height: 30px;
     width: 80%;
     border-bottom: 1px dotted white;
     float:left;
-    margin-right: 5px;
 }
 .ca-wrapper {
-    width: 90%;
+    width: 100%;
     display: inline-block;
     padding-bottom: 25px;
 }
@@ -92,9 +91,10 @@ body,html {
     background: lightblue;
 }
 .ca-duration {
-    float: right;
+    float: left;
     font-size: 10pt;
-    width: 9%;
+    padding: 2%;
+    width: 10%;
     color: olivedrab;
     text-align: center;
 }
@@ -122,11 +122,13 @@ body,html {
     color: gray;
 }
 .ca-play {
-    width: 9%;
     text-align: center;
-    float: left;
     color: olivedrab;
+    display: inline;
+    width: 15%;
+    float: left;
 }
+
 .ca-not-available {
     color: gray;
 }

@@ -3,7 +3,6 @@
     var myApp = angular.module( 'canAppr' );
     myApp.directive('cdSwitch', function( registryService ) {
         var templateFn = function (elemente,attributes ) {
-            console.log ( 'disabled' , attributes.disabled);
             var outTemplate='';
             outTemplate = '<label class="topcoat-switch">';
                 outTemplate += '<input type="checkbox" class="topcoat-switch__input"';
