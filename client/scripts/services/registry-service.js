@@ -74,7 +74,7 @@
             },
             getConfig: function (name) {
                 if ( name ) {
-                    return _config[name] || false;
+                    return _config[name];
                 } else {
                     return _config;
                 }

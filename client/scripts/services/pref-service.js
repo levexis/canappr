@@ -36,8 +36,14 @@
             if ( !_.isEqual(before,after) ) {
                 $log.debug( 'pref change saved', before, after );
                 window.localStorage.setItem( 'canAppr.prefs', JSON.stringify( _prefs) );
-                if ( registryService.getConfig ('isNative') ) {
-                    fileService.canDownload( _canDownloadCurry( after.canDownload ) );
+                if ( registryService.getConfig ('isNative') === 'boolean' ) {
+                    if ( registryService.getConfig ('isNative') ) {
+                        _isNative = true;
+                        fileService.canDownload( _canDownloadCurry( after.canDownload ) );
+                    } else {
+                        // if it's not native then no need to init file service so set isReady
+                        fileService.canDownload ( null , true);
+                    }
                 }
             }
         // don't forget object comparison

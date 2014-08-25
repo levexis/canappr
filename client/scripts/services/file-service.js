@@ -23,6 +23,7 @@
             LOCAL_ROOT,
             _cancel,
             _isDownloading,
+            _isReady = false, // only ready once file table loaded
             DOWNLOAD_WAIT_MAX = 5*60*1000,// max 5 mins waiting for download to finish for a download and wait request
             _canDownload = ( typeof navigator.onLine !== 'undefined' ) ? function () { return navigator.onLine; } : undefined;
         try {
@@ -410,29 +411,42 @@
 // file table could be a service, it is saved to local directory specified on init so we know which urls are downloaded to where.
 // or at least an object so when values are get or set it saves / flushes to disk.
         /*
+         * @private
          * gets contents of file table
-         * @returns object keyed on url.
+         * @returns promise that resolves once table loaded
          */
         function _getTable () {
+            var deferred = $q.defer();
+            _fileTable = _fileTable || {};
             _fileManager.read_file( APP_DIR , 'file_table.txt' ,
                 function ( table ) {
                     if ( table ) {
-                        _fileTable = JSON.parse( table );
-                    } else {
-                        _fileTable = {};
+                        // need to extend existing object as otherwise will destroy refences and cause initialisation problems
+                        // where it will redownload the files
+                        _.extend(_fileTable , JSON.parse( table ) );
+
                     }
-                    window.fileTable = _fileTable;
-                    $log.debug('fileTable',_fileTable);
-                });
+                    deferred.resolve( table );
+                    _isReady = true;
+                },
+                qutils.promiseError (deferred,'FT load failure')
+            );
+            return deferred.promise;
         }
         /*
-         * saves file table
          * @private
+         * saves file table
+         * @returns a promise that resolves on save
          */
         function _saveTable () {
+            var deferred = $q.defer();
             _fileManager.write_file( APP_DIR ,
                 'file_table.txt' ,
-                JSON.stringify (_fileTable));
+                JSON.stringify (_fileTable),
+                qutils.promiseSuccess(deferred),
+                qutils.promiseError(deferred,'FT save failure')
+            );
+            return deferred.promise;
         }
         /*
          * returns an array of files that match the expression
@@ -465,13 +479,19 @@
              * @returns {boolean} initialised successfully
              */
             init : function init ( app_dir ) {
-                var failed;
+                var failed,
+                    _self = this;
                 LOCAL_ROOT = window.cordova.file.externalDataDirectory || window.cordova.file.dataDirectory;
                 _dirManager = new DirManager();
                 _fileManager = new FileManager();
                 APP_DIR = (app_dir || APP_DIR );
-                // populate file table
-                _getTable();
+                // populate file table and start downloads
+                _getTable().then( function (table) {
+                    // start download queue
+                    if ( _.keys( table ) ) {
+                        _self.downloadQueued();
+                    }
+                });
                 // expose raw fileManager for debugging!
                 window.fileManager = _fileManager;
                 window.dirManager = _dirManager;
@@ -484,10 +504,6 @@
                     });
                 }
                 _isDownloading = false;
-                // start download queue if not already
-                if ( _.keys(_fileTable) ) {
-                    this.downloadQueued();
-                }
                 return true;
             },
             /*
@@ -554,14 +570,36 @@
                         };
                     }
                     // single download queue for now
-                    if ( _fileTable[url] && _fileTable[url].status !== 'deleted' && !this.isDownloading() ) {
+                    if ( _fileTable[url] && _fileTable[url].status === 'downloading' ) {
+                        // check every 5 seconds to see if download complete
+                        deferred = $q.defer();
+                        startTime = new Date();
+                        manuel = function () {
+                            $timeout( function () {
+                                if ( _fileTable[url].status === 'cached' ) {
+                                    deferred.resolve( _fileTable[url].local );
+                                } else if ( _fileTable[url].status === 'failed' ) {
+                                    deferred.reject( 'download error' );
+                                    // give it 5 mins total before timing out
+                                } else if ( new Date().getTime - startTime > DOWNLOAD_WAIT_MAX ) {
+                                    // could return the actual URL if online?
+                                    deferred.reject( 'timed out after ' + ( new Date().getTime - startTime) + 'ms ');
+                                } else {
+                                    manuel(url);
+                                }
+                            }, 5000 );
+                        };
+                        // call the spanish waiter
+                        manuel();
+                        return deferred.promise;
+                    } else if ( _fileTable[url] && _fileTable[url].status !== 'deleted' && !this.isDownloading() ) {
                         _fileTable[url].status = 'downloading';
                         _isDownloading = true;
                         _fileManager.download_file( url , APP_DIR + '/' + dir , name ,
                             function ( file ) {
                                 $log.debug('created file',file);
                                 _fileTable[url].status = 'cached';
-    //                            _fileTable[url].local = file.toNativeURL(); not in android need local url
+                                //                            _fileTable[url].local = file.toNativeURL(); not in android need local url
                                 // get the filesize, it's not actually a file that is returned!
                                 file.file( function ( file ) {
                                     // save in MB to 1 decimal place
@@ -579,28 +617,6 @@
                                 _saveTable();
                                 deferred.reject( error );
                             });
-                        return deferred.promise;
-                    } else if ( _fileTable[url] && _fileTable[url].status === 'downloading' ) {
-                        // check every 5 seconds to see if download complete
-                        deferred = $q.defer();
-                        startTime = new Date();
-                        manuel = function () {
-                            $timeout( function () {
-                                if ( _fileTable[url].status === 'cached' ) {
-                                    deferred.resolve( _fileTable[url].local );
-                                } else if ( _fileTable[url].status === 'failed' ) {
-                                    deferred.reject( 'download error' );
-                                // give it 5 mins total before timing out
-                                } else if ( new Date().getTime - startTime > DOWNLOAD_WAIT_MAX ) {
-                                    // could return the actual URL if online?
-                                    deferred.reject( 'timed out after ' + ( new Date().getTime - startTime) + 'ms ');
-                                } else {
-                                    manuel(url);
-                                }
-                            }, 5000 );
-                        };
-                        // call the spanish waiter
-                        manuel();
                         return deferred.promise;
                     }
                 }
@@ -737,16 +753,20 @@
             /*
              * sets / returns canDownload flag
              * @param {string | function} Can be set to function or string or nothing to return current state
+             * @param {boolean} Allows ready to be set, should only be used for testing
              * @returns {boolean} current status
              */
-            canDownload: function ( setFlag ) {
+            canDownload: function ( setFlag , setReady ) {
                 if ( typeof setFlag !== 'undefined' ) {
                     _canDownload = setFlag;
                 }
+                if ( typeof setReady === 'boolean' ) {
+                    _isReady = setReady;
+                }
                 if ( typeof _canDownload === 'function' ) {
-                    return _canDownload();
+                    return _isReady && _canDownload();
                 } else {
-                    return !!_canDownload;
+                    return _isReady && !!_canDownload;
                 }
             },
             /*

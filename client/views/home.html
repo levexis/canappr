@@ -1,0 +1,24 @@
+<ons-page ng-controller="HomeCtrl" id="main"><!-- as soon as I add my transition I can't scroll any more! -->
+<ons-scroller>
+    <cd-nav-bar></cd-nav-bar>
+    <div class="animated fadeIn"><!-- had a problem with cd-transition on ons-page seemed to kill scroller !-->
+        <div class="ca-blurb">
+            <h1 align="center">Medit8</h1>
+            Welcome
+        </div>
+        <div class="ca-main-empty" ng-show="!someFiltered"><p>Sorry, there are no {{collectionName}} from {{model.name}} available to you right now.</p></div>
+        <ons-navigator title="{{collectionName}}" ng-show="someFiltered" class="ca-main-list" >
+            <ons-list>
+                <span ng-repeat="item in collection | filter:filterWhere | orderBy : name">
+                    <ons-list-item
+                            class="topcoat-list__item--tappable topcoat-list__item__line-height"
+                            ng-click="clickList( targetTemplate, { id: item.id , collection: target, item: item });">
+                        <i ng-class="['fa','fa-lg',collectionClass,'ca-arrow-right']">&nbsp;</i>
+                        {{item.name}}
+                    </ons-list-item>
+                </span>
+            </ons-list>
+        </ons-navigator>
+    </div>
+</ons-scroller>
+</ons-page>

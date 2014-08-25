@@ -4,7 +4,9 @@
     // just resets the page model default home page
     function _welcome ($scope) {
         $scope.model = { name: 'Organizations',
-                 html : 'Welcome to my new app, this is just placeholder text',
+                 html : '<p>Select an organization, you can then subscribe to their courses which will trigger automatic download of their content so its available offline.</p>' +
+                        '<p>You can remove individual files using the switch which becomes available once initial download.</p>' +
+                        '<p>You can use modules without subscribing and play them directly from the internet</p>',
                 isPlaceholder: true};
     }
     /*

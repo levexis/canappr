@@ -27,7 +27,12 @@
                      // set the navtype here or mabe in config section instead of hard coding into index.html
                  };
                  document.addEventListener( 'deviceready', onDeviceReady, false );
+             } else {
+                 // triggers web app initialisation
+                 registryService.setConfig( 'isNative', false );
              }
+
+
              if ( window.location.port === '9000' ) {
                  registryService.setConfig( 'isE2E', true );
              }

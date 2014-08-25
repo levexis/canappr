@@ -221,8 +221,8 @@ describe('Services', function() {
                 rootScope.canAppr.config.hello = 'world';
                 service.getConfig('hello').should.equal( 'world' );
             } );
-            it( 'should return false if name not defined ', function () {
-                service.getConfig('wibble' ).should.equal(false);
+            it( 'should return undefined if name not defined ', function () {
+                expect(service.getConfig('wibble' ) ).to.be.undefined;
             });
         } );
         describe( 'setConfig', function () {
@@ -470,6 +470,7 @@ describe('Services', function() {
                     //httpBackend.flush();
                     // reset spies
                     _fileService.reset();
+                    _fileService.canDownload ( true, true);
                 } );
             });
             it( 'should lookup files and add to queue if checkCourseFiles called without modules' , function () {
@@ -490,11 +491,8 @@ describe('Services', function() {
                 rootScope.$apply();
             });
             it( 'should return aggregate status for course files', function (next) {
-                // http backend seems to insist the api returns a collection even for a single get!
-                // otherwise I get a bad array error if I don't put the record in an array
-                var response = JSON.stringify([ mockModules[2] ]);
-                httpBackend.expectGET( apiBase + 'modules/3' ).respond ( 200 , response );
-                service.isModuleReady('1' ).then ( function ( status ) {
+                httpBackend.expectGET( apiBase + 'modules/3' ).respond ( 200 , [ mockModules[2] ] );
+                service.isModuleReady('3' ).then ( function ( status ) {
                     status.should.not.be.ok;
                     next();
                 });
@@ -628,16 +626,17 @@ describe('Services', function() {
             describe( 'downloadURL', function () {
                 beforeEach( function () {
                     delete _fileTable[_url];
-                    service.canDownload( true );
+                    service.canDownload( true , true );
+                    // reset the spy
                     _fileManager.download_file.reset();
                 } );
                 it( 'should return a promise', function () {
                     service.downloadURL().should.be.an( 'object' )
                     service.downloadURL().then.should.be.a( 'function' );
                 } );
-                it( 'should resolve to false if url,dir or name missing', function ( done ) {
+                it( 'should resolve to url', function ( done ) {
                     service.downloadURL( _url ).then( function ( what ) {
-                        what.should.be.false;
+                        what.should.equal(_url);
                         done();
                     } );
                     rootScope.$apply();
@@ -655,12 +654,12 @@ describe('Services', function() {
                     } );
                     rootScope.$apply();
                 } );
-                it( 'should resolve immediately to false if canDownload is false and not cached', function ( done ) {
+                it( 'should resolve immediately to url if canDownload is false and not cached', function ( done ) {
                     _fileTable[_url] = { status : 'downloading',
                         local : 'cdv://local/test.mp3' };
-                    service.canDownload( false );
+                    service.canDownload( false , true );
                     service.downloadURL( _url ).then( function ( what ) {
-                        what.should.be.false;
+                        what.should.equal( _url);
                         done();
                     } );
                     rootScope.$apply();
@@ -690,7 +689,7 @@ describe('Services', function() {
             describe( 'downloadQueued', function () {
                 beforeEach( function () {
                     delete _fileTable[_url];
-                    service.canDownload( true );
+                    service.canDownload( true , true );
                 } );
                 it( 'should return length of current queue', function () {
                     service.downloadQueued().should.equal( 0 );
@@ -702,7 +701,6 @@ describe('Services', function() {
                     ] ).should.equal( 1 );
                 } );
                 it( 'should pop off the queue and start downloading', function () {
-                    console.log('debug');
                     service.downloadQueued( [
                         {url : _url, status : 'queued', dir : '1', filename : 'test.mp3'}
                     ] ).should.equal( 0 );
@@ -714,8 +712,9 @@ describe('Services', function() {
                     service.downloadQueued().should.equal( 0 ); // popped
                     service.isDownloading().should.be.ok;
                 } );
-                it.only( 'should raise error if downloadQueued reaches 250 recrusions' , function (  ) {
-                    service.downloadQueued(window.mockModules, 251).should.equal(false);
+                it( 'should raise error if downloadQueued reaches 250 recrusions' , function (  ) {
+                    // need to clone or it will pop one of my mocks off the window object and break later tests!
+                    service.downloadQueued( _.clone(window.mockModules), 251).should.equal(false);
                 });
 
             } );
@@ -823,9 +822,11 @@ describe('Services', function() {
                 it('should get fileTable', function () {
                     service.getFileTable().should.be.an('object');
                 });
-                it('should get / set canDonwload', function () {
-                    service.canDownload ( true ).should.be.ok;
-                    service.canDownload ( false ).should.not.be.ok;
+                it('should get / set canDowwload', function () {
+                    service.canDownload ( true , true ).should.be.ok;
+                    service.canDownload ( false , true ).should.not.be.ok;
+                    service.canDownload ( true , false ).should.not.be.ok;
+                    service.canDownload ( false , false ).should.not.be.ok;
                     service.canDownload ().should.not.be.ok;
                 });
                 it('should exec canDownload if function', function () {
@@ -833,7 +834,7 @@ describe('Services', function() {
                     toggler = function () {
                         return !!( a++ % 2 );
                     };
-                    service.canDownload (toggler).should.be.ok;
+                    service.canDownload (toggler , true).should.be.ok;
                     service.canDownload ().should.not.be.ok;
 
                 });
@@ -852,7 +853,10 @@ describe('Services', function() {
             });
             describe ('prefService.checkFiles' , function () {
                 var _prefService;
-                beforeEach( inject( function ( prefService) {
+                beforeEach( inject( function ( prefService ,registryService) {
+                    console.log('debug',_fileTable);
+                    registryService.setConfig('isNative',true);
+                    rootScope.$apply();
                     _prefService = prefService;
                     _prefService.subscribeCourse( 1 , mockModules[0] );
                     _url = _.keys(_fileTable)[0];
