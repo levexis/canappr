@@ -9,6 +9,6 @@
                 navService.go ( 'views/main.html' ,{ collection : where ,
                     navDir: 'forward'});
             };
+//            $scope.collection = prefService.getCourses();
         } );
-        $scope.collection = prefService.getCourses();
 })(angular,_)// jshint ignore:line

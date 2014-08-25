@@ -33,6 +33,7 @@
                     hasBuffered = false, // helps with UI lag on first play
                 /* track elapsed time for phone gap */
                     ticTock = function () {
+                        var delay = 50;
                         if ( $scope['audio'+$index].playing ) {
                             $timeout( function () {
 //                                update position every second
@@ -41,10 +42,14 @@
                                     if ( pos  && pos > 0) {
                                         $scope['audio' + $index].currentTime = pos;
                                         $scope['audio' + $index].formatTime = timeUtils.secShow (pos);
+                                        if ( $scope['audio' + $index].playing === 'buffering' ) {
+                                            $scope['audio' + $index].playing = true;
+                                        }
+                                        delay=1000;
                                     }
                                     ticTock();
                                 });
-                            }, 1000 );
+                            }, delay );
                         }
                 };
 
@@ -122,7 +127,7 @@
                                 $scope['audio'+$index].playing = false;
                                 _setGapAudio( localUrl);
                                 $scope['audio'+$index].play = gapAudio.play;
-                                hasBuffered = true;
+//                                hasBuffered = true;
                         });
                     } else {
                         // direct download
@@ -150,8 +155,7 @@
                                 // freezes the app whilst it waits on initial load, use time out so scope is applied
                                 $timeout( function () {
                                     gapAudio.play();
-                                    hasBuffered = true;
-                                    $scope['audio' + $index].playing = true;
+//                                    hasBuffered = true;
                                 }, 100 );
                             }
                         }
