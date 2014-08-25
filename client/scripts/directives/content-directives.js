@@ -78,6 +78,12 @@
                             }
                         }
                     );
+                    $scope.$on('$destroy', function() {
+                        // release media player on destroy
+                        $log.debug('releasing audio player', $index,$scope);
+                        gapAudio.stop();
+                        gapAudio.release();
+                    });
                     $log.debug ( 'gap Audio Create',src,gapAudio);
                 }
                 $log.debug ('playItem',registryService.getConfig( 'isNative' ),'audio' + $index,$scope['audio' + $index],$scope );

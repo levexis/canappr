@@ -37,6 +37,7 @@
                 }
                 try {
                     if ( options && options.oldScope) {
+                        $log.debug( 'old scope', oldScope);
                         options.oldScope.$remove();
                     }
                 } catch (err) {

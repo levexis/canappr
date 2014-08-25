@@ -762,6 +762,13 @@ describe('Services', function() {
                     service.resetAll();
                     service.getURL( _url ).should.equal( _url );
                 } );
+                it( 'should set status to queued if redownload method called', function () {
+                    service.redownload( _url ).should.be.ok;
+                    service.getStatus( _url ).should.equal( 'queued' );
+                } );
+                it( 'should return false if redownload method called on file that is not in filetable', function () {
+                    service.redownload( _url+'not exists' ).should.equal( false );
+                });
             } );
             describe( 'clearDir', function () {
                 beforeEach( function () {

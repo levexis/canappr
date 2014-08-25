@@ -48,15 +48,19 @@
                 if ( now === true && before === false ) {
                     _.forEach ($scope.content , function ( item) {
                         if ( item.file ) {
-                            fileService.cacheURL( decodeURIComponent( item.file.url ) );
+                            fileService.redownload( decodeURIComponent( item.file.url ) );
                         }
                     });
+                // delete content
                 } else if ( now === false && before === true ) {
                     _.forEach ($scope.content , function ( item) {
                         if ( item.file ) {
                             fileService.clearFile( decodeURIComponent( item.file.url ) );
                         }
                     });
+                    $scope.notAvailable = !fileService.canDownload();
+                    // reset URL
+                    _setContent();
                 }
             });
         } );

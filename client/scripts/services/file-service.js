@@ -536,7 +536,7 @@
                                 filename : name
                             };
                         }
-                        if ( _fileTable[url] && (!_fileTable[url].status || _fileTable[url].status === 'deleted') ) {
+                        if ( _fileTable[url] && (!_fileTable[url].status ||_fileTable[url].status === 'failed') ) {
                             _fileTable[url].status = 'queued';
                              _saveTable();
                             this.downloadQueued();
@@ -547,7 +547,7 @@
             },
             /*
              * download and wait
-             * if already downloading then polls every 5 seconds for completed download
+             * if already downloading then polls every 5 seconds for completed download if already downloading
              * @param {string} url to download
              * @param {string} dir directory to download it to
              * @name {string} filename to use
@@ -721,6 +721,19 @@
             getStatus  : function (url) {
                 if ( url && _fileTable[url] ) {
                     return _fileTable[url].status;
+                } else {
+                    return false;
+                }
+            },
+            /*
+             * sets the url to be redownloaded, can be used to resubscribe or to download, returns false if not foun
+             * @param {string} URL to look for
+             * @returns {boolean | string} return false if not find, otherwise status string. status of cached if downloaded and saved
+             */
+            redownload  : function (url) {
+                if ( url && _fileTable[url] ) {
+                    _fileTable[url].status = 'queued';
+                    return true;
                 } else {
                     return false;
                 }

@@ -189,7 +189,6 @@
                         modules.forEach( queueContentFiles );
                         // kick off queue
                         if ( _checkStatus (modules ) ) {
-                            // todo: how do we get the status of all the files? Another method I think
                             return qutils.resolved(true);
                         } else {
                             fileService.downloadQueued();
