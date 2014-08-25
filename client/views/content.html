@@ -2,7 +2,7 @@
     <ons-scroller>
         <cd-nav-bar></cd-nav-bar>
         <div class="animated fadeIn"><!-- had a problem with cd-transition on ons-page seemed to kill scroller !-->
-            <h1 align="center">{{model.name}} <cd-switch model="isDownloaded" disabled="disableDownload"></cd-switch></h1>
+            <h1 align="center">{{model.name}} <cd-switch model="isDownloaded" disabled="disableDownload" style="padding:10px;"></cd-switch></h1>
             <div class="ca-blurb">
                 <p align="center" class="ca-main-body" ng-bind-html="model.html"></p>
             </div>

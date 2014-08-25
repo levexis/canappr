@@ -4,7 +4,7 @@
     myApp.directive('cdSwitch', function( registryService ) {
         var templateFn = function (elemente,attributes ) {
             var outTemplate='';
-            outTemplate = '<label class="topcoat-switch">';
+            outTemplate = '<label class="topcoat-switch ca-switch">';
                 outTemplate += '<input type="checkbox" class="topcoat-switch__input"';
 // maybe add a click event just for testing in karma?
                 outTemplate += ' ng-model="' + attributes.model + '"';
