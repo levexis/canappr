@@ -1,4 +1,4 @@
-(function(angular , document, window) {
+(function(angular , document, window, _) {
     'use strict';
     var myApp = angular.module('canAppr', ['onsen.directives' ,'mediaPlayer', 'ngTouch', 'ngAnimate', 'ngCachedResource', 'ngSanitize' ])
         .run(
@@ -45,37 +45,5 @@
                  registryService.setConfig( 'isE2E', true );
              }
          });
-
-    // this is just an example
-    myApp.factory ( 'myInterceptor', function( $q , $log) {
-        return {
-/*            // optional method
-            'request': function(config) {
-                // do something on success
-                console.log('req',config);
-                return config;
-            },
-            // optional method
-            'requestError': function(rejection) {
-                console.log('reqerr',rejection);
-                return $q.reject(rejection);
-            },
-            // optional method
-            'response': function(response) {
-                console.log('res',response);
-                return response;
-            },
-            // optional method
-            */
-            // mock api repsponse errors?
-            'responseError': function(rejection) {
-                $log.debug('http response err',rejection);
-                return $q.reject(rejection);
-            }
-        };
-    });
-    myApp.config( function ( $httpProvider  ) {
-        $httpProvider.interceptors.push('myInterceptor');
-    } );
-})(angular, document, window); // jshint ignore:line
+})(angular, document, window, _); // jshint ignore:line
 
