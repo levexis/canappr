@@ -154,7 +154,8 @@
                                 $scope['audio' + $index].playing = hasBuffered ? true : 'buffering';
                                 // freezes the app whilst it waits on initial load, use time out so scope is applied
                                 $timeout( function () {
-                                    gapAudio.play();
+                                    // this should be set by default but audio is stopping when iphone goes to sleep
+                                    gapAudio.play({ playAudioWhenScreenIsLocked: true});
 //                                    hasBuffered = true;
                                 }, 100 );
                             }
@@ -192,7 +193,6 @@
                 outHTML += '    </div>';
 //                outHTML += '    <div class="ca-duration">{{ item.time | cfSecShow}}</div>';
                 outHTML += '</div>';
-                $log.debug('audio template',outHTML);
                 return outHTML;
             }
         };

@@ -22,6 +22,25 @@ body,html {
     color:darkorange;
 }
 
+.ca-home-course {
+    color:white;
+    background:limegreen;
+    padding: 5px 10px;
+    box-shadow: 0 8px 6px -6px black;
+    margin: 2px 0px;
+}
+.ca-home p {
+    text-align: center;
+    padding: 2px;
+}
+
+.ca-clickable:hover {
+    cursor: pointer;
+}
+.ca-audio-icon {
+    padding: 0px 10px;
+}
+
 .ca-back {
     font-weight: normal;
     padding: 7px ;
@@ -37,14 +56,14 @@ body,html {
 }
 /* these need to autoresize */
 .ca-main-list {
-    height:800px;
+    height: 400px;
 }
 .ca-blurb {
     font-size: 11pt;
     transition: 2s linear all;
+    text-align: center;
 /*    box-shadow: 0 8px 6px -6px black; */
 }
-
 .ca-main-body p {
     padding: 5px;
 }

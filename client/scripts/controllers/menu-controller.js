@@ -14,12 +14,13 @@
         $rootScope.$watch('canAppr.navParams' , function ( after , before) {
 //          console.log('navParams', after, before);
             /* resets parameters if you go back up tree */
+            // note the existence checks, when direct navigation used previous values are reset so this doesn't
+            // trip over itself and get into a race condition
             if ( before && after ) {
-                if ( before.org.id !== after.org.id ) {
-                    $log.debug( 'blank course / module', after, before );
+                if ( before.org.id && after.org.id && before.org.id !== after.org.id ) {
                     registryService.resetNavModel( 'course' );
                     registryService.resetNavModel( 'module' );
-                } else if ( before.course.id !== after.course.id ) {
+                } else if ( before.course.id && after.course.id && before.course.id !== after.course.id ) {
                     registryService.resetNavModel( 'module' );
                 }
             }

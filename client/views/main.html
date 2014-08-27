@@ -7,8 +7,8 @@
     <cd-nav-bar></cd-nav-bar>
     <div class="animated fadeIn"><!-- had a problem with cd-transition on ons-page seemed to kill scroller !-->
         <div class="ca-blurb">
-            <h1 align="center">{{model.name}}<cd-switch ng-show="canSubscribe" model="subscribed"></cd-switch></h1>
-            <p align="center" class="ca-main-body" ng-bind-html="model.html"></p>
+            <h1>{{model.name}}<cd-switch ng-show="canSubscribe" model="subscribed"></cd-switch></h1>
+            <p class="ca-main-body" ng-bind-html="model.html"></p>
         </div>
         <div class="ca-main-empty" ng-show="!someFiltered"><p>Sorry, there are no {{collectionName}} from {{model.name}} available to you right now.</p></div>
         <ons-navigator title="{{collectionName}}" ng-show="someFiltered" class="ca-main-list" >

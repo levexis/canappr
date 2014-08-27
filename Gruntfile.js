@@ -39,7 +39,7 @@ module.exports = function (grunt) {
                     {expand : true, flatten : true, cwd : 'bower_components/angular-cordova-wrapper/release/', src : '*.min.js*', dest : 'client/scripts/vendor/' },
                     {expand : true, flatten : true, cwd : 'bower_components/onsenui/build/js/', src : 'onsenui.js', dest : 'client/scripts/vendor/' },
                     {expand : true, flatten : true, cwd : 'bower_components/angular-resource/', src : '*.min.js*', dest : 'client/scripts/vendor/' },
-                    {expand : true, flatten : true, cwd : 'bower_components/angular-cached-resource/', src : '*.min.js*', dest : 'client/scripts/vendor/' },
+                    {expand : true, flatten : true, cwd : 'bower_components/angular-cached-resource/', src : '*.js*', dest : 'client/scripts/vendor/' },
                     {expand : true, flatten : true, cwd : 'bower_components/angular-cookies/', src : '*.min.js*', dest : 'client/scripts/vendor/' },
                     {expand : true, flatten : true, cwd : 'bower_components/angular-sanitize/', src : '*.min.js*', dest : 'client/scripts/vendor/' },
                     {expand : true, flatten : true, cwd : 'bower_components/underscore/', src : 'underscore.js', dest : 'client/scripts/vendor/' },
@@ -49,6 +49,9 @@ module.exports = function (grunt) {
                     //css
                     {expand : true, flatten : true, cwd : 'bower_components/modernizr/', src : 'modernizr.js', dest : 'client/scripts/vendor' },
                     {expand : true, cwd : 'bower_components/onsenui/build/css/', src : '**/*', dest : 'client/styles/' },
+                    // copies over fa provided by onsen but we use full icons anyway
+                    {expand : true, cwd : 'bower_components/font-awesome/css/', src : '**/*', dest : 'client/styles/' },
+                    {expand : true, cwd : 'bower_components/font-awesome/fonts/', src : '**/*', dest : 'client/fonts/' },
                     {expand : true, flatten : true, cwd : 'bower_components/animate.css/', src : 'animate.min.css', dest : 'client/styles/' }
                 ]
             }

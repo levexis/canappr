@@ -4,9 +4,7 @@
     // just resets the page model default home page
     function _welcome ($scope) {
         $scope.model = { name: 'Organizations',
-                 html : '<p>Select an organization and then subscribe to their courses which interest you. Media for modules will then be downloaded automatically for offline playback.</p>' +
-                        '<p>You can remove module files using the switch which becomes enabled after the initial download has finished.</p>' +
-                        '<p>You can access modules without subscribing and play them directly from the internet.</p>',
+                 html : '<p>Select an organization and then browse for courses which interest you. Switch on a course and all current and future modules will be downloaded for you to access offline.</p>',
                 isPlaceholder: true};
     }
     /*

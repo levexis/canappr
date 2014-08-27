@@ -2,11 +2,17 @@
 <ons-scroller>
     <div class="animated fadeIn ca-home"><!-- had a problem with cd-transition on ons-page seemed to kill scroller !-->
         <div class="ca-blurb">
-            <h1 align="center">Medit8</h1>
+            <h1 align="center">Medit8 <i class="fa fa-cogs"></i> Spirtituality, shared.</h1>
         </div>
-        <div class="ca-main-empty" ng-show="!someFiltered">
-            <p>Welcome to Medit8, you have not yet subscribed to any courses</p>
+        <div class="ca-main-empty" ng-show="!courses.length">
+            <p>Welcome to Medit8, you have not yet joined any courses {{courses.length}}</p>
             <p><ons-button ng-click="go('org');">Get Started</ons-button></p>
+        </div>
+        <div ng-show="courses.length">
+            <p>Below is the list of courses you have currently subscribed to.</p>
+            <p ng-show="isNative">Modules listed with <i class="fa fa-file-audio-o"></i> are available for offline playback. You can remove the files by using the switching on the playback screen.</p>
+            <cd-course-status ng-repeat="course in courses"></cd-course-status>
+            <p><ons-button ng-click="go('org');">Find More</ons-button></p>
         </div>
     </div>
 </ons-scroller>

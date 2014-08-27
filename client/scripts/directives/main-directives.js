@@ -2,7 +2,7 @@
     "use strict";
     var myApp = angular.module( 'canAppr' );
     myApp.directive('cdSwitch', function( registryService ) {
-        var templateFn = function (elemente,attributes ) {
+        var templateFn = function (element , attributes ) {
             var outTemplate='';
             outTemplate = '<label class="topcoat-switch ca-switch">';
                 outTemplate += '<input type="checkbox" class="topcoat-switch__input"';

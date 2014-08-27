@@ -4,7 +4,7 @@
     var myApp = angular.module( 'canAppr' );
 
     myApp.factory('registryService', function($rootScope) {
-        var _navParams, _config;
+        var _navParams, _config,_apiBase;
 
         if ( !$rootScope.canAppr) {
             // initialize if not already
@@ -16,7 +16,7 @@
         }
         _navParams =  $rootScope.canAppr.navParams;
         _config = $rootScope.canAppr.config;
-
+        _apiBase = $rootScope.canAppr.apiBase;
         // this gets the model for the selected Id - this is now done in navigation service
         // as can often be passed in unless short cuts
         /*
@@ -64,7 +64,6 @@
                     this.resetNavModel(type);
                     _.extend ( _navParams[type]  , properties );
                 }
-                console.log('set',_navParams[type],type,properties);
                 return _navParams[type];
             },
             setNavId: function( type , id ) {
@@ -109,7 +108,18 @@
                     return null;
                 }
                 */
+            },
+            // this should probably just be a config option so it's saved?
+            getAPIBase: function () {
+                return _apiBase;
+            },
+            setAPIBase: function (url) {
+                if ( url ) {
+                    _apiBase = url;
+                }
+                return _apiBase;
             }
+
         };
     });
 

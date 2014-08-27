@@ -1,6 +1,11 @@
 var expect = chai.expect;
 
 var app = angular.module( 'canAppr' );
+// before we do anything we need to remove the interceptor for the API
+app.config( function ( $httpProvider  ) {
+    $httpProvider.interceptors.pop();
+} );
+
 /*
 ,mockedApp = angular.module('mockAppr', ['canAppr', 'ngMockE2E']);
 // this allows for passThrough via ngMockE2E but have to create a mock app module to call

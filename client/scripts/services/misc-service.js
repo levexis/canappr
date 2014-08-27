@@ -122,14 +122,13 @@
                         $log.error('unknown nav',name);
                         return false;
                     }
-                    console.log( name,id,service);
                     service.query( {id: id} , function ( results ) {
-                        console.log( 'query' , results );
-
+                        $log.debug( 'debug',name,id,results[0] );
                         registryService.setNavModel(name, results[0]);
                         deferred.resolve( results[0] );
                     } ,
                     function (err) {
+                        $log.error( err, name ,id  );
                         deferred.reject( err );
                     });
                 }
