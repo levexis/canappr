@@ -21,7 +21,7 @@ mockedApp.run(function($httpBackend) {
     });
      //...
      $httpBackend.whenGET('/hello').respond(function(method, url, data) {
-     console.log('intercepted',method,url,data);
+     $log.debug('intercepted',method,url,data);
      });
     // passthrough is a nightmare... https://github.com/angular/angular.js/issues/1434
 */
@@ -30,15 +30,15 @@ mockedApp.run(function($httpBackend) {
 
     // I could build a complete mock for the phonegap modules here - Media, file etc
 //});
-
-
+// reset localstorage
+window.localStorage.clear();
 describe('Services', function() {
+    var apiBase;
 
     beforeEach( module( 'canAppr' ) );
 //    beforeEach( module( 'mockAppr' ) ); not getting joy from mockAppr
 
     describe( 'libs', function () {
-    var apibase;
         describe( 'xml', function () {
             var service,
                 xml = '<file><type>video</type><url>https://dropbox.com/19382/breathing.mp4</url></file>';
@@ -273,11 +273,13 @@ describe('Services', function() {
          */
     } );
     describe( 'navService', function () {
-        var service;
-        beforeEach( inject( function ( navService, $rootScope ) {
+        var service, registry;
+        beforeEach( inject( function ( navService, $rootScope ,registryService ) {
+            registry = registryService;
             service = navService;
             rootScope = $rootScope;
             expect( service ).to.not.be.undefined;
+            apiBase = $rootScope.canAppr.apiBase;
             // mocks - this could be a service in itself as likely to be re-needed
             rootScope.ons = { navigator : { getCurrentPage : sinon.stub(),
                 resetToPage : sinon.stub() },
@@ -323,12 +325,99 @@ describe('Services', function() {
             } );
             it( 'should get the options if they are set', function () {
                 service.getRouteOptions( rootScope ).big.should.equal( 'hello' );
-            } )
+            } );
             it( 'should pop the options ', function () {
                 service.getRouteOptions( rootScope );
                 _.keys( rootScope.canAppr.config.navOptions ).length.should.equal( 0 );
-            } )
+            } );
         } );
+        describe( 'setNavState' , function () {
+            var http;
+            beforeEach( inject( function ( $httpBackend ) {
+                http = $httpBackend;
+                // clear the caches
+                window.localStorage.clear();
+            }));
+            afterEach( function () {
+                http.verifyNoOutstandingExpectation();
+                http.verifyNoOutstandingRequest();
+            } );
+            it('should return a promise', function () {
+                service.setNavState().then.should.be.a('function');
+                service.setNavState({ orgId: 1 }).then.should.be.a('function');
+                http.whenGET (  apiBase + 'organizations/1').respond( 200, [ {} ]);
+                http.flush();
+            });
+            it ('should allow org to be set', function (done) {
+                service.setNavState({ orgId: 2 }).then( function (results) {
+                  console.log('results',results);
+                  registry.getNavModels( 'org' ).name.should.equal( 'Org2' );
+                  done();
+                });
+                http.expectGET( apiBase + 'organizations/2').respond( 200, [
+                    { id: '2', name: 'Org2' }
+                ] );
+                rootScope.$apply();
+                http.flush();
+            });
+            it ('should allow course to be set', function (done) {
+                service.setNavState({ courseId: 2 }).then( function (results) {
+                    // should return 2 promises in all
+                    results.length.should.equal(2);
+                    registry.getNavModels( 'course' ).name.should.equal( 'Course2' );
+                    registry.getNavModels( 'org' ).name.should.equal( 'Org2' );
+                    done();
+                });
+                http.expectGET( apiBase + 'courses/2').respond( 200, [
+                    { id: '2', orgId: '2', name: 'Course2' }
+                ] );
+                http.expectGET( apiBase + 'organizations/2').respond( 200, [
+                    { id: '2', name: 'Org2' }
+                ] );
+                rootScope.$apply();
+                http.flush();
+            });
+            it ('should allow module to be set', function (done) {
+                service.setNavState({ moduleId: 2 }).then( function (results) {
+                    // should return 3 promises in all
+                    results.length.should.equal(3);
+                    registry.getNavModels( 'course' ).name.should.equal( 'Course2' );
+                    registry.getNavModels( 'org' ).name.should.equal( 'Org2' );
+                    done();
+                });
+                http.expectGET( apiBase + 'modules/2').respond( 200, [
+                    { id: '2', name: 'Mod2', courseId: '2' }
+                ] );
+                http.expectGET( apiBase + 'courses/2').respond( 200, [
+                    { id: '2', orgId: '2', name: 'Course2' }
+                ] );
+                http.expectGET( apiBase + 'organizations/2').respond( 200, [
+                    { id: '2', name: 'Org2' }
+                ] );
+                rootScope.$apply();
+                http.flush();
+            });
+            it('should be async if course, module and org to all be set explicitly', function (done) {
+                service.setNavState({ orgid:2 , courseId: 2, moduleId: 2 }).then( function (results) {
+                    // expect 3 results
+                    console.log('results',3);
+                    registry.getNavModels( 'course' ).name.should.equal( 'Course2' );
+                    registry.getNavModels( 'org' ).name.should.equal( 'Org2' );
+                    done();
+                });
+                http.expectGET( apiBase + 'modules/2').respond( 200, [
+                    { id: '2', name: 'Mod2', courseId: '2' }
+                ] );
+                http.expectGET( apiBase + 'courses/2').respond( 200, [
+                    { id: '2', orgId: '2', name: 'Course2' }
+                ] );
+                http.expectGET( apiBase + 'organizations/2').respond( 200, [
+                    { id: '2', name: 'Org2' }
+                ] );
+                rootScope.$apply();
+                http.flush();
+            });
+        });
     } );
 
     describe( 'domUtils', function () {
@@ -407,7 +496,10 @@ describe('Services', function() {
             expect( service ).to.not.be.undefined;
             // set current nav params
             rootScope.canAppr.navParams.org.id=1;
+            rootScope.canAppr.navParams.org.name='myorg';
             rootScope.canAppr.navParams.course.id=1;
+            rootScope.canAppr.navParams.course.orgId=1;
+            rootScope.canAppr.navParams.course.name='mycourse';
             rootScope.canAppr.navParams.module.id=3;
             // this updates all the watches so navParams & configs set
             rootScope.$apply();
@@ -448,12 +540,23 @@ describe('Services', function() {
                 service.getEventTime( 'hello' ).getTime.should.be.a.function;
             } );
         });
+        describe ( 'getCourses'  , function () {
+            it( 'should return zero length array if Ive not subscribed', function () {
+                service.getCourses().length.should.equal(0);
+            } );
+            it( 'should be 0 if Ive not subscribed', function () {
+                service.subscribeCourse();
+                service.getCourses().length.should.equal(1);
+                service.getCourses()[0].orgId.should.equal(1);
+                service.getCourses()[0].orgName.should.equal('myorg');
+                service.getCourses()[0].name.should.equal('mycourse');
+            } );
+        });
         describe ( 'files'  , function () {
             // this is a nice cheat to get the module data without having to wrestle with e2e backend, it's in a js file
             // that karma includes
             var modules = window.mockModules,
                 _moduleService,
-                apiBase,
                 httpBackend;
             beforeEach( function (next ) {
                 inject( function ( moduleService , $httpBackend ) {
@@ -511,6 +614,21 @@ describe('Services', function() {
             it( 'checkFiles should populate cache status by module' , function () {
                 service.checkFiles();
                 service.isModuleReady(1).should.be.ok;
+            });
+            // this is really a test of ngCachedResource
+            it( 'should update cache if data is stale', function (done) {
+                httpBackend.expectGET( apiBase + 'modules/3' ).respond ( 200 , [  { msg: 'stale' }  ] );
+                _moduleService.query( { id: 3} , function (results) {
+                    httpBackend.expectGET( apiBase + 'modules/3' ).respond ( 200 , [ { msg: 'fresh' } ] );
+                    // immediate response of stale
+                    results[0].msg.should.equal('stale');
+                    // apply scope so cache is updated?
+                    _moduleService.query( { id: 3} , function (results) {
+                        results[0].msg.should.equal( 'fresh' );
+                        done();
+                    });
+                });
+                httpBackend.flush();
             });
         });
         it( 'should store preferences from localstorage');/* , function () {
@@ -861,7 +979,6 @@ describe('Services', function() {
             describe ('prefService.checkFiles' , function () {
                 var _prefService;
                 beforeEach( inject( function ( prefService ,registryService) {
-                    console.log('debug',_fileTable);
                     registryService.setConfig('isNative',true);
                     rootScope.$apply();
                     _prefService = prefService;

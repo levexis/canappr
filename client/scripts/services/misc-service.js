@@ -3,7 +3,7 @@
     // this can be used to replace the rootScope nonsense
     var myApp = angular.module( 'canAppr' );
 
-    myApp.factory('navService', function($rootScope , $log, registryService) {
+    myApp.factory('navService', function($rootScope , $log, $q, qutils, registryService , orgService, courseService, moduleService) {
 
         var _config = registryService.getConfig();
 
@@ -100,6 +100,75 @@
                 } else {
                     return null;
                 }
+            },
+            /* sets the nav state for when navigation is done directly
+             * still requires navigate.go to go to the correct view
+             * if switching to module then it will look up course and org if not specified
+             * @param {object} {org: n, course:n, module:n }
+             * @returns {promise} resolves to all promise results or false if options not set
+             */
+            setNavState: function ( options ) {
+                var orgPromise,coursePromise,modulePromise,
+                    promises = [];
+                function _set(name, id, deferred) {
+                    var service;
+                    if ( name === 'org' ) {
+                        service = orgService;
+                    } else if ( name === 'course' ) {
+                        service = courseService;
+                    } else if ( name === 'module' ) {
+                        service = moduleService;
+                    } else {
+                        $log.error('unknown nav',name);
+                        return false;
+                    }
+                    console.log( name,id,service);
+                    service.query( {id: id} , function ( results ) {
+                        console.log( 'query' , results );
+
+                        registryService.setNavModel(name, results[0]);
+                        deferred.resolve( results[0] );
+                    } ,
+                    function (err) {
+                        deferred.reject( err );
+                    });
+                }
+                if ( typeof options === 'object' ) {
+                    if ( options.moduleId ) {
+                        modulePromise = $q.defer();
+                        _set( 'module', options.moduleId , modulePromise );
+                        promises.push ( modulePromise.promise );
+                    }
+                    // if course is set then can get in parallel, otherwise its series
+                    if ( options.courseId ) {
+                        coursePromise = $q.defer();
+                        _set( 'course', options.courseId , coursePromise );
+                    } else if ( modulePromise ) {
+                        coursePromise = $q.defer();
+                        modulePromise.promise.then ( function ( module ) {
+                            _set( 'course', module.courseId , coursePromise );
+                        } );
+                    }
+                    if ( coursePromise ) {
+                        promises.push( coursePromise.promise );
+                    }
+                    if ( options.orgId ) {
+                        orgPromise = $q.defer();
+                        _set( 'org', options.orgId , orgPromise );
+                    } else if ( coursePromise ) {
+                        orgPromise = $q.defer();
+                        coursePromise.promise.then ( function ( course ) {
+                            _set( 'org', course.orgId , orgPromise );
+                        } );
+                    }
+                    if ( orgPromise ) {
+                        promises.push( orgPromise.promise );
+                    }
+                    return $q.all(promises );
+                } else {
+                    return qutils.resolved( false );
+                }
+
             }
         };
     });

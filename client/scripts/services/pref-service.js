@@ -38,7 +38,6 @@
 
         /* watches pref changes, saves and processes certain prefs like downloadable */
         $rootScope.$watch('canAppr.prefs', function ( after, before) {
-            console.log(registryService.getConfig ('isNative'));
             if ( !_.isEqual(before,after) ) {
                 $log.debug( 'pref change saved', before, after );
                 window.localStorage.setItem( 'canAppr.prefs', JSON.stringify( _prefs) );
@@ -162,6 +161,15 @@
                     if ( !_prefs.course[ courseId ] ) {
                         _prefs.course[ courseId ] = {};
                     }
+                    // get the name of the course and organization, for use by getCourses method which returns a summary
+                    // at the moment can only subscribe by navigating there
+                    if ( _courseId == courseId ) { // jshint ignore:line
+                        _prefs.course[ courseId ].name = _navParams.course.name;
+                    }
+                    _prefs.course[ courseId ].orgId = _navParams.course.orgId;
+                    if ( _orgId == _navParams.course.orgId ) { // jshint ignore:line
+                        _prefs.course[ courseId ].orgName = _navParams.org.name;
+                    }
                     if (typeof _prefs.course[ courseId ].subscribed !== 'object' ) {
                         _prefs.course[ courseId ].subscribed = new Date();
                     }
@@ -266,7 +274,7 @@
                         return _checkStatus( module , allDownloaded );
                     } else {
                         moduleService.query ( { id: moduleId } , function ( module ) {
-                            $log.debug( 'is module cb', module)
+                            $log.debug( 'is module cb', module);
                             return deferred.resolve ( _checkStatus( module , allDownloaded  ) );
                         });
                         return deferred.promise;
@@ -282,7 +290,11 @@
                 if ( courseId && _prefs.course[ courseId ] ) {
                     _prefs.course[ courseId ].subscribed = false;
                     // remove all files
-                    return fileService.clearDir( courseId );
+                    if ( registryService.getConfig('isNative') ) {
+                        return fileService.clearDir( courseId );
+                    } else {
+                        return true;
+                    }
                 } else {
                     return qutils.resolved(false);
                 }
@@ -357,8 +369,23 @@
                     $log.debug( 'requires module data' );
                     return false;
                 }
+            },
+            /*
+             * gets all the courses the person is currently subscribed to
+             * @returns array of { id, name, orgName, subscribed }
+             */
+            getCourses: function () {
+                var _outArr = [];
+                if (_prefs.course) {
+                    _.keys( _prefs.course ).forEach ( function (course) {
+                        if ( _prefs.course[course].subscribed ) {
+                            // append the courseid into object and extend - should clone in the process to prevent any accidental updates
+                            _outArr.push( _.extend ( {id: course} , _prefs.course[course] ));
+                        }
+                    });
+                }
+                return _outArr;
             }
-
         };
     });
 

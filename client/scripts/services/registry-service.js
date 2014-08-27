@@ -17,7 +17,8 @@
         _navParams =  $rootScope.canAppr.navParams;
         _config = $rootScope.canAppr.config;
 
-        // this gets the model for the selected Id
+        // this gets the model for the selected Id - this is now done in navigation service
+        // as can often be passed in unless short cuts
         /*
         $rootScope.$watch('canAppr.navParams' , function ( before , after ) {
             // should be a service? Returns true if changed
@@ -40,6 +41,7 @@
         } , true );
 */
         return {
+            // org, course , module
             getNavModels: function( type ) {
                 if (type) {
                     return _navParams[type];
@@ -62,6 +64,7 @@
                     this.resetNavModel(type);
                     _.extend ( _navParams[type]  , properties );
                 }
+                console.log('set',_navParams[type],type,properties);
                 return _navParams[type];
             },
             setNavId: function( type , id ) {
