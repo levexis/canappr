@@ -6,11 +6,10 @@
             return what ? decodeURIComponent( what ) : what;
         };
     });
+
+    // this will get called on each scope cycle which is a lot if the playback is updating current time
     myApp.filter('cftrustUrl', function ($sce,$log) {
         return function(url) {
-            $log.debug ('cftrustUrl',url);
-            // for debugging trust this one
-            $sce.trustAsResourceUrl('http://www.soundjay.com');
             return $sce.trustAsResourceUrl(url);
         };
     });
