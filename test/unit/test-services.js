@@ -239,6 +239,38 @@ describe('Services', function() {
                 service.getConfig().hello.should.have.lengthOf( 4 );
             } );
         } );
+        describe( 'isReady', function () {
+            beforeEach( function () {
+                rootScope.canAppr.ready = false;
+            });
+            afterEach( function () {
+                // other tests may depend on isReady which karma does initialise
+                rootScope.canAppr.ready = true;
+            });
+            it( 'should be a method', function () {
+                service.isReady.should.be.a( 'function' );
+            } );
+            it( 'should return not ready initially', function () {
+                service.isReady().should.equal(false);
+            } );
+            it( 'should be settable', function () {
+                service.isReady( true );
+                service.isReady().should.equal(true);
+            } );
+        } );
+        describe( 'APIBase', function () {
+            it( 'should be a method', function () {
+                service.getAPIBase.should.be.a( 'function' );
+                service.setAPIBase.should.be.a( 'function' );
+            } );
+            it( 'should return local default', function () {
+                service.getAPIBase().should.equal( 'api/0/');
+            } );
+            it( 'should be settable', function () {
+                service.setAPIBase( 'http://api.daddyswork.com/canappr/medit8/1' );
+                service.getAPIBase().should.equal( 'http://api.daddyswork.com/canappr/medit8/1' );
+            } );
+        } );
         /*
          getNavModels: function( type ) {
          if (type) {
@@ -440,17 +472,6 @@ describe('Services', function() {
                 service.offset( angular.element( angular.element( document.getElementsByTagName( 'body' ) ) ) ).top.should.be.above( 0 );
             } );
         } );
-    } );
-    describe( 'fileService', function () {
-        var service;
-        beforeEach( inject( function ( fileService ) {
-            service = fileService;
-            expect( service ).to.not.be.undefined;
-        } ) );
-        it( 'should return original url if not found' , function() {
-            service.getURL('http://notfound.com' ).should.equal('http://notfound.com');
-        })
-        it( 'should return local file path if found' );
     } );
     describe( 'qutils', function () {
         var service , rootScope, deferred, log;
@@ -693,6 +714,9 @@ describe('Services', function() {
         } ) );
         it( 'should not initialise until init called', function () {
             expect ( service.getFileManager() ).to.be.undefined;
+        });
+        it( 'should return a promise on init', function () {
+            service.init().then.should.be.a( 'function' );
         });
         it( 'should initialise' , function () {
             service.init();

@@ -11,7 +11,8 @@
             // app global config, there is probably a service for this
             $rootScope.canAppr = { apiBase : 'api/0/',
                 navParams : { org : { name : 'Organizations' }, module : {}, course : {} },
-                config : { isNative : ( typeof window.cordova !== 'undefined' ) }
+                config : { isNative : ( typeof window.cordova !== 'undefined' ) },
+                ready : false
             };
         }
         _navParams =  $rootScope.canAppr.navParams;
@@ -118,6 +119,12 @@
                     _apiBase = url;
                 }
                 return _apiBase;
+            },
+            isReady: function (ready) {
+                if ( typeof ready === 'boolean' ) {
+                    $rootScope.canAppr.ready = ready;
+                }
+                return  $rootScope.canAppr.ready;
             }
 
         };

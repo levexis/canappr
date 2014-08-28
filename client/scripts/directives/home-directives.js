@@ -1,7 +1,8 @@
 (function (angular) {
     "use strict";
     var myApp = angular.module( 'canAppr' );
-    myApp.directive('cdCourseStatus', function( registryService , moduleService , prefService ) {
+    // watches rootScope for ready
+    myApp.directive('cdCourseStatus', function( $rootScope, $log, registryService , moduleService , prefService ) {
         var outTemplate='',
             directive;
         outTemplate += '<h3 class="topcoat-list__header ca-home-course ca-clickable"  ng-click="navCourse(course);">{{course.orgName}} - {{course.name}}</h3>';
@@ -17,20 +18,60 @@
                 return function ( scope, element, attributes ) {
                     // get the modules which have been downloaded
                     scope.modules = [];
-                    // if native then check its downloaded
-                    if ( registryService.getConfig( 'isNative' ) ) {
+                    function getModules() {
                         moduleService.query( { courseId : scope.course.id }, function ( modules ) {
                             modules.forEach( function ( module ) {
-                                if ( prefService.checkCourseFiles( scope.course.id, module ) ) {
+                                if ( scope.course.id === module.courseId &&
+                                    prefService.isDownloaded ( module ) ) {
                                     scope.modules.push( module );
                                 }
                             } );
                         } );
                     }
+                    // if native then check its downloaded
+                    if ( registryService.getConfig( 'isNative' ) ) {
+                        if ( !registryService.isReady() ) {
+                            // wait for file table to be ready before checking
+                            $rootScope.$watch( 'canAppr.ready', function ( ready, wasReady ) {
+                                if ( ready && !wasReady ) {
+                                    getModules();
+                                }
+                            } );
+                        } else {
+                            getModules();
+                        }
+                    }
                 };
             },
             restrict: 'E',
             template : outTemplate
+        };
+        return directive;
+    });
+    // watches isReady and hides splash screen when it's true
+    myApp.directive('cdSplash',  function( $rootScope , $timeout) {
+        // use rootscope and directive for this?
+        function hideSplash( hide ) {
+//            var el =  angular.element( document.getElementById('splash' )).addClass('fadeOut');
+            if ( hide ) {
+                el.addClass('animated fadeOut');
+                // there must be an auto fix to this, i think animate.css just sets opactity to 1
+                // could do a cleanup where anything invisible is
+                $timeout( function () {
+                    el.addClass( 'ca-hide' );
+                }, 1000 );
+            }
+        }
+        var el, directive = {
+            compile: function ( element,attributes) {
+               el = element;
+               // watch after linking just to avoid a race condition
+               return function ( scope, element, attributes ) {
+                   $rootScope.$watch( 'canAppr.ready', hideSplash );
+               };
+            },
+            restrict: 'E',
+            template : '<div id="splash"></div>'
         };
         return directive;
     });

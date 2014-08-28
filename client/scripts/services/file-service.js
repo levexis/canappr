@@ -3,7 +3,7 @@
     // this can be used to replace the rootScope nonsense
     var myApp = angular.module( 'canAppr' );
 
-    myApp.factory( 'fileService', function ( $rootScope, $log , $q, $timeout , qutils) {
+    myApp.factory( 'fileService', function ( $rootScope, $log , $q, $timeout , $window, qutils) {
 
         /**
 
@@ -27,12 +27,12 @@
             DOWNLOAD_WAIT_MAX = 5*60*1000,// max 5 mins waiting for download to finish for a download and wait request
             _canDownload = ( typeof navigator.onLine !== 'undefined' ) ? function () { return navigator.onLine; } : undefined;
         try {
-            var tmp = window.LocalFileSystem.PERSISTENT;
+            var tmp = $window.LocalFileSystem.PERSISTENT;
             tmp = null;
         }
         catch ( e ) {
-            var LocalFileSystem = {PERSISTENT : window.PERSISTENT, TEMPORARY : window.TEMPORARY};
-            window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
+            var LocalFileSystem = {PERSISTENT : $window.PERSISTENT, TEMPORARY : $window.TEMPORARY};
+            $window.requestFileSystem = $window.requestFileSystem || $window.webkitRequestFileSystem;
         }
         // used by FileManager and Debug Manager to log what it's doing, still quite noisy!
         var Log = function ( bucket, tag ) {
@@ -179,17 +179,17 @@
                     callback( fileSystemSingleton.fileSystem );
                     return;
                 }
-                if ( !window.requestFileSystem ) {
+                if ( !$window.requestFileSystem ) {
                     return fail();
                 }
 
-                window.requestFileSystem(
-                    window.LocalFileSystem.PERSISTENT,
+                $window.requestFileSystem(
+                    $window.LocalFileSystem.PERSISTENT,
                     0,
                     function ( fileSystem ) {
                         fileSystemSingleton.fileSystem = fileSystem;
                         // set the root file LOCAL_ROOT is done in fileService.init() but have left old default to data Directory
-                        fileSystemSingleton.fileSystem.root.nativeURL = LOCAL_ROOT || window.cordova.file.dataDirectory;
+                        fileSystemSingleton.fileSystem.root.nativeURL = LOCAL_ROOT || $window.cordova.file.dataDirectory;
                         callback( fileSystemSingleton.fileSystem );
                     },
                     function ( err ) {
@@ -270,7 +270,7 @@
                     tofilename,
                     function ( fileEntry ) {
                         var sPath = fileEntry.toURL();
-                        var fileTransfer = new window.FileTransfer();
+                        var fileTransfer = new $window.FileTransfer();
                         fileEntry.remove();
                         fileTransfer.download(
                             encodeURI( url ),
@@ -476,25 +476,27 @@
              * inits file service
              * should be called on device ready to initialize module
              * @param app_dir
-             * @returns {boolean} initialised successfully
+             * @returns {promise} resolves to true if sucessful false if not
              */
             init : function init ( app_dir ) {
                 var failed,
-                    _self = this;
-                LOCAL_ROOT = window.cordova.file.externalDataDirectory || window.cordova.file.dataDirectory;
+                    _self = this,
+                    deferred = $q.defer();
+                LOCAL_ROOT = $window.cordova.file.externalDataDirectory || $window.cordova.file.dataDirectory;
                 _dirManager = new DirManager();
                 _fileManager = new FileManager();
                 APP_DIR = (app_dir || APP_DIR );
                 // populate file table and start downloads
                 _getTable().then( function (table) {
+                    deferred.resolve( true );
                     // start download queue
                     if ( _.keys( table ) ) {
                         _self.downloadQueued();
                     }
-                });
+                }, qutils.promiseError (deferred, 'FS init error') );
                 // expose raw fileManager for debugging!
-                window.fileManager = _fileManager;
-                window.dirManager = _dirManager;
+                $window.fileManager = _fileManager;
+                $window.dirManager = _dirManager;
                 //_cancel = false;  TODO: not implemented cancel yet
                 // should not be already downloading anything, fail files that have been downloading
                 if ( !_isDownloading ) {
@@ -504,7 +506,7 @@
                     });
                 }
                 _isDownloading = false;
-                return true;
+                return deferred.promise;
             },
             /*
              * gets URL to use

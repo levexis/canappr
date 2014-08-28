@@ -4,7 +4,7 @@
     // how can we dynamically inject the resource, have hard coded organizations for now
     // need current model and then collection for list, eg collectionId 5 is model and courses is the collection etc
     myApp.controller( 'HomeCtrl',
-        function ( $scope , prefService , navService, registryService ) {
+        function ( $scope , $rootScope, prefService , navService, registryService ) {
             $scope.go = function (where) {
                 navService.go ( 'views/main.html' ,{ collection : where ,
                     navDir: 'forward'});
@@ -20,7 +20,8 @@
                     .then ( function () {
                     navService.go( 'views/content.html',
                         { direction : 'forward',
-                            autoplay : true } );
+                            autoplay : true,
+                            oldScope: $scope } );
                 });
             };
             $scope.navCourse =  function ( course ) {
@@ -31,7 +32,8 @@
                 .then ( function () {
                     navService.go( 'views/main.html',
                         { direction : 'forward',
-                            collection: 'module' } );
+                            collection: 'module',
+                            oldScope: $scope } );
                 });
             };
             $scope.isNative = registryService.getConfig('isNative');

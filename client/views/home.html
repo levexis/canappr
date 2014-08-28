@@ -9,8 +9,8 @@
             <p><ons-button ng-click="go('org');">Get Started</ons-button></p>
         </div>
         <div ng-show="courses.length">
-            <p>Below is the list of courses you have currently subscribed to.</p>
-            <p ng-show="isNative">Modules listed with <i class="fa fa-file-audio-o"></i> are available for offline playback. You can remove the files by using the switching on the playback screen.</p>
+            <p>Below is the list of courses you are currently subscribed to.</p>
+            <p ng-show="isNative">Modules listed with <i class="fa fa-file-audio-o"></i> are available for offline playback. You can remove the files by using the switch on the playback screen.</p>
             <cd-course-status ng-repeat="course in courses"></cd-course-status>
             <p><ons-button ng-click="go('org');">Find More</ons-button></p>
         </div>
