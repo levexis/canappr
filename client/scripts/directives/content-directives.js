@@ -31,8 +31,8 @@
                     navParams = registryService.getNavModels(),
                     hasBuffered = false, // helps with UI lag on first play
                 /* track elapsed time for phone gap */
-                    ticTock = function () {
-                        var delay = 50;
+                    ticTock = function (delay) {
+                        delay = delay || 50;
                         if ( $scope['audio'+$index].playing ) {
                             $timeout( function () {
 //                                update position every second
@@ -46,7 +46,7 @@
                                         }
                                         delay=1000;
                                     }
-                                    ticTock();
+                                    ticTock(delay);
                                 });
                             }, delay );
                         }
