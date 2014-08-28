@@ -65,6 +65,7 @@
         var el, directive = {
             compile: function ( element,attributes) {
                el = element;
+//               el.style =  'animation-duration: 2s';
                // watch after linking just to avoid a race condition
                return function ( scope, element, attributes ) {
                    $rootScope.$watch( 'canAppr.ready', hideSplash );

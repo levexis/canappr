@@ -2,6 +2,7 @@ var chai = require('chai' ),
     chaiAsPromised = require('chai-as-promised' ),
     MenuPage = require('./pages/menu-page' ),
     MainPage = require('./pages/main-page' ),
+    HomePage = require('./pages/home-page' ),
     fs = require ('fs' ),
     // set ARTIFACT_DIR for snapshots
     // eg ARTIFACT_DIR=test.
@@ -50,7 +51,7 @@ if ( process.env['ARTIFACT_DIR'] ) {
         if ( e.code != 'EEXIST' ) throw e;
     }
 }
-describe('main', function () {
+describe('e2e', function () {
     describe ('Page Objects', function() {
         var menu,main,deferred;
         beforeEach( function () {
@@ -79,7 +80,8 @@ describe('main', function () {
         it( 'should create a valid main page', function () {
             return Q.all([
                 expect( main.getTitle().getText() ).to.eventually.contain( 'Organizations' ),
-                expect( main.getDescription().getInnerHtml() ).to.eventually.contain( 'Welcome' ),
+                // this really should be a check for blurb
+                expect( main.getDescription().getInnerHtml() ).to.eventually.contain( 'Select an organization' ),
                 expect( main.getListTitleText() ).to.eventually.contain( 'Organizations' ),
                 expect( main.getList() ).to.eventually.have.length( 2 ).then(
                     function ( list) {
@@ -140,11 +142,11 @@ describe('main', function () {
          */
     });
     describe ('Stories', function() {
-        var menu,main,deferred,testPromise;
+        var menu,main,home,deferred,testPromise;
         beforeEach( function () {
             browser.ignoreSynchronization = true;
             main = new MainPage();
-            main.get();
+            home = new HomePage();
             menu = new MenuPage();
             deferred = Q.defer();
             testPromise = deferred.promise;
@@ -154,8 +156,8 @@ describe('main', function () {
             return takeScreenshot('test_' + new Date().getTime() );
         } );
         it( 'should start with an intro to the app',function() {
-
-            expect ( main.getDescription().getInnerHtml() ).to.eventually.contain('Welcome');
+            home.get();
+            expect ( home.getBlurb().getInnerHtml() ).to.eventually.contain('Welcome to Medit8');
         });
         it( 'should allow me to select an organization from home list',function() {
             main.get();
@@ -207,6 +209,7 @@ describe('main', function () {
                 })
             ).to.eventually.have.length( 2 );
  */
+            main.get();
             main.navTo ( { organizations: 'surrey', courses: 'meditation', modules: 'breath' } )
                 .then( function () {
                     menu.getOrg().click()
@@ -222,6 +225,7 @@ describe('main', function () {
             return testPromise.should.eventually.not.contain('Meditation');
         });
         it( 'should change menu label when I change course' , function() {
+            main.get();
             main.navTo ( { organizations: 'surrey', courses: 'meditation', modules: 'breath' } )
                 .then( function () {
                     menu.getCourse().click()
@@ -235,6 +239,7 @@ describe('main', function () {
             return testPromise.should.eventually.contain( 'Triratna Liturgy' );
         });
         it( 'should show nothing available message if no list' ,function() {
+            main.get();
             return expect( main.clickOn( 'now' )
                 .then( function ( what ) {
                     return main.getListEmpty().getText();

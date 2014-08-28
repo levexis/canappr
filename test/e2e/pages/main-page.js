@@ -9,11 +9,16 @@ module.exports = function () {
     /* get the page */
     this.get = function( navTo ) {
         var _deferred = new Q.defer();
-        browser.get('/');
-        return browser.waitForAngular().then ( function ( resolved ) {
-            _that.list = _that.main.element.all( by.tagName ('li') );
-            _deferred.resolve( resolved);
+        browser.get('/#/main');
+        return browser.navigate().refresh().then ( function () {
+            // now defaults to home page so click on button to get to organizations
+            browser.waitForAngular().then ( function ( resolved ) {
+                _that.main = element( by.id('main') );
+                _that.list = _that.main.element.all( by.tagName ('li') );
+                _deferred.resolve( resolved);
+            });
         });
+
         return _deferred.promise;
     };
     /* allows you to set where you want to nave to

@@ -45,7 +45,7 @@ module.exports = function () {
     };
     this.get = function( navTo ) {
         var _deferred = new Q.defer();
-        browser.get('/');
+        browser.get('/#/menu');
         return browser.waitForAngular().then ( function ( resolved ) {
             _that.list = _that.menu.element.all( by.tagName ('li') );
             _deferred.resolve( resolved);

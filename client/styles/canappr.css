@@ -160,7 +160,6 @@ body,html {
     width:100%;
     z-index:10000;
     height:100%;
-    animation-duration: 5s
 }
 .ca-hide {
     visibility: hidden;

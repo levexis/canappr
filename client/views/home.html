@@ -3,10 +3,10 @@
     <div class="animated fadeIn ca-home"><!-- had a problem with cd-transition on ons-page seemed to kill scroller !-->
         <div class="ca-blurb">
             <h1 align="center">Medit8 <i class="fa fa-cogs"></i> Spirtituality, shared.</h1>
-        </div>
-        <div class="ca-main-empty" ng-show="!courses.length">
-            <p>Welcome to Medit8, you have not yet joined any courses {{courses.length}}</p>
-            <p><ons-button ng-click="go('org');">Get Started</ons-button></p>
+            <div class="ca-main-empty" ng-show="!courses.length">
+                <p>Welcome to Medit8, you have not yet joined any courses</p>
+                <p><ons-button ng-click="go('org');">Get Started</ons-button></p>
+            </div>
         </div>
         <div ng-show="courses.length">
             <p>Below is the list of courses you are currently subscribed to.</p>
