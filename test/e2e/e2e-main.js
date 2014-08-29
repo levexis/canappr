@@ -67,31 +67,6 @@ describe('e2e', function () {
             browser.ignoreSynchronization = false;
             return takeScreenshot('test_' + new Date().getTime() );
         } );
-        it( 'should allow a user to subscribe to a course', function() {
-            // could create a macro out of these?
-            main.get();
-            return expect( main.navTo ( { organizations: 'surrey', courses: 'meditation' } )
-                .then( function () {
-                    return main.getSubscribe().click().then(
-                        function () {
-                            return main.getSubscribe().getText();
-                        } );
-                } ) ).to.eventually.equal('true');
-        });
-        it( 'should show subscribed courses on homepage' );
-        it( 'should allow a user to play module content without subscribing or downloading' );
-        it( 'should show allow users to choose to autodownload' );
-        /*
-         native tests / require appium
-         it( 'should download current and next module content' );
-         it( 'should show downloaded modules on homepage' );
-         it( 'should show allow users to remove watched content' );
-         */
-
-        /* not implemented
-         it( 'should notify when new module available' );
-         it( 'should show enable new content once criteria met' );
-         */
         it( 'should start with an intro to the app',function() {
             home.get();
             expect ( home.getBlurb().getInnerHtml() ).to.eventually.contain('Welcome to Medit8');
@@ -187,7 +162,31 @@ describe('e2e', function () {
                 } ) )
                 .to.eventually.contain( 'there are no' );
         });
+        it( 'should allow a user to subscribe to a course', function() {
+            // could create a macro out of these?
+            main.get();
+            return expect( main.navTo ( { organizations: 'surrey', courses: 'meditation' } )
+                .then( function () {
+                    return main.getSubscribe().click().then(
+                        function () {
+                            return main.getSubscribe();
+                        } );
+                } ) ).to.eventually.equal('true');
+        });
+        it( 'should show subscribed courses on homepage' );
+        it( 'should allow a user to play module content without subscribing or downloading' );
+        it( 'should show allow users to choose to autodownload' );
+        /*
+            native tests / require appium
+            it( 'should download current and next module content' );
+            it( 'should show downloaded modules on homepage' );
+            it( 'should show allow users to remove watched content' );
+        */
 
+        /* not implemented
+        it( 'should notify when new module available' );
+        it( 'should show enable new content once criteria met' );
+         */
     });
     describe ('Page Objects', function() {
         var menu,main,deferred;
