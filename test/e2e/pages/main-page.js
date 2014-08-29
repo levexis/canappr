@@ -206,6 +206,9 @@ module.exports = function () {
     this.getListTitleText = function() {
         return this.main.element( by.css('.ca-main-list') ).getAttribute('title');
     };
+    this.getSubscribe = function () {
+        return this.main.element( by.binding('subscribed') );
+    };
     try {
         this.list = this.main.element.all( by.tagName( 'li' ) );
     } catch (err) {

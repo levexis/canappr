@@ -100,13 +100,18 @@ module.exports = function (grunt) {
         protractor : {
             options : {
                 noColor : false,
-                configFile : 'protractor.conf.js'
             },
-            dev : {
+            all : {},
+            dev : {   // Grunt requires at least one target to run so you can simply put 'all: {}' here too.
+                options: {
+                    configFile: "protractor.conf.dev.js", // Target-specific config file
+                    args: {} // Target-specific arguments
+                }
+            },
+            ci: {
                 options : {
-                    args : {
-//                        chromeOnly: true
-                    }
+                    configFile : "protractor.conf.js", // Target-specific config file
+                    args : {} // Target-specific arguments
                 }
             }
         },
@@ -261,9 +266,23 @@ module.exports = function (grunt) {
     grunt.registerTask('e2e', [
         'selenium_phantom_hub',
         'connect:e2e',
-        'protractor',
+        'protractor:ci',
         'selenium_stop'
     ]);
+    grunt.registerTask('e2e:dev', [
+        'selenium_phantom_hub',
+        'connect:e2e',
+        'protractor:dev',
+        'selenium_stop'
+    ]);
+/*
+    grunt.registerTask('e2e', [
+        'selenium_phantom_hub',
+        'connect:e2e',
+        'protractor:dev',
+        'selenium_stop'
+    ]);
+*/
 
     // use this for testing via webstorm
     grunt.registerTask('webstorm', [

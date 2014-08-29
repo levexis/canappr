@@ -52,95 +52,7 @@ if ( process.env['ARTIFACT_DIR'] ) {
     }
 }
 describe('e2e', function () {
-    describe ('Page Objects', function() {
-        var menu,main,deferred;
-        beforeEach( function () {
-            // don't you just love opensource, fix to protractor phantomjs bug https://github.com/angular/protractor/issues/686
-            browser.ignoreSynchronization = true;
-            main = new MainPage();
-            menu = new MenuPage();
-            deferred = Q.defer();
-            return main.get();
-        } );
-        afterEach( function () {
-            browser.ignoreSynchronization = false;
-            return takeScreenshot('test_' + new Date().getTime() );
-        } );
-        it( 'should create a valid menu', function () {
-            menu.get();
-            return Q.all([
-            expect( menu.list.count() ).to.eventually.equal( 4 ),
-            expect( menu.list.get( 0 ).getText() ).to.eventually.contain( 'Medit8' ),
-            expect( menu.getHome().getText() ).to.eventually.contain( 'Medit8' ),
-            expect( menu.getOrg().getText() ).to.eventually.contain( 'Organizations' ),
-            expect( menu.getCourse().getText() ).to.eventually.equal( '' ),
-            expect( menu.getModule().getText() ).to.eventually.equal( '' ),
-            expect( menu.getList() ).to.eventually.have.length( 4 )])
-        } );
-        it( 'should create a valid main page', function () {
-            return Q.all([
-                expect( main.getTitle().getText() ).to.eventually.contain( 'Organizations' ),
-                // this really should be a check for blurb
-                expect( main.getDescription().getInnerHtml() ).to.eventually.contain( 'Select an organization' ),
-                expect( main.getListTitleText() ).to.eventually.contain( 'Organizations' ),
-                expect( main.getList() ).to.eventually.have.length( 2 ).then(
-                    function ( list) {
-                    expect (list[0].getText() ).to.eventually.contain('Triratna East Surrey');
-                })
-            ]);
-        } );
 
-        it( 'should navigate to correct course use clickOn', function () {
-            return expect( main.clickOn( 'surrey' )
-                .then( function ( what ) {
-                    return main.clickOn( 'meditation' );
-                } ) )
-                .to.eventually.equal( 'meditation' );
-            /* this will work
-             return expect( main.clickOn( 'surrey' )
-             .then( function(what) {
-             console.log ('firstClick',what);
-             return main.clickOn( 'meditation' ); }) )
-             .to.eventually.equal( 'meditation' );
-             main.clickOn( 'surrey' )
-             .then( function(what) {
-             console.log( 'firstClick', what );
-             main.clickOn( 'meditation' ).then( function ( what ) {
-             console.log( 'secondClick', what );
-             deferred.resolve( what );
-             } )
-             });
-             return expect( deferred.promise ).to.eventually.equal('meditation');
-             */
-        });
-
-        it( 'should navigate using navTo Macro', function () {
-            return expect( main.navTo( { organizations : 'surrey', courses : 'meditation' } ) )
-                .to.eventually.contain( 'modules' )
-        });
-
-        // should say navto
-        it( 'should return blank if no list title on page navigatedTo', function () {
-            return expect ( main.navTo ( { organizations: 'surrey', courses: 'meditation', modules: 'breath' } ) )
-                .to.eventually.equal( '' );
-
-        });
-        it( 'should return blank if navTo params misspelled', function () {
-            return expect ( main.navTo ( { organisations: 'surrey', couses: 'meditation', moduls: 'breath' } ) )
-                .to.eventually.equal( 'organizations' );
-        });
-        it( 'should return blank if clickOn not found', function () {
-            return ( main.clickOn ( 'plant pot' ) )
-                .should.be.rejectedWith( 'unable to find plant pot' );
-        });
-        it( 'should allow me to chain methods without then' );
-        /* does not work yet see test-promise for syntax
-         return expect( main.clickOn( 'surrey' )
-         .clickOn( 'meditation' )
-         .getTitle().getText() )
-         .to.eventually.equal( 'meditation' );
-         */
-    });
     describe ('Stories', function() {
         var menu,main,home,deferred,testPromise;
         beforeEach( function () {
@@ -155,15 +67,44 @@ describe('e2e', function () {
             browser.ignoreSynchronization = false;
             return takeScreenshot('test_' + new Date().getTime() );
         } );
+        it( 'should allow a user to subscribe to a course', function() {
+            // could create a macro out of these?
+            main.get();
+            return expect( main.navTo ( { organizations: 'surrey', courses: 'meditation' } )
+                .then( function () {
+                    return main.getSubscribe().click().then(
+                        function () {
+                            return main.getSubscribe().getText();
+                        } );
+                } ) ).to.eventually.equal('true');
+        });
+        it( 'should show subscribed courses on homepage' );
+        it( 'should allow a user to play module content without subscribing or downloading' );
+        it( 'should show allow users to choose to autodownload' );
+        /*
+         native tests / require appium
+         it( 'should download current and next module content' );
+         it( 'should show downloaded modules on homepage' );
+         it( 'should show allow users to remove watched content' );
+         */
+
+        /* not implemented
+         it( 'should notify when new module available' );
+         it( 'should show enable new content once criteria met' );
+         */
         it( 'should start with an intro to the app',function() {
             home.get();
             expect ( home.getBlurb().getInnerHtml() ).to.eventually.contain('Welcome to Medit8');
         });
-        it( 'should allow me to select an organization from home list',function() {
+        it( 'should have a buuton to get started which takes me to the main list',function() {
+            home.get();
+            expect ( home.getBlurb().getInnerHtml() ).to.eventually.contain('Welcome to Medit8');
+        });
+        it( 'should allow me to select an organization from main list',function() {
             main.get();
             expect ( main.getListTitleText() ).to.eventually.contain('Organizations');
         });
-        it( 'should allow me to select a course from orgs list' ,function() {
+        it( 'should allow me to select a course from org page' ,function() {
             main.get();
             expect ( main.navTo ( { organizations: 'surrey', courses: 'meditation' } )
                 .then ( function ( what ) {
@@ -171,7 +112,7 @@ describe('e2e', function () {
             })
             ).to.eventually.contain('guided meditations');
         });
-        it( 'should allow me to select a module from courses list',function() {
+        it( 'should allow me to select a module from course page',function() {
             main.get();
             expect ( main.navTo ( { organizations: 'surrey', courses: 'meditation' } )
                 .then ( function ( what ) {
@@ -246,12 +187,94 @@ describe('e2e', function () {
                 } ) )
                 .to.eventually.contain( 'there are no' );
         });
-        it( 'should allow me to play module content' );
-        it( 'should show enable new content' );
-        it( 'should show allow users to remove watched content' );
-        it( 'should show allow users to choose to autodownload' );
-        it( 'should download current and next module content' );
-        it( 'should notify when new module available' );
 
     });
-});
+    describe ('Page Objects', function() {
+        var menu,main,deferred;
+        beforeEach( function () {
+            // don't you just love opensource, fix to protractor phantomjs bug https://github.com/angular/protractor/issues/686
+            browser.ignoreSynchronization = true;
+            main = new MainPage();
+            menu = new MenuPage();
+            deferred = Q.defer();
+            return main.get();
+        } );
+        afterEach( function () {
+            browser.ignoreSynchronization = false;
+            return takeScreenshot('test_' + new Date().getTime() );
+        } );
+        it( 'should create a valid menu', function () {
+            menu.get();
+            return Q.all([
+                expect( menu.list.count() ).to.eventually.equal( 4 ),
+                expect( menu.list.get( 0 ).getText() ).to.eventually.contain( 'Medit8' ),
+                expect( menu.getHome().getText() ).to.eventually.contain( 'Medit8' ),
+                expect( menu.getOrg().getText() ).to.eventually.contain( 'Organizations' ),
+                expect( menu.getCourse().getText() ).to.eventually.equal( '' ),
+                expect( menu.getModule().getText() ).to.eventually.equal( '' ),
+                expect( menu.getList() ).to.eventually.have.length( 4 )])
+        } );
+        it( 'should create a valid main page', function () {
+            return Q.all([
+                expect( main.getTitle().getText() ).to.eventually.contain( 'Organizations' ),
+                // this really should be a check for blurb
+                expect( main.getDescription().getInnerHtml() ).to.eventually.contain( 'Select an organization' ),
+                expect( main.getListTitleText() ).to.eventually.contain( 'Organizations' ),
+                expect( main.getList() ).to.eventually.have.length( 2 ).then(
+                    function ( list) {
+                        expect (list[0].getText() ).to.eventually.contain('Triratna East Surrey');
+                    })
+            ]);
+        } );
+
+        it( 'should navigate to correct course use clickOn', function () {
+            return expect( main.clickOn( 'surrey' )
+                .then( function ( what ) {
+                    return main.clickOn( 'meditation' );
+                } ) )
+                .to.eventually.equal( 'meditation' );
+            /* this will work
+             return expect( main.clickOn( 'surrey' )
+             .then( function(what) {
+             console.log ('firstClick',what);
+             return main.clickOn( 'meditation' ); }) )
+             .to.eventually.equal( 'meditation' );
+             main.clickOn( 'surrey' )
+             .then( function(what) {
+             console.log( 'firstClick', what );
+             main.clickOn( 'meditation' ).then( function ( what ) {
+             console.log( 'secondClick', what );
+             deferred.resolve( what );
+             } )
+             });
+             return expect( deferred.promise ).to.eventually.equal('meditation');
+             */
+        });
+
+        it( 'should navigate using navTo Macro', function () {
+            return expect( main.navTo( { organizations : 'surrey', courses : 'meditation' } ) )
+                .to.eventually.contain( 'modules' )
+        });
+
+        // should say navto
+        it( 'should return blank if no list title on page navigatedTo', function () {
+            return expect ( main.navTo ( { organizations: 'surrey', courses: 'meditation', modules: 'breath' } ) )
+                .to.eventually.equal( '' );
+
+        });
+        it( 'should return blank if navTo params misspelled', function () {
+            return expect ( main.navTo ( { organisations: 'surrey', couses: 'meditation', moduls: 'breath' } ) )
+                .to.eventually.equal( 'organizations' );
+        });
+        it( 'should return blank if clickOn not found', function () {
+            return ( main.clickOn ( 'plant pot' ) )
+                .should.be.rejectedWith( 'unable to find plant pot' );
+        });
+        it( 'should allow me to chain methods without then' );
+        /* does not work yet see test-promise for syntax
+         return expect( main.clickOn( 'surrey' )
+         .clickOn( 'meditation' )
+         .getTitle().getText() )
+         .to.eventually.equal( 'meditation' );
+         */
+    });});
