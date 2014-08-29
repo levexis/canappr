@@ -99,9 +99,8 @@ module.exports = function (grunt) {
         },
         protractor : {
             options : {
-                noColor : false,
+                noColor : false
             },
-            all : {},
             dev : {   // Grunt requires at least one target to run so you can simply put 'all: {}' here too.
                 options: {
                     configFile: "protractor.conf.dev.js", // Target-specific config file
@@ -114,6 +113,9 @@ module.exports = function (grunt) {
                     args : {} // Target-specific arguments
                 }
             }
+        },
+        selenium_start : {
+            options : { timeout : 9999} // otherwise procli keeps shutting, most annoying someone screwed with this
         },
         phonegap: {
             config: {
@@ -270,7 +272,7 @@ module.exports = function (grunt) {
         'selenium_stop'
     ]);
     grunt.registerTask('e2e:dev', [
-        'selenium_phantom_hub',
+        'selenium_start',
         'connect:e2e',
         'protractor:dev',
         'selenium_stop'
@@ -290,7 +292,9 @@ module.exports = function (grunt) {
         'connect:dev'
     ]);
 
-    // use this for testing via webstorm
+    // use this for testing via protractor client
+    // https://github.com/angular/protractor/blob/master/docs/debugging.md
+    // ./node_modules/protractor/bin/elementexplorer.js localhost:9000
     grunt.registerTask('procli', [
         'selenium_start',
         'connect:dev'

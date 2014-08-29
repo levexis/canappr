@@ -6,16 +6,30 @@ if ( typeof protractor === 'undefined' ) {
 module.exports = function () {
     var _that = this,
         navQ;
+    function _refreshList() {
+        try {
+            _that.main = element( by.id( 'main' ) );
+            // something strange happening here, think we may have more than one main hence we are getting all rather than element back
+            if ( _that.main.all === 'function' ) {
+                _that.list = _that.main.all( by.tagName( 'li' ) );
+            } else {
+                _that.list = _that.main.element.all( by.tagName( 'li' ) );
+            }
+            return true;
+        } catch ( err ) {
+            // main not yet loaded / visible
+            return false;
+        }
+    }
     /* get the page */
     this.get = function( navTo ) {
         var _deferred = new Q.defer();
         browser.get('/#/main');
-        return browser.navigate().refresh().then ( function () {
+        browser.navigate().refresh().then ( function () {
             // now defaults to home page so click on button to get to organizations
             browser.waitForAngular().then ( function ( resolved ) {
-                _that.main = element( by.id('main') );
-                _that.list = _that.main.element.all( by.tagName ('li') );
-                _deferred.resolve( resolved);
+                _refreshList();
+                _deferred.resolve( resolved );
             });
         });
 
@@ -44,6 +58,8 @@ module.exports = function () {
                                 // if it matches then click and try again recursively
                                 item.click().then( function () {
 //                                    console.log( 'navigated', listName );
+                                    _refreshList();
+
                                     _that.navTo( where );
                                     /*if ( listName !== 'modules' ) {
                                         return _that.navTo( where )
@@ -165,8 +181,6 @@ module.exports = function () {
             }
         return clickQ.promise;
     };
-
-    var _that = this;
     this.main = element( by.id('main') );
     /* a little promise practice */
     this.getList = function () {
@@ -178,7 +192,7 @@ module.exports = function () {
                 _outList[i] = what;
                 //return what; this freezes everything so have had to create an array and then
                 // return that
-            }
+            };
         }
         return this.list.count()
             .then( function ( items ) {
@@ -207,12 +221,8 @@ module.exports = function () {
         return this.main.element( by.css('.ca-main-list') ).getAttribute('title');
     };
     this.getSubscribe = function () {
-        return this.main.element( by.binding('subscribed') );
+        return this.main.element( by.css('.topcoat-switch__input') );
     };
-    try {
-        this.list = this.main.element.all( by.tagName( 'li' ) );
-    } catch (err) {
-        // main not yet loaded / visible
-    }
+    _refreshList();
     return this;
 };

@@ -20,5 +20,5 @@ exports.config = {
         timeout: 1000
     },
     rootElement: 'body',
-    allScriptsTimeout: 60000
+    allScriptsTimeout: 60000,
 };

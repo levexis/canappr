@@ -54,7 +54,7 @@ if ( process.env['ARTIFACT_DIR'] ) {
 describe('e2e', function () {
 
     describe ('Stories', function() {
-        var menu,main,home,deferred,testPromise;
+        var menu,main,home,deferred,testPromise,journeys={};
         beforeEach( function () {
             browser.ignoreSynchronization = true;
             main = new MainPage();
@@ -62,21 +62,54 @@ describe('e2e', function () {
             menu = new MenuPage();
             deferred = Q.defer();
             testPromise = deferred.promise;
+            // could create a macro out of these?
+            journeys.subscribeMeditation = main.get().then ( function () {
+                main.navTo( { organizations : 'surrey', courses : 'meditation' } )
+                    .then( function () {
+                        var main = new MainPage();
+                        console.log( 'clicking' );
+                        return main.getSubscribe().click();
+                    } );
+            });
+
+
         } );
         afterEach( function () {
             browser.ignoreSynchronization = false;
-            return takeScreenshot('test_' + new Date().getTime() );
+            return takeScreenshot('after_' + new Date().getTime() );
         } );
         it( 'should allow a user to subscribe to a course', function() {
             // could create a macro out of these?
             main.get();
             return expect( main.navTo ( { organizations: 'surrey', courses: 'meditation' } )
                 .then( function () {
+                    takeScreenshot('before_' + new Date().getTime() );
                     return main.getSubscribe().click().then(
                         function () {
-                            return main.getSubscribe().getText();
+                            return main.getSubscribe().getAttribute('checked');
                         } );
                 } ) ).to.eventually.equal('true');
         });
+        it( 'should allow a user to subscribe to a course via macro', function() {
+            return expect( journeys.subscribeMeditation.then(
+                function () {
+                    var main = new MainPage();
+                    return main.getSubscribe().getAttribute('checked');
+                } ) ).to.eventually.equal('true');
+        });
+/*
+        it( 'should show subscribed course via macro', function() {
+            return expect( journeys.subscribeMeditation.then(
+                function () {
+                    menu = new MenuPage();
+                    menu.goHome().then ( function () {
+                        home = new HomePage();
+                        // this will be an array if more than one?
+                        return home.getCourses().getText();
+                    });
+                }) ).to.eventually.equal('true');
+        });
+        */
+        it( 'should show subscribed courses on homepage' );
     });
 });

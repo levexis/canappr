@@ -79,6 +79,7 @@
             restrict: 'E',
             template : '<div id="splash"></div>'
         };
+        return directive;
     });
 
 })(angular); //jshint ignore:line

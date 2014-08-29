@@ -51,6 +51,7 @@
                     fileService.canDownload ( null , true);
                 }
             }
+            _prefs = after;
             // don't forget object comparison
         }, true);
         _prefs = $rootScope.canAppr.prefs;
