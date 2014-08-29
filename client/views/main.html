@@ -5,7 +5,7 @@
 <ons-page ng-controller="MainCtrl" id="main"><!-- as soon as I add my transition I can't scroll any more! -->
 <ons-scroller>
     <cd-nav-bar></cd-nav-bar>
-    <div class="animated fadeIn"><!-- had a problem with cd-transition on ons-page seemed to kill scroller !-->
+    <div cd-fade-in><!-- had a problem with cd-transition on ons-page seemed to kill scroller !-->
         <div class="ca-blurb">
             <h1>{{model.name}}<cd-switch ng-show="canSubscribe" model="subscribed"></cd-switch></h1>
             <p class="ca-main-body" ng-bind-html="model.html"></p>

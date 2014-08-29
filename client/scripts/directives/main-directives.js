@@ -60,7 +60,6 @@
                                                         oldScope: $scope });
                 };
                 $scope.isSingle=navService.isSingle();
-                console.log ('isSingle',$scope.isSingle);
                 $scope.toggleMenu = navService.toggleMenu;
             },
             template: function ( element, attributes) {
@@ -104,6 +103,18 @@
                     }
                 };
 
+            }
+        };
+    });
+    myApp.directive('cdFadeIn', function ( $log ,registryService ) {
+        return {
+            restrict : "A",
+            compile : function ( el, attr ) {
+                // seems fine to add classes here, cd transition was causing problems with ons-scroller
+                if ( !registryService.getConfig( 'isE2E' ) ) {
+                    el.addClass( 'animated' );
+                    el.addClass( 'fadeIn' );
+                }
             }
         };
     });

@@ -49,7 +49,7 @@
         return directive;
     });
     // watches isReady and hides splash screen when it's true
-    myApp.directive('cdSplash',  function( $rootScope , $timeout) {
+    myApp.directive('cdSplash',  function( $rootScope , $timeout, registryService) {
         // use rootscope and directive for this?
         function hideSplash( hide ) {
 //            var el =  angular.element( document.getElementById('splash' )).addClass('fadeOut');
@@ -67,14 +67,18 @@
                el = element;
 //               el.style =  'animation-duration: 2s';
                // watch after linking just to avoid a race condition
-               return function ( scope, element, attributes ) {
-                   $rootScope.$watch( 'canAppr.ready', hideSplash );
-               };
+                if ( !registryService.getConfig( 'isE2E' ) ) {
+                    return function ( scope, element, attributes ) {
+                        $rootScope.$watch( 'canAppr.ready', hideSplash );
+                    };
+                } else {
+                    // hide ths splash screen
+                    element.addClass( 'ca-hide' );
+                }
             },
             restrict: 'E',
             template : '<div id="splash"></div>'
         };
-        return directive;
     });
 
 })(angular); //jshint ignore:line
