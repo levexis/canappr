@@ -77,22 +77,7 @@ describe('e2e', function () {
             browser.ignoreSynchronization = false;
             return takeScreenshot('after_' + new Date().getTime() );
         } );
-        it( 'should disable module delete switch until content has been downloaded', function () {
-            main.get();
-            return expect (
-                main.navTo ( { organizations: 'surrey', courses: 'meditation', modules: 'breath' } )
-                    .then( function () {
-                        return main.getSwitch().isEnabled();
-                    }) ).to.eventually.be.not.ok;
-        });
-        it( 'should show module as not downloaded when switch is set', function () {
-            main.get();
-            return expect (
-                main.navTo ( { organizations: 'surrey', courses: 'meditation', modules: 'breath' } )
-                    .then( function () {
-                        return main.getSwitch().getAttribute('checked');
-                    }) ).to.eventually.be.not.ok;
-        });
+
 
     });
 });

@@ -37,8 +37,8 @@
                     $log.debug( 'module status', $scope.isDownloaded, $scope.canDownload, module );
                 } );
             } else {
-                $scope.isDownloaded = true;
-                $scope.disableDownload = false;
+                $scope.isDownloaded = false;
+                $scope.disableDownload = true;
             }
             $scope.isSubscribed = prefService.isSubscribed();
             $scope.navDir=options.navDir || 'new';

@@ -277,8 +277,23 @@ describe('e2e', function () {
                     });
                 }) ).to.eventually.contain('Triratna East Surrey - Guided Meditations');
         });
+        it( 'should disable module delete switch until content has been downloaded', function () {
+            main.get();
+            return expect (
+                main.navTo ( { organizations: 'surrey', courses: 'meditation', modules: 'breath' } )
+                    .then( function () {
+                        return main.getSwitch().isEnabled();
+                    }) ).to.eventually.be.not.ok;
+        });
+        it( 'should show module as not downloaded when switch is set', function () {
+            main.get();
+            return expect (
+                main.navTo ( { organizations: 'surrey', courses: 'meditation', modules: 'breath' } )
+                    .then( function () {
+                        return main.getSwitch().getAttribute('checked');
+                    }) ).to.eventually.be.not.ok;
+        });
         it( 'should allow a user to play module content without subscribing or downloading' );
-        it( 'should disable module delete switch until content has been downloaded' );
         /*
          native tests / require appium
          it( 'should download current and next module content' );
