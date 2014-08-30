@@ -61,6 +61,7 @@ describe('e2e', function () {
             home = new HomePage();
             menu = new MenuPage();
             deferred = Q.defer();
+            // probably won't need to use this provided each nested function returns the next promise explicitly
             testPromise = deferred.promise;
             // could create a macro out of these?
             journeys.subscribeMeditation = function () {
@@ -76,41 +77,22 @@ describe('e2e', function () {
             browser.ignoreSynchronization = false;
             return takeScreenshot('after_' + new Date().getTime() );
         } );
-        /*
-        it( 'should allow a user to subscribe to a course', function() {
-            // could create a macro out of these?
+        it( 'should disable module delete switch until content has been downloaded', function () {
             main.get();
-            return expect( main.navTo ( { organizations: 'surrey', courses: 'meditation' } )
-                .then( function () {
-                    return main.getSubscribe().click().then(
-                        function () {
-                            return main.getSubscribe().getAttribute('checked');
-                        } );
-                } ) ).to.eventually.equal('true');
+            return expect (
+                main.navTo ( { organizations: 'surrey', courses: 'meditation', modules: 'breath' } )
+                    .then( function () {
+                        return main.getSwitch().isEnabled();
+                    }) ).to.eventually.be.not.ok;
         });
-        it( 'should allow a user to subscribe to a course via macro', function() {
-            return expect( journeys.subscribeMeditation().then(
-                function () {
-                    var main = new MainPage();
-                    return main.getSubscribe().getAttribute('checked');
-                } ) ).to.eventually.equal('true');
+        it( 'should show module as not downloaded when switch is set', function () {
+            main.get();
+            return expect (
+                main.navTo ( { organizations: 'surrey', courses: 'meditation', modules: 'breath' } )
+                    .then( function () {
+                        return main.getSwitch().getAttribute('checked');
+                    }) ).to.eventually.be.not.ok;
         });
-        */
-        it( 'should show subscribed course via macro', function() {
-            return expect( journeys.subscribeMeditation().then(
-                function () {
-                    console.log( 'menu' );
-                    menu = new MenuPage();
-                    return menu.getHome().click().then ( function () {
-                        console.log( 'home' );
-                        home = new HomePage();
-                        return home.getCourses().then( function (courses) {
-                            console.log( 'courses',courses);
-                            return courses[0];
-                        });
-                    });
-                }) ).to.eventually.contain('Triratna East Surrey - Guided Meditations');
-        });
-        it( 'should show subscribed courses on homepage' );
+
     });
 });

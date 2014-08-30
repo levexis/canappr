@@ -142,7 +142,7 @@ describe('e2e', function () {
          */
     });
     describe ('Stories', function() {
-        var menu,main,home,deferred,testPromise;
+        var menu,main,home,deferred,testPromise, journeys={};
         beforeEach( function () {
             browser.ignoreSynchronization = true;
             main = new MainPage();
@@ -150,6 +150,14 @@ describe('e2e', function () {
             menu = new MenuPage();
             deferred = Q.defer();
             testPromise = deferred.promise;
+            journeys.subscribeMeditation = function () {
+                return main.get().then( function () {
+                    main.navTo( { organizations : 'surrey', courses : 'meditation' } )
+                        .then( function () {
+                            return main.getSwitch().click();
+                        } );
+                } );
+            };
         } );
         afterEach( function () {
             browser.ignoreSynchronization = false;
@@ -251,21 +259,26 @@ describe('e2e', function () {
                 .to.eventually.contain( 'there are no' );
         });
         it( 'should allow a user to subscribe to a course', function() {
-            // could create a macro out of these?
-            return expect( main.navTo ( { organizations: 'surrey', courses: 'meditation' } )
-                .then( function () {
-                    return main.getSubscribe().click().then(
-                        function () {
-                            console.log('clicked');
-                            return main.getSubscribe().getAttribute('checked');
-                        } );
+            return expect( journeys.subscribeMeditation().then(
+                function () {
+                    var main = new MainPage();
+                    return main.getSwitch().getAttribute('checked');
                 } ) ).to.eventually.equal('true');
         });
-
-        it( 'should show subscribed courses on homepage' );
-
+        it( 'should show subscribed course on homepage', function() {
+            return expect( journeys.subscribeMeditation().then(
+                function () {
+                    menu = new MenuPage();
+                    return menu.getHome().click().then ( function () {
+                        home = new HomePage();
+                        return home.getCourses().then( function (courses) {
+                            return courses[0];
+                        });
+                    });
+                }) ).to.eventually.contain('Triratna East Surrey - Guided Meditations');
+        });
         it( 'should allow a user to play module content without subscribing or downloading' );
-        it( 'should show allow users to choose to autodownload' );
+        it( 'should disable module delete switch until content has been downloaded' );
         /*
          native tests / require appium
          it( 'should download current and next module content' );

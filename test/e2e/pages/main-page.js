@@ -220,7 +220,7 @@ module.exports = function () {
     this.getListTitleText = function() {
         return this.main.element( by.css('.ca-main-list') ).getAttribute('title');
     };
-    this.getSubscribe = function () {
+    this.getSwitch = function () {
         return this.main.element( by.css('.topcoat-switch__input') );
     };
     _refreshList();
