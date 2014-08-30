@@ -5,15 +5,23 @@ if ( typeof protractor === 'undefined' ) {
 }
 module.exports = function () {
     function getList( list ) {
-        var _outList = [];
-        return list.count()
+        var _outList = [], _promises = [], deferred = Q.defer();
+        console.log('getList',list);
+        list.count()
             .then( function ( items ) {
                 var item = 0;
                 while ( item < items ) {
-                    _outList.push( list.get( item++ ).then );
+                    _promises.push( list.get( item++ ).then( function ( course ) {
+                        return course.getText().then( function ( text) {
+                            _outList.push( text );
+                        });
+                    }));
                 }
-                return Q.all( _outList );
+                Q.all( _promises ).then( function () {
+                    deferred.resolve ( _outList );
+                });
             } );
+        return deferred.promise;
     }
     var _that = this;
     /* get the page */

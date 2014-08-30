@@ -63,27 +63,25 @@ describe('e2e', function () {
             deferred = Q.defer();
             testPromise = deferred.promise;
             // could create a macro out of these?
-            journeys.subscribeMeditation = main.get().then ( function () {
-                main.navTo( { organizations : 'surrey', courses : 'meditation' } )
-                    .then( function () {
-                        var main = new MainPage();
-                        console.log( 'clicking' );
-                        return main.getSubscribe().click();
-                    } );
-            });
-
-
+            journeys.subscribeMeditation = function () {
+                return main.get().then( function () {
+                    main.navTo( { organizations : 'surrey', courses : 'meditation' } )
+                        .then( function () {
+                            return main.getSubscribe().click();
+                        } );
+                } );
+            };
         } );
         afterEach( function () {
             browser.ignoreSynchronization = false;
             return takeScreenshot('after_' + new Date().getTime() );
         } );
+        /*
         it( 'should allow a user to subscribe to a course', function() {
             // could create a macro out of these?
             main.get();
             return expect( main.navTo ( { organizations: 'surrey', courses: 'meditation' } )
                 .then( function () {
-                    takeScreenshot('before_' + new Date().getTime() );
                     return main.getSubscribe().click().then(
                         function () {
                             return main.getSubscribe().getAttribute('checked');
@@ -91,25 +89,28 @@ describe('e2e', function () {
                 } ) ).to.eventually.equal('true');
         });
         it( 'should allow a user to subscribe to a course via macro', function() {
-            return expect( journeys.subscribeMeditation.then(
+            return expect( journeys.subscribeMeditation().then(
                 function () {
                     var main = new MainPage();
                     return main.getSubscribe().getAttribute('checked');
                 } ) ).to.eventually.equal('true');
         });
-/*
-        it( 'should show subscribed course via macro', function() {
-            return expect( journeys.subscribeMeditation.then(
-                function () {
-                    menu = new MenuPage();
-                    menu.goHome().then ( function () {
-                        home = new HomePage();
-                        // this will be an array if more than one?
-                        return home.getCourses().getText();
-                    });
-                }) ).to.eventually.equal('true');
-        });
         */
+        it( 'should show subscribed course via macro', function() {
+            return expect( journeys.subscribeMeditation().then(
+                function () {
+                    console.log( 'menu' );
+                    menu = new MenuPage();
+                    return menu.getHome().click().then ( function () {
+                        console.log( 'home' );
+                        home = new HomePage();
+                        return home.getCourses().then( function (courses) {
+                            console.log( 'courses',courses);
+                            return courses[0];
+                        });
+                    });
+                }) ).to.eventually.contain('Triratna East Surrey - Guided Meditations');
+        });
         it( 'should show subscribed courses on homepage' );
     });
 });
