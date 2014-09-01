@@ -455,6 +455,28 @@ describe('Services', function() {
                 http.flush();
             });
         });
+        describe('getRouteTemplate',function() {
+            it('should default to home', function () {
+                service.getRouteTemplate().should.equal( 'views/home.html' );
+                service.getRouteTemplate('#/home').should.equal( 'views/home.html' );
+                service.getRouteTemplate('#/home?123').should.equal( 'views/home.html' );
+            });
+            it('should route main', function () {
+                service.getRouteTemplate('#/main').should.equal( 'views/main.html' );
+                service.getRouteTemplate('#/main?123').should.equal( 'views/main.html' );
+            });
+            it('should route content', function () {
+                service.getRouteTemplate('#/content').should.equal( 'views/content.html' );
+                service.getRouteTemplate('#/content?123').should.equal( 'views/content.html' );
+            });
+            it('should route library', function () {
+                service.getRouteTemplate('#/library').should.equal( 'views/library.html' );
+                service.getRouteTemplate('#/library?123').should.equal( 'views/library.html' );
+            });
+            it('should route 404 if not known', function () {
+                service.getRouteTemplate('gonads').should.equal( 'views/404.html' );
+            });
+        });
     } );
 
     describe( 'domUtils', function () {

@@ -20,7 +20,7 @@
         };
         return directive;
     });
-    myApp.directive('cdBody', function( registryService , $window ) {
+    myApp.directive('cdBody', function( registryService , $window ,navService ) {
         var outTemplate;
         // push thing didn't go very will so disabled
         if ( false && registryService.getConfig('isNative')) {
@@ -33,13 +33,7 @@
         return {
             restrict: "E",
             link : function ( $scope, element, attributes ) {
-                if ( !$window.location.hash || $window.location.hash === '#/home' ) {
-                    $scope.template = 'views/home.html';
-                } else if ( $window.location.hash === '#/main' ) {
-                    $scope.template = 'views/main.html';
-                } else if ( $window.location.hash === '#/content' ) {
-                    $scope.template = 'views/content.html';
-                }
+                $scope.template = navService.getRouteTemplate ( $window.location.hash );
             },
             template : outTemplate
         };
