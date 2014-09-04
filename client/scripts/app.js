@@ -18,6 +18,8 @@
              if ( typeof $window.cordova !== 'undefined' ) {
                  var onDeviceReady = function () {
                      $log.debug( 'CORDOVA VERSION: ' + window.device.cordova );
+                     // hide phonegap splash
+                     navigator.splashscreen.hide();
                      // stops app bleading into phone network status bar
                      $window.StatusBar.overlaysWebView( false );
                      registryService.setConfig( 'isNative', true );

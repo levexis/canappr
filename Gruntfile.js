@@ -131,7 +131,8 @@ module.exports = function (grunt) {
                            'org.apache.cordova.network-information',
                            'org.apache.cordova.media',
                             'org.apache.cordova.file',
-                            'org.apache.cordova.file-transfer'
+                            'org.apache.cordova.file-transfer',
+                            'org.apache.cordova.splashscreen'
                 ],
                 platforms: ['android' , 'ios'],
                 maxBuffer: 200, // You may need to raise this for iOS.
@@ -142,7 +143,64 @@ module.exports = function (grunt) {
                     return(pkg.name + '-' + pkg.version);
                 },
                 debuggable: true,
-
+                // Set an app icon at various sizes (optional)
+                icons: {
+                    android: {
+                        ldpi: 'icons/droid/ic_launcher.png',
+                        mdpi: 'icons/droid/ic_launcher2.png',
+                        hdpi: 'icons/droid/ic_launcher3.png',
+                        xhdpi: 'icons/droid/ic_launcher4.png'
+                    },
+//                    wp8: {
+//                        app: 'icon-62-tile.png',
+//                        tile: 'icon-173-tile.png'
+//                    },
+                    ios: {
+                        icon29: 'icons/ios/Icon-Small.png',
+                        icon29x2: 'icons/ios/Icon-Small.png',
+                        icon40: 'icons/ios/Icon-40.png',
+                        icon40x2: 'icons/ios/Icon-40@2x.png',
+                        icon57: 'icons/ios/Icon-60.png',
+                        icon57x2: 'icons/ios/Icon-60@2x.png',
+                        icon60: 'icons/ios/Icon-60.png',
+                        icon60x2: 'icons/ios/Icon-60@2x.png',
+                        icon72: 'icons/ios/Icon-76.png',
+                        icon72x2: 'icons/ios/Icon-76@2x.png',
+                        icon76: 'icons/ios/Icon-76.png',
+                        icon76x2: 'icons/ios/Icon-76@2x.png'
+                    }
+                },
+                // Set a splash screen at various sizes (optional)
+                // Only works for Android and IOS
+                screens: {
+                    android: {
+                        ldpi: 'icons/big_splash.png',
+                        // landscape version
+                        ldpiLand: 'icons/big_splash.png',
+                        mdpi: 'icons/big_splash.png',
+                        // landscape version
+                        mdpiLand: 'icons/big_splash.png',
+                        hdpi: 'icons/big_splash.png',
+                        // landscape version
+                        hdpiLand: 'icons/big_splash.png',
+                        xhdpi: 'icons/big_splash.png',
+                        // landscape version
+                        xhdpiLand: 'icons/big_splash.png'
+                    },
+                    ios: 'icons/big_splash.png'
+    /*{
+                        // ipad landscape
+                        ipadLand: 'icons/big_splash.png',
+                        ipadLandx2: 'icons/big_splash.png',
+                        // ipad portrait
+                        ipadPortrait: 'icons/big_splash.png',
+                        ipadPortraitx2: 'icons/big_splash.png',
+                        // iphone portrait
+                        iphonePortrait: 'icons/big_splash.png',
+                        iphonePortraitx2: 'icons/big_splash.png',
+                        iphone568hx2: 'icons/big_splash.png'
+                    }*/
+                },
                 // Must be set for ios to work.
                 // Should return the app name.
                 name: function(){
@@ -165,63 +223,9 @@ module.exports = function (grunt) {
                     }
                 },
 
-                // Set an app icon at various sizes (optional)
-                icons: {
-                    android: {
-                        ldpi: 'icon-36-ldpi.png',
-                        mdpi: 'icon-48-mdpi.png',
-                        hdpi: 'icon-72-hdpi.png',
-                        xhdpi: 'icon-96-xhdpi.png'
-                    },
-                    wp8: {
-                        app: 'icon-62-tile.png',
-                        tile: 'icon-173-tile.png'
-                    },
-                    ios: {
-                        icon29: 'icon29.png',
-                        icon29x2: 'icon29x2.png',
-                        icon40: 'icon40.png',
-                        icon40x2: 'icon40x2.png',
-                        icon57: 'icon57.png',
-                        icon57x2: 'icon57x2.png',
-                        icon60x2: 'icon60x2.png',
-                        icon72: 'icon72.png',
-                        icon72x2: 'icon72x2.png',
-                        icon76: 'icon76.png',
-                        icon76x2: 'icon76x2.png'
-                    }
-                },
 
-                // Set a splash screen at various sizes (optional)
-                // Only works for Android and IOS
-                screens: {
-                    android: {
-                        ldpi: 'screen-ldpi-portrait.png',
-                        // landscape version
-                        ldpiLand: 'screen-ldpi-landscape.png',
-                        mdpi: 'screen-mdpi-portrait.png',
-                        // landscape version
-                        mdpiLand: 'screen-mdpi-landscape.png',
-                        hdpi: 'screen-hdpi-portrait.png',
-                        // landscape version
-                        hdpiLand: 'screen-hdpi-landscape.png',
-                        xhdpi: 'screen-xhdpi-portrait.png',
-                        // landscape version
-                        xhdpiLand: 'www/screen-xhdpi-landscape.png'
-                    },
-                    ios: {
-                        // ipad landscape
-                        ipadLand: 'screen-ipad-landscape.png',
-                        ipadLandx2: 'screen-ipad-landscape-2x.png',
-                        // ipad portrait
-                        ipadPortrait: 'screen-ipad-portrait.png',
-                        ipadPortraitx2: 'screen-ipad-portrait-2x.png',
-                        // iphone portrait
-                        iphonePortrait: 'screen-iphone-portrait.png',
-                        iphonePortraitx2: 'screen-iphone-portrait-2x.png',
-                        iphone568hx2: 'screen-iphone-568h-2x.png'
-                    }
-                },
+
+
 
                 // Android-only integer version to increase with each release.
                 // See http://developer.android.com/tools/publishing/versioning.html

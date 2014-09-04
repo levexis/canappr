@@ -17,11 +17,22 @@
 <preference name="phonegap-version" value="3.1.0" />
 
 
-<gap:platform name="android" />
-<gap:platform name="ios" />
+    <gap:platform name="android" />
+    <gap:platform name="ios" />
+    <icon src="www/images/crapicon.png" />
+    <icon gap:platform="ios" height="60" src="icon-60.png" width="60" />
+    <icon gap:platform="ios" height="72" src="icon-72.png" width="72" />
+    <icon gap:platform="ios" height="120" src="icon-60@2x.png" width="120" />
+    <icon gap:platform="ios" height="144" src="icon-72@2x.png" width="144" />
+    <icon gap:platform="android" gap:density="ldpi" src="ic_launcher" />
+    <icon gap:platform="android" gap:density="mdpi" src="ic_launcher2.png" />
+    <icon gap:platform="android" gap:density="hdpi" src="ic_launcher3.png" />
+    <icon gap:platform="android" gap:density="xhdpi" src="ic_launcher4.png" />
 
-    <gap:plugin name="org.apache.cordova.device" />
-    <gap:plugin name="org.apache.cordova.statusbar" version="0.1.4" />
+    <!-- android was crashing on start up when did remote build and seems to have been something to do with no size info -->
+    <gap:splash gap:platform="android" src="www/images/big_splash.png" width="100%" height="100%" />
+    <gap:splash gap:platform="ios" src="www/images/big_splash.png" width="2000" height="2000"/>
+
     <!-- this code makes the statusbar text white
     <gap:config-file platform="ios" parent="UIViewControllerBasedStatusBarAppearance">
         <false/>
