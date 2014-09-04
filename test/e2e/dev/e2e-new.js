@@ -1,8 +1,10 @@
+// run with grunt e2e:dev , allows you to just run a single test as it.only not supported
 var chai = require('chai' ),
     chaiAsPromised = require('chai-as-promised' ),
     MenuPage = require('../pages/menu-page' ),
     MainPage = require('../pages/main-page' ),
     HomePage = require('../pages/home-page' ),
+    ContentPage = require('../pages/content-page' ),
     fs = require ('fs' ),
     // set ARTIFACT_DIR for snapshots
     // eg ARTIFACT_DIR=test.
@@ -54,12 +56,13 @@ if ( process.env['ARTIFACT_DIR'] ) {
 describe('e2e', function () {
 
     describe ('Stories', function() {
-        var menu,main,home,deferred,testPromise,journeys={};
+        var menu,main,home,content,deferred,testPromise,journeys={};
         beforeEach( function () {
             browser.ignoreSynchronization = true;
             main = new MainPage();
             home = new HomePage();
             menu = new MenuPage();
+            content = new ContentPage();
             deferred = Q.defer();
             // probably won't need to use this provided each nested function returns the next promise explicitly
             testPromise = deferred.promise;
@@ -73,6 +76,29 @@ describe('e2e', function () {
                 } );
             };
         } );
+        it( 'should allow a user to play module content without subscribing or downloading' , function () {
+            main.get();
+            return expect (
+                main.navTo ( { organizations: 'medit8', courses: 'bowls', modules: 'singing' } )
+                    .then( function () {
+//                        var content = new ContentPage();
+                        return content.getPlayPause().click().then(
+                            function () {
+                                return browser.sleep( 1000 ).then (
+                                function () {
+                                    return content.getRemaining();
+                                });
+                        });
+                    }) ).to.eventually.be.within(1, 16);
+        });
+        it( 'should fetch the track time' , function () {
+            main.get();
+            return expect (
+                main.navTo ( { organizations: 'medit8', courses: 'bowls', modules: 'singing' } )
+                    .then( function () {
+                            return content.getRemaining();
+                        })).to.eventually.be.equal(17);
+        });
         afterEach( function () {
             browser.ignoreSynchronization = false;
             return takeScreenshot('after_' + new Date().getTime() );
