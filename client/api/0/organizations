@@ -16,5 +16,14 @@
         "description": "Mindfulness plain and simple.",
         "logo": "http://www.lovelifelivenow.com/wp-content/uploads/2013/12/Now-Project-5-150x100.png",
         "html": "Mindfulness courses and retreats without the religion."
+    },
+    {
+        "id" : "3",
+        "name" : "Medit8",
+        "url": "http://medit8.daddyswork.com/",
+        "contact": "contact@daddyswork.com",
+        "description": "Core developers of the Medit8 app.",
+        "logo": "",
+        "html": "Sounds for meditations from the core developers of Medit8"
     }
 ]

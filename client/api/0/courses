@@ -19,5 +19,12 @@
         "name" : "Talks on Buddhism",
         "html" : "Buddhism from various perspectives",
         "startDate" : "2014-06-28T00:00:00.000Z"
+    },
+    {
+        "id" : "4",
+        "orgId" : "3",
+        "name" : "Bells and bowls",
+        "html" : "Sounds for use with your own meditation practice",
+        "startDate" : "2014-09-01T00:00:00.000Z"
     }
 ]

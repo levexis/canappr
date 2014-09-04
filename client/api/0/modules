@@ -37,5 +37,26 @@
         "html" : "I have been asked to co guide a Buddhafield retreat based upon the theme \"Dreaming the new\". Having reflected on what I might do this meditation came about and after being asked to record it at our communal practise evening at Heaven, here it is.",
         "availableAfter" :3,
         "playlist" : "PG9yZ2FuaXphdGlvbiBpZD0iMSI+DQogICAgPGNvdXJzZSBpZD0iMSI+DQogICAgICAgPG1vZHVsZSBpZD0iNSI+DQogICAgICAgICAgPGNvbnRlbnQ+DQogICAgICAgICAgICA8ZGVzY3JpcHRpb24+RHJlYW1pbmcgdGhlIG5ldzwvZGVzY3JpcHRpb24+IA0KICAgICAgICAgICAgPG93bmVyPmRoLnAuZGFraW5pQGdtYWlsLmNvbTwvb3duZXI+DQogICAgICAgICAgICA8dGltZT4yNzcwPC90aW1lPg0KICAgICAgICAgICAgPHNpemU+NDU8L3NpemU+DQogICAgICAgICAgICA8ZmlsZT4NCiAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4NCiAgICAgICAgICAgICAgICA8dXJsPmh0dHBzJTNBJTJGJTJGZGwuZHJvcGJveHVzZXJjb250ZW50LmNvbSUyRnUlMkYxMTIwNDUzJTJGdHJpcmF0bmElMkZuZXcuMTI4Lm1wMzwvdXJsPg0KICAgICAgICAgICAgPC9maWxlPiAgICAgICAgICAgICAgICANCiAgICAgICAgICA8L2NvbnRlbnQ+DQogICAgICAgPC9tb2R1bGU+DQogICAgPC9jb3Vyc2U+DQo8L29yZ2FuaXphdGlvbj4="
+    },
+    {
+        "id": "6",
+        "courseId": "4",
+        "name": "Chimes",
+        "html": "Tibettan Chimes x 3",
+        "playlist": "PG9yZ2FuaXphdGlvbiBpZD0nMyc+PGNvdXJzZSBpZD0nNCc+PG1vZHVsZSBpZD0nNic+PGNvbnRlbnQ+PGRlc2NyaXB0aW9uPkNoaW1lczwvZGVzY3JpcHRpb24+PG93bmVyPnVua25vd248L293bmVyPjxzaXplPjAuMjwvc2l6ZT48dGltZT45PC90aW1lPjxmaWxlPjx1cmw+YXVkaW8lMkZjaGltZXMubXAzPC91cmw+PHR5cGU+YXVkaW88L3R5cGU+PHRpdGxlLz48L2ZpbGU+PC9jb250ZW50PjwvbW9kdWxlPjwvY291cnNlPjwvb3JnYW5pemF0aW9uPg=="
+    },
+    {
+        "id": "7",
+        "courseId": "4",
+        "name": "Bowl",
+        "html": "Sound of bowl being struck",
+        "playlist": "PG9yZ2FuaXphdGlvbiBpZD0nMyc+PGNvdXJzZSBpZD0nNCc+PG1vZHVsZSBpZD0nNyc+PGNvbnRlbnQ+PGRlc2NyaXB0aW9uPkJvd2w8L2Rlc2NyaXB0aW9uPjxvd25lcj51bmtub3duPC9vd25lcj48c2l6ZT4wLjM8L3NpemU+PHRpbWU+Mzg8L3RpbWU+PGZpbGU+PHVybD5hdWRpbyUyRmJvd2wubXAzPC91cmw+PHR5cGU+YXVkaW88L3R5cGU+PHRpdGxlPjwvdGl0bGU+PC9maWxlPjwvY29udGVudD48L21vZHVsZT48L2NvdXJzZT48L29yZ2FuaXphdGlvbj4="
+    },
+    {
+        "id": "8",
+        "courseId": "4",
+        "name": "Singing Bowl",
+        "html": "Sound of bowl \"singing\"",
+        "playlist": "PG9yZ2FuaXphdGlvbiBpZD0nMyc+PGNvdXJzZSBpZD0nNCc+PG1vZHVsZSBpZD0nOCc+PGNvbnRlbnQ+PGRlc2NyaXB0aW9uPlNpbmdpbmcgQm93bDwvZGVzY3JpcHRpb24+PG93bmVyPnVua25vd248L293bmVyPjxzaXplPjAuMTwvc2l6ZT48dGltZT4xNzwvdGltZT48ZmlsZT48dXJsPmF1ZGlvJTJGc2luZ2luZy5tcDM8L3VybD48dHlwZT5hdWRpbzwvdHlwZT48dGl0bGU+PC90aXRsZT48L2ZpbGU+PC9jb250ZW50PjwvbW9kdWxlPjwvY291cnNlPjwvb3JnYW5pemF0aW9uPg=="
     }
 ]
