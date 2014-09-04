@@ -144,61 +144,64 @@ module.exports = function (grunt) {
                 },
                 debuggable: true,
                 // Set an app icon at various sizes (optional)
+
                 icons: {
                     android: {
-                        ldpi: 'icons/droid/ic_launcher.png',
-                        mdpi: 'icons/droid/ic_launcher2.png',
-                        hdpi: 'icons/droid/ic_launcher3.png',
-                        xhdpi: 'icons/droid/ic_launcher4.png'
-                    },
+                        ldpi: 'client/icons/droid/ic_launcher.png',
+                        mdpi: 'client/icons/droid/ic_launcher2.png',
+                        hdpi: 'client/icons/droid/ic_launcher3.png',
+                        xhdpi: 'client/icons/droid/ic_launcher4.png'
+                    }
 //                    wp8: {
 //                        app: 'icon-62-tile.png',
 //                        tile: 'icon-173-tile.png'
 //                    },
+                    /* ios icons not working, think they are copying to wrong directory - have a look for resources
                     ios: {
-                        icon29: 'icons/ios/Icon-Small.png',
-                        icon29x2: 'icons/ios/Icon-Small.png',
-                        icon40: 'icons/ios/Icon-40.png',
-                        icon40x2: 'icons/ios/Icon-40@2x.png',
-                        icon57: 'icons/ios/Icon-60.png',
-                        icon57x2: 'icons/ios/Icon-60@2x.png',
-                        icon60: 'icons/ios/Icon-60.png',
-                        icon60x2: 'icons/ios/Icon-60@2x.png',
-                        icon72: 'icons/ios/Icon-76.png',
-                        icon72x2: 'icons/ios/Icon-76@2x.png',
-                        icon76: 'icons/ios/Icon-76.png',
-                        icon76x2: 'icons/ios/Icon-76@2x.png'
+                        icon29: 'client/icons/ios/icon-Small.png',
+                        icon29x2: 'client/icons/ios/icon-Small.png',
+                        icon40: 'client/icons/ios/icon-40.png',
+                        icon40x2: 'client/icons/ios/icon-40@2x.png',
+                        icon57: 'client/icons/ios/icon-57.png',
+                        icon57x2: 'client/icons/ios/icon-57@2x.png',
+                        icon60: 'client/icons/ios/icon-60.png',
+                        icon60x2: 'client/icons/ios/icon-60@2x.png',
+                        icon72: 'client/icons/ios/icon-72.png',
+                        icon72x2: 'client/icons/ios/icon-72@2x.png',
+                        icon76: 'client/icons/ios/icon-76.png',
+                        icon76x2: 'client/icons/ios/icon-76@2x.png'
                     }
+                     */
                 },
                 // Set a splash screen at various sizes (optional)
                 // Only works for Android and IOS
                 screens: {
                     android: {
-                        ldpi: 'icons/big_splash.png',
+                        ldpi: 'client/icons/big_splash.png',
                         // landscape version
-                        ldpiLand: 'icons/big_splash.png',
-                        mdpi: 'icons/big_splash.png',
+                        ldpiLand: 'client/icons/big_splash.png',
+                        mdpi: 'client/icons/big_splash.png',
                         // landscape version
-                        mdpiLand: 'icons/big_splash.png',
-                        hdpi: 'icons/big_splash.png',
+                        mdpiLand: 'client/icons/big_splash.png',
+                        hdpi: 'client/icons/big_splash.png',
                         // landscape version
-                        hdpiLand: 'icons/big_splash.png',
-                        xhdpi: 'icons/big_splash.png',
+                        hdpiLand: 'client/icons/big_splash.png',
+                        xhdpi: 'client/icons/big_splash.png',
                         // landscape version
-                        xhdpiLand: 'icons/big_splash.png'
-                    },
-                    ios: 'icons/big_splash.png'
+                        xhdpiLand: 'client/icons/big_splash.png'
+                    }
+// again ios not working for local build, need to copy the right filename to the right directory                    ios: 'client/screen/default.png'
     /*{
                         // ipad landscape
-                        ipadLand: 'icons/big_splash.png',
-                        ipadLandx2: 'icons/big_splash.png',
+                        ipadLand: 'client/icons/big_splash.png',
+                        ipadLandx2: 'client/icons/big_splash.png',
                         // ipad portrait
-                        ipadPortrait: 'icons/big_splash.png',
-                        ipadPortraitx2: 'icons/big_splash.png',
+                        ipadPortrait: 'client/icons/big_splash.png',
+                        ipadPortraitx2: 'client/icons/big_splash.png',
                         // iphone portrait
-                        iphonePortrait: 'icons/big_splash.png',
-                        iphonePortraitx2: 'icons/big_splash.png',
-                        iphone568hx2: 'icons/big_splash.png'
+                        iphonePortrait: 'client/icons/big_splash.png',
+                        iphonePortraitx2: 'client/icons/big_splash.png',
+                        iphone568hx2: 'client/icons/big_splash.png'
                     }*/
                 },
                 // Must be set for ios to work.

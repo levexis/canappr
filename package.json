@@ -56,6 +56,7 @@
     "underscore": "^1.6.0"
   },
   "devDependencies": {
-    "grunt-phonegap": "^0.15.2"
+    "grunt-phonegap": "^0.15.2",
+    "grunt-rasterize": "^0.1.7"
   }
 }
