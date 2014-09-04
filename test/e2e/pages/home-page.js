@@ -6,7 +6,6 @@ if ( typeof protractor === 'undefined' ) {
 module.exports = function () {
     function getList( list ) {
         var _outList = [], _promises = [], deferred = Q.defer();
-        console.log('getList',list);
         list.count()
             .then( function ( items ) {
                 var item = 0;

@@ -83,7 +83,7 @@ describe('e2e', function () {
                 // this really should be a check for blurb
                 expect( main.getDescription().getInnerHtml() ).to.eventually.contain( 'Select an organization' ),
                 expect( main.getListTitleText() ).to.eventually.contain( 'Organizations' ),
-                expect( main.getList() ).to.eventually.have.length( 2 ).then(
+                expect( main.getList() ).to.eventually.have.length( 3 ).then(
                     function ( list) {
                         expect (list[0].getText() ).to.eventually.contain('Triratna East Surrey');
                     })
