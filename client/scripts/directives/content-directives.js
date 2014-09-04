@@ -44,7 +44,10 @@
                                         if ( $scope['audio' + $index].playing === 'buffering' ) {
                                             $scope['audio' + $index].playing = true;
                                         }
-                                        delay=1000;
+                                        // needs to be fast enough so each second is registered
+                                        // problem is it triggers a complete digest each time but if not quick enough
+                                        // then stutters on mobile
+                                        delay=250;
                                     }
                                     ticTock(delay);
                                 });
