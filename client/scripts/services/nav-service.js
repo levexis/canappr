@@ -170,7 +170,7 @@
             },
             // these are our routes on top of onsen, used by cdBody directive
             getRouteTemplate: function(urlHash) {
-                if ( !urlHash || urlHash.substr(0,6) === '#/home' ) {
+                if ( !urlHash || urlHash.substr(0,2) === '#/' || urlHash.substr(0,6) === '#/home' ) {
                     return 'views/home.html';
                 } else if ( urlHash.substr(0,6) === '#/main' ) {
                     return 'views/main.html';
