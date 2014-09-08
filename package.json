@@ -57,6 +57,7 @@
   },
   "devDependencies": {
     "grunt-phonegap": "^0.15.2",
-    "grunt-rasterize": "^0.1.7"
+    "grunt-rasterize": "^0.1.7",
+    "wd": "^0.3.6"
   }
 }
