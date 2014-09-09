@@ -420,11 +420,11 @@
             _fileTable = _fileTable || {};
             _fileManager.read_file( APP_DIR , 'file_table.txt' ,
                 function ( table ) {
+                    $log.debug('loaded file table',table);
                     if ( table ) {
                         // need to extend existing object as otherwise will destroy refences and cause initialisation problems
                         // where it will redownload the files
                         _.extend(_fileTable , JSON.parse( table ) );
-
                     }
                     deferred.resolve( table );
                     _isReady = true;
@@ -443,7 +443,7 @@
             _fileManager.write_file( APP_DIR ,
                 'file_table.txt' ,
                 JSON.stringify (_fileTable),
-                qutils.promiseSuccess(deferred),
+                qutils.promiseSuccess(deferred,'FT save'),
                 qutils.promiseError(deferred,'FT save failure')
             );
             return deferred.promise;

@@ -25,10 +25,10 @@
                      registryService.setConfig( 'isNative', true );
                      fileService.init('canappr' ).then( function () {
                          registryService.isReady( true );
+                         // check for new files for all subscribed courses and add to queue
+                         prefService.checkFiles();
+                         document.addEventListener("online", prefService.checkFiles, false);
                      });
-                     // check for new files for all subscribed courses and add to queue
-                     prefService.checkFiles();
-                     document.addEventListener("online", prefService.checkFiles, false);
                  };
                  document.addEventListener( 'deviceready', onDeviceReady, false );
              } else {
