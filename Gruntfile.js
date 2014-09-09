@@ -44,8 +44,8 @@ module.exports = function (grunt) {
                     {expand : true, flatten : true, cwd : 'bower_components/angular-sanitize/', src : '*.min.js*', dest : 'client/scripts/vendor/' },
                     {expand : true, flatten : true, cwd : 'bower_components/underscore/', src : 'underscore.js', dest : 'client/scripts/vendor/' },
                     {expand : true, flatten : true, cwd : 'bower_components/angular-media-player/dist', src : '*.min.js', dest : 'client/scripts/vendor/' },
-                    {expand : true, flatten : true, cwd : 'bower_components/fastclick/lib/', src : 'fastclick.js', dest : 'client/scripts/vendor/' },
                     {expand : true, flatten : true, cwd : 'bower_components/ngAnimate-animate.css/', src : 'animate.js', dest : 'client/scripts/vendor/' },
+                    {expand : true, flatten : true, cwd : 'bower_components/abdmob/x2js', src : '*.min.js', dest : 'client/scripts/vendor/' },
                     //css
                     {expand : true, flatten : true, cwd : 'bower_components/modernizr/', src : 'modernizr.js', dest : 'client/scripts/vendor' },
                     {expand : true, cwd : 'bower_components/onsenui/build/css/', src : '**/*', dest : 'client/styles/' },
