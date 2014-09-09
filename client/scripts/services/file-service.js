@@ -260,11 +260,21 @@
                     }
                 );
             };
-
+            // allows you to download local files, only really for testing
+            // bundled files that people subscribe to should be directly linked in file table rather than duplicated
+            function _checkLocalURL ( url ) {
+                if ( url && url.indexOf ( '://' ) === -1 ) {
+                    $log.debug ('local url' ,$window.cordova.file.applicationDirectory + url);
+                    return $window.cordova.file.applicationDirectory + url;
+                } else {
+                    return url;
+                }
+            }
             this.download_file = function ( url, todir, tofilename, success, fail, options, trustAllHosts ) {
                 fail = (typeof fail === 'undefined') ? Log( 'FileManager', 'read file fail' ) : fail;
                 options = (typeof options === 'undefined') ? {} : options;
                 trustAllHosts = (typeof trustAllHosts === 'undefined') ? false : (trustAllHosts === true);
+                url = _checkLocalURL( url );
                 this.load_file(
                     todir,
                     tofilename,
