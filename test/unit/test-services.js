@@ -387,7 +387,6 @@ describe('Services', function() {
             });
             it ('should allow org to be set', function (done) {
                 service.setNavState({ orgId: 2 }).then( function (results) {
-                  console.log('results',results);
                   registry.getNavModels( 'org' ).name.should.equal( 'Org2' );
                   done();
                 });
@@ -437,7 +436,6 @@ describe('Services', function() {
             it('should be async if course, module and org to all be set explicitly', function (done) {
                 service.setNavState({ orgid:2 , courseId: 2, moduleId: 2 }).then( function (results) {
                     // expect 3 results
-                    console.log('results',3);
                     registry.getNavModels( 'course' ).name.should.equal( 'Course2' );
                     registry.getNavModels( 'org' ).name.should.equal( 'Org2' );
                     done();
@@ -751,7 +749,10 @@ describe('Services', function() {
                 _fileManager = service.getFileManager();
                 _dirManager = service.getDirManager();
                 _fileTable = service.getFileTable();
+                // need checkURL for tests to run
+                var checkLocalURL = _fileManager.checkLocalURL;
                 _fileManager = sinon.stub( _fileManager );
+                _fileManager.checkLocalURL = sinon.spy(checkLocalURL);
                 _dirManager = sinon.stub( _dirManager );
                 _url = 'http://test.com/test.mp3';
             } );

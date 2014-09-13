@@ -124,7 +124,7 @@ module.exports = function (grunt) {
                 cordova: '.cordova',
                 html : 'index.html', // (Optional) You may change this to any other.html
                 path: 'phonegap',
-                cleanBeforeBuild: true, // when false the build path doesn't get regenerated
+                cleanBeforeBuild: false, // when false the build path doesn't get regenerated
 //                plugins: ['/local/path/to/plugin', 'http://example.com/path/to/plugin.git'],
                 plugins: ['org.apache.cordova.device' ,
                            'org.apache.cordova.statusbar' ,
@@ -177,31 +177,31 @@ module.exports = function (grunt) {
                 // Only works for Android and IOS
                 screens: {
                     android: {
-                        ldpi: 'client/icons/big_splash.png',
+                        ldpi: 'client/screen/default.png',
                         // landscape version
-                        ldpiLand: 'client/icons/big_splash.png',
-                        mdpi: 'client/icons/big_splash.png',
+                        ldpiLand: 'client/screen/default.png',
+                        mdpi: 'client/screen/default.png',
                         // landscape version
-                        mdpiLand: 'client/icons/big_splash.png',
-                        hdpi: 'client/icons/big_splash.png',
+                        mdpiLand: 'client/screen/default.png',
+                        hdpi: 'client/screen/default.png',
                         // landscape version
-                        hdpiLand: 'client/icons/big_splash.png',
-                        xhdpi: 'client/icons/big_splash.png',
+                        hdpiLand: 'client/screen/default.png',
+                        xhdpi: 'client/screen/default.png',
                         // landscape version
-                        xhdpiLand: 'client/icons/big_splash.png'
+                        xhdpiLand: 'client/screen/default.png'
                     }
 // again ios not working for local build, need to copy the right filename to the right directory                    ios: 'client/screen/default.png'
     /*{
                         // ipad landscape
-                        ipadLand: 'client/icons/big_splash.png',
-                        ipadLandx2: 'client/icons/big_splash.png',
+                        ipadLand: 'client/screen/default.png',
+                        ipadLandx2: 'client/screen/default.png',
                         // ipad portrait
-                        ipadPortrait: 'client/icons/big_splash.png',
-                        ipadPortraitx2: 'client/icons/big_splash.png',
+                        ipadPortrait: 'client/screen/default.png',
+                        ipadPortraitx2: 'client/screen/default.png',
                         // iphone portrait
-                        iphonePortrait: 'client/icons/big_splash.png',
-                        iphonePortraitx2: 'client/icons/big_splash.png',
-                        iphone568hx2: 'client/icons/big_splash.png'
+                        iphonePortrait: 'client/screen/default.png',
+                        iphonePortraitx2: 'client/screen/default.png',
+                        iphone568hx2: 'client/screen/default.png'
                     }*/
                 },
                 // Must be set for ios to work.

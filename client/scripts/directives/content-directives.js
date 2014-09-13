@@ -37,7 +37,7 @@
                             $timeout( function () {
 //                                update position every second
                                 gapAudio.getCurrentPosition( function (pos ) {
-                                    // returns -1 initially
+                                    // returns -1 initially for unknown length
                                     if ( pos  && pos > 0) {
                                         $scope['audio' + $index].currentTime = pos;
                                         $scope['audio' + $index].formatTime = timeUtils.secShow (pos);
@@ -46,8 +46,9 @@
                                         }
                                         // needs to be fast enough so each second is registered
                                         // problem is it triggers a complete digest each time but if not quick enough
-                                        // then stutters on mobile
-                                        delay=250;
+                                        // then stutters on mobile. Needs to be fast enough to tick seconds but not so fast as to look like a bad attempt
+                                        // at a realtime progressbar animation
+                                        delay=500;
                                     }
                                     ticTock(delay);
                                 });
@@ -56,7 +57,8 @@
                 };
 
                 function _setGapAudio ( src ) {
-                    gapAudio = new Media( src , // jshint ignore:line
+                    // we have to correct local paths for android as currently not supporting a relative path
+                    gapAudio = new Media( fileService.checkMediaURL (src ) , // jshint ignore:line
                         // success callback at end
                         function audio_success() {
                             $log.debug( "playAudio():Audio Completed" );
@@ -79,6 +81,10 @@
                              */
                             if ( status === 2 ) {
                                 // start the clock
+                                ticTock();
+                            // android ( 4.4 ) returns starting and not running so this branch is android and above is ios
+                            } else if ( status ===1 ) {
+//                                $scope['audio' + $index].playing = 'buffering';
                                 ticTock();
                             } else {
                                 $scope['audio' + $index].playing = false;
@@ -133,7 +139,7 @@
                         });
                     } else {
                         // direct download
-                        _setGapAudio ( attributes.src );
+                        _setGapAudio (  attributes.src );
                         // hangs before it plays so display buffering icon
                         $scope['audio'+$index].play = gapAudio.play;
                         hasBuffered = false;

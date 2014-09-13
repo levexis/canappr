@@ -102,10 +102,14 @@
                    return function () {
                        var args = [].slice.call( arguments );
                        // Call the original with the output prepended with formatted timestamp
-                       origFn.apply( null, args );
-                       // we log second just in case args cause a problem!
-                       if ( typeof bugger === 'object' ) {
-                           bugger.log.apply( bugger, args );
+                       try {
+                           origFn.apply( null, args );
+                           // we log second just in case args cause a problem!
+                           if ( typeof bugger === 'object' ) {
+                               bugger.log.apply( bugger, args );
+                           }
+                       } catch (err) {
+                           // throwing a karma error, maybe if debug stubbed out later?!?
                        }
                    };
                }

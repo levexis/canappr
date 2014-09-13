@@ -260,21 +260,22 @@
                     }
                 );
             };
-            // allows you to download local files, only really for testing
-            // bundled files that people subscribe to should be directly linked in file table rather than duplicated
-            function _checkLocalURL ( url ) {
+            // used for download of local files for testing and playback on android
+            // as media player doesn't support relative path
+            this.checkLocalURL = function ( url ) {
                 if ( url && url.indexOf ( '://' ) === -1 ) {
-                    $log.debug ('local url' ,$window.cordova.file.applicationDirectory + url);
-                    return $window.cordova.file.applicationDirectory + url;
+                    $log.debug ('local url' ,$window.cordova.file.applicationDirectory + 'www/' + url);
+                    return $window.cordova.file.applicationDirectory + 'www/' + url;
                 } else {
                     return url;
                 }
-            }
+            };
+
             this.download_file = function ( url, todir, tofilename, success, fail, options, trustAllHosts ) {
                 fail = (typeof fail === 'undefined') ? Log( 'FileManager', 'read file fail' ) : fail;
                 options = (typeof options === 'undefined') ? {} : options;
                 trustAllHosts = (typeof trustAllHosts === 'undefined') ? false : (trustAllHosts === true);
-                url = _checkLocalURL( url );
+                url = this.checkLocalURL( url );
                 this.load_file(
                     todir,
                     tofilename,
@@ -527,7 +528,7 @@
                 if ( url && _fileTable[url] && _fileTable[url].status === 'cached') {
                     return _fileTable[url].local;
                 } else {
-                    return url;
+                    return ( url );
                 }
             },
             /* cache if not already in file system
@@ -633,7 +634,7 @@
                     }
                 }
                 // can't download, either offline or no directory and filename specified
-                return qutils.resolved(url);
+                return qutils.resolved( url );
             },
             /*
              * downloads file queue, calls itself until queue is empty
@@ -800,6 +801,29 @@
              */
             getFileTable: function () {
                 return _fileTable;
+            },
+            /*
+             * formats local URLs to work with media player plugins
+             * note this API has changed in recent phonegap so relative paths are ok but current version we are using
+             * does not do relative paths in android
+             * @param {string} relative url
+             * @param {string} full url
+             */
+            checkMediaURL: function (url) {
+                var fileMan = _fileManager || new FileManager(),
+                    returnURL;
+                if ( $window.device && typeof $window.device.platform === 'string' && $window.device.platform.toLowerCase() === 'android' ) {
+                    returnURL=fileMan.checkLocalURL(url);
+                    // strip off the file://
+                    if ( returnURL.substr(0,7) === 'file://' ) {
+                        return returnURL.substr( 7 );
+                    } else {
+                        // presume its http(s)
+                        return returnURL;
+                    }
+                } else {
+                    return url;
+                }
             }
         };
 

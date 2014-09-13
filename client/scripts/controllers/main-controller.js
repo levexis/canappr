@@ -49,6 +49,7 @@
                     $scope.collectionClass = 'fa-terminal';
                     moduleService.query( { courseId : navParams.course.id }, _queryCB( $scope ) );
                     $scope.filterWhere = { courseId : navParams.course.id };
+                    $log.debug ( 'modules', $scope.collection, $scope.where );
                     $scope.target = 'content';
                     $scope.collectionName = 'Modules';
                     $scope.targetTemplate = 'views/content.html';

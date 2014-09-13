@@ -52,22 +52,26 @@ describe('Main Controller', function () {
             });
         });
         describe ( 'Modules View' , function () {
-            beforeEach(  function () {
+            beforeEach( function () {
                 scope.options = { collection : 'module'};
                 ctrl = controller( "MainCtrl", {$scope : scope } );
-            });
-            it ('should set collectionName to Organizations' , function () {
-                scope.collectionName.should.equal ( 'Modules' );
-                scope.target.should.equal ( 'content' );
-            });
-            it ('should set collectionClass to fa-terminal' , function () {
-                scope.collectionClass.should.equal ( 'fa-terminal');
-            });
-            it ('should set canSubscribe' , function () {
-                expect ( scope.canSubscribe ).to.exist;
-            });
-            it ('should set subscribed' , function () {
-                expect ( scope.subscribed ).to.exist;
+            } );
+            it( 'should set collectionName to Organizations', function () {
+                scope.collectionName.should.equal( 'Modules' );
+                scope.target.should.equal( 'content' );
+            } );
+            it( 'should set collectionClass to fa-terminal', function () {
+                scope.collectionClass.should.equal( 'fa-terminal' );
+            } );
+            it( 'should set canSubscribe', function () {
+                expect( scope.canSubscribe ).to.exist;
+            } );
+            it( 'should set subscribed', function () {
+                expect( scope.subscribed ).to.exist;
+            } );
+            describe ( 'Subscribe Course' , function () {
+                it ('should update preferences with subscribed module');
+                it ('should add the modules to the course queue');
             });
         });
     });
