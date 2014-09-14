@@ -284,7 +284,8 @@
                         var fileTransfer = new $window.FileTransfer();
                         fileEntry.remove();
                         fileTransfer.download(
-                            encodeURI( url ),
+                            // PC removed encodeURI from original as broke local urls by double encoding them
+                            url ,
                             sPath,
                             function ( theFile ) {
                                 delete _dirCache[todir];
@@ -292,9 +293,7 @@
                                 success( theFile );
                             },
                             function ( error ) {
-                                $log.debug( "download error source " + error.source );
-                                $log.debug( "download error target " + error.target );
-                                $log.debug( "upload error code: " + error.code );
+                                $log.debug( "download error", error, error.source, error.target, error.code );
                                 fail( error );
                             },
                             trustAllHosts,
