@@ -7,20 +7,24 @@
                  html : '<p>Select an organization and then browse for courses which interest you. Switch on a course and all current and future modules will be downloaded for you to access offline.</p>',
                 isPlaceholder: true};
     }
-    /*
-     * sets the collection for the page
-     */
-    function _queryCB ($scope) {
-        return function ( results ) {
-            $scope.collection = results;
-            // this someFiltered thing is for the UI and should be refactored into a directive!
-            $scope.someFiltered = !!_.findWhere ( results , $scope.filterWhere );
-        };
-    }
+
     // how can we dynamically inject the resource, have hard coded organizations for now
     // need current model and then collection for list, eg collectionId 5 is model and courses is the collection etc
     myApp.controller( 'MainCtrl',
         function ( $scope, $rootScope, $log, orgService , courseService, moduleService , registryService, navService, prefService , fileService) {
+            /*
+             * sets the collection for the page filtering on $scope.filterWhere if set
+             */
+            function _queryCB ($scope) {
+                return function ( results ) {
+                    if ( $scope.filterWhere ) {
+                        $scope.collection = _.where( results, $scope.filterWhere ) || [];
+                    } else {
+                        $scope.collection = results;
+                    }
+                    $scope.someFiltered = !!$scope.collection.length;
+                };
+            }
             var navParams =  $scope.navParams ||  registryService.getNavModels(),
                 options = $scope.options || navService.getRouteOptions($scope) || {}; // the scope.options / navParams is there to allow test to set these in karma
             $scope.collection = [];
@@ -48,8 +52,9 @@
                 } else if ( options.collection === 'module' ) {
                     $scope.collectionClass = 'fa-terminal';
                     moduleService.query( { courseId : navParams.course.id }, _queryCB( $scope ) );
+                    // filterWhere gets passed through to template - it's used to fix issues with local API ignoring query string
+                    // that could be done by a directive but no reason why other searches couldn't be done by
                     $scope.filterWhere = { courseId : navParams.course.id };
-                    $log.debug ( 'modules', $scope.collection, $scope.where );
                     $scope.target = 'content';
                     $scope.collectionName = 'Modules';
                     $scope.targetTemplate = 'views/content.html';
@@ -57,6 +62,8 @@
                     $scope.canSubscribe = true;
                     $scope.subscribed = prefService.isSubscribed ();
                     $scope.last = 'Courses';
+                    // should use an object eg model.subscribed or you can get into fun and games if using
+                    // with child scopes via sub-controllers and directives
                     $scope.$watch('subscribed', function ( subscribed) {
                         if ( subscribed ) {
                             // pass in current module list so downloading can start
