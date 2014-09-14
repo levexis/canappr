@@ -1,4 +1,4 @@
-(function (angular) {
+(function (angular, _) {
     "use strict";
 
     var myApp = angular.module( 'canAppr' );
@@ -15,11 +15,16 @@
 // whilst we use a local flat file API this mocks the response for us
     myApp.factory ( 'localAPIInterceptor', function( $q , $log, registryService) {
         var apiBase = registryService.getAPIBase();
+        function isLocalAPIRequest(url) {
+            // only looks to see if its an API request for now - todo add check its same host or no host for native
+            return !!( url && url.indexOf( apiBase ) > -1);
+        }
         return {
             'request': function(config) {
-                var route,id,match, pos = config.url.indexOf (apiBase);
+                var route,id,match, pos;
                 // do something on success
-                if ( pos > -1 ) {
+                if ( isLocalAPIRequest(config.url) ) {
+                    pos = config.url.indexOf (apiBase);
                     // whilst mocking the url we create the individual ids from
                     match = /(.*?)\/(.*)/.exec( config.url.substr( pos + apiBase.length ) );
                     if (match) {
@@ -39,14 +44,19 @@
              },*/
             // optional method
             'response': function(response) {
-                var responseData;
-                if ( response.config.parseId ) {
-                    // remove elements from response array that do not match
-                    // could also apply searches here by looking at query string
-                    // currently doing that with an angular filter
-                    response.data = _.where ( response.data, { id: response.config.parseId } );
-                    response.resource = _.where ( response.resource, { id: response.config.parseId } );
-//                    $log.debug( 'mock api', response );
+                var responseData, query;
+                // apply query string for local API
+                if ( isLocalAPIRequest ( response.config.url ) ) {
+                    query = response.config.params;
+                    if ( response.config.parseId ) {
+                        query = query || {};
+                        query.id = response.config.parseId;
+                    }
+                    // remove elements from response array that do not match as local api is just a flat file
+                    if ( query ) {
+                        response.data = _.where( response.data, query );
+                        response.resource = _.where( response.resource, query );
+                    }
                 }
                 return response;
             },
@@ -60,4 +70,4 @@
     myApp.config( function ( $httpProvider  ) {
         $httpProvider.interceptors.push('localAPIInterceptor');
     } );
-})(angular);
+})(angular , _); // jshint ignore:line
