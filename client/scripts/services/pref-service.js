@@ -189,6 +189,7 @@
             checkCourseFiles : function ( courseId , modules ) {
                 var deferred;
                 courseId = courseId || _courseId;
+                console.log ('check course files', courseId,modules);
                 if ( _isNative && courseId ) {
                     // could check files and mark as all downloaded if done
                     if ( modules ) {
@@ -226,7 +227,7 @@
                 }
             },
             /*
-             * master method that checks for files for all courses
+             * master method that checks for files for all courses that the use is subscribed to
              * will find new files and download accordingly
              * updates status for each course if new files found
              * @returns a promise that resolves to isDownloaded for all files
@@ -237,7 +238,9 @@
                     deferred;
 
                 _.keys(_prefs.course ).forEach ( function ( courseId ) {
-                    all.push( _self.checkCourseFiles( courseId ) );
+                    if ( _prefs.course[courseId].subscribed ) {
+                        all.push( _self.checkCourseFiles( courseId ) );
+                    }
                 });
                 if ( all.length ) {
                     deferred = $q.defer();

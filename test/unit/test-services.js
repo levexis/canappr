@@ -659,7 +659,23 @@ describe('Services', function() {
             });
             it( 'checkFiles should populate cache status by module' , function () {
                 service.checkFiles();
+                service.checkCourseFiles = sinon.spy( service.checkCourseFiles );
+                rootScope.$apply();
+                // not subscribed to anything so should not get an unexpected get
+                service.checkCourseFiles.should.not.have.been.called;
+                // todo should this be failing?
                 service.isModuleReady(1).should.be.ok;
+            });
+            it( 'checkFiles should only checkCourseFiles for subscribed courses' , function () {
+                service.subscribeCourse();
+                service.checkFiles();
+//                service.checkCourseFiles = sinon.spy(service.checkCourseFiles);
+                httpBackend.expectGET('api/0/modules?courseId=1' ).respond ( 200 );
+                rootScope.$apply();
+// my spy doesnt work - need to check syntax / scope but above single get does the trick
+//                service.checkCourseFiles.should.have.been.calledOnce;
+                service.isModuleReady(1).should.be.ok;
+                service.unsubscribeCourse();
             });
             // this is really a test of ngCachedResource
             it( 'should update cache if data is stale', function (done) {
