@@ -80,6 +80,40 @@ eg offset(angular.element (document.querySelector( '.ca-progress')));
             }
         };
     });
+    /*
+     * analytics, just basic ga for now.
+     */
+    myApp.factory('analService', function ($log, registryService) {
+        var successCB = function() {},
+            errorCB = function(err) { $log.debug('ga-error',err);},
+            _gaPlugin;
+        function getPlugin () {
+            if ( !_gaPlugin ) {
+                _gaPlugin = registryService.getConfig( 'gaPlugin' );
+            }
+            return _gaPlugin;
+        }
+        return  {
+            trackView: function ( url ) {
+                if ( url && getPlugin() ) {
+                    return _gaPlugin.trackPage( successCB, errorCB, url );
+                }
+            },
+            trackEvent: function ( category, action, label , value) {
+                /* TrackEvent api
+                1)  resultHandler - a function that will be called on success
+                2)  errorHandler - a function that will be called on error.
+                3)  category - This is the type of event you are sending such as "Button", "Menu", etc.
+                4)  eventAction - This is the type of event you are sending such as "Click", "Select". etc.
+                5)  eventLabel - A label that describes the event such as Button title or Menu Item name.
+                6)  eventValue - An application defined integer value that can mean whatever you want it to mean.
+                */
+                if ( category && action && (label || value ) && getPlugin() ) {
+                    return _gaPlugin.trackEvent( successCB, errorCB, category, action, label, value );
+                }
+            }
+        };
+    });
 
 })(angular); // jshint ignore:line
 

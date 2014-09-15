@@ -529,7 +529,23 @@ describe('Services', function() {
             log.debug.should.have.been.calledOnce;
         });
     } );
-
+    describe( 'analService', function () {
+        var service;
+        beforeEach( inject( function ( analService ) {
+            service = analService;
+            expect( service ).to.not.be.undefined;
+        } ) );
+        describe( 'track', function () {
+            it( 'should have trackView method', function () {
+                service.trackView.should.be.a('function');
+            } );
+            it( 'should call gaPlugin.trackPage if url supplied if gaPlugin ready');
+            it( 'should have trackEvent method', function () {
+                service.trackEvent.should.be.a('function');
+            } );
+            it( 'should call gaPlugin.trackEvent if category,action and lable/value supplied if gaPlugin ready');
+        } );
+    } );
     describe( 'prefService', function () {
         var service, rootScope, _fileService;
         beforeEach( inject( function ( $rootScope , fileService,  prefService , registryService) {

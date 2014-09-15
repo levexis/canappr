@@ -132,7 +132,8 @@ module.exports = function (grunt) {
                            'org.apache.cordova.media',
                             'org.apache.cordova.file',
                             'org.apache.cordova.file-transfer',
-                            'org.apache.cordova.splashscreen'
+                            'org.apache.cordova.splashscreen',
+                            'http://github.com/phonegap-build/GAPlugin.git'
                 ],
                 platforms: ['android' , 'ios'],
                 maxBuffer: 200, // You may need to raise this for iOS.
