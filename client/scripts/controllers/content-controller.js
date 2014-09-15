@@ -4,7 +4,7 @@
     // how can we dynamically inject the resource, have hard coded organizations for now
     // need current model and then collection for list, eg collectionId 5 is model and courses is the collection etc
     myApp.controller( 'ContentCtrl',
-        function ( $scope , $rootScope, registryService, xmlService , domUtils , $log , prefService , navService , fileService) {
+        function ( $scope , $rootScope, registryService, xmlService , domUtils , $log , prefService , navService , fileService, analService) {
             var navParams =  registryService.getNavModels(),
                 options = $scope.options || navService.getRouteOptions($scope) || {};
             function _setContent() {
@@ -48,6 +48,7 @@
                 if ( now === true && before === false ) {
                     _.forEach ($scope.content , function ( item) {
                         if ( item.file ) {
+                            analService.trackEvent('audio' , 'redownload', item.file.url , $scope.model.id);
                             fileService.redownload( decodeURIComponent( item.file.url ) );
                         }
                     });
@@ -55,6 +56,7 @@
                 } else if ( now === false && before === true ) {
                     _.forEach ($scope.content , function ( item) {
                         if ( item.file ) {
+                            analService.trackEvent('audio' , 'delete', item.file.url , $scope.model.id);
                             fileService.clearFile( decodeURIComponent( item.file.url ) );
                         }
                     });

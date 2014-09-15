@@ -11,7 +11,7 @@
     // how can we dynamically inject the resource, have hard coded organizations for now
     // need current model and then collection for list, eg collectionId 5 is model and courses is the collection etc
     myApp.controller( 'MainCtrl',
-        function ( $scope, $rootScope, $log, orgService , courseService, moduleService , registryService, navService, prefService , fileService) {
+        function ( $scope, $rootScope, $log, orgService , courseService, moduleService , registryService, navService, prefService , fileService, analService) {
             /*
              * sets the collection for the page filtering on $scope.filterWhere if set
              */
@@ -67,8 +67,10 @@
                     $scope.$watch('subscribed', function ( subscribed) {
                         if ( subscribed ) {
                             // pass in current module list so downloading can start
+                            analService.trackEvent('course' , 'subscribe', $scope.model.name , $scope.model.id);
                             prefService.subscribeCourse( $scope.model.id , $scope.collection );
                         } else {
+                            analService.trackEvent('course' , 'unsubscribe', $scope.model.name , $scope.model.id);
                             prefService.unsubscribeCourse( );
                         }
                     });

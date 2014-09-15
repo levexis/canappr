@@ -20,7 +20,7 @@
         };
     });
 
-    myApp.directive('cdPlayItem', function( xmlService , $window, $compile ,$log, $timeout, domUtils , registryService, timeUtils ,fileService, prefService) {
+    myApp.directive('cdPlayItem', function( xmlService , $window, $compile ,$log, $timeout, domUtils , registryService, timeUtils ,fileService, prefService , analService) {
         var directive = {
             restrict: 'E',
 
@@ -155,6 +155,7 @@
                     $scope['audio'+$index].playPause = function () {
                         $log.debug('playPause',$scope['audio'+$index],gapAudio);
                         if ( $scope['audio'+$index].playing !== 'buffering' ) {
+                            analService.trackEvent('audio' , 'PlayPause', attributes.src, navParams.module.id);
                             if ( $scope['audio' + $index].playing ) {
                                 gapAudio.pause();
                                 $scope['audio' + $index].playing = false;

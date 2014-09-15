@@ -3,7 +3,7 @@
     // this can be used to replace the rootScope nonsense
     var myApp = angular.module( 'canAppr' );
 
-    myApp.factory('navService', function($rootScope , $log, $q, qutils, registryService , orgService, courseService, moduleService) {
+    myApp.factory('navService', function($rootScope , $log, $q, qutils, registryService , orgService, courseService, moduleService, analService) {
 
         var _config = registryService.getConfig();
 
@@ -19,6 +19,7 @@
             /* loads the main page */
             go: function ( where, options ) {
                 // add a timestamp
+                analService.trackView (where);
                 where += '#' + new Date().getTime();
                 // this is the one phone gap uses - single screen
                 if (_config.navType === 'slide' ) {
@@ -171,14 +172,19 @@
             // these are our routes on top of onsen, used by cdBody directive
             getRouteTemplate: function(urlHash) {
                 if ( !urlHash || urlHash === '#/' || urlHash.substr(0,6) === '#/home' ) {
+                    analService.trackView ('views/home.html');
                     return 'views/home.html';
                 } else if ( urlHash.substr(0,6) === '#/main' ) {
+                    analService.trackView ('views/main.html');
                     return 'views/main.html';
                 } else if ( urlHash.substr(0,9) === '#/content' ) {
+                    analService.trackView ('views/content.html');
                     return 'views/content.html';
                 } else if ( urlHash.substr(0,9) === '#/library' ) {
+                    analService.trackView ('views/library.html');
                     return 'views/library.html';
                 } else {
+                    analService.trackView ('views/404.html');
                     return 'views/404.html';
                 }
             }
