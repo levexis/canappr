@@ -64,12 +64,12 @@
                     $scope.last = 'Courses';
                     // should use an object eg model.subscribed or you can get into fun and games if using
                     // with child scopes via sub-controllers and directives
-                    $scope.$watch('subscribed', function ( subscribed) {
-                        if ( subscribed ) {
+                    $scope.$watch('subscribed', function ( subscribed , wasSubscribed) {
+                        if ( subscribed  && !wasSubscribed) {
                             // pass in current module list so downloading can start
                             analService.trackEvent('course' , 'subscribe', $scope.model.name , $scope.model.id);
                             prefService.subscribeCourse( $scope.model.id , $scope.collection );
-                        } else {
+                        } else if ( wasSubscribed ) {
                             analService.trackEvent('course' , 'unsubscribe', $scope.model.name , $scope.model.id);
                             prefService.unsubscribeCourse( );
                         }

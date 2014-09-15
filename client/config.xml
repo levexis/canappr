@@ -19,15 +19,10 @@
 
     <gap:platform name="android" />
     <gap:platform name="ios" />
-    <icon src="www/images/crapicon.png" />
-    <icon gap:platform="ios" height="60" src="icon-60.png" width="60" />
-    <icon gap:platform="ios" height="72" src="icon-72.png" width="72" />
-    <icon gap:platform="ios" height="120" src="icon-60@2x.png" width="120" />
-    <icon gap:platform="ios" height="144" src="icon-72@2x.png" width="144" />
-    <icon gap:platform="android" gap:density="ldpi" src="ic_launcher" />
-    <icon gap:platform="android" gap:density="mdpi" src="ic_launcher2.png" />
-    <icon gap:platform="android" gap:density="hdpi" src="ic_launcher3.png" />
-    <icon gap:platform="android" gap:density="xhdpi" src="ic_launcher4.png" />
+    <icon gap:platform="android" gap:density="ldpi" src="www/icons/droid/ic_launcher" />
+    <icon gap:platform="android" gap:density="mdpi" src="www/icons/droid/ic_launcher2.png" />
+    <icon gap:platform="android" gap:density="hdpi" src="www/icons/droid/ic_launcher3.png" />
+    <icon gap:platform="android" gap:density="xhdpi" src="www/icons/droid/ic_launcher4.png" />
 
     <!-- android was crashing on start up when did remote build and seems to have been something to do with no size info -->
     <gap:splash gap:platform="android" src="www/screen/default.png" width="100%" height="100%" />
