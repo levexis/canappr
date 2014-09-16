@@ -96,6 +96,7 @@ eg offset(angular.element (document.querySelector( '.ca-progress')));
         return  {
             trackView: function ( url ) {
                 if ( url && getPlugin() ) {
+                    $log.debug ( 'trackView', url);
                     return _gaPlugin.trackPage( successCB, errorCB, url );
                 }
             },
@@ -109,6 +110,7 @@ eg offset(angular.element (document.querySelector( '.ca-progress')));
                 6)  eventValue - An application defined integer value that can mean whatever you want it to mean.
                 */
                 if ( category && action && (label || value ) && getPlugin() ) {
+                    $log.debug ( 'trackEvent', category, action, label , value);
                     return _gaPlugin.trackEvent( successCB, errorCB, category, action, label, value );
                 }
             }

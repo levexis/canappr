@@ -1,3 +1,7 @@
+/* to build in testflight */
+//account 97fea4a9ffaa8bb7a22f21a18b5e31e5_MjAzMjk1NTIwMTQtMDgtMTEgMTc6MDE6MzUuODMyNTg4
+//team    248dcb1a3e396b99e50c047c5424913a_NDI3NjU1MjAxNC0wOS0wMiAwNTowOToxNy45MDMzMzc
+//ipa distribute:testflight -a 97fea4a9ffaa8bb7a22f21a18b5e31e5_MjAzMjk1NTIwMTQtMDgtMTEgMTc6MDE6MzUuODMyNTg4 -T 248dcb1a3e396b99e50c047c5424913a_NDI3NjU1MjAxNC0wOS0wMiAwNTowOToxNy45MDMzMzc
 module.exports = function (grunt) {
     "use strict";
 
@@ -132,8 +136,7 @@ module.exports = function (grunt) {
                            'org.apache.cordova.media',
                             'org.apache.cordova.file',
                             'org.apache.cordova.file-transfer',
-                            'org.apache.cordova.splashscreen',
-                            'http://github.com/phonegap-build/GAPlugin.git'
+                            'org.apache.cordova.splashscreen'
                 ],
                 platforms: ['android' , 'ios'],
                 maxBuffer: 200, // You may need to raise this for iOS.
@@ -152,27 +155,20 @@ module.exports = function (grunt) {
                         mdpi: 'client/icons/droid/ic_launcher2.png',
                         hdpi: 'client/icons/droid/ic_launcher3.png',
                         xhdpi: 'client/icons/droid/ic_launcher4.png'
-                    }
+                    },
 //                    wp8: {
 //                        app: 'icon-62-tile.png',
 //                        tile: 'icon-173-tile.png'
 //                    },
-                    /* ios icons not working, think they are copying to wrong directory - have a look for resources
+                    // just for icons
                     ios: {
-                        icon29: 'client/icons/ios/icon-Small.png',
-                        icon29x2: 'client/icons/ios/icon-Small.png',
-                        icon40: 'client/icons/ios/icon-40.png',
-                        icon40x2: 'client/icons/ios/icon-40@2x.png',
-                        icon57: 'client/icons/ios/icon-57.png',
-                        icon57x2: 'client/icons/ios/icon-57@2x.png',
-                        icon60: 'client/icons/ios/icon-60.png',
-                        icon60x2: 'client/icons/ios/icon-60@2x.png',
-                        icon72: 'client/icons/ios/icon-72.png',
-                        icon72x2: 'client/icons/ios/icon-72@2x.png',
-                        icon76: 'client/icons/ios/icon-76.png',
-                        icon76x2: 'client/icons/ios/icon-76@2x.png'
+                        icon29: 'client/icons/iphone/icon-small.png',
+                        icon29x2: 'client/icons/iphone/icon-small@2x.png',
+                        icon57: 'client/icons/iphone/icon@2x.png',
+                        icon57x2: 'client/icons/iphone/icon@2x.png',
+                        icon40x2: 'client/icons/iphone/icon-40@2x.png',
+                        icon60x2: 'client/icons/iphone/icon-60@2x.png'
                     }
-                     */
                 },
                 // Set a splash screen at various sizes (optional)
                 // Only works for Android and IOS
@@ -190,24 +186,25 @@ module.exports = function (grunt) {
                         xhdpi: 'client/screen/default.png',
                         // landscape version
                         xhdpiLand: 'client/screen/default.png'
-                    }
-// again ios not working for local build, need to copy the right filename to the right directory                    ios: 'client/screen/default.png'
-    /*{
-                        // ipad landscape
+                    },
+                    ios: {
+/*                        // ipad landscape
                         ipadLand: 'client/screen/default.png',
                         ipadLandx2: 'client/screen/default.png',
                         // ipad portrait
                         ipadPortrait: 'client/screen/default.png',
                         ipadPortraitx2: 'client/screen/default.png',
                         // iphone portrait
-                        iphonePortrait: 'client/screen/default.png',
-                        iphonePortraitx2: 'client/screen/default.png',
-                        iphone568hx2: 'client/screen/default.png'
-                    }*/
+                        */
+                        iphonePortrait: 'client/screen/Default~iphone.png',
+                        iphonePortraitx2: 'client/screen/Default@2x.png',
+                        iphone568hx2: 'client/screen/Default.png'
+                    }
                 },
                 // Must be set for ios to work.
                 // Should return the app name.
-                name: function(){
+                name: 'Medit8'
+                /* my app is called Medit8 not cannappr and this has been a fucking nightmare as copied icons to wrong directoryfunction(){
                     var pkg = grunt.file.readJSON('package.json');
                     return pkg.name;
                 }/*,

@@ -56,7 +56,7 @@
     "underscore": "^1.6.0"
   },
   "devDependencies": {
-    "grunt-phonegap": "^0.15.2",
+    "grunt-phonegap": "https://github.com/levexis/grunt-phonegap/tarball/master",
     "grunt-rasterize": "^0.1.7",
     "wd": "^0.3.6"
   }
