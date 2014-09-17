@@ -69,7 +69,7 @@
                             // pass in current module list so downloading can start
                             analService.trackEvent('course' , 'subscribe', $scope.model.name , $scope.model.id);
                             prefService.subscribeCourse( $scope.model.id , $scope.collection );
-                        } else if ( !wasSubscribed && wasSubscribed ) {
+                        } else if ( !subscribed && wasSubscribed ) {
                             analService.trackEvent('course' , 'unsubscribe', $scope.model.name , $scope.model.id);
                             prefService.unsubscribeCourse( );
                         }

@@ -156,6 +156,8 @@ describe('e2e', function () {
                 return main.get().then( function () {
                     main.navTo( { organizations : 'surrey', courses : 'meditation' } )
                         .then( function () {
+                            // switch can be missing
+                            var main = new MainPage();
                             return main.getSwitch().click();
                         } );
                 } );
@@ -279,6 +281,25 @@ describe('e2e', function () {
                     });
                 }) ).to.eventually.contain('Triratna East Surrey - Guided Meditations');
         });
+        it( 'should remove unsubscribed course from homepage', function() {
+            return expect( journeys.subscribeMeditation().then(
+                function () {
+                    menu = new MenuPage();
+                    return menu.getHome().click().then ( function () {
+                        // should unsubscribe if we click again
+                        return journeys.subscribeMeditation(). then (
+                            function () {
+                                menu = new MenuPage();
+                                return menu.getHome().click().then( function () {
+                                    home = new HomePage();
+                                    return home.getCourses().then( function ( courses ) {
+                                        return courses;
+                                    } );
+                                } );
+                            });
+                    });
+                }) ).to.eventually.be.empty;
+        });
         it( 'should disable module delete switch until content has been downloaded', function () {
             main.get();
             return expect (
@@ -301,7 +322,7 @@ describe('e2e', function () {
             return expect (
                 main.navTo ( { organizations: 'medit8', courses: 'bowls', modules: 'singing' } )
                     .then( function () {
-//                        var content = new ContentPage();
+                        var content = new ContentPage();
                         return content.getPlayPause().click().then(
                             function () {
                                 return browser.sleep( 1000 ).then (

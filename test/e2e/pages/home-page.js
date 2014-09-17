@@ -11,15 +11,21 @@ module.exports = function () {
                 var item = 0;
                 while ( item < items ) {
                     _promises.push( list.get( item++ ).then( function ( course ) {
-                        return course.getText().then( function ( text) {
+                        return course.getText().then( function ( text ) {
                             _outList.push( text );
-                        });
-                    }));
+                        } );
+                    } ) );
                 }
                 Q.all( _promises ).then( function () {
-                    deferred.resolve ( _outList );
-                });
-            } );
+                    deferred.resolve( _outList );
+                } );
+            } ,
+            // trying to catch webdriver error
+            function (err) {
+                console.trace('caught error',err);
+                // should resolve to a blank array
+                deferred.resolve( _outList );
+            });
         return deferred.promise;
     }
     var _that = this;
