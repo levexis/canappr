@@ -192,10 +192,11 @@
                     outHTML += '</audio>';
                 }
                 outHTML += '<div class="ca-wrapper" ng-class="{ \'ca-even\': ($index % 2) !== 0 , \'ca-not-available\' : notAvailable }" >';
-                outHTML += '    <p class="ca-content-title {{item.file.type}} ">{{ $index+1 }}. {{item.description}} (<span ng-bind-html="audio{{$index}}.duration -audio{{$index}}.currentTime | cfSecShow"></span>)</p>';
+                // also play pause if click on title to play pause as seems play button is too near left for automation to work
+                outHTML += '    <p class="ca-content-title {{item.file.type}}" ng-click="pulse=true; audio{{$index}}.playPause()">{{ $index+1 }}. {{item.description}} (<span ng-bind-html="audio{{$index}}.duration -audio{{$index}}.currentTime | cfSecShow"></span>)</p>';
                 // have added a pulse to make it obvious something is happening as safari is laggy particularly on ipad etc
                 outHTML += '    <div class="ca-play animated" style="animation-duration: 1s; text-align: center" ng-click="pulse=true; audio{{$index}}.playPause()" ng-class="{ \'pulse\' : pulse }">';
-                outHTML += '        <i class="fa fa-2x" ng-class="{ \'fa-pause\': audio{{$index}}.playing===true ,\'fa-spinner\': audio{{$index}}.playing===\'buffering\', \'fa-spin\': audio{{$index}}.playing===\'buffering\', \'fa-play\': !audio{{$index}}.playing }"></i>';
+                outHTML += '        <i class="fa fa-2x" ng-class="{ \'fa-pause\': audio{{$index}}.playing===true ,\'fa-spinner\': audio{{$index}}.playing===\'buffering\', \'fa-spin\': audio{{$index}}.playing===\'buffering\', \'fa-play\': !audio{{$index}}.playing }">&nbsp;</i>';// have put a nbsp for mobile taps to work
                 outHTML += '    </div>';
                 outHTML += '    <div class="ca-progress" ng-click="audio{{$index}}.seek(audio{{$index}}.duration * seekPercentage($event))">';
                 outHTML += '        <span class="ca-audio-bar topcoat-progress-bar" ng-style="{ width: audio{{$index}}.currentTime*100/audio{{$index}}.duration + \'%\' }" aria-valuemax="100" aria-valuemin="0" role="progressbar" style="width:0px"></span>';

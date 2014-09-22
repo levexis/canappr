@@ -1,0 +1,52 @@
+Appium fun
+
+// clone appium
+// get submodules for examples
+git clone https://github.com/appium/appium.git
+// run appium doctor to make sure paths are set
+./bin/appium-doctor.js
+// install submodules to get examples
+git submodule update --init 
+// reset everything 
+./reset.sh 
+// start appium with long timeout so we can use REPL without it shutting after 60 seconds of inactivity
+appium --command-timeout 999
+// new terminal install wd as that's got the bindings to appium
+npm install wd
+// start a REPL client
+./node_modules/.bin/wd shell
+// connect to local appium 
+
+var x = wd.remote({host:'localhost',port: 4723})
+x.on('status', function (info) {   console.log(info); });
+x.on('command', function (meth, path, data) {   console.log(meth, path, data); });
+x.on('http', function (meth, path, data) {   console.log(meth, path, data); });
+// now open your app
+x.init({ browserName: '',
+'appium-version': '1.0',
+platformName: 'iOS',
+platformVersion: '7.1',
+deviceName: 'iPhone Simulator',
+app: '/Users/paulcook/levexis/canappr/phonegap/platforms/ios/build/emulator/Medit8.app' });
+
+// you can now do some basic querying but you need to look at server output or put logging to debug so you can see
+// what the reply is. Doesn't seem we can use wd terminal fully as just return null
+x.contexts()
+// select the webview context so we can use normal selectors - need to add the window
+x.context('WEBVIEW_1').window('')
+// you can select elements using their native class
+ x.elementsByClassName('UIAButton')
+// or you can cuse their value, which is my button text
+ x.elementByName('Get Started')
+// now lets get the gui for the server from here for selectros
+https://bitbucket.org/appium/appium.app/downloads/
+// now kill appium and run from gui
+// write tests in wd and run in mocha
+// setup app in gui so you can launch app to test code / use inspector
+// then copy results to a wd script file, add sleeps for start up and between commands for transitions
+// stop the gui and disable the app start
+// launch server again click on hour glass to launch app
+// swipe gestures are broken as args need to be in an array
+// .execute("mobile: swipe", { "touchCount": 1, "startX": 19, "startY": 441, "endX": 299, "endY": 447, "duration": 0.5 })
+// should be
+// .execute("mobile: swipe", [{ "touchCount": 1, "startX": 19, "startY": 441, "endX": 299, "endY": 447, "duration": 0.5 }])
