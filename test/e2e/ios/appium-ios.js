@@ -69,14 +69,9 @@ describe("appium ios", function () {
             deviceName: 'iPhone Simulator',
             app: '/Users/paulcook/levexis/canappr/phonegap/platforms/ios/build/emulator/Medit8.app' };
         if ( process.env.SAUCE_USERNAME ) {
-//            desired['appium-version'] = '1.2';
+            // if this doesn't exist it doesn't tell you
             desired.app = 'sauce-storage:Medit8.app.zip';
         }
-        console.log ( serverConfig, desired );
-        home = new HomePage( driver );
-        main = new MainPage( driver );
-        content = new ContentPage(driver );
-        menu = new MenuPage( driver );
         journeys.navToChimes = function () {
             return home.getButton().click()
                 .then( function () {
@@ -97,12 +92,44 @@ describe("appium ios", function () {
         };
         return driver.init(desired);
     });
+    beforeEach( function () {
+        home = new HomePage( driver );
+        main = new MainPage( driver );
+        content = new ContentPage(driver );
+        menu = new MenuPage( driver );
+    });
     after(function () {
         //return driver.sleep( SLEEP_TIME*2 ).quit();
     });
     afterEach(function () {
-        return takeScreenshot('ios_' + new Date().getTime() );
+        takeScreenshot('ios_' + new Date().getTime() );
+        //return menu.goHome();
     });
+    // test of page object
+    it.only('should be able to repeat a journey without clicking stale elements' , function () {
+        return expect ( journeys.navToChimes().then ( function () {
+            return menu.goHome().then( function () {
+                return journeys.navToChimes();
+            } );
+        }) ).to.eventually.not.be.rejected;
+    });
+    /*
+    it.only('testing out selectors' , function () {
+        return expect ( journeys.navToChimes().then ( function () {
+            return menu.goHome().then( function () {
+                console.log( 'click button');
+                return home.getButton().click()
+                    .then( function () {
+                        console.log( 'getting element');
+                        return driver.sleep( SLEEP_TIME ).elementsByName( 'Medit8 Sounds' ).last().isDisplayed().then( function ( value ) {
+                            console.log( 'value', value );
+                            return value;
+                        });
+                    });
+            });
+        }) ).to.eventually. be.true;
+    });*/
+    // should test selectors are working as well
     it("should play/pause remote audio", function () {
         return expect(  journeys.navToChimes().then ( function () {
                 return content.tapPlayPause()

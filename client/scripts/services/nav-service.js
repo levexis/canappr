@@ -39,7 +39,7 @@
                 try {
                     if ( options && options.oldScope) {
                         $log.debug( 'old scope', options.oldScope);
-                        options.oldScope.$remove();
+                        options.oldScope.$destroy();
                     }
                 } catch (err) {
                     // something doesn't exist

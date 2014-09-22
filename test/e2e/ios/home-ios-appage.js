@@ -21,11 +21,18 @@ module.exports = function (driver) {
     // needs the precise text to work
     this.tapOn = function( listText ) {
         // actually should mixin on all the methods to the response.
-        return driver.sleep(SLEEP_TIME).elementByName( listText ).click();
+        // have a probem where old elements not being removed. Need to check isDisplayed or will get server side errors
+        return driver.sleep(SLEEP_TIME).elementsByName( listText ).last().click();
     };
     // THESE PATHS ARE TOTALLY UNRELIABLE!
     this.getTagLine = function() {
         return driver.sleep(SLEEP_TIME).elementByXPath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAStaticText[23]");
+    };
+    this.getWelcome = function() {
+        return driver.sleep(SLEEP_TIME).elementByXPath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAStaticText[16]");
+    };
+    this.getSecondParagraph = function() {
+        return driver.sleep(SLEEP_TIME).elementByXPath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAStaticText[27]");
     };
     this.getFirstParagraph = function() {
         return driver.sleep(SLEEP_TIME).elementByXPath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAStaticText[24]");

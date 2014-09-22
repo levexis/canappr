@@ -27,7 +27,8 @@ module.exports = function (driver) {
     };*/
     // needs the precise text to work
     this.tapOn = function(listText) {
-        return driver.sleep(SLEEP_TIME).elementByName( listText ).click();
+        // have a probem where old elements not being removed. Need to check isDisplayed or will get server side errors
+        return driver.sleep(SLEEP_TIME).elementsByName( listText ).last().click();
     };
     // these first two could be a base page object class
     this.getSwitch = function () {
