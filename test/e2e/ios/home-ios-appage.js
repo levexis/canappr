@@ -21,7 +21,6 @@ module.exports = function (driver) {
     // needs the precise text to work
     this.tapOn = function( listText ) {
         // actually should mixin on all the methods to the response.
-        console.log('tapon',listText);
         return driver.sleep(SLEEP_TIME).elementByName( listText ).click();
     };
     // THESE PATHS ARE TOTALLY UNRELIABLE!

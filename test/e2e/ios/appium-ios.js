@@ -2,7 +2,11 @@
 // This could probably be the same for both OS but with different environment variable to set config / page object?
 // can see why they put device stuff in seperate files in their examples, which versions do we want to support
 // more versions / resolutions = more complicated page objects
-// SAUCE_USERNAME=daddysauce SAUCE_KEY=94e75bbd-cef6-46e7-9549-1315d4b36ee5 mocha test/e2e/ios/appium-ios.js
+/*
+zip -r Medit8.app.zip phonegap/platforms/ios/build/emulator/Medit8.app
+curl -u daddysauce:94e75bbd-cef6-46e7-9549-1315d4b36ee5 -X POST "http://saucelabs.com/rest/v1/storage/daddysauce/Medit8.app.zip?overwrite=true" -H "Content-Type: application/octet-stream" --data-binary @Medit8.app.zip
+SAUCE_USERNAME=daddysauce SAUCE_ACCESS_KEY=94e75bbd-cef6-46e7-9549-1315d4b36ee5 mocha -R spec test/e2e/ios/appium-ios.js
+*/
 
 var wd = require("wd"),
     serverConfigs = require('./appium-servers' ),
@@ -59,11 +63,16 @@ describe("appium ios", function () {
         }
         // these should be a seperate file per environment as in the appium examples maybe using the dreaded node config!
         var desired = { browserName: '',
-            'appium-version': '1.0',
+            'appium-version': '1.2',
             platformName: 'iOS',
             platformVersion: '7.1',
-            deviceName: 'iPhone',
+            deviceName: 'iPhone Simulator',
             app: '/Users/paulcook/levexis/canappr/phonegap/platforms/ios/build/emulator/Medit8.app' };
+        if ( process.env.SAUCE_USERNAME ) {
+//            desired['appium-version'] = '1.2';
+            desired.app = 'sauce-storage:Medit8.app.zip';
+        }
+        console.log ( serverConfig, desired );
         home = new HomePage( driver );
         main = new MainPage( driver );
         content = new ContentPage(driver );
