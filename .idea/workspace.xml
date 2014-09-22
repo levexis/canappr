@@ -5,18 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d7f11957-3015-47bb-8a81-9a4535aedf33" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/e2e/ios/appium-ios.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/experiments/appium-ios.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/experiments/appium_fidings.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/e2e/ios/content-ios-appage.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/e2e/ios/home-ios-appage.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/experiments/logging.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/e2e/ios/main-ios-appage.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/e2e/ios/menu-ios-appage.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/scripts/directives/content-directives.js" afterPath="$PROJECT_DIR$/client/scripts/directives/content-directives.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/report.html" afterPath="$PROJECT_DIR$/test/report.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/e2e/ios/appium-ios.js" afterPath="$PROJECT_DIR$/test/e2e/ios/appium-ios.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/e2e/ios/content-ios-appage.js" afterPath="$PROJECT_DIR$/test/e2e/ios/content-ios-appage.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/e2e/ios/home-ios-appage.js" afterPath="$PROJECT_DIR$/test/e2e/ios/home-ios-appage.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/e2e/ios/main-ios-appage.js" afterPath="$PROJECT_DIR$/test/e2e/ios/main-ios-appage.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/e2e/ios/menu-ios-appage.js" afterPath="$PROJECT_DIR$/test/e2e/ios/menu-ios-appage.js" />
     </list>
     <ignored path="canappr.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -42,8 +35,8 @@
       <file leaf-file-name="appium-ios.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test/e2e/ios/appium-ios.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.06947891" vertical-offset="1264" max-vertical-offset="2070">
-              <caret line="88" column="35" selection-start-line="88" selection-start-column="35" selection-end-line="88" selection-end-column="35" />
+            <state vertical-scroll-proportion="0.4591346" vertical-offset="1688" max-vertical-offset="2520">
+              <caret line="138" column="6" selection-start-line="138" selection-start-column="6" selection-end-line="138" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -82,8 +75,8 @@
       <file leaf-file-name="main-ios-appage.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/e2e/ios/main-ios-appage.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="810">
-              <caret line="38" column="72" selection-start-line="38" selection-start-column="72" selection-end-line="38" selection-end-column="72" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="795">
+              <caret line="31" column="56" selection-start-line="31" selection-start-column="56" selection-end-line="31" selection-end-column="56" />
               <folding />
             </state>
           </provider>
@@ -92,8 +85,8 @@
       <file leaf-file-name="home-ios-appage.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/e2e/ios/home-ios-appage.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="675">
-              <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="750">
+              <caret line="23" column="38" selection-start-line="23" selection-start-column="38" selection-end-line="23" selection-end-column="38" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -124,8 +117,8 @@
       <file leaf-file-name="content-ios-appage.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/e2e/ios/content-ios-appage.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="203" max-vertical-offset="1035">
-              <caret line="55" column="46" selection-start-line="55" selection-start-column="46" selection-end-line="55" selection-end-column="46" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="1035">
+              <caret line="55" column="42" selection-start-line="55" selection-start-column="42" selection-end-line="55" selection-end-column="42" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -136,8 +129,8 @@
       <file leaf-file-name="menu-ios-appage.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/e2e/ios/menu-ios-appage.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="1110">
-              <caret line="32" column="6" selection-start-line="32" selection-start-column="6" selection-end-line="32" selection-end-column="6" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="233" max-vertical-offset="1245">
+              <caret line="53" column="33" selection-start-line="53" selection-start-column="33" selection-end-line="53" selection-end-column="33" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -205,10 +198,10 @@
         <option value="$PROJECT_DIR$/test/experiments/appium-ios.js" />
         <option value="$PROJECT_DIR$/test/e2e/ios/appium-servers.js" />
         <option value="$PROJECT_DIR$/test/e2e/ios/menu-ios-appage.js" />
-        <option value="$PROJECT_DIR$/test/e2e/ios/home-ios-appage.js" />
         <option value="$PROJECT_DIR$/test/e2e/ios/main-ios-appage.js" />
-        <option value="$PROJECT_DIR$/test/e2e/ios/appium-ios.js" />
         <option value="$PROJECT_DIR$/test/e2e/ios/content-ios-appage.js" />
+        <option value="$PROJECT_DIR$/test/e2e/ios/home-ios-appage.js" />
+        <option value="$PROJECT_DIR$/test/e2e/ios/appium-ios.js" />
       </list>
     </option>
   </component>
@@ -224,7 +217,8 @@
     <data>$PROJECT_DIR$/node_modules/karma</data>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="22" />
+    <option name="x" value="-23" />
+    <option name="y" value="24" />
     <option name="width" value="1919" />
     <option name="height" value="976" />
   </component>
@@ -624,7 +618,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1919" height="976" extended-state="0" />
+    <frame x="-23" y="24" width="1919" height="976" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Grunt" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.175" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -1007,34 +1001,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/e2e/ios/appium-servers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="285">
-          <caret line="10" column="38" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/e2e/ios/menu-ios-appage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="1110">
-          <caret line="32" column="6" selection-start-line="32" selection-start-column="6" selection-end-line="32" selection-end-column="6" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/e2e/ios/home-ios-appage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="675">
-          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test/experiments/test-promises.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="915" max-vertical-offset="2595">
@@ -1059,18 +1025,46 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/e2e/ios/main-ios-appage.js">
+    <entry file="file://$PROJECT_DIR$/test/e2e/ios/appium-servers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="810">
-          <caret line="38" column="72" selection-start-line="38" selection-start-column="72" selection-end-line="38" selection-end-column="72" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="285">
+          <caret line="10" column="38" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="38" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test/e2e/ios/content-ios-appage.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="203" max-vertical-offset="1035">
-          <caret line="55" column="46" selection-start-line="55" selection-start-column="46" selection-end-line="55" selection-end-column="46" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="1035">
+          <caret line="55" column="42" selection-start-line="55" selection-start-column="42" selection-end-line="55" selection-end-column="42" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/e2e/ios/menu-ios-appage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="233" max-vertical-offset="1245">
+          <caret line="53" column="33" selection-start-line="53" selection-start-column="33" selection-end-line="53" selection-end-column="33" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/e2e/ios/main-ios-appage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="795">
+          <caret line="31" column="56" selection-start-line="31" selection-start-column="56" selection-end-line="31" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/e2e/ios/home-ios-appage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="750">
+          <caret line="23" column="38" selection-start-line="23" selection-start-column="38" selection-end-line="23" selection-end-column="38" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
@@ -1079,8 +1073,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test/e2e/ios/appium-ios.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.06947891" vertical-offset="1264" max-vertical-offset="2070">
-          <caret line="88" column="35" selection-start-line="88" selection-start-column="35" selection-end-line="88" selection-end-column="35" />
+        <state vertical-scroll-proportion="0.4591346" vertical-offset="1688" max-vertical-offset="2520">
+          <caret line="138" column="6" selection-start-line="138" selection-start-column="6" selection-end-line="138" selection-end-column="6" />
           <folding />
         </state>
       </provider>

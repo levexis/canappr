@@ -16,7 +16,7 @@ var Q = require ('q' ),
 
 module.exports = function (driver) {
     driver = driver || window.driver;
-/*
+/* tried to add these for chaining but lacking the brain power, can easily create journeys in tests to cut down on code
     this.addTapOn = function (lastPromise) {
         lastPromise.tapOn = function () {
             console.log ( 'tapping on', that , arguments );
@@ -27,11 +27,12 @@ module.exports = function (driver) {
     };*/
     // needs the precise text to work
     this.tapOn = function(listText) {
-         // should allow tapOns to be chained together
-         // actually should mixin on all the methods to the response. Do I need to use _
         return driver.sleep(SLEEP_TIME).elementByName( listText ).click();
     };
-
+    // these first two could be a base page object class
+    this.getSwitch = function () {
+        return driver.sleep(SLEEP_TIME).elementByXPath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIASwitch[1]");
+    };
     this.getTitle = function() {
         return driver.sleep(SLEEP_TIME).elementByXPath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAStaticText[9]");
     };
@@ -41,8 +42,6 @@ module.exports = function (driver) {
     this.getListTitleText = function() {
         return driver.sleep(SLEEP_TIME).elementByXPath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAStaticText[11]");
     };
-    this.getSwitch = function () {
-        return driver.sleep(SLEEP_TIME).elementByXPath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIASwitch[1]");
-    };
+
     return this;
 };

@@ -21,16 +21,21 @@ module.exports = function (driver) {
     // needs the precise text to work
     this.tapOn = function( listText ) {
         // actually should mixin on all the methods to the response.
-        return _.extend ( driver.sleep(SLEEP_TIME).elementByName( listText ).click() , { tapOn: this.tapOn } );
+        console.log('tapon',listText);
+        return driver.sleep(SLEEP_TIME).elementByName( listText ).click();
     };
+    // THESE PATHS ARE TOTALLY UNRELIABLE!
     this.getTagLine = function() {
-        return driver.sleep(SLEEP_TIME).elementByXPath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAStaticText[17]");
+        return driver.sleep(SLEEP_TIME).elementByXPath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAStaticText[23]");
     };
-    this.getAppDescription = function() {
-        return driver.sleep(SLEEP_TIME).elementByXPath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAStaticText[16]");
+    this.getFirstParagraph = function() {
+        return driver.sleep(SLEEP_TIME).elementByXPath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAStaticText[24]");
+    };
+    this.getSecondParagraph = function() {
+        return driver.sleep(SLEEP_TIME).elementByXPath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAStaticText[27]");
     };
     this.getFirstItem = function() {
-        return driver.sleep(SLEEP_TIME).elementByXPath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAStaticText[20]");
+        return driver.sleep(SLEEP_TIME).elementByXPath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAStaticText[28]");
     };
     this.getButton = function () {
         return driver.sleep(SLEEP_TIME).elementByXPath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAButton[1]");

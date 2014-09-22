@@ -25,6 +25,8 @@ var Q = require ('q' ),
 
 module.exports = function (driver) {
     driver = driver || window.driver;
+    var that = this;
+
     // should calculate this by using getPosition, screen size, resolution etc but will do to start with
     this.tapOpen = function () {
         return driver.sleep( SLEEP_TIME ).execute( "mobile: tap", [
@@ -36,6 +38,7 @@ module.exports = function (driver) {
             { "touchCount": 1, "startX": 19, "startY": 441, "endX": 299, "endY": 447, "duration": 0.5 }
         ] );
     };
+    // when I click back it seems to leave elements behind
     this.tapBack = function () {
         return driver.sleep( SLEEP_TIME ).execute( "mobile: tap", [
             { "tapCount": 1, "touchCount": 1, "duration": 0.1, "x": 17, "y": 42 }
@@ -43,11 +46,17 @@ module.exports = function (driver) {
     };
     // gets the text use tapBack to click on it
     this.getHome = function () {
-        return driver.elementByXPath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAStaticText[2]");
+        return driver.sleep( SLEEP_TIME ).elementByXPath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAStaticText[2]");
+    };
+    // opens menu and taps home
+    this.goHome = function () {
+        return this.tapOpen().then(function () {
+            return that.getHome().click();
+        });
     };
     // needs the precise text to work
     this.getOrg = function() {
-        return driver.elementByXPath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAStaticText[4]");
+        return driver.sleep( SLEEP_TIME ).elementByXPath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAStaticText[4]");
     };
     // positions change based on content of right pane. safer to use explicit tapOn
     this.getCourse = function(rightView) {
