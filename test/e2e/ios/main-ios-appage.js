@@ -11,25 +11,14 @@
  */
 var Q = require ('q' ),
 // we're assuming this isn't supported - waitForElementByXPath
-    SLEEP_TIME = process.env.APPIUM_PAUSE || 1000; // number of milliseconds between commands to allow transitions to complete as wait for doesn't work, increase if tests fail as element not present
-
+    SLEEP_TIME = process.env.APPIUM_PAUSE || 1000,
+    iosPage = require ('./home-ios-appage' ); // number of milliseconds between commands to allow transitions to complete as wait for doesn't work, increase if tests fail as element not present
 
 module.exports = function (driver) {
     driver = driver || window.driver;
-/* tried to add these for chaining but lacking the brain power, can easily create journeys in tests to cut down on code
-    this.addTapOn = function (lastPromise) {
-        lastPromise.tapOn = function () {
-            console.log ( 'tapping on', that , arguments );
-            var nextPromise = promise.then( that.tapOn );
-            return that.addTapOn(nextPromise);
-        };
-        return lastPromise;
-    };*/
-    // needs the precise text to work
-    this.tapOn = function(listText) {
-        // have a probem where old elements not being removed. Need to check isDisplayed or will get server side errors
-        return driver.sleep(SLEEP_TIME).elementsByName( listText ).last().click();
-    };
+    // inherit iosPage and call constructor
+    iosPage.apply ( this , arguments );
+
     // these first two could be a base page object class
     this.getSwitch = function () {
         return driver.sleep(SLEEP_TIME).elementByXPath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIASwitch[1]");

@@ -44,7 +44,7 @@ module.exports = function (driver) {
         return driver.sleep(SLEEP_TIME).elementByXPath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAStaticText[28]");
     };
     this.getButton = function () {
-        return driver.sleep(SLEEP_TIME).elementByXPath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAButton[1]");
+        return driver.sleep(SLEEP_TIME).elementsByXPath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAButton" ).last();
     };
     return this;
 };

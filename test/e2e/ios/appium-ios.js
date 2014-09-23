@@ -103,10 +103,10 @@ describe("appium ios", function () {
     });
     afterEach(function () {
         takeScreenshot('ios_' + new Date().getTime() );
-        //return menu.goHome();
+        return menu.goHome();
     });
     // test of page object
-    it.only('should be able to repeat a journey without clicking stale elements' , function () {
+    it('should be able to repeat a journey without clicking stale elements' , function () {
         return expect ( journeys.navToChimes().then ( function () {
             return menu.goHome().then( function () {
                 return journeys.navToChimes();
@@ -115,20 +115,34 @@ describe("appium ios", function () {
     });
     /*
     it.only('testing out selectors' , function () {
+        var textElements=[];
         return expect ( journeys.navToChimes().then ( function () {
             return menu.goHome().then( function () {
-                console.log( 'click button');
-                return home.getButton().click()
-                    .then( function () {
-                        console.log( 'getting element');
-                        return driver.sleep( SLEEP_TIME ).elementsByName( 'Medit8 Sounds' ).last().isDisplayed().then( function ( value ) {
-                            console.log( 'value', value );
-                            return value;
+                return journeys.navToBells().then( function () {
+                    return driver.sleep( SLEEP_TIME ).elementsByXPath( '//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAStaticText' ).then( function ( values ) {
+                        var _all = [];
+                        values.forEach( function ( el ) {
+                            _all.push( el.isDisplayed().then( function ( displayed ) {
+                                if ( displayed ) {
+                                    return el.text().then( function ( text ) {
+                                        // check its a valid string?
+                                        console.log( el.value, text );
+                                        textElements.push ( { path: '//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAStaticText['+ el.value +']',
+                                            text: text } );
+                                    } );
+                                }
+                            } ) );
+                        } );
+                        return Q.all( _all ).then( function () {
+                            console.log (textElements);
+                            return textElements;
                         });
-                    });
+                    } );
+                } );
             });
         }) ).to.eventually. be.true;
-    });*/
+    });
+    */
     // should test selectors are working as well
     it("should play/pause remote audio", function () {
         return expect(  journeys.navToChimes().then ( function () {
