@@ -57,6 +57,7 @@
   },
   "devDependencies": {
     "colors": "^0.6.2",
+    "grunt-mocha-appium": "^0.4.0",
     "grunt-phonegap": "https://github.com/levexis/grunt-phonegap/tarball/master",
     "grunt-rasterize": "^0.1.7",
     "wd": "^0.3.8"

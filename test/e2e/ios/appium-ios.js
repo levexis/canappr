@@ -7,7 +7,7 @@ zip -r Medit8.app.zip phonegap/platforms/ios/build/emulator/Medit8.app
 curl -u daddysauce:94e75bbd-cef6-46e7-9549-1315d4b36ee5 -X POST "http://saucelabs.com/rest/v1/storage/daddysauce/Medit8.app.zip?overwrite=true" -H "Content-Type: application/octet-stream" --data-binary @Medit8.app.zip
 SAUCE_USERNAME=daddysauce SAUCE_ACCESS_KEY=94e75bbd-cef6-46e7-9549-1315d4b36ee5 mocha -R spec test/e2e/ios/appium-ios.js
 */
-
+// MAKE SURE ALL TESTS HAVE EVENTUALLY AND EVERY THEN IN THE CHANGE RETURNS ELSE TEST(S) WILL BE SKIPPED
 var wd = require("wd"),
     serverConfigs = require('./appium-servers' ),
     chai = require("chai" ),
@@ -73,7 +73,7 @@ describe("appium ios", function () {
             desired.app = 'sauce-storage:Medit8.app.zip';
         }
         journeys.navToChimes = function () {
-            return home.getButton().click()
+            return home.tapButton()
                 .then( function () {
                     return main.tapOn( 'Medit8 Sounds' ).then( function () {
                         return main.tapOn( 'Bells and bowls' ).then( function () {
@@ -83,7 +83,7 @@ describe("appium ios", function () {
                 } );
         };
         journeys.navToBells = function () {
-            return home.getButton().click()
+            return home.tapButton()
                 .then( function () {
                     return main.tapOn( 'Medit8 Sounds' ).then( function () {
                         return main.tapOn( 'Bells and bowls' );
@@ -99,10 +99,11 @@ describe("appium ios", function () {
         menu = new MenuPage( driver );
     });
     after(function () {
-        //return driver.sleep( SLEEP_TIME*2 ).quit();
+        return driver.sleep( SLEEP_TIME*2 ).quit();
     });
     afterEach(function () {
         takeScreenshot('ios_' + new Date().getTime() );
+        // is this called after after at the end?
         return menu.goHome();
     });
     // test of page object
@@ -113,34 +114,62 @@ describe("appium ios", function () {
             } );
         }) ).to.eventually.not.be.rejected;
     });
-    /*
-    it.only('testing out selectors' , function () {
-        var textElements=[];
-        return expect ( journeys.navToChimes().then ( function () {
-            return menu.goHome().then( function () {
-                return journeys.navToBells().then( function () {
-                    return driver.sleep( SLEEP_TIME ).elementsByXPath( '//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAStaticText' ).then( function ( values ) {
-                        var _all = [];
-                        values.forEach( function ( el ) {
-                            _all.push( el.isDisplayed().then( function ( displayed ) {
-                                if ( displayed ) {
-                                    return el.text().then( function ( text ) {
-                                        // check its a valid string?
-                                        console.log( el.value, text );
-                                        textElements.push ( { path: '//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAStaticText['+ el.value +']',
-                                            text: text } );
-                                    } );
-                                }
-                            } ) );
-                        } );
-                        return Q.all( _all ).then( function () {
-                            console.log (textElements);
-                            return textElements;
-                        });
-                    } );
-                } );
+    it('should do nav to bells journey' , function () {
+        return expect ( journeys.navToBells().then ( function () {
+            return main.getTitle().then( function (el) {
+                return el.text();
             });
-        }) ).to.eventually. be.true;
+        }) ).to.eventually.equal('Bells and bowls');
+    });
+    /*
+    // check page elemets
+    it.only('should be able to find page elements' , function () {
+        function logArr (values , what) {
+            for ( var i = 0; i <values.length; i++ ) {
+                // useful for debugging
+                console.log (i, what, values[i].text, values[i].path );
+            }
+        }
+        return expect ( home.getElements('text' ).then( function (elements) {
+            logArr(elements , 'home');
+            return home.tapButton().then ( function () {
+                return main.getElements('text' ).then( function (elements) {
+                    logArr(elements , 'main');
+                    return menu.goHome().then( function () {
+// Scanning elements whist menu causes an exeception on isVisible call
+//                    return menu.tapOpen().then( function () {
+//                        as soon as you get as you getElement on menu it crashes!
+//                        return menu.getElements('text' ).then( function () {
+                            // this may change based on whats open, ie home page or content?
+//                            logArr( elements, 'menumain' );
+ //                           return menu.tapOn('Medit8').then( function () {
+                                return journeys.navToBells().then( function () {
+                                    return main.tapSwitch().then( function () {
+                                        console.log('clicked switch');
+                                        return main.tapOn( 'Chimes' ).then( function () {
+                                            console.log('clicked chimes');
+                                            return content.getElements( 'text' ).then( function ( elements ) {
+                                                logArr( elements, 'content' );
+                                                return menu.goHome().then( function () {
+                                                    return home.getElements( 'text' ).then( function ( elements ) {
+                                                        logArr( elements, 'home' );
+                                                        //                                        return menu.tapOpen().then( function ( elements ) {
+                                                        // NEED TO GET ELEMENTS
+                                                        // this may change based on whats open, ie home page or content?
+                                                        //                                            logArr( elements, 'menucont' );
+                                                        //                                        });
+                                                    });
+                                                });
+                                            });
+                                        });
+                                    });
+                                });
+//                            });
+ //                       });
+                    });
+                });
+            });
+        }) ).to.eventually.not.be.rejected;
     });
     */
     // should test selectors are working as well
@@ -163,43 +192,49 @@ describe("appium ios", function () {
     });
     it("should download modules for subscribed courses", function () {
         return expect(  journeys.navToBells().then ( function () {
-            return main.getSwitch().click().sleep( SLEEP_TIME ).then ( function () {
+            return main.tapSwitch().then ( function () {
                 // have problems with back button increasing total number of UI elements, need a more reliable way
                 // possible a page offset check which cycles through elements until it finds the xpath for a certain element
                 // and then offsets from that
                 // look for both elements
-                return menu.goHome().sleep( SLEEP_TIME ).elementByName('Medit8 Sounds - Bells and bowls').elementByName('Chimes');
+                return menu.goHome().sleep( SLEEP_TIME ).then( function () {
+                    return main.elementExists('Chimes');
+                });
             });
-        })).to.be.ok;
+        })).to.eventually.equal(true);
     });
     it("should remove deleted modules", function () {
         return expect(  journeys.navToBells().then ( function () {
             // wait to download
-            return main.getSwitch().click().sleep(SLEEP_TIME ).then ( function () {
+            return main.tapSwitch().then ( function () {
                 return main.tapOn( 'Chimes' ).then( function () {
-                    return content.getSwitch().click().then( function () {
+                    return content.tapSwitch().then( function () {
                         // Chimes should not be in list
                         // IS THIS PICKING UP ON HIDDEN MENU CHIMES?
-                        return menu.goHome().sleep( SLEEP_TIME ).elementByName( 'Chimes' );
+                        return menu.goHome().sleep( SLEEP_TIME ).then( function () {
+                            return main.elementExists('text','Chimes');
+                        });
                     } );
                 } );
             });
-        }) ).to.eventually.be.rejected;
+        }) ).to.eventually.equal(false);
     });
-    it("should allow deleted modules to be redownloaded", function () {
+    it.only("should allow deleted modules to be redownloaded", function () {
         return expect(  journeys.navToBells().then ( function () {
             // wait to download
-            return main.getSwitch().click().sleep(SLEEP_TIME ).then ( function () {
-                return main.tapOn( 'Chimes' ).then( function () {
-                    return content.getSwitch().click().then( function () {
+            return main.tapSwitch().then ( function () {
+                return main.tapOn( 'Bowl' ).then( function () {
+                    return content.tapSwitch().then( function () {
                         // Chimes should not be in list
                         return menu.goHome().then( function () {
                             return home.tapOn('Medit8 Sounds - Bells and bowls').then( function () {
-                                return main.tapOn('Chimes' ).then( function () {
-                                    // wait for redownload
-                                    return content.getSwitch().click().sleep(SLEEP_TIME *2 ).then( function () {
+                                return main.tapOn('Bowl' ).then( function () {
+                                    // wait for redownload????
+                                    return content.tapSwitch().then( function () {
                                         // Chimes should be back in list
-                                        return menu.goHome().elementByName( 'Chimes' );
+                                        return menu.goHome().then( function () {
+                                            return main.elementExists('text','Chimes');
+                                        });
                                     } );
                                 });
                             });

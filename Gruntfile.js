@@ -255,6 +255,30 @@ module.exports = function (grunt) {
                 permissions: ['INTERNET', 'ACCESS_COURSE_LOCATION', '...']
                  */
             }
+        },
+        mochaAppium: {
+            options : {
+                // Mocha options
+                reporter : 'spec',
+                timeout : 30e3,
+                // Toggles wd's promises API, default:false
+                usePromises : true,
+                // Path to appium executable, default:'appium'
+                appiumPath : 'appium'
+            },
+            ios : {
+                src : ['test/e2e/ios/appium-ios.js'],
+                options : {
+                    // Appium Options
+                    deviceName : 'iPhone Simulator',
+                    platformName : 'iOS',
+                    version : '7.1',
+                    // A url of a zip file containg your .app package
+                    // or
+                    // A local absolute path to your simulator-compiled .app directory
+                    app : 'phonegap//platforms/ios/build/emulator/Medit8.app'
+                }
+            }
         }
    });
 
@@ -269,6 +293,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks( 'grunt-contrib-clean' );
     // use grunt phonegap:build:android
     grunt.loadNpmTasks( 'grunt-phonegap' );
+    grunt.loadNpmTasks('grunt-mocha-appium');
 
     grunt.registerTask('e2e', [
         'selenium_phantom_hub',
@@ -280,6 +305,7 @@ module.exports = function (grunt) {
         'selenium_start',
         'connect:e2e',
         'protractor:dev',
+        'mochaAppium:ios',
         'selenium_stop'
     ]);
 /*

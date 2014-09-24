@@ -21,10 +21,14 @@ Module  //UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAStati
  */
 var Q = require ('q' ),
     _ = require ('underscore' ),
-    SLEEP_TIME = process.env.APPIUM_PAUSE || 1000; // number of milliseconds between commands to allow transitions to complete as wait for doesn't work, increase if tests fail as element not present
+    SLEEP_TIME = process.env.APPIUM_PAUSE || 1000,
+    IosPage = require ('./ios-appage' ); // number of milliseconds between commands to allow transitions to complete as wait for doesn't work, increase if tests fail as element not present
 
-module.exports = function (driver) {
+var MenuPage = function (driver) {
     driver = driver || window.driver;
+    // inherit iosPage and call constructor
+    IosPage.apply ( this , arguments );
+
     var that = this;
 
     // should calculate this by using getPosition, screen size, resolution etc but will do to start with
@@ -50,11 +54,12 @@ module.exports = function (driver) {
     };
     // opens menu and taps home
     this.goHome = function () {
-        return this.tapOpen().then(function () {
+        // slide open as menu isn't visible on home page
+        return this.slideOpen().then(function () {
             return that.getHome().click();
         });
     };
-    // needs the precise text to work
+    // needs the precise text to work - CAN USE THE getList on prototype
     this.getOrg = function() {
         return driver.sleep( SLEEP_TIME ).elementByXPath("//UIAApplication[1]/UIAWindow[1]/UIAScrollView[1]/UIAWebView[1]/UIAStaticText[4]");
     };
@@ -75,3 +80,5 @@ module.exports = function (driver) {
     };
     return this;
 };
+MenuPage.prototype = new IosPage();
+module.exports = MenuPage;
