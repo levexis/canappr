@@ -745,7 +745,7 @@
             redownload  : function (url) {
                 if ( url && _fileTable[url] ) {
                     _fileTable[url].status = 'queued';
-                    return true;
+                    return this.downloadQueued();
                 } else {
                     return false;
                 }

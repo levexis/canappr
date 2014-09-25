@@ -197,7 +197,7 @@ describe("appium ios", function () {
                 // possible a page offset check which cycles through elements until it finds the xpath for a certain element
                 // and then offsets from that
                 // look for both elements
-                return menu.goHome().sleep( SLEEP_TIME ).then( function () {
+                return menu.goHome().then( function () {
                     return main.elementExists('Chimes');
                 });
             });
@@ -211,18 +211,19 @@ describe("appium ios", function () {
                     return content.tapSwitch().then( function () {
                         // Chimes should not be in list
                         // IS THIS PICKING UP ON HIDDEN MENU CHIMES?
-                        return menu.goHome().sleep( SLEEP_TIME ).then( function () {
-                            return main.elementExists('text','Chimes');
+                        return menu.goHome().then( function () {
+                            return main.elementExists('Chimes');
                         });
                     } );
                 } );
             });
         }) ).to.eventually.equal(false);
     });
-    it.only("should allow deleted modules to be redownloaded", function () {
+    it ("should allow deleted modules to be redownloaded", function () {
         return expect(  journeys.navToBells().then ( function () {
             // wait to download
             return main.tapSwitch().then ( function () {
+                // use bowl this time as chime was left in an undeleted state by previous test
                 return main.tapOn( 'Bowl' ).then( function () {
                     return content.tapSwitch().then( function () {
                         // Chimes should not be in list
@@ -233,7 +234,7 @@ describe("appium ios", function () {
                                     return content.tapSwitch().then( function () {
                                         // Chimes should be back in list
                                         return menu.goHome().then( function () {
-                                            return main.elementExists('text','Chimes');
+                                            return main.elementExists('Bowl');
                                         });
                                     } );
                                 });

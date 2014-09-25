@@ -2,7 +2,7 @@
     'use strict';
     var myApp = angular.module('canAppr', ['onsen.directives' ,'mediaPlayer', 'ngTouch', 'ngAnimate', 'ngCachedResource', 'ngSanitize' ])
         .run(
-         function ($rootScope, $timeout , $window, $injector, $log , registryService , fileService ,prefService ) {
+         function ($rootScope, $timeout , $window, $injector, $log , registryService , fileService ,prefService, analService ) {
             var document = $window.document;
              // if in debug mode then expose rootScope and it's injector
              // eg canAppr.getService('orgService').query().$promise.then(function (results) { console.log('results',results); } ));
@@ -17,17 +17,7 @@
              // phonegap stuff - where to put?
              if ( typeof $window.cordova !== 'undefined' ) {
                  var onDeviceReady = function () {
-                     if ($window.plugins && $window.plugins.gaPlugin) {
-                        // gaPlugin is put in registry after initialisation so it's ready
-                        $window.plugins.gaPlugin.init(function (msg){
-                                $log.debug( 'ga-init' , msg );
-                                registryService.setConfig ('gaPlugin', $window.plugins.gaPlugin );
-                                // do we need to log home page?
-                            },
-                            function (err) { $log.debug( 'ga-error' , err); },
-                            "UA-54805789-1", // medit8 app id
-                            10); // poll to upload metrics every 10 seconds
-                     }
+                     analService.init( "gamob init UA-54805789-1" );
                      $log.debug( 'CORDOVA VERSION: ' + window.device.cordova );
                      // hide phonegap splash
                      navigator.splashscreen.hide();

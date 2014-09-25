@@ -1,4 +1,4 @@
-(function (angular) {
+(function (angular, $window) {
     "use strict";
     // this can be used to replace the rootScope nonsense
     var myApp = angular.module( 'canAppr' );
@@ -94,6 +94,14 @@ eg offset(angular.element (document.querySelector( '.ca-progress')));
             return _gaPlugin;
         }
         return  {
+            init: function (accountId) {
+                if ( $window.analytics ) {
+                    // switched for gaPlugin to google-analytics which seems "slightly" better maintained
+                    _gaPlugin = $window.analytics.startTrackerWithId( accountId );
+                    $log.debug( 'gaMob init', accountId );
+                    registryService.setConfig( 'gaPlugin', $window.analytics );
+                }
+            },
             trackView: function ( url ) {
                 if ( url && getPlugin() ) {
                     $log.debug ( 'trackView', url);
@@ -117,6 +125,6 @@ eg offset(angular.element (document.querySelector( '.ca-progress')));
         };
     });
 
-})(angular); // jshint ignore:line
+})(angular,$window); // jshint ignore:line
 
 

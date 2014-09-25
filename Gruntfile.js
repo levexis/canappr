@@ -136,7 +136,8 @@ module.exports = function (grunt) {
                            'org.apache.cordova.media',
                             'org.apache.cordova.file',
                             'org.apache.cordova.file-transfer',
-                            'org.apache.cordova.splashscreen'
+                            'org.apache.cordova.splashscreen',
+                            'https://github.com/danwilson/google-analytics-plugin.git'
                 ],
                 platforms: ['android' , 'ios'],
                 maxBuffer: 200, // You may need to raise this for iOS.
@@ -146,7 +147,8 @@ module.exports = function (grunt) {
                     var pkg = grunt.file.readJSON('package.json');
                     return(pkg.name + '-' + pkg.version);
                 },
-                debuggable: true,
+                // set DEBUG=Y for debugable version, cannot deploy debugable versions to play store
+                debuggable: process.env.DEBUG ? true : false,
                 // Set an app icon at various sizes (optional)
 
                 icons: {
@@ -260,7 +262,7 @@ module.exports = function (grunt) {
             options : {
                 // Mocha options
                 reporter : 'spec',
-                timeout : 30e3,
+                timeout : 30e4,
                 // Toggles wd's promises API, default:false
                 usePromises : true,
                 // Path to appium executable, default:'appium'
@@ -276,7 +278,32 @@ module.exports = function (grunt) {
                     // A url of a zip file containg your .app package
                     // or
                     // A local absolute path to your simulator-compiled .app directory
-                    app : 'phonegap//platforms/ios/build/emulator/Medit8.app'
+                    app : __dirname + '/phonegap/platforms/ios/build/emulator/Medit8.app'
+                }
+            }
+        },
+        mochacli:    {
+            options: {
+                colors:        true,
+                'check-leaks': false,
+                ui:            'bdd',
+                reporter:      'spec',
+                timeout:       20000
+            },
+            ios:     {
+                options: {
+                    files: ['./test/e2e/ios/ios-appium.js'],
+                    reporter: 'spec'
+                }
+            },
+            spec:    {
+                options: {
+                    reporter: 'spec'
+                }
+            },
+            nyan:    {
+                options: {
+                    reporter: 'nyan'
                 }
             }
         }
@@ -294,6 +321,7 @@ module.exports = function (grunt) {
     // use grunt phonegap:build:android
     grunt.loadNpmTasks( 'grunt-phonegap' );
     grunt.loadNpmTasks('grunt-mocha-appium');
+    grunt.loadNpmTasks('grunt-mocha-cli');
 
     grunt.registerTask('e2e', [
         'selenium_phantom_hub',
@@ -305,7 +333,10 @@ module.exports = function (grunt) {
         'selenium_start',
         'connect:e2e',
         'protractor:dev',
-        'mochaAppium:ios',
+        'phonegap:build',
+        'mochacli:ios',
+//        'mochaAppium:ios',
+
         'selenium_stop'
     ]);
 /*
