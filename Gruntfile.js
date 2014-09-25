@@ -281,31 +281,6 @@ module.exports = function (grunt) {
                     app : __dirname + '/phonegap/platforms/ios/build/emulator/Medit8.app'
                 }
             }
-        },
-        mochacli:    {
-            options: {
-                colors:        true,
-                'check-leaks': false,
-                ui:            'bdd',
-                reporter:      'spec',
-                timeout:       20000
-            },
-            ios:     {
-                options: {
-                    files: ['./test/e2e/ios/ios-appium.js'],
-                    reporter: 'spec'
-                }
-            },
-            spec:    {
-                options: {
-                    reporter: 'spec'
-                }
-            },
-            nyan:    {
-                options: {
-                    reporter: 'nyan'
-                }
-            }
         }
    });
 
@@ -333,11 +308,9 @@ module.exports = function (grunt) {
         'selenium_start',
         'connect:e2e',
         'protractor:dev',
+        'selenium_stop',
         'phonegap:build',
-        'mochacli:ios',
-//        'mochaAppium:ios',
-
-        'selenium_stop'
+        'mochaAppium:ios'
     ]);
 /*
     grunt.registerTask('e2e', [
