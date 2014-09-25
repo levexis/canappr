@@ -57,21 +57,7 @@ describe("appium ios", function () {
 
     before(function () {
         var serverConfig = ( process.env.SAUCE_USERNAME ) ? serverConfigs.sauce : serverConfigs.local;
-        driver = wd.promiseChainRemote(serverConfig);
-        if (process.env['DEBUG']) {
-            require( "./logging" ).configure( driver );
-        }
-        // these should be a seperate file per environment as in the appium examples maybe using the dreaded node config!
-        var desired = { browserName: '',
-            'appium-version': '1.2',
-            platformName: 'iOS',
-            platformVersion: '7.1',
-            deviceName: 'iPhone Simulator',
-            app: '/Users/paulcook/levexis/canappr/phonegap/platforms/ios/build/emulator/Medit8.app' };
-        if ( process.env.SAUCE_USERNAME ) {
-            // if this doesn't exist it doesn't tell you
-            desired.app = 'sauce-storage:Medit8.app.zip';
-        }
+        console.log(typeof this.browser);
         journeys.navToChimes = function () {
             return home.tapButton()
                 .then( function () {
@@ -90,7 +76,27 @@ describe("appium ios", function () {
                     } );
                 } );
         };
-        return driver.init(desired);
+        if ( typeof this.browser === 'object' ) { // configured from grunt appium
+            driver = this.browser;
+        } else {
+            driver = wd.promiseChainRemote( serverConfig );
+            if ( process.env['DEBUG'] ) {
+                require( "./logging" ).configure( driver );
+            }
+            // these should be a seperate file per environment as in the appium examples maybe using the dreaded node config!
+            var desired = { browserName : '',
+                //            'appium-version': '1.2',
+                platformName : 'iOS',
+                platformVersion : '7.1',
+                deviceName : 'iPhone Simulator',
+                //            app: '/Users/paulcook/levexis/canappr/phonegap/platforms/ios/build/emulator/Medit8.app' };
+            };
+            if ( process.env.SAUCE_USERNAME ) {
+                // if this doesn't exist it doesn't tell you
+                desired.app = 'sauce-storage:Medit8.app.zip';
+            }
+            return driver.init( desired );
+        }
     });
     beforeEach( function () {
         home = new HomePage( driver );
