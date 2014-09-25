@@ -1,4 +1,4 @@
-(function (angular, $window) {
+(function (angular) {
     "use strict";
     // this can be used to replace the rootScope nonsense
     var myApp = angular.module( 'canAppr' );
@@ -83,7 +83,7 @@ eg offset(angular.element (document.querySelector( '.ca-progress')));
     /*
      * analytics, just basic ga for now.
      */
-    myApp.factory('analService', function ($log, registryService) {
+    myApp.factory('analService', function ($log,  $window, registryService) {
         var successCB = function() {},
             errorCB = function(err) { $log.debug('ga-error',err);},
             _gaPlugin;
@@ -95,17 +95,21 @@ eg offset(angular.element (document.querySelector( '.ca-progress')));
         }
         return  {
             init: function (accountId) {
-                if ( $window.analytics ) {
+                if ( $window.analytics && accountId) {
                     // switched for gaPlugin to google-analytics which seems "slightly" better maintained
-                    _gaPlugin = $window.analytics.startTrackerWithId( accountId );
+                    $window.analytics.startTrackerWithId( accountId );
+                    _gaPlugin = $window.analytics;
                     $log.debug( 'gaMob init', accountId );
-                    registryService.setConfig( 'gaPlugin', $window.analytics );
+                    registryService.setConfig( 'gaPlugin', _gaPlugin );
+                    return true;
+                } else {
+                    return false;
                 }
             },
             trackView: function ( url ) {
                 if ( url && getPlugin() ) {
                     $log.debug ( 'trackView', url);
-                    return _gaPlugin.trackPage( successCB, errorCB, url );
+                    return _gaPlugin.trackView(  url );
                 }
             },
             trackEvent: function ( category, action, label , value) {
@@ -119,12 +123,12 @@ eg offset(angular.element (document.querySelector( '.ca-progress')));
                 */
                 if ( category && action && (label || value ) && getPlugin() ) {
                     $log.debug ( 'trackEvent', category, action, label , value);
-                    return _gaPlugin.trackEvent( successCB, errorCB, category, action, label, value );
+                    return _gaPlugin.trackEvent(category, action, label, value );
                 }
             }
         };
     });
 
-})(angular,$window); // jshint ignore:line
+})(angular); // jshint ignore:line
 
 

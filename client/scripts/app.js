@@ -17,8 +17,10 @@
              // phonegap stuff - where to put?
              if ( typeof $window.cordova !== 'undefined' ) {
                  var onDeviceReady = function () {
-                     analService.init( "gamob init UA-54805789-1" );
                      $log.debug( 'CORDOVA VERSION: ' + window.device.cordova );
+                     analService.init( "UA-54805789-1" );
+                     analService.trackView( "start" );
+
                      // hide phonegap splash
                      navigator.splashscreen.hide();
                      // stops app bleading into phone network status bar
