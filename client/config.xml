@@ -4,7 +4,7 @@
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "com.daddyswork.canappr"
-        version   = "0.0.1">
+        version   = "0.2">
     <name>Medit8</name>
 
     <description>
@@ -38,9 +38,12 @@
 -->
 <!-- subdomains = true not working on android so added * !-->
 	<access origin="http://*.segment.io" subdomains="true" />
-	<access origin="http://*.licdn.com" subdomains="true" /> <!-- allows photos to appear -->
-	<access origin="http://*.akamaihd.net" subdomains="true" /> <!-- facebook photos -->
-	<access origin="https://*.dropboxusercontent.com" subdomains="true" /> <!-- dropbox public link -->
+	<access origin="http://*.akamaihd.net" subdomains="true" />
+	<access origin="https://*.dropboxusercontent.com" subdomains="true" /> <!-- drop box -->
+    <access origin="https://*.live.com" subdomains="true" /> <!-- one drive -->
+    <access origin="https://*.google.com" subdomains="true" /> <!-- analytics and google drive -->
+    <access origin="https://*.amazon.com" subdomains="true" /><!-- aws -->
+
     <access origin="http://localhost" subdomains="true" /> <!-- debugging -->
 
 </widget>

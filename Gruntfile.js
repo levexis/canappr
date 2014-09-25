@@ -205,34 +205,31 @@ module.exports = function (grunt) {
                 },
                 // Must be set for ios to work.
                 // Should return the app name.
-                name: 'Medit8'
+                name: 'Medit8',
                 /* my app is called Medit8 not cannappr and this has been a fucking nightmare as copied icons to wrong directoryfunction(){
                     var pkg = grunt.file.readJSON('package.json');
                     return pkg.name;
-                }/*,
+                },*/
 
                 // Add a key if you plan to use the `release:android` task
                 // See http://developer.android.com/tools/publishing/app-signing.html
                 key: {
-                    store: 'release.keystore',
+                    store: 'release/release.keystore',
                     alias: 'release',
                     aliasPassword: function(){
                         // Prompt, read an environment variable, or just embed as a string literal
-                        return('');
+                        return('medit8');
                     },
                     storePassword: function(){
                         // Prompt, read an environment variable, or just embed as a string literal
-                        return('');
+                        return('medit8');
                     }
                 },
 
-
-
-
-
                 // Android-only integer version to increase with each release.
                 // See http://developer.android.com/tools/publishing/versioning.html
-                versionCode: function(){ return(1) },
+                versionCode: 1
+                /*
 
                 // Android-only options that will override the defaults set by Phonegap in the
                 // generated AndroidManifest.xml
@@ -242,7 +239,6 @@ module.exports = function (grunt) {
 
                 // iOS7-only options that will make the status bar white and transparent
                 iosStatusBar: 'WhiteAndTransparent',
-
                 // If you want to use the Phonegap Build service to build one or more
                 // of the platforms specified above, include these options.
                 // See https://build.phonegap.com/
