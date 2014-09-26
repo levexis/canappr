@@ -214,7 +214,7 @@ module.exports = function (grunt) {
                 // Add a key if you plan to use the `release:android` task
                 // See http://developer.android.com/tools/publishing/app-signing.html
                 key: {
-                    store: 'release/release.keystore',
+                    store: 'releases/release.keystore',
                     alias: 'release',
                     aliasPassword: function(){
                         // Prompt, read an environment variable, or just embed as a string literal
@@ -228,7 +228,9 @@ module.exports = function (grunt) {
 
                 // Android-only integer version to increase with each release.
                 // See http://developer.android.com/tools/publishing/versioning.html
-                versionCode: 1
+                versionCode: 1,
+                // iOS7-only options that will make the status bar white and transparent
+                iosStatusBar: 'WhiteAndTransparent'
                 /*
 
                 // Android-only options that will override the defaults set by Phonegap in the

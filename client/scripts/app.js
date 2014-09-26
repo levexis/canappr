@@ -2,7 +2,7 @@
     'use strict';
     var myApp = angular.module('canAppr', ['onsen.directives' ,'mediaPlayer', 'ngTouch', 'ngAnimate', 'ngCachedResource', 'ngSanitize' ])
         .run(
-         function ($rootScope, $timeout , $window, $injector, $log , registryService , fileService ,prefService, analService ) {
+         function ($rootScope, $timeout , $window, $injector, $log , registryService , fileService ,prefService, analService, navService ) {
             var document = $window.document;
              // if in debug mode then expose rootScope and it's injector
              // eg canAppr.getService('orgService').query().$promise.then(function (results) { console.log('results',results); } ));
@@ -20,13 +20,28 @@
                      $log.debug( 'CORDOVA VERSION: ' + window.device.cordova );
                      analService.init( "UA-54805789-1" );
                      analService.trackView( "start" );
-
-                     // hide phonegap splash
-                     navigator.splashscreen.hide();
                      // stops app bleading into phone network status bar
                      $window.StatusBar.overlaysWebView( false );
                      registryService.setConfig( 'isNative', true );
+                     // set back button behaviour via a backButton config function or will just go home
+                     document.addEventListener("backbutton",
+                         function () {
+                             var goBack = registryService.getConfig( 'backButton' );
+                             if ( typeof goBack === 'function' ) {
+                                 goBack();
+                             } else {
+                                 // go home by default
+                                 navService.go( 'views/home.html', {
+                                     navDir : 'new'} );
+                             }
+                         }, false);
+
+                     function onBackKeyDown() {
+                         // Handle the back button
+                     }
                      fileService.init('canappr' ).then( function () {
+                         // hide phonegap splash
+                         $window.navigator.splashscreen.hide();
                          registryService.isReady( true );
                          // check for new files for all subscribed courses and add to queue
                          prefService.checkFiles();

@@ -50,3 +50,33 @@ https://bitbucket.org/appium/appium.app/downloads/
 // .execute("mobile: swipe", { "touchCount": 1, "startX": 19, "startY": 441, "endX": 299, "endY": 447, "duration": 0.5 })
 // should be
 // .execute("mobile: swipe", [{ "touchCount": 1, "startX": 19, "startY": 441, "endX": 299, "endY": 447, "duration": 0.5 }])
+// now lets try to do android, you may need to create a keystore to sign the android app
+keytool -genkey -v -keystore release.keystore -alias release -keyalg RSA -keysize 2048 -validity 10000
+// suggest you attach a device as the android emulator is slow as hell
+// starting from wd
+./node_modules/.bin/wd shell
+
+var x = wd.remote({host:'localhost',port: 4723})
+x.init({ browserName: '',
+'appium-version': '1.2',
+platformName: 'android',
+platformVersion: '4.4',
+deviceName: 'Nexus 7',
+app: '/Users/paulcook/levexis/canappr/phonegap/platforms/android/bin/Medit8-debug.apk' });
+
+
+
+//.elementByName('App')
+//.should.eventually.exist
+//.elementsByAndroidUIAutomator('new UiSelector().clickable(true)')
+//.should.eventually.have.length(12)
+//.elementsByAndroidUIAutomator('new UiSelector().enabled(true)')
+//.should.eventually.have.length.above(20)
+//.elementByXPath('//android.widget.TextView[@text=\'API Demos\']')
+// must use double quotes for class name string
+x.elementsByAndroidUIAutomator('new UiSelector().className("android.widget.Button")')
+
+// need to use android ui inspector
+adb
+uiautomatorviewer
+//http://developer.android.com/tools/help/uiautomator/UiSelector.html

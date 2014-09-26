@@ -85,11 +85,11 @@ describe("appium ios", function () {
             }
             // these should be a seperate file per environment as in the appium examples maybe using the dreaded node config!
             var desired = { browserName : '',
-                //            'appium-version': '1.2',
+                'appium-version': '1.2',
                 platformName : 'iOS',
                 platformVersion : '7.1',
                 deviceName : 'iPhone Simulator',
-                //            app: '/Users/paulcook/levexis/canappr/phonegap/platforms/ios/build/emulator/Medit8.app' };
+                app: '/Users/paulcook/levexis/canappr/phonegap/platforms/ios/build/emulator/Medit8.app'
             };
             if ( process.env.SAUCE_USERNAME ) {
                 // if this doesn't exist it doesn't tell you
