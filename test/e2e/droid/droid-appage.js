@@ -90,7 +90,7 @@ DroidPage.prototype = {
     },
     getButton: function ( id ) {
         id = id  ||  1;
-//        console.log('get button',id);
+        console.log('get button',id);
         return this.getElements( 'button' ).then( function ( els ) {
             return els[id-1].element;
         } ,
@@ -111,6 +111,7 @@ DroidPage.prototype = {
     // better to return driver.elementByPath?
     // may need to read the element then click so it's active?
     tapOn : function ( listText ) {
+        console.log('tap on',listText);
         return this.getElements( 'text' ).then( function ( elements ) {
 //            console.log('list click',listText , _.findWhere( elements, { text : listText } ));
             return _.findWhere( elements, { text : listText } ).element.click();
