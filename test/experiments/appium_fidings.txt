@@ -9,15 +9,14 @@ git clone https://github.com/appium/appium.git
 git submodule update --init 
 // reset everything 
 ./reset.sh 
-// start appium with long timeout so we can use REPL without it shutting after 60 seconds of inactivity
+// start appium with long timeout so we can use REPL without it shutting after 60 seconds of inactivity or you can start from appium inspector below...
 appium --command-timeout 999
 // new terminal install wd as that's got the bindings to appium
 npm install wd
 // start a REPL client
 ./node_modules/.bin/wd shell
-// connect to local appium 
-
-var x = wd.remote({host:'localhost',port: 4723})
+// connect to local appium, enable promise chaining... 
+var x = wd.promiseChainRemote({host:'localhost',port: 4723})
 x.on('status', function (info) {   console.log(info); });
 x.on('command', function (meth, path, data) {   console.log(meth, path, data); });
 x.on('http', function (meth, path, data) {   console.log(meth, path, data); });
@@ -30,7 +29,9 @@ deviceName: 'iPhone Simulator',
 app: '/Users/paulcook/levexis/canappr/phonegap/platforms/ios/build/emulator/Medit8.app' });
 
 // you can now do some basic querying but you need to look at server output or put logging to debug so you can see
-// what the reply is. Doesn't seem we can use wd terminal fully as just return null
+// what the reply is. Doesn't seem we can use wd terminal fully as just return null.
+// Actually you can get the results using wd.promiseChainRemote instead of wd.remote 
+// and now you can click etc etc
 x.contexts()
 // select the webview context so we can use normal selectors - need to add the window
 x.context('WEBVIEW_1').window('')
@@ -38,7 +39,7 @@ x.context('WEBVIEW_1').window('')
  x.elementsByClassName('UIAButton')
 // or you can cuse their value, which is my button text
  x.elementByName('Get Started')
-// now lets get the gui for the server from here for selectros
+// now lets get the gui for the server from here for selectors
 https://bitbucket.org/appium/appium.app/downloads/
 // now kill appium and run from gui
 // write tests in wd and run in mocha
@@ -56,7 +57,7 @@ keytool -genkey -v -keystore release.keystore -alias release -keyalg RSA -keysiz
 // starting from wd
 ./node_modules/.bin/wd shell
 
-var x = wd.remote({host:'localhost',port: 4723})
+var x = wd.promiseChainRemote({host:'localhost',port: 4723})
 x.init({ browserName: '',
 'appium-version': '1.2',
 platformName: 'android',
@@ -64,6 +65,15 @@ platformVersion: '4.4',
 deviceName: 'Nexus 7',
 app: '/Users/paulcook/levexis/canappr/phonegap/platforms/android/bin/Medit8-debug.apk' });
 
+
+
+var x = wd.promiseChainRemote({host:'localhost',port: 4723})
+x.init({ browserName: '',
+'appium-version': '1.2',
+platformName: 'android',
+platformVersion: '4.3',
+deviceName: 'S3',
+app: '/Users/paulcook/levexis/canappr/phonegap/platforms/android/bin/Medit8-debug.apk' });
 
 
 //.elementByName('App')
@@ -75,8 +85,13 @@ app: '/Users/paulcook/levexis/canappr/phonegap/platforms/android/bin/Medit8-debu
 //.elementByXPath('//android.widget.TextView[@text=\'API Demos\']')
 // must use double quotes for class name string
 x.elementsByAndroidUIAutomator('new UiSelector().className("android.widget.Button")')
+// this was working fine on 4.4 but just ran on my S3 which is 4.3 and not found
 
 // need to use android ui inspector
 adb
 uiautomatorviewer
 //http://developer.android.com/tools/help/uiautomator/UiSelector.html
+// this will put the element text in content-desc but that's not an attribute that appium can get use
+//
+el.getAttribute('name')
+// grunt mochaProtractor does not set PromiseChainRemote properly so I've forked it under levexis!
