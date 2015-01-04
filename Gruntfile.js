@@ -1,6 +1,9 @@
 /* to build in testflight */
 //account 97fea4a9ffaa8bb7a22f21a18b5e31e5_MjAzMjk1NTIwMTQtMDgtMTEgMTc6MDE6MzUuODMyNTg4
 //team    248dcb1a3e396b99e50c047c5424913a_NDI3NjU1MjAxNC0wOS0wMiAwNTowOToxNy45MDMzMzc
+// grunt phonegap:build or grunt phonegap:build:ios
+// cd phonegap/platforms/ios/
+//ipa build
 //ipa distribute:testflight -a 97fea4a9ffaa8bb7a22f21a18b5e31e5_MjAzMjk1NTIwMTQtMDgtMTEgMTc6MDE6MzUuODMyNTg4 -T 248dcb1a3e396b99e50c047c5424913a_NDI3NjU1MjAxNC0wOS0wMiAwNTowOToxNy45MDMzMzc
 module.exports = function (grunt) {
     "use strict";
@@ -126,6 +129,7 @@ module.exports = function (grunt) {
                 root: 'client',
                 config: 'client/config.xml',
                 cordova: '.cordova',
+                cli: 'phonegap',
                 html : 'index.html', // (Optional) You may change this to any other.html
                 path: 'phonegap',
                 cleanBeforeBuild: false, // when false the build path doesn't get regenerated
@@ -141,7 +145,7 @@ module.exports = function (grunt) {
                 ],
                 platforms: ['android' , 'ios'],
                 maxBuffer: 200, // You may need to raise this for iOS.
-                verbose: false,
+                verbose: true,
                 releases: 'releases',
                 releaseName: function(){
                     var pkg = grunt.file.readJSON('package.json');
