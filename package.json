@@ -6,7 +6,7 @@
   "version": "0.1.0",
   "author": "Paul Cook",
   "homepage": "http://linkedin.com/in/adtechzen",
-  "private": false,
+  "private": true,
   "contributors": [
     "Paul Cook <levexis@googlemail.com> ()"
   ],
@@ -59,7 +59,7 @@
     "colors": "^0.6.2",
     "grunt-mocha-appium": "https://github.com/levexis/grunt-mocha-appium/tarball/master",
     "grunt-mocha-cli": "^1.6.0",
-    "grunt-phonegap": "^0.15.2",
+    "grunt-phonegap": "https://github.com/levexis/grunt-phonegap/tarball/master",
     "grunt-rasterize": "^0.1.7",
     "wd": "^0.3.8"
   }
