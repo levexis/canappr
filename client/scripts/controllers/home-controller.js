@@ -24,17 +24,12 @@
                             oldScope: $scope } );
                 });
             };
-            $scope.navCourse =  function ( course ) {
-                registryService.setNavId('org',course.orgId );
-                registryService.setNavId('course',course.id);
-                registryService.resetNavModel('module');
-                navService.setNavState ( { courseId : course.id , orgId: course.orgId } )
-                .then ( function () {
-                    navService.go( 'views/main.html',
-                        { direction : 'forward',
-                            collection: 'module',
-                            oldScope: $scope } );
-                });
+            // copy index to index2
+            $scope.newIndex =  function ( course ) {
+
+            };
+            $scope.newView =  function ( course ) {
+
             };
             $scope.isNative = registryService.getConfig('isNative');
 

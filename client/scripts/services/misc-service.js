@@ -60,6 +60,11 @@ eg offset(angular.element (document.querySelector( '.ca-progress')));
                 resolved.resolve( what );
                 return resolved.promise;
             },
+            rejected : function ( error ) {
+                var resolved = $q.defer();
+                resolved.reject( error );
+                return resolved.promise;
+            },
 
             promiseSuccess : function ( deferred, message ) {
                 return function ( success ) {

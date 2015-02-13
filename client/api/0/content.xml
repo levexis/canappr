@@ -93,3 +93,23 @@
        </module>
     </course>
 </organization>
+
+
+<organization id="">
+<course id="">
+    <module id="">
+        <content>
+            <description></description>
+            <time></time>
+            <size></size>
+            <file>
+                <type>audio</type>
+                <owner></owner>
+                <url></url>
+            </file>
+        </content>
+    </module>
+</course>
+</organization>
+
+

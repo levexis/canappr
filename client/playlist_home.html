@@ -1,0 +1,51 @@
+<ion-view title="Playlist Builder">
+    <ion-content has-tabs="true" has-header="true" padding="true">
+        <div class="list list-inset">
+            <div class="item item-divider">
+                Course Details
+            </div>
+            <label class="item item-input item-select">
+                <span class="input-label">
+                    Course
+                </span>
+                <select ng-model="model.courseId">
+                    <option ng-repeat="course in courses" id="module.id">{{module.name}}</option>
+                </select>
+            </label>
+            <label class="item item-input item-select">
+                <span class="input-label">
+                    Module
+                </span>
+                <select ng-model="model.moduleId" placeholder="select course">
+                    <option ng-repeat="module in modules | filter:courseId:model.courseId" id="module.id">{{module.name}}</option>
+                </select>
+            </label>
+            <div class="item item-divider">
+                Audio Content <button class="small-button" ng-disabled="!(model.moduleId && model.courseId)" ng-click="copyModuleData()">COPY</button>
+
+            </div>
+            <label class="item item-input">
+                <span class="input-label">Description</span>
+                <input type="text" placeholder="description" ng-model="model.description">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Time</span>
+                <input type="number" placeholder="seconds" ng-model="model.time">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Owner</span>
+                <input type="email" placeholder="email" ng-model="model.owner">
+            </label>
+            <label class="item item-input">
+                <span class="input-label">File</span>
+                <input type="email" placeholder="url" ng-model="model.url">
+            </label>
+            <div class="item item-divider">
+                Output <generate-button></generate-button>
+            </div>
+            <label class="item item-input">
+                <textarea placeholder="result">{{model.out}}</textarea>
+            </label>
+        </div>
+    </ion-content>
+</ion-view>

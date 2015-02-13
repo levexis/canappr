@@ -1,0 +1,263 @@
+
+    {
+        "organizations": [
+            {
+                "id": "1",
+                "name": "Triratna East Surrey",
+                "url": "http://east.surreytriratna.com",
+                "contact": "east@surreytriratna.com",
+                "description": "Buddist Meditation Group",
+                "logo": "https://graph.facebook.com/233402610132766/picture?type=square",
+                "html": "Buddhist Mediation group based in Nutfield Surrey."
+            },
+            {
+                "id": "2",
+                "name": "The Now Project",
+                "url": "http://www.lovelifelivenow.com/",
+                "contact": "lovelifelivenow@gmail.com",
+                "description": "Mindfulness plain and simple.",
+                "logo": "http://www.lovelifelivenow.com/wp-content/uploads/2013/12/Now-Project-5-150x100.png",
+                "html": "Mindfulness courses and retreats without the religion."
+            },
+            {
+                "id": "3",
+                "name": "Medit8 Sounds",
+                "url": "http://medit8.daddyswork.com/",
+                "contact": "contact@daddyswork.com",
+                "description": "Core developers of the Medit8 app.",
+                "logo": "",
+                "html": "Sounds for meditations from the core developers of Medit8"
+            },
+            {
+                "id": "4",
+                "name": "Free Buddhist Audio",
+                "url": "http://www.freebuddhistaudio.com/",
+                "contact": "contact@freebuddhistaudio.com",
+                "description": "Selection of talks and guided meditations.",
+                "logo": "http://www.freebuddhistaudio.com/images/menus/home/freebuddhistaudio.png",
+                "html": "A handful of talks and guided meditations, please donate what you can afford at <a href=\"http://www.freebuddhistaudio.com/donate\">freebuddhistaudio.com/donate</a>"
+            },
+            {
+                "id" : "5",
+                "name" : "Inspired Hypnosis",
+                "url" : "http://www.inspiredhypnosis.co.uk/",
+                "contact" : "inspiredhypnosis@gmail.com",
+                "description" : "Cognitive Behavioural Hypnotherapy.",
+                "logo" : "http://www.freebuddhistaudio.com/images/menus/home/freebuddhistaudio.png",
+                "html" : "Self-hypnosis tracks from a leading Cognitive Behavioural Hypnotherapist. For more information please see <a href=\"http://www.inspiredhypnosis.co.uk/\">www.inspiredhypnosis.co.uk</a>"
+            }
+        ],
+    
+    "courses": [
+    {
+        "id" : "1",
+        "orgId" : "1",
+        "name" : "Guided Meditations",
+        "html" : "Guided mindfulness meditations for use at home, on the train or in the office",
+        "startDate" : "2014-06-08T00:00:00.000Z"
+    },
+    {
+        "id" : "2",
+        "orgId" : "1",
+        "name" : "Triratna Liturgy",
+        "html" : "Practices of the Triratna order",
+        "startDate" : "2014-06-18T00:00:00.000Z"
+    },
+    {
+        "id" : "3",
+        "orgId" : "1",
+        "name" : "Talks by Padmapriya",
+        "html" : "Buddhism and Mindfulness for every day living",
+        "startDate" : "2014-06-18T00:00:00.000Z"
+    },
+    {
+        "id" : "4",
+        "orgId" : "3",
+        "name" : "Bells and bowls",
+        "html" : "Sounds for use with your own meditation practice",
+        "startDate" : "2014-09-01T00:00:00.000Z"
+    },
+    {
+        "id" : "5",
+        "orgId" : "3",
+        "name" : "Binaural Sounds",
+        "html" : "Listen with headphones to reset your mind",
+        "startDate" : "2015-1-01T00:00:00.000Z"
+    },
+    {
+        "id" : "6",
+        "orgId" : "4",
+        "name" : "Talks by Sangharakshita",
+        "html" : "Learn about the Bhudda, Dharma and Sangha",
+        "startDate" : "2015-1-01T00:00:00.000Z"
+    },
+    {
+        "id" : "7",
+        "orgId" : "4",
+        "name" : "Talks by Nagapriya",
+        "html" : "Learn Karma, Reincarnation and Ethics",
+        "startDate" : "2015-1-01T00:00:00.000Z"
+    },
+    {
+        "id" : "8",
+        "orgId" : "5",
+        "name" : "Self Hypnosis Tracks",
+        "html" : "Self-hypnosis recordings by Mark Davis",
+        "startDate" : "2015-1-01T00:00:00.000Z"
+    }
+],      
+    "modules": [
+    {
+        "id" : "1",
+        "courseId" : "1",
+        "name" : "Awareness of The Body",
+        "html" : "Awareness of the body is quite simply the most fundamental practise of meditation. Most of us spend so much of our time stuck in our heads. Rarely are we aware of our bodies until a painful sensation forces our attention away from our mind. The practise of awareness of the body helps us to reintegrate the mind into the totality of the mind body experience.",
+        "available" :1,
+        "playlist" : "PG9yZ2FuaXphdGlvbiBpZD0iMSI+DQogICAgPGNvdXJzZSBpZD0iMSI+DQogICAgICAgPG1vZHVsZSBpZD0iMSI+DQogICAgICAgICAgPGNvbnRlbnQ+DQogICAgICAgICAgICA8ZGVzY3JpcHRpb24+QXdhcmVuZXNzIE9mIFRoZSBCb2R5PC9kZXNjcmlwdGlvbj4gDQogICAgICAgICAgICA8b3duZXI+ZGgucC5kYWtpbmlAZ21haWwuY29tPC9vd25lcj4NCiAgICAgICAgICAgIDx0aW1lPjE4MDA8L3RpbWU+IA0KICAgICAgICAgICAgPHNpemU+Mjk8L3NpemU+DQogICAgICAgICAgICA8ZmlsZT4NCiAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4NCiAgICAgICAgICAgICAgICA8dXJsPmh0dHBzJTNBJTJGJTJGZGwuZHJvcGJveHVzZXJjb250ZW50LmNvbSUyRnUlMkYxMTIwNDUzJTJGdHJpcmF0bmElMkZib2R5LjEyOC5tcDM8L3VybD4NCiAgICAgICAgICAgIDwvZmlsZT4gICAgICAgICAgICAgICAgDQogICAgICAgICAgPC9jb250ZW50Pg0KICAgICAgIDwvbW9kdWxlPg0KICAgIDwvY291cnNlPg0KPC9vcmdhbml6YXRpb24+DQo="
+    },
+    {
+        "id" : "2",
+        "courseId" : "1",
+        "name" : "Awareness of Positive Emotion",
+        "html" : "Within the Buddhist tradition the practise of awareness of positive emotion is called the Mettabhavana. Although often a preliminary practise along with the mindfulness of breathing it is an indispensable foundation for subsequent insight practise. Indeed when used reflectively the practise of positive emotion is an insight practise.",
+        "playlist" : "DQo8b3JnYW5pemF0aW9uIGlkPSIxIj4NCiAgICA8Y291cnNlIGlkPSIxIj4NCiAgICAgICA8bW9kdWxlIGlkPSIyIj4NCiAgICAgICAgICA8Y29udGVudD4NCiAgICAgICAgICAgIDxkZXNjcmlwdGlvbj5Bd2FyZW5lc3MgT2YgUG9zaXRpdmUgRW1vdGlvbjwvZGVzY3JpcHRpb24+IA0KICAgICAgICAgICAgPG93bmVyPmRoLnAuZGFraW5pQGdtYWlsLmNvbTwvb3duZXI+DQogICAgICAgICAgICA8dGltZT4yNTM3PC90aW1lPg0KICAgICAgICAgICAgPHNpemU+NDE8L3NpemU+DQogICAgICAgICAgICA8ZmlsZT4NCiAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4NCiAgICAgICAgICAgICAgICA8dXJsPmh0dHBzJTNBJTJGJTJGZGwuZHJvcGJveHVzZXJjb250ZW50LmNvbSUyRnUlMkYxMTIwNDUzJTJGdHJpcmF0bmElMkZtZXR0YS4xMjgubXAzPC91cmw+DQogICAgICAgICAgICA8L2ZpbGU+ICAgICAgICAgICAgICAgIA0KICAgICAgICAgIDwvY29udGVudD4NCiAgICAgICA8L21vZHVsZT4NCiAgICA8L2NvdXJzZT4NCjwvb3JnYW5pemF0aW9uPg=="
+    },
+    {
+        "id" : "3",
+        "courseId" : "1",
+        "name" : "Awareness of Breath experience",
+        "html" : "Experience of breath is not an abstract thing. The breath is here! Now! In this very moment. It is not a recollection of a past experience nor is it a fantasy of the future. Although largely considered a preliminary, but indispensable, practise it has the potential to become an insight practise. Indeed, we are told that it was this practise the Buddha of this age, Shakyamuni, used on the eve of his enlightenment.",
+        "availableAfter" :[1,2],
+        "playlist" : "PG9yZ2FuaXphdGlvbiBpZD0iMSI+DQogICAgPGNvdXJzZSBpZD0iMSI+DQogICAgICAgPG1vZHVsZSBpZD0iMyI+DQogICAgICAgICAgPGNvbnRlbnQ+DQogICAgICAgICAgICA8ZGVzY3JpcHRpb24+QXdhcmVuZXNzIE9mIEJyZWF0aCBFeHBlcmllbmNlPC9kZXNjcmlwdGlvbj4gDQogICAgICAgICAgICA8b3duZXI+ZGgucC5kYWtpbmlAZ21haWwuY29tPC9vd25lcj4NCiAgICAgICAgICAgIDx0aW1lPjI1ODM8L3RpbWU+DQogICAgICAgICAgICA8c2l6ZT40Mjwvc2l6ZT4NCiAgICAgICAgICAgIDxmaWxlPg0KICAgICAgICAgICAgICAgIDx0eXBlPmF1ZGlvPC90eXBlPg0KICAgICAgICAgICAgICAgIDx1cmw+aHR0cHMlM0ElMkYlMkZkbC5kcm9wYm94dXNlcmNvbnRlbnQuY29tJTJGdSUyRjExMjA0NTMlMkZ0cmlyYXRuYSUyRmJyZWF0aC4xMjgubXAzPC91cmw+DQogICAgICAgICAgICA8L2ZpbGU+ICAgICAgICAgICAgICAgIA0KICAgICAgICAgIDwvY29udGVudD4NCiAgICAgICA8L21vZHVsZT4NCiAgICA8L2NvdXJzZT4NCjwvb3JnYW5pemF0aW9uPg=="
+    },
+    {
+        "id" : "4",
+        "courseId" : "1",
+        "name" : "Awareness of Just Being",
+        "html" : "Awareness of Just being is the natural state of a healthy, calm, emotionally positive body/mind experience. It is, we are told, the enlightened mind. A mind that is awake, alert, attentive, broad in its awareness, deep in its understanding and giving rise to spontaneous, non conceptual, appropriate, skilful action.",
+        "availableAfter" :[3],
+        "playlist" : "PG9yZ2FuaXphdGlvbiBpZD0iMSI+DQogICAgPGNvdXJzZSBpZD0iMSI+DQogICAgICAgPG1vZHVsZSBpZD0iNCI+DQogICAgICAgICAgPGNvbnRlbnQ+DQogICAgICAgICAgICA8ZGVzY3JpcHRpb24+QXdhcmVuZXNzIE9mIEp1c3QgQmVpbmc8L2Rlc2NyaXB0aW9uPiANCiAgICAgICAgICAgIDxvd25lcj5kaC5wLmRha2luaUBnbWFpbC5jb208L293bmVyPg0KICAgICAgICAgICAgPHRpbWU+MjIzOTwvdGltZT4NCiAgICAgICAgICAgIDxzaXplPjM2PC9zaXplPg0KICAgICAgICAgICAgPGZpbGU+DQogICAgICAgICAgICAgICAgPHR5cGU+YXVkaW88L3R5cGU+DQogICAgICAgICAgICAgICAgPHVybD5odHRwcyUzQSUyRiUyRmRsLmRyb3Bib3h1c2VyY29udGVudC5jb20lMkZ1JTJGMTEyMDQ1MyUyRnRyaXJhdG5hJTJGYmVpbmcuMTI4Lm1wMzwvdXJsPg0KICAgICAgICAgICAgPC9maWxlPiAgICAgICAgICAgICAgICANCiAgICAgICAgICA8L2NvbnRlbnQ+DQogICAgICAgPC9tb2R1bGU+DQogICAgPC9jb3Vyc2U+DQo8L29yZ2FuaXphdGlvbj4="
+    },
+    {
+        "id" : "5",
+        "courseId" : "1",
+        "name" : "Dreaming The New",
+        "html" : "I have been asked to co guide a Buddhafield retreat based upon the theme \"Dreaming the new\". Having reflected on what I might do this meditation came about and after being asked to record it at our communal practise evening at Heaven, here it is.",
+        "availableAfter" :3,
+        "playlist" : "PG9yZ2FuaXphdGlvbiBpZD0iMSI+DQogICAgPGNvdXJzZSBpZD0iMSI+DQogICAgICAgPG1vZHVsZSBpZD0iNSI+DQogICAgICAgICAgPGNvbnRlbnQ+DQogICAgICAgICAgICA8ZGVzY3JpcHRpb24+RHJlYW1pbmcgdGhlIG5ldzwvZGVzY3JpcHRpb24+IA0KICAgICAgICAgICAgPG93bmVyPmRoLnAuZGFraW5pQGdtYWlsLmNvbTwvb3duZXI+DQogICAgICAgICAgICA8dGltZT4yNzcwPC90aW1lPg0KICAgICAgICAgICAgPHNpemU+NDU8L3NpemU+DQogICAgICAgICAgICA8ZmlsZT4NCiAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4NCiAgICAgICAgICAgICAgICA8dXJsPmh0dHBzJTNBJTJGJTJGZGwuZHJvcGJveHVzZXJjb250ZW50LmNvbSUyRnUlMkYxMTIwNDUzJTJGdHJpcmF0bmElMkZuZXcuMTI4Lm1wMzwvdXJsPg0KICAgICAgICAgICAgPC9maWxlPiAgICAgICAgICAgICAgICANCiAgICAgICAgICA8L2NvbnRlbnQ+DQogICAgICAgPC9tb2R1bGU+DQogICAgPC9jb3Vyc2U+DQo8L29yZ2FuaXphdGlvbj4="
+    },
+    {
+        "id": "6",
+        "courseId": "4",
+        "name": "Chimes",
+        "html": "Tibettan Chimes x 3",
+        "playlist": "PG9yZ2FuaXphdGlvbiBpZD0nMyc+PGNvdXJzZSBpZD0nNCc+PG1vZHVsZSBpZD0nNic+PGNvbnRlbnQ+PGRlc2NyaXB0aW9uPkNoaW1lczwvZGVzY3JpcHRpb24+PG93bmVyPnVua25vd248L293bmVyPjxzaXplPjAuMjwvc2l6ZT48dGltZT45PC90aW1lPjxmaWxlPjx1cmw+YXVkaW8lMkZjaGltZXMubXAzPC91cmw+PHR5cGU+YXVkaW88L3R5cGU+PHRpdGxlLz48L2ZpbGU+PC9jb250ZW50PjwvbW9kdWxlPjwvY291cnNlPjwvb3JnYW5pemF0aW9uPg=="
+    },
+    {
+        "id": "7",
+        "courseId": "4",
+        "name": "Bowl",
+        "html": "Sound of bowl being struck",
+        "playlist": "PG9yZ2FuaXphdGlvbiBpZD0nMyc+PGNvdXJzZSBpZD0nNCc+PG1vZHVsZSBpZD0nNyc+PGNvbnRlbnQ+PGRlc2NyaXB0aW9uPkJvd2w8L2Rlc2NyaXB0aW9uPjxvd25lcj51bmtub3duPC9vd25lcj48c2l6ZT4wLjM8L3NpemU+PHRpbWU+Mzg8L3RpbWU+PGZpbGU+PHVybD5hdWRpbyUyRmJvd2wubXAzPC91cmw+PHR5cGU+YXVkaW88L3R5cGU+PHRpdGxlPjwvdGl0bGU+PC9maWxlPjwvY29udGVudD48L21vZHVsZT48L2NvdXJzZT48L29yZ2FuaXphdGlvbj4="
+    },
+    {
+        "id": "8",
+        "courseId": "4",
+        "name": "Singing Bowl",
+        "html": "Sound of bowl \"singing\"",
+        "playlist": "PG9yZ2FuaXphdGlvbiBpZD0nMyc+PGNvdXJzZSBpZD0nNCc+PG1vZHVsZSBpZD0nOCc+PGNvbnRlbnQ+PGRlc2NyaXB0aW9uPlNpbmdpbmcgQm93bDwvZGVzY3JpcHRpb24+PG93bmVyPnVua25vd248L293bmVyPjxzaXplPjAuMTwvc2l6ZT48dGltZT4xNzwvdGltZT48ZmlsZT48dXJsPmF1ZGlvJTJGc2luZ2luZy5tcDM8L3VybD48dHlwZT5hdWRpbzwvdHlwZT48dGl0bGU+PC90aXRsZT48L2ZpbGU+PC9jb250ZW50PjwvbW9kdWxlPjwvY291cnNlPjwvb3JnYW5pemF0aW9uPg=="
+    },
+    {
+        "id": "9",
+        "courseId": "5",
+        "name": "Sleep",
+        "html": "Deep relaxation for sleep",
+        "playlist": "sleepbab.mp3"
+    },
+    {
+        "id": "10",
+        "courseId": "5",
+        "name": "Relax",
+        "html": "Relaxation tones for deep meditation",
+        "playlist": "relaxbab.mp3"
+    },
+    {
+        "id": "11",
+        "courseId": "5",
+        "name": "Energize",
+        "html": "Tones to stimulate the mind",
+        "playlist": "energizebab.mp3"
+    },
+    {
+        "id": "12",
+        "courseId": "6",
+        "name": "Who Is The Buddha?",
+        "html": "Sangharakshita talks about the Buddha",
+        "playlist": "who_is_the_buddha.mp3"
+    },
+    {
+        "id": "13",
+        "courseId": "7",
+        "name": "Understanding Karma and Buddhist Ethics",
+        "html": "Nagapriya discusses common misconceptions about Karma, Rebirth and Ethics",
+        "playlist": ""
+    },
+    {
+        "id": "14",
+        "courseId": "7",
+        "name": "Universal Awakening",
+        "html": "Nagapriya discusses the ideal of Universal Awakening",
+        "playlist": "universal_awakening.mp3"
+    },
+    {
+        "id": "15",
+        "courseId": "6",
+        "name": "Introducing Buddhism",
+        "html": "Sangharakshita talks about the Buddhism",
+        "playlist": "introducing_buddhism.mp3"
+    },
+    {
+        "id": "16",
+        "courseId": "6",
+        "name": "The Dynamics of Being",
+        "html": "Sangharakshita talks about the dynamics of being",
+        "playlist": "dynamics_of_being.mp3"
+    },
+    {
+        "id": "17",
+        "courseId": "6",
+        "name": "An Evening With",
+        "html": "Sangharakshita question and answer session at Croydon Bhuddist Centre",
+        "playlist": "an_evening_with_sangharakshita.mp3"
+    },
+    {
+        "id": "18",
+        "courseId": "2",
+        "name": "Taking Refuge",
+        "html": "",
+        "playlist": "taking-refuge64.mp3"
+    },
+    {
+        "id": "19",
+        "courseId": "2",
+        "name": "The Heart Sutra",
+        "html": "",
+        "playlist": "heart-sutra64.mp3"
+    },
+    {
+        "id": "20",
+        "courseId": "2",
+        "name": "Going for Refuge",
+        "html": "",
+        "playlist": "GfR-full64.mp3"
+    },
+    {
+        "id": "21",
+        "courseId": "2",
+        "name": "3 Fold Puja",
+        "html": "",
+        "playlist": "3foldpuja64.mp3"
+    }
+]
+
+}

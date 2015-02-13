@@ -13,7 +13,14 @@
          https://git-wip-us.apache.org/repos/asf/cordova-plugin-file.git
          https://git-wip-us.apache.org/repos/asf/cordova-plugin-file-transfer.git
 
-         */
+         see plugin docs for directory layouts etc https://github.com/apache/cordova-plugin-file/blob/master/doc/index.md
+         if playing around in console this will get you started
+              var fs = canAppr.getService('fileService');
+              var scb = function ( s ) { console.log ( 'success' , s ); };
+              var ecb = function ( e ) { console.log ( 'error' , e ); };
+              var FM = fs.getFileManager();
+              var DM = fs.getDirManager();
+          */
         var _dirCache = {},
             _fileManager,
             _dirManager,
@@ -823,6 +830,57 @@
                 } else {
                     return url;
                 }
+            },
+            /*
+              writes a text file
+              @returns a promise resolves to value pass from get_path
+              */
+            writeFile: function (content,path,name) {
+                var deferred,
+                    _self = this;
+                content = content || '';
+                if ( !path || !name ) {
+                    return qutils.rejected( 'path & name required for writeFile' );
+                } else {
+                    deferred = $q.defer();
+                    _fileManager.write_file( path, name, content,
+                        function ( success ) {
+                            return deferred.resolve( success || true);
+                        },
+                        function ( error ) {
+                            return deferred.reject( error );
+                        } );
+                    return deferred.promise;
+                }
+            },
+            /*
+              reads a local file
+             @returns a promise resolves to file contents
+             */
+            readFile: function (path,name) {
+                var deferred,
+                    _self = this;
+                if ( !path || !name ) {
+                    return qutils.rejected( 'path & name required for writeFile' );
+                } else {
+                    deferred = $q.defer();
+                    _fileManager.read_file( path, name,
+                        function ( data ) {
+                            return deferred.resolve( data );
+                        },
+                        function ( error ) {
+                            return deferred.reject( error );
+                        } );
+                    return deferred.promise;
+                }
+            },
+            // copies one file to another
+            copyFile: function (fromPath,fromName,toPath,toName) {
+                var _self = this;
+                return _self.readFile( fromPath, fromName ).then (
+                    function (data) {
+                        return _self.writeFile( data, toPath , toName );
+                    });
             }
         };
 
