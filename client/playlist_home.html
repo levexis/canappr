@@ -8,16 +8,16 @@
                 <span class="input-label">
                     Course
                 </span>
-                <select ng-model="model.courseId">
-                    <option ng-repeat="course in courses" id="module.id">{{module.name}}</option>
+                <select ng-model="model.courseId" ng-click="getCollections()">
+                    <option ng-repeat="course in model.courses" value="{{course.id}}">{{course.name}}</option>
                 </select>
             </label>
             <label class="item item-input item-select">
                 <span class="input-label">
                     Module
                 </span>
-                <select ng-model="model.moduleId" placeholder="select course">
-                    <option ng-repeat="module in modules | filter:courseId:model.courseId" id="module.id">{{module.name}}</option>
+                <select ng-model="model.moduleId" placeholder="select course" ng-click="getCollections()">
+                    <option ng-repeat="module in model.modules | filter:{courseId:model.courseId}" value="{{module.id}}">{{module.name}}</option>
                 </select>
             </label>
             <div class="item item-divider">

@@ -20,7 +20,7 @@ var myApp = angular.module('canAppr', ['ionic' ,'firebase'] )
                 url: '/playlist',
                 templateUrl: 'playlist_home.html',
                 controller : 'PlayCtrl'
-            })
+            });
         // if none of the above states are matched, use this as the fallback
         $urlRouterProvider.otherwise('/playlist');
 
@@ -40,7 +40,19 @@ var myApp = angular.module('canAppr', ['ionic' ,'firebase'] )
 myApp.controller('PlayCtrl',function ($scope,$rootScope,orgService,moduleService,courseService,xmlService) {
 
 //    alert('hello world');
-    $scope.model = {};
+    $scope.model = { orgs:{}, modules:{}, courses:{} };
+    function setAttr ( what ) {
+        return function(data) {
+            $scope.model[what] = data;
+        };
+    }
+    $scope.getCollections = function() {
+        orgService.query({},setAttr('orgs'));
+        courseService.query({},setAttr('courses'));
+        moduleService.query({},setAttr('modules'));
+        console.log( 'getCollections' , $scope.model );
+    };
+    $scope.getCollections();
 });
 myApp.directive('generateButton', function () {
     return {
@@ -65,7 +77,8 @@ myApp.directive('generateButton', function () {
 
             $scope.generatePlaylist = function () {
                 $scope.model.out = 'b64 encoded \n' + template;
-            }
+                $scope.getCollections();
+            };
         },
         restrict: 'E'
     };
