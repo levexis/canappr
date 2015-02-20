@@ -8,21 +8,28 @@
                 <span class="input-label">
                     Course
                 </span>
-                <select ng-model="model.courseId" ng-click="getCollections()">
-                    <option ng-repeat="course in model.courses" value="{{course.id}}">{{course.name}}</option>
+                <select ng-model="model.orgId" ng-click="getCollections()">
+                    <option ng-repeat="org in model.orgs" value="{{org.id}}">{{org.name}}</option>
+                </select>
+            </label>
+            <label class="item item-input item-select">
+                <span class="input-label">
+                    Course
+                </span>
+                <select ng-model="model.courseId">
+                    <option ng-repeat="course in model.courses | filter:{orgId:model.orgId}" value="{{course.id}}">{{course.name}}</option>
                 </select>
             </label>
             <label class="item item-input item-select">
                 <span class="input-label">
                     Module
                 </span>
-                <select ng-model="model.moduleId" placeholder="select course" ng-click="getCollections()">
+                <select ng-model="model.moduleId" placeholder="select course" ng-change="copyData(true)">
                     <option ng-repeat="module in model.modules | filter:{courseId:model.courseId}" value="{{module.id}}">{{module.name}}</option>
                 </select>
             </label>
             <div class="item item-divider">
-                Audio Content <button class="small-button" ng-disabled="!(model.moduleId && model.courseId)" ng-click="copyModuleData()">COPY</button>
-
+                Audio Content <button class="small-button" ng-disabled="!(model.moduleId && model.courseId)" ng-click="copyData()">COPY</button>
             </div>
             <label class="item item-input">
                 <span class="input-label">Description</span>
@@ -33,19 +40,24 @@
                 <input type="number" placeholder="seconds" ng-model="model.time">
             </label>
             <label class="item item-input">
+                <span class="input-label">Size</span>
+                <input type="number" placeholder="MB" ng-model="model.size">
+            </label>
+            <label class="item item-input">
                 <span class="input-label">Owner</span>
                 <input type="email" placeholder="email" ng-model="model.owner">
             </label>
             <label class="item item-input">
                 <span class="input-label">File</span>
-                <input type="email" placeholder="url" ng-model="model.url">
+                <input type="url" placeholder="url" ng-model="model.url">
             </label>
             <div class="item item-divider">
                 Output <generate-button></generate-button>
             </div>
             <label class="item item-input">
-                <textarea placeholder="result">{{model.out}}</textarea>
+                <textarea placeholder="result" ng-model="model.out"></textarea>
             </label>
+            <dw-clip copy-text="{{model.out}}"></dw-clip>
         </div>
     </ion-content>
 </ion-view>

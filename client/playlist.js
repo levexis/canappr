@@ -8,7 +8,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'numTen.services' is found in services.js
 // 'numTen.controllers' is found in controllers.js
-var myApp = angular.module('canAppr', ['ionic' ,'firebase'] )
+var myApp = angular.module('canAppr', ['ionic' ,'firebase','daddyswork'] )
     .config(function($stateProvider, $urlRouterProvider) {
 
         // Ionic uses AngularUI Router which uses the concept of states
@@ -50,14 +50,35 @@ myApp.controller('PlayCtrl',function ($scope,$rootScope,orgService,moduleService
         orgService.query({},setAttr('orgs'));
         courseService.query({},setAttr('courses'));
         moduleService.query({},setAttr('modules'));
-        console.log( 'getCollections' , $scope.model );
+//        console.log( 'getCollections' , $scope.model );
     };
+    // if blank flag prevents description being over written if auto update, ie if you type the file details in first
+    $scope.copyData = function(ifBlank) {
+        var playlist;
+        // if playlist exists for module then decodes it, if not just copies over the description of the module
+        if ( $scope.model.courseId && ( !ifBlank || !$scope.model.description ) ) {
+            var module = _.findWhere( $scope.model.modules , {id: $scope.model.moduleId});
+            if ( module.playlist ) {
+                playlist = xmlService.toObject( atob( module.playlist ));
+                playlist = playlist.organization.course.module.content;
+                $scope.model.description = playlist.description;
+                $scope.model.time = playlist.time * 1;
+                $scope.model.size = playlist.size * 1;
+                $scope.model.owner = playlist.owner;
+                $scope.model.url = decodeURIComponent ( playlist.file.url );
+            } else {
+                $scope.model.description = module.name;
+            }
+        }
+    };
+
     $scope.getCollections();
 });
-myApp.directive('generateButton', function () {
+myApp.directive('generateButton', function ( xmlService ) {
     return {
         template : '<button class="button--big" ng-click="generatePlaylist()">GENERATE</button>',
         link : function ( $scope ) {
+            /*jshint multistr: true */
             var template = '<organization id="ORGID">\
                 <course id="COURSEID">\
                     <module id="MODULEID">\
@@ -65,9 +86,9 @@ myApp.directive('generateButton', function () {
                             <description>DESCRIPTION</description>\
                             <time>TIME</time>\
                             <size>SIZE</size>\
+                            <owner>OWNER</owner>\
                             <file>\
                                 <type>audio</type>\
-                                <owner>OWNER</owner>\
                                 <url>URL</url>\
                             </file>\
                         </content>\
@@ -76,8 +97,16 @@ myApp.directive('generateButton', function () {
                 </organization>';
 
             $scope.generatePlaylist = function () {
-                $scope.model.out = 'b64 encoded \n' + template;
-                $scope.getCollections();
+                var playlist = template;
+                playlist.replace('ORGID' , $scope.model.orgId);
+                playlist.replace('COURSEID' , $scope.model.courseId);
+                playlist.replace('MODULEID' , $scope.model.moduleId);
+                playlist.replace('DESCRIPTION' , $scope.model.description);
+                playlist.replace('TIME' , $scope.model.time);
+                playlist.replace('SIZE' , $scope.model.size);
+                playlist.replace('OWNER' , $scope.model.owner);
+                playlist.replace('URL' , encodeURIComponent ($scope.model.url) );
+                $scope.model.out = btoa( playlist );
             };
         },
         restrict: 'E'
