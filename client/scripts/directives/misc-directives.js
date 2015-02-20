@@ -32,7 +32,7 @@
             link:function(scope, element, attrs) {
                 // replaces last copy with new one on chanege
                 function textChange( newValue ) {
-                    var strTemplate = template.replace(/\{\{copyText\}\}/g, attrs.copyText),
+                    var strTemplate = template.replace(/\{\{copyText\}\}/g, encodeURIComponent( attrs.copyText )),
                         last = element.find('object');
                     if (last.length) {
                         last[0].remove();

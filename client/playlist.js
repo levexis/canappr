@@ -74,7 +74,7 @@ myApp.controller('PlayCtrl',function ($scope,$rootScope,orgService,moduleService
 
     $scope.getCollections();
 });
-myApp.directive('generateButton', function ( xmlService ) {
+myApp.directive('generateButton', function ( xmlService, $log ) {
     return {
         template : '<button class="button--big" ng-click="generatePlaylist()">GENERATE</button>',
         link : function ( $scope ) {
@@ -98,14 +98,15 @@ myApp.directive('generateButton', function ( xmlService ) {
 
             $scope.generatePlaylist = function () {
                 var playlist = template;
-                playlist.replace('ORGID' , $scope.model.orgId);
-                playlist.replace('COURSEID' , $scope.model.courseId);
-                playlist.replace('MODULEID' , $scope.model.moduleId);
-                playlist.replace('DESCRIPTION' , $scope.model.description);
-                playlist.replace('TIME' , $scope.model.time);
-                playlist.replace('SIZE' , $scope.model.size);
-                playlist.replace('OWNER' , $scope.model.owner);
-                playlist.replace('URL' , encodeURIComponent ($scope.model.url) );
+                playlist = playlist.replace(/ORGID/g , $scope.model.orgId);
+                playlist = playlist.replace(/COURSEID/g , $scope.model.courseId);
+                playlist = playlist.replace(/MODULEID/g , $scope.model.moduleId);
+                playlist = playlist.replace(/DESCRIPTION/g , $scope.model.description);
+                playlist = playlist.replace(/TIME/g , $scope.model.time);
+                playlist = playlist.replace(/SIZE/g , $scope.model.size);
+                playlist = playlist.replace(/OWNER/g , $scope.model.owner);
+                playlist = playlist.replace(/URL/g , encodeURIComponent ($scope.model.url) );
+                $log.debug ('encoding playlist', playlist);
                 $scope.model.out = btoa( playlist );
             };
         },
