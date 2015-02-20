@@ -172,28 +172,28 @@
         "courseId": "5",
         "name": "Sleep",
         "html": "Deep relaxation for sleep",
-        "playlist": "sleepbab.mp3"
+        "playlist": ""
     },
     {
         "id": "10",
         "courseId": "5",
         "name": "Relax",
         "html": "Relaxation tones for deep meditation",
-        "playlist": "relaxbab.mp3"
+        "playlist": ""
     },
     {
         "id": "11",
         "courseId": "5",
         "name": "Energize",
         "html": "Tones to stimulate the mind",
-        "playlist": "energizebab.mp3"
+        "playlist": ""
     },
     {
         "id": "12",
         "courseId": "6",
         "name": "Who Is The Buddha?",
         "html": "Sangharakshita talks about the Buddha",
-        "playlist": "who_is_the_buddha.mp3"
+        "playlist": ""
     },
     {
         "id": "13",
@@ -207,57 +207,78 @@
         "courseId": "7",
         "name": "Universal Awakening",
         "html": "Nagapriya discusses the ideal of Universal Awakening",
-        "playlist": "universal_awakening.mp3"
+        "playlist": ""
     },
     {
         "id": "15",
         "courseId": "6",
         "name": "Introducing Buddhism",
         "html": "Sangharakshita talks about the Buddhism",
-        "playlist": "introducing_buddhism.mp3"
+        "playlist": ""
     },
     {
         "id": "16",
         "courseId": "6",
         "name": "The Dynamics of Being",
         "html": "Sangharakshita talks about the dynamics of being",
-        "playlist": "dynamics_of_being.mp3"
+        "playlist": "3"
     },
     {
         "id": "17",
         "courseId": "6",
         "name": "An Evening With",
         "html": "Sangharakshita question and answer session at Croydon Bhuddist Centre",
-        "playlist": "an_evening_with_sangharakshita.mp3"
+        "playlist": ""
     },
     {
         "id": "18",
         "courseId": "2",
         "name": "Taking Refuge",
-        "html": "",
-        "playlist": "taking-refuge64.mp3"
+        "html": "Taking Refuge (short form)",
+        "playlist": ""
     },
     {
         "id": "19",
         "courseId": "2",
         "name": "The Heart Sutra",
-        "html": "",
-        "playlist": "heart-sutra64.mp3"
+        "html": "The Heart Sutra",
+        "playlist": ""
     },
     {
         "id": "20",
         "courseId": "2",
         "name": "Going for Refuge",
-        "html": "",
-        "playlist": "GfR-full64.mp3"
+        "html": "Going for Refuge ( Long Form )",
+        "playlist": ""
     },
     {
         "id": "21",
         "courseId": "2",
         "name": "3 Fold Puja",
-        "html": "",
-        "playlist": "3foldpuja64.mp3"
-    }
+        "html": "Triratna 3 fold Puja",
+        "playlist": ""
+    },
+      {
+        "id": "22",
+        "courseId": "8",
+        "name": "Sleep",
+        "html": "Deep relaxation for sleep",
+        "playlist": ""
+      },
+      {
+        "id": "23",
+        "courseId": "8",
+        "name": "Muscle Relaxation",
+        "html": "Deep muscle relaxation",
+        "playlist": ""
+      },
+      {
+        "id": "24",
+        "courseId": "8",
+        "name": "Social Confidence",
+        "html": "Deep relaxation & Social Confidence",
+        "playlist": ""
+      }
 ]
 
 }
