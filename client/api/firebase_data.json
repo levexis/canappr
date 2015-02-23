@@ -15,9 +15,9 @@
                 "name": "The Now Project",
                 "url": "http://www.lovelifelivenow.com/",
                 "contact": "lovelifelivenow@gmail.com",
-                "description": "Mindfulness plain and simple.",
+                "description": "Mindfulness for beginners.",
                 "logo": "http://www.lovelifelivenow.com/wp-content/uploads/2013/12/Now-Project-5-150x100.png",
-                "html": "Mindfulness courses and retreats without the religion."
+                "html": "Mindfulness courses and retreats without religion, find out more at <a href=\"http://www.lovelifelivenow.com/\">http://www.lovelifelivenow.com/</a>"
             },
             {
                 "id": "3",
@@ -104,7 +104,14 @@
         "name" : "Self Hypnosis Tracks",
         "html" : "Self-hypnosis recordings by Mark Davis",
         "startDate" : "2015-1-01T00:00:00.000Z"
-    }
+    },
+      {
+        "id" : "9",
+        "orgId" : "2",
+        "name" : "7 day introduction",
+        "html" : "7 daily lessons to introduce you to mindfulness.",
+        "startDate" : "2014-06-08T00:00:00.000Z"
+      }
 ],      
     "modules": [
     {
