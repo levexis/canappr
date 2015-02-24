@@ -1,6 +1,6 @@
 (function(angular , _) {
     'use strict';
-    var myApp = angular.module('canAppr', ['onsen.directives' ,'mediaPlayer',  'firebase', 'ngTouch', 'ngAnimate', 'ngCachedResource', 'ngSanitize' ])
+    var myApp = angular.module('canAppr', ['onsen.directives' ,'mediaPlayer', 'ngTouch', 'ngAnimate', 'ngCachedResource', 'ngSanitize' ])
         .run(
          function ($rootScope, $timeout , $window, $injector, $log , registryService , fileService ,prefService, analService, navService ) {
             var document = $window.document;

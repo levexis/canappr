@@ -1,6 +1,6 @@
 {
   "name": "canappr",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "dependencies": {
     "underscore": null,
     "angular": "1.2.21",

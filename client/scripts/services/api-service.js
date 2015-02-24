@@ -1,64 +1,8 @@
 (function (angular, _) {
     "use strict";
 
+    var myApp = angular.module( 'canAppr' );
 
-    var myApp = angular.module( 'canAppr' ),
-        _fireRef;
-
-/*
-    myApp.value('firebase', (new Firebase('https://glowing-torch-3900.firebaseio.com/')));
-
-    myApp.factory("orgService", function( firebaseResource ) {
-        var Orgs = firebaseResource(
-            {
-//                path: 'organizations'
-            }
-        );
-
-        return Orgs;
-    });
-
-
- */
-    // adds just the methods we're using here, which is a read only api request
-    function _mockResource ( baseRef, collection ) {
-        this.baseRef = baseRef;
-        this.getData = function () {
-            return baseRef.$asObject()[collection] || [];
-        };
-        // ignore what for now, I have a feeling this is done by the interceptor below anyway as api is actually flat files
-        this.query = function ( what , callBack ) {
-            var data = this.getData();
-            if ( !callBack && typeof what === 'function' ) {
-                callBack = what;
-            } else if (  typeof what === 'function' ) {
-                what = what();
-            }
-            if ( typeof callBack === 'function' ) {
-                callBack( data );
-            }
-            return data;
-        }
-    }
-    myApp.factory("orgService", function( $firebase ) {
-            // should we always refresh or poll, presume this is taken care of?
-            _fireRef = _fireRef || new Firebase("http://glowing-torch-3900.firebaseio.com/");
-            // create an AngularFire reference to the data
-            return  new _mockResource( $firebase(_fireRef) , 'organizations' );
-        });
-    myApp.factory("courseService", function( $firebase ) {
-        // should we always refresh or poll, presume this is taken care of?
-        _fireRef = _fireRef || new Firebase("http://glowing-torch-3900.firebaseio.com/");
-        // create an AngularFire reference to the data
-        return  new _mockResource( $firebase(_fireRef) , 'courses' );
-    });
-    myApp.factory("moduleService", function( $firebase ) {
-        // should we always refresh or poll, presume this is taken care of?
-        _fireRef = _fireRef || new Firebase("http://glowing-torch-3900.firebaseio.com/");
-        // create an AngularFire reference to the data
-        return  new _mockResource( $firebase(_fireRef) , 'modules' );
-    });
-/*
     myApp.factory('orgService', function($cachedResource , $rootScope) {
         return new $cachedResource('orgs',$rootScope.canAppr.apiBase + 'organizations/:id', { id:'@id' });
     });
@@ -68,7 +12,6 @@
     myApp.factory('moduleService', function($cachedResource , $rootScope) {
         return new $cachedResource('modules',$rootScope.canAppr.apiBase + 'modules/:id', { id:'@id' });
     });
- */
 // whilst we use a local flat file API this mocks the response for us
     myApp.factory ( 'localAPIInterceptor', function( $q , $log, registryService) {
         var apiBase = registryService.getAPIBase();

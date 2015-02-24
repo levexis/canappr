@@ -9,7 +9,7 @@
         if ( !$rootScope.canAppr) {
             // initialize if not already
             // app global config, there is probably a service for this
-            $rootScope.canAppr = { apiBase : 'api/0/',
+            $rootScope.canAppr = { apiBase : 'http://medit8.daddyswork.com/api/0/',
                 navParams : { org : { name : 'Organizations' }, module : {}, course : {} },
                 config : { isNative : ( typeof window.cordova !== 'undefined' ) },
                 ready : false
