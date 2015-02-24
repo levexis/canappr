@@ -4,7 +4,7 @@
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
         id        = "com.daddyswork.canappr"
-        version   = "0.2">
+        version   = "0.3">
     <name>Medit8</name>
 
     <description>
@@ -43,6 +43,7 @@
     <access origin="https://*.live.com" subdomains="true" /> <!-- one drive -->
     <access origin="https://*.google.com" subdomains="true" /> <!-- analytics and google drive -->
     <access origin="https://*.amazon.com" subdomains="true" /><!-- aws -->
+    <access origin="https://*.daddyswork.com" subdomains="true" /><!-- api etc -->
 
     <access origin="http://localhost" subdomains="true" /> <!-- debugging -->
 

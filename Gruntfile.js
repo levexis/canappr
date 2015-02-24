@@ -135,7 +135,7 @@ module.exports = function (grunt) {
                 cleanBeforeBuild: false, // when false the build path doesn't get regenerated
 //                plugins: ['/local/path/to/plugin', 'http://example.com/path/to/plugin.git'],
                 plugins: ['org.apache.cordova.device' ,
-                           'org.apache.cordova.statusbar' ,
+//                           'org.apache.cordova.statusbar' ,
                            'org.apache.cordova.network-information',
                            'org.apache.cordova.media',
                             'org.apache.cordova.file',
@@ -232,9 +232,9 @@ module.exports = function (grunt) {
 
                 // Android-only integer version to increase with each release.
                 // See http://developer.android.com/tools/publishing/versioning.html
-                versionCode: 1,
+                versionCode: 1
                 // iOS7-only options that will make the status bar white and transparent
-                iosStatusBar: 'WhiteAndTransparent'
+//                iosStatusBar: 'WhiteAndTransparent'
                 /*
 
                 // Android-only options that will override the defaults set by Phonegap in the
