@@ -1,62 +1,230 @@
 [
     {
-        "id" : "1",
-        "courseId" : "1",
-        "name" : "Awareness of The Body",
-        "html" : "Awareness of the body is quite simply the most fundamental practise of meditation. Most of us spend so much of our time stuck in our heads. Rarely are we aware of our bodies until a painful sensation forces our attention away from our mind. The practise of awareness of the body helps us to reintegrate the mind into the totality of the mind body experience.",
-        "available" :1,
-        "playlist" : "PG9yZ2FuaXphdGlvbiBpZD0iMSI+DQogICAgPGNvdXJzZSBpZD0iMSI+DQogICAgICAgPG1vZHVsZSBpZD0iMSI+DQogICAgICAgICAgPGNvbnRlbnQ+DQogICAgICAgICAgICA8ZGVzY3JpcHRpb24+QXdhcmVuZXNzIE9mIFRoZSBCb2R5PC9kZXNjcmlwdGlvbj4gDQogICAgICAgICAgICA8b3duZXI+ZGgucC5kYWtpbmlAZ21haWwuY29tPC9vd25lcj4NCiAgICAgICAgICAgIDx0aW1lPjE4MDA8L3RpbWU+IA0KICAgICAgICAgICAgPHNpemU+Mjk8L3NpemU+DQogICAgICAgICAgICA8ZmlsZT4NCiAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4NCiAgICAgICAgICAgICAgICA8dXJsPmh0dHBzJTNBJTJGJTJGZGwuZHJvcGJveHVzZXJjb250ZW50LmNvbSUyRnUlMkYxMTIwNDUzJTJGdHJpcmF0bmElMkZib2R5LjEyOC5tcDM8L3VybD4NCiAgICAgICAgICAgIDwvZmlsZT4gICAgICAgICAgICAgICAgDQogICAgICAgICAgPC9jb250ZW50Pg0KICAgICAgIDwvbW9kdWxlPg0KICAgIDwvY291cnNlPg0KPC9vcmdhbml6YXRpb24+DQo="
-    },
-    {
-        "id" : "2",
-        "courseId" : "1",
-        "name" : "Awareness of Positive Emotion",
-        "html" : "Within the Buddhist tradition the practise of awareness of positive emotion is called the Mettabhavana. Although often a preliminary practise along with the mindfulness of breathing it is an indispensable foundation for subsequent insight practise. Indeed when used reflectively the practise of positive emotion is an insight practise.",
-        "playlist" : "DQo8b3JnYW5pemF0aW9uIGlkPSIxIj4NCiAgICA8Y291cnNlIGlkPSIxIj4NCiAgICAgICA8bW9kdWxlIGlkPSIyIj4NCiAgICAgICAgICA8Y29udGVudD4NCiAgICAgICAgICAgIDxkZXNjcmlwdGlvbj5Bd2FyZW5lc3MgT2YgUG9zaXRpdmUgRW1vdGlvbjwvZGVzY3JpcHRpb24+IA0KICAgICAgICAgICAgPG93bmVyPmRoLnAuZGFraW5pQGdtYWlsLmNvbTwvb3duZXI+DQogICAgICAgICAgICA8dGltZT4yNTM3PC90aW1lPg0KICAgICAgICAgICAgPHNpemU+NDE8L3NpemU+DQogICAgICAgICAgICA8ZmlsZT4NCiAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4NCiAgICAgICAgICAgICAgICA8dXJsPmh0dHBzJTNBJTJGJTJGZGwuZHJvcGJveHVzZXJjb250ZW50LmNvbSUyRnUlMkYxMTIwNDUzJTJGdHJpcmF0bmElMkZtZXR0YS4xMjgubXAzPC91cmw+DQogICAgICAgICAgICA8L2ZpbGU+ICAgICAgICAgICAgICAgIA0KICAgICAgICAgIDwvY29udGVudD4NCiAgICAgICA8L21vZHVsZT4NCiAgICA8L2NvdXJzZT4NCjwvb3JnYW5pemF0aW9uPg=="
-    },
-    {
-        "id" : "3",
-        "courseId" : "1",
-        "name" : "Awareness of Breath experience",
-        "html" : "Experience of breath is not an abstract thing. The breath is here! Now! In this very moment. It is not a recollection of a past experience nor is it a fantasy of the future. Although largely considered a preliminary, but indispensable, practise it has the potential to become an insight practise. Indeed, we are told that it was this practise the Buddha of this age, Shakyamuni, used on the eve of his enlightenment.",
-        "availableAfter" :[1,2],
-        "playlist" : "PG9yZ2FuaXphdGlvbiBpZD0iMSI+DQogICAgPGNvdXJzZSBpZD0iMSI+DQogICAgICAgPG1vZHVsZSBpZD0iMyI+DQogICAgICAgICAgPGNvbnRlbnQ+DQogICAgICAgICAgICA8ZGVzY3JpcHRpb24+QXdhcmVuZXNzIE9mIEJyZWF0aCBFeHBlcmllbmNlPC9kZXNjcmlwdGlvbj4gDQogICAgICAgICAgICA8b3duZXI+ZGgucC5kYWtpbmlAZ21haWwuY29tPC9vd25lcj4NCiAgICAgICAgICAgIDx0aW1lPjI1ODM8L3RpbWU+DQogICAgICAgICAgICA8c2l6ZT40Mjwvc2l6ZT4NCiAgICAgICAgICAgIDxmaWxlPg0KICAgICAgICAgICAgICAgIDx0eXBlPmF1ZGlvPC90eXBlPg0KICAgICAgICAgICAgICAgIDx1cmw+aHR0cHMlM0ElMkYlMkZkbC5kcm9wYm94dXNlcmNvbnRlbnQuY29tJTJGdSUyRjExMjA0NTMlMkZ0cmlyYXRuYSUyRmJyZWF0aC4xMjgubXAzPC91cmw+DQogICAgICAgICAgICA8L2ZpbGU+ICAgICAgICAgICAgICAgIA0KICAgICAgICAgIDwvY29udGVudD4NCiAgICAgICA8L21vZHVsZT4NCiAgICA8L2NvdXJzZT4NCjwvb3JnYW5pemF0aW9uPg=="
-    },
-    {
-        "id" : "4",
-        "courseId" : "1",
-        "name" : "Awareness of Just Being",
-        "html" : "Awareness of Just being is the natural state of a healthy, calm, emotionally positive body/mind experience. It is, we are told, the enlightened mind. A mind that is awake, alert, attentive, broad in its awareness, deep in its understanding and giving rise to spontaneous, non conceptual, appropriate, skilful action.",
-        "availableAfter" :[3],
-        "playlist" : "PG9yZ2FuaXphdGlvbiBpZD0iMSI+DQogICAgPGNvdXJzZSBpZD0iMSI+DQogICAgICAgPG1vZHVsZSBpZD0iNCI+DQogICAgICAgICAgPGNvbnRlbnQ+DQogICAgICAgICAgICA8ZGVzY3JpcHRpb24+QXdhcmVuZXNzIE9mIEp1c3QgQmVpbmc8L2Rlc2NyaXB0aW9uPiANCiAgICAgICAgICAgIDxvd25lcj5kaC5wLmRha2luaUBnbWFpbC5jb208L293bmVyPg0KICAgICAgICAgICAgPHRpbWU+MjIzOTwvdGltZT4NCiAgICAgICAgICAgIDxzaXplPjM2PC9zaXplPg0KICAgICAgICAgICAgPGZpbGU+DQogICAgICAgICAgICAgICAgPHR5cGU+YXVkaW88L3R5cGU+DQogICAgICAgICAgICAgICAgPHVybD5odHRwcyUzQSUyRiUyRmRsLmRyb3Bib3h1c2VyY29udGVudC5jb20lMkZ1JTJGMTEyMDQ1MyUyRnRyaXJhdG5hJTJGYmVpbmcuMTI4Lm1wMzwvdXJsPg0KICAgICAgICAgICAgPC9maWxlPiAgICAgICAgICAgICAgICANCiAgICAgICAgICA8L2NvbnRlbnQ+DQogICAgICAgPC9tb2R1bGU+DQogICAgPC9jb3Vyc2U+DQo8L29yZ2FuaXphdGlvbj4="
-    },
-    {
-        "id" : "5",
-        "courseId" : "1",
-        "name" : "Dreaming The New",
-        "html" : "I have been asked to co guide a Buddhafield retreat based upon the theme \"Dreaming the new\". Having reflected on what I might do this meditation came about and after being asked to record it at our communal practise evening at Heaven, here it is.",
-        "availableAfter" :3,
-        "playlist" : "PG9yZ2FuaXphdGlvbiBpZD0iMSI+DQogICAgPGNvdXJzZSBpZD0iMSI+DQogICAgICAgPG1vZHVsZSBpZD0iNSI+DQogICAgICAgICAgPGNvbnRlbnQ+DQogICAgICAgICAgICA8ZGVzY3JpcHRpb24+RHJlYW1pbmcgdGhlIG5ldzwvZGVzY3JpcHRpb24+IA0KICAgICAgICAgICAgPG93bmVyPmRoLnAuZGFraW5pQGdtYWlsLmNvbTwvb3duZXI+DQogICAgICAgICAgICA8dGltZT4yNzcwPC90aW1lPg0KICAgICAgICAgICAgPHNpemU+NDU8L3NpemU+DQogICAgICAgICAgICA8ZmlsZT4NCiAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4NCiAgICAgICAgICAgICAgICA8dXJsPmh0dHBzJTNBJTJGJTJGZGwuZHJvcGJveHVzZXJjb250ZW50LmNvbSUyRnUlMkYxMTIwNDUzJTJGdHJpcmF0bmElMkZuZXcuMTI4Lm1wMzwvdXJsPg0KICAgICAgICAgICAgPC9maWxlPiAgICAgICAgICAgICAgICANCiAgICAgICAgICA8L2NvbnRlbnQ+DQogICAgICAgPC9tb2R1bGU+DQogICAgPC9jb3Vyc2U+DQo8L29yZ2FuaXphdGlvbj4="
-    },
-    {
-        "id": "6",
-        "courseId": "4",
-        "name": "Chimes",
-        "html": "Tibettan Chimes x 3",
-        "playlist": "PG9yZ2FuaXphdGlvbiBpZD0nMyc+PGNvdXJzZSBpZD0nNCc+PG1vZHVsZSBpZD0nNic+PGNvbnRlbnQ+PGRlc2NyaXB0aW9uPkNoaW1lczwvZGVzY3JpcHRpb24+PG93bmVyPnVua25vd248L293bmVyPjxzaXplPjAuMjwvc2l6ZT48dGltZT45PC90aW1lPjxmaWxlPjx1cmw+YXVkaW8lMkZjaGltZXMubXAzPC91cmw+PHR5cGU+YXVkaW88L3R5cGU+PHRpdGxlLz48L2ZpbGU+PC9jb250ZW50PjwvbW9kdWxlPjwvY291cnNlPjwvb3JnYW5pemF0aW9uPg=="
-    },
-    {
-        "id": "7",
-        "courseId": "4",
-        "name": "Bowl",
-        "html": "Sound of bowl being struck",
-        "playlist": "PG9yZ2FuaXphdGlvbiBpZD0nMyc+PGNvdXJzZSBpZD0nNCc+PG1vZHVsZSBpZD0nNyc+PGNvbnRlbnQ+PGRlc2NyaXB0aW9uPkJvd2w8L2Rlc2NyaXB0aW9uPjxvd25lcj51bmtub3duPC9vd25lcj48c2l6ZT4wLjM8L3NpemU+PHRpbWU+Mzg8L3RpbWU+PGZpbGU+PHVybD5hdWRpbyUyRmJvd2wubXAzPC91cmw+PHR5cGU+YXVkaW88L3R5cGU+PHRpdGxlPjwvdGl0bGU+PC9maWxlPjwvY29udGVudD48L21vZHVsZT48L2NvdXJzZT48L29yZ2FuaXphdGlvbj4="
-    },
-    {
-        "id": "8",
-        "courseId": "4",
-        "name": "Singing Bowl",
-        "html": "Sound of bowl \"singing\"",
-        "playlist": "PG9yZ2FuaXphdGlvbiBpZD0nMyc+PGNvdXJzZSBpZD0nNCc+PG1vZHVsZSBpZD0nOCc+PGNvbnRlbnQ+PGRlc2NyaXB0aW9uPlNpbmdpbmcgQm93bDwvZGVzY3JpcHRpb24+PG93bmVyPnVua25vd248L293bmVyPjxzaXplPjAuMTwvc2l6ZT48dGltZT4xNzwvdGltZT48ZmlsZT48dXJsPmF1ZGlvJTJGc2luZ2luZy5tcDM8L3VybD48dHlwZT5hdWRpbzwvdHlwZT48dGl0bGU+PC90aXRsZT48L2ZpbGU+PC9jb250ZW50PjwvbW9kdWxlPjwvY291cnNlPjwvb3JnYW5pemF0aW9uPg=="
-    }
+           "id" : "1",
+           "courseId" : "1",
+           "name" : "Awareness of The Body",
+           "html" : "Awareness of the body is quite simply the most fundamental practise of meditation. Most of us spend so much of our time stuck in our heads. Rarely are we aware of our bodies until a painful sensation forces our attention away from our mind. The practise of awareness of the body helps us to reintegrate the mind into the totality of the mind body experience.",
+           "available" :1,
+           "playlist" : "PG9yZ2FuaXphdGlvbiBpZD0iMSI+ICAgICAgICAgICAgICAgIDxjb3Vyc2UgaWQ9IjEiPiAgICAgICAgICAgICAgICAgICAgPG1vZHVsZSBpZD0iMSI+ICAgICAgICAgICAgICAgICAgICAgICAgPGNvbnRlbnQ+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxkZXNjcmlwdGlvbj5Bd2FyZW5lc3MgT2YgVGhlIEJvZHk8L2Rlc2NyaXB0aW9uPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dGltZT4xNjUzPC90aW1lPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8c2l6ZT4xMy4yPC9zaXplPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8b3duZXI+ZGgucC5kYWtpbmlAZ21haWwuY29tPC9vd25lcj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPGZpbGU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx1cmw+aHR0cHMlM0ElMkYlMkZkbC5kcm9wYm94dXNlcmNvbnRlbnQuY29tJTJGdSUyRjExMjA0NTMlMkZ0cmlyYXRuYSUyRmNsZWFuJTJGYm9keTY0Lm1wMzwvdXJsPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8L2ZpbGU+ICAgICAgICAgICAgICAgICAgICAgICAgPC9jb250ZW50PiAgICAgICAgICAgICAgICAgICAgPC9tb2R1bGU+ICAgICAgICAgICAgICAgIDwvY291cnNlPiAgICAgICAgICAgICAgICA8L29yZ2FuaXphdGlvbj4="
+       },
+       {
+           "id" : "2",
+           "courseId" : "1",
+           "name" : "Awareness of Positive Emotion",
+           "html" : "Within the Buddhist tradition the practise of awareness of positive emotion is called the Mettabhavana. Although often a preliminary practise along with the mindfulness of breathing it is an indispensable foundation for subsequent insight practise. Indeed when used reflectively the practise of positive emotion is an insight practise.",
+           "playlist" : "PG9yZ2FuaXphdGlvbiBpZD0iMSI+ICAgICAgICAgICAgICAgIDxjb3Vyc2UgaWQ9IjEiPiAgICAgICAgICAgICAgICAgICAgPG1vZHVsZSBpZD0iMiI+ICAgICAgICAgICAgICAgICAgICAgICAgPGNvbnRlbnQ+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxkZXNjcmlwdGlvbj5NZXR0YSBCaGF2YW5hPC9kZXNjcmlwdGlvbj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPHRpbWU+MjI3MjwvdGltZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPHNpemU+MTguMjwvc2l6ZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPG93bmVyPmRoLnAuZGFraW5pQGdtYWlsLmNvbTwvb3duZXI+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxmaWxlPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPHR5cGU+YXVkaW88L3R5cGU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dXJsPmh0dHBzJTNBJTJGJTJGZGwuZHJvcGJveHVzZXJjb250ZW50LmNvbSUyRnUlMkYxMTIwNDUzJTJGdHJpcmF0bmElMkZjbGVhbiUyRm1ldHRhNjQubXAzPC91cmw+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvZmlsZT4gICAgICAgICAgICAgICAgICAgICAgICA8L2NvbnRlbnQ+ICAgICAgICAgICAgICAgICAgICA8L21vZHVsZT4gICAgICAgICAgICAgICAgPC9jb3Vyc2U+ICAgICAgICAgICAgICAgIDwvb3JnYW5pemF0aW9uPg=="
+       },
+       {
+           "id" : "3",
+           "courseId" : "1",
+           "name" : "Awareness of Breath experience",
+           "html" : "Experience of breath is not an abstract thing. The breath is here! Now! In this very moment. It is not a recollection of a past experience nor is it a fantasy of the future. Although largely considered a preliminary, but indispensable, practise it has the potential to become an insight practise. Indeed, we are told that it was this practise the Buddha of this age, Shakyamuni, used on the eve of his enlightenment.",
+           "availableAfter" :[1,2],
+           "playlist" : "PG9yZ2FuaXphdGlvbiBpZD0iMSI+ICAgICAgICAgICAgICAgIDxjb3Vyc2UgaWQ9IjEiPiAgICAgICAgICAgICAgICAgICAgPG1vZHVsZSBpZD0iMyI+ICAgICAgICAgICAgICAgICAgICAgICAgPGNvbnRlbnQ+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxkZXNjcmlwdGlvbj5Bd2FyZW5lc3MgT2YgQnJlYXRoIEV4cGVyaWVuY2U8L2Rlc2NyaXB0aW9uPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dGltZT4yMzUzPC90aW1lPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8c2l6ZT4xOC44PC9zaXplPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8b3duZXI+ZGgucC5kYWtpbmlAZ21haWwuY29tPC9vd25lcj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPGZpbGU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx1cmw+aHR0cHMlM0ElMkYlMkZkbC5kcm9wYm94dXNlcmNvbnRlbnQuY29tJTJGdSUyRjExMjA0NTMlMkZ0cmlyYXRuYSUyRmNsZWFuJTJGYnJlYXRoNjQubXAzPC91cmw+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvZmlsZT4gICAgICAgICAgICAgICAgICAgICAgICA8L2NvbnRlbnQ+ICAgICAgICAgICAgICAgICAgICA8L21vZHVsZT4gICAgICAgICAgICAgICAgPC9jb3Vyc2U+ICAgICAgICAgICAgICAgIDwvb3JnYW5pemF0aW9uPg=="
+       },
+       {
+           "id" : "4",
+           "courseId" : "1",
+           "name" : "Awareness of Just Being",
+           "html" : "Awareness of Just being is the natural state of a healthy, calm, emotionally positive body/mind experience. It is, we are told, the enlightened mind. A mind that is awake, alert, attentive, broad in its awareness, deep in its understanding and giving rise to spontaneous, non conceptual, appropriate, skilful action.",
+           "availableAfter" :[3],
+           "playlist" : "PG9yZ2FuaXphdGlvbiBpZD0iMSI+ICAgICAgICAgICAgICAgIDxjb3Vyc2UgaWQ9IjEiPiAgICAgICAgICAgICAgICAgICAgPG1vZHVsZSBpZD0iNCI+ICAgICAgICAgICAgICAgICAgICAgICAgPGNvbnRlbnQ+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxkZXNjcmlwdGlvbj5Bd2FyZW5lc3MgT2YgSnVzdCBCZWluZzwvZGVzY3JpcHRpb24+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx0aW1lPjE5NDE8L3RpbWU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxzaXplPjE1LjU8L3NpemU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxvd25lcj5kaC5wLmRha2luaUBnbWFpbC5jb208L293bmVyPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZmlsZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx0eXBlPmF1ZGlvPC90eXBlPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPHVybD5odHRwcyUzQSUyRiUyRmRsLmRyb3Bib3h1c2VyY29udGVudC5jb20lMkZ1JTJGMTEyMDQ1MyUyRnRyaXJhdG5hJTJGY2xlYW4lMkZiZWluZzY0Lm1wMzwvdXJsPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8L2ZpbGU+ICAgICAgICAgICAgICAgICAgICAgICAgPC9jb250ZW50PiAgICAgICAgICAgICAgICAgICAgPC9tb2R1bGU+ICAgICAgICAgICAgICAgIDwvY291cnNlPiAgICAgICAgICAgICAgICA8L29yZ2FuaXphdGlvbj4="
+       },
+       {
+           "id" : "5",
+           "courseId" : "1",
+           "name" : "Dreaming The New",
+           "html" : "I have been asked to co guide a Buddhafield retreat based upon the theme \"Dreaming the new\". Having reflected on what I might do this meditation came about and after being asked to record it at our communal practise evening at Heaven, here it is.",
+           "availableAfter" :3,
+           "playlist" : "PG9yZ2FuaXphdGlvbiBpZD0iMSI+ICAgICAgICAgICAgICAgIDxjb3Vyc2UgaWQ9IjEiPiAgICAgICAgICAgICAgICAgICAgPG1vZHVsZSBpZD0iNSI+ICAgICAgICAgICAgICAgICAgICAgICAgPGNvbnRlbnQ+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxkZXNjcmlwdGlvbj5EcmVhbWluZyB0aGUgbmV3PC9kZXNjcmlwdGlvbj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPHRpbWU+MjY1NDwvdGltZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPHNpemU+MjEuMjwvc2l6ZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPG93bmVyPmRoLnAuZGFraW5pQGdtYWlsLmNvbTwvb3duZXI+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxmaWxlPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPHR5cGU+YXVkaW88L3R5cGU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dXJsPmh0dHBzJTNBJTJGJTJGZGwuZHJvcGJveHVzZXJjb250ZW50LmNvbSUyRnUlMkYxMTIwNDUzJTJGdHJpcmF0bmElMkZjbGVhbiUyRm5ldzY0Lm1wMzwvdXJsPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8L2ZpbGU+ICAgICAgICAgICAgICAgICAgICAgICAgPC9jb250ZW50PiAgICAgICAgICAgICAgICAgICAgPC9tb2R1bGU+ICAgICAgICAgICAgICAgIDwvY291cnNlPiAgICAgICAgICAgICAgICA8L29yZ2FuaXphdGlvbj4="
+       },
+       {
+           "id": "6",
+           "courseId": "4",
+           "name": "Chimes",
+           "html": "Tibettan Chimes x 3",
+           "playlist": "PG9yZ2FuaXphdGlvbiBpZD0nMyc+PGNvdXJzZSBpZD0nNCc+PG1vZHVsZSBpZD0nNic+PGNvbnRlbnQ+PGRlc2NyaXB0aW9uPkNoaW1lczwvZGVzY3JpcHRpb24+PG93bmVyPnVua25vd248L293bmVyPjxzaXplPjAuMjwvc2l6ZT48dGltZT45PC90aW1lPjxmaWxlPjx1cmw+YXVkaW8lMkZjaGltZXMubXAzPC91cmw+PHR5cGU+YXVkaW88L3R5cGU+PHRpdGxlLz48L2ZpbGU+PC9jb250ZW50PjwvbW9kdWxlPjwvY291cnNlPjwvb3JnYW5pemF0aW9uPg=="
+       },
+       {
+           "id": "7",
+           "courseId": "4",
+           "name": "Bowl",
+           "html": "Sound of bowl being struck",
+           "playlist": "PG9yZ2FuaXphdGlvbiBpZD0nMyc+PGNvdXJzZSBpZD0nNCc+PG1vZHVsZSBpZD0nNyc+PGNvbnRlbnQ+PGRlc2NyaXB0aW9uPkJvd2w8L2Rlc2NyaXB0aW9uPjxvd25lcj51bmtub3duPC9vd25lcj48c2l6ZT4wLjM8L3NpemU+PHRpbWU+Mzg8L3RpbWU+PGZpbGU+PHVybD5hdWRpbyUyRmJvd2wubXAzPC91cmw+PHR5cGU+YXVkaW88L3R5cGU+PHRpdGxlPjwvdGl0bGU+PC9maWxlPjwvY29udGVudD48L21vZHVsZT48L2NvdXJzZT48L29yZ2FuaXphdGlvbj4="
+       },
+       {
+           "id": "8",
+           "courseId": "4",
+           "name": "Singing Bowl",
+           "html": "Sound of bowl \"singing\"",
+           "playlist": "PG9yZ2FuaXphdGlvbiBpZD0nMyc+PGNvdXJzZSBpZD0nNCc+PG1vZHVsZSBpZD0nOCc+PGNvbnRlbnQ+PGRlc2NyaXB0aW9uPlNpbmdpbmcgQm93bDwvZGVzY3JpcHRpb24+PG93bmVyPnVua25vd248L293bmVyPjxzaXplPjAuMTwvc2l6ZT48dGltZT4xNzwvdGltZT48ZmlsZT48dXJsPmF1ZGlvJTJGc2luZ2luZy5tcDM8L3VybD48dHlwZT5hdWRpbzwvdHlwZT48dGl0bGU+PC90aXRsZT48L2ZpbGU+PC9jb250ZW50PjwvbW9kdWxlPjwvY291cnNlPjwvb3JnYW5pemF0aW9uPg=="
+       },
+       {
+           "id": "9",
+           "courseId": "5",
+           "name": "Sleep",
+           "html": "Tones for sleeping",
+           "playlist": "PG9yZ2FuaXphdGlvbiBpZD0iMyI+ICAgICAgICAgICAgICAgIDxjb3Vyc2UgaWQ9IjUiPiAgICAgICAgICAgICAgICAgICAgPG1vZHVsZSBpZD0iOSI+ICAgICAgICAgICAgICAgICAgICAgICAgPGNvbnRlbnQ+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxkZXNjcmlwdGlvbj5TbGVlcDwvZGVzY3JpcHRpb24+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx0aW1lPjE4MDA8L3RpbWU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxzaXplPjE0LjQ8L3NpemU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxvd25lcj5iYWJAZGFkZHlzd29yay5jb208L293bmVyPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZmlsZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx0eXBlPmF1ZGlvPC90eXBlPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPHVybD5odHRwcyUzQSUyRiUyRmRsLmRyb3Bib3h1c2VyY29udGVudC5jb20lMkZ1JTJGMTEyMDQ1MyUyRmJhYmVhdHMlMkZzbGVlcGJhYjY0Lm1wMzwvdXJsPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8L2ZpbGU+ICAgICAgICAgICAgICAgICAgICAgICAgPC9jb250ZW50PiAgICAgICAgICAgICAgICAgICAgPC9tb2R1bGU+ICAgICAgICAgICAgICAgIDwvY291cnNlPiAgICAgICAgICAgICAgICA8L29yZ2FuaXphdGlvbj4="
+       },
+       {
+           "id": "10",
+           "courseId": "5",
+           "name": "Relax",
+           "html": "Relaxation tones for meditation",
+           "playlist": "PG9yZ2FuaXphdGlvbiBpZD0iMyI+ICAgICAgICAgICAgICAgIDxjb3Vyc2UgaWQ9IjUiPiAgICAgICAgICAgICAgICAgICAgPG1vZHVsZSBpZD0iMTAiPiAgICAgICAgICAgICAgICAgICAgICAgIDxjb250ZW50PiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGVzY3JpcHRpb24+UmVsYXg8L2Rlc2NyaXB0aW9uPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dGltZT4xODAwPC90aW1lPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8c2l6ZT4xNC40PC9zaXplPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8b3duZXI+YmFiQGRhZGR5c3dvcmsuY29tPC9vd25lcj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPGZpbGU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx1cmw+aHR0cHMlM0ElMkYlMkZkbC5kcm9wYm94dXNlcmNvbnRlbnQuY29tJTJGdSUyRjExMjA0NTMlMkZiYWJlYXRzJTJGcmVsYXhiYWI2NC5tcDM8L3VybD4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPC9maWxlPiAgICAgICAgICAgICAgICAgICAgICAgIDwvY29udGVudD4gICAgICAgICAgICAgICAgICAgIDwvbW9kdWxlPiAgICAgICAgICAgICAgICA8L2NvdXJzZT4gICAgICAgICAgICAgICAgPC9vcmdhbml6YXRpb24+"
+       },
+       {
+           "id": "11",
+           "courseId": "5",
+           "name": "Energize",
+           "html": "Tones to stimulate the mind",
+           "playlist": "PG9yZ2FuaXphdGlvbiBpZD0iMyI+ICAgICAgICAgICAgICAgIDxjb3Vyc2UgaWQ9IjUiPiAgICAgICAgICAgICAgICAgICAgPG1vZHVsZSBpZD0iMTEiPiAgICAgICAgICAgICAgICAgICAgICAgIDxjb250ZW50PiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGVzY3JpcHRpb24+RW5lcmdpemU8L2Rlc2NyaXB0aW9uPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dGltZT4xODAwPC90aW1lPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8c2l6ZT4xNC40PC9zaXplPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8b3duZXI+YmFiQGRhZGR5c3dvcmsuY29tPC9vd25lcj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPGZpbGU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx1cmw+aHR0cHMlM0ElMkYlMkZkbC5kcm9wYm94dXNlcmNvbnRlbnQuY29tJTJGdSUyRjExMjA0NTMlMkZiYWJlYXRzJTJGZW5lcmdpemViYWI2NC5tcDM8L3VybD4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPC9maWxlPiAgICAgICAgICAgICAgICAgICAgICAgIDwvY29udGVudD4gICAgICAgICAgICAgICAgICAgIDwvbW9kdWxlPiAgICAgICAgICAgICAgICA8L2NvdXJzZT4gICAgICAgICAgICAgICAgPC9vcmdhbml6YXRpb24+"
+       },
+       {
+           "id": "12",
+           "courseId": "6",
+           "name": "Who Is The Buddha?",
+           "html": "Sangharakshita talks about the Buddha",
+           "playlist": "PG9yZ2FuaXphdGlvbiBpZD0iNCI+ICAgICAgICAgICAgICAgIDxjb3Vyc2UgaWQ9IjYiPiAgICAgICAgICAgICAgICAgICAgPG1vZHVsZSBpZD0iMTIiPiAgICAgICAgICAgICAgICAgICAgICAgIDxjb250ZW50PiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGVzY3JpcHRpb24+V2hvIElzIFRoZSBCdWRkaGE/PC9kZXNjcmlwdGlvbj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPHRpbWU+MzM0MzwvdGltZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPHNpemU+MjcuMjwvc2l6ZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPG93bmVyPmluZm9AZnJlZWJ1ZGRoaXN0YXVkaW8uY29tPC9vd25lcj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPGZpbGU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx1cmw+aHR0cHMlM0ElMkYlMkZkbC5kcm9wYm94dXNlcmNvbnRlbnQuY29tJTJGdSUyRjExMjA0NTMlMkZmYmElMkZ3aG9faXNfdGhlX2J1ZGRoYS5tcDM8L3VybD4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPC9maWxlPiAgICAgICAgICAgICAgICAgICAgICAgIDwvY29udGVudD4gICAgICAgICAgICAgICAgICAgIDwvbW9kdWxlPiAgICAgICAgICAgICAgICA8L2NvdXJzZT4gICAgICAgICAgICAgICAgPC9vcmdhbml6YXRpb24+"
+       },
+       {
+           "id": "13",
+           "courseId": "7",
+           "name": "Understanding Karma and Buddhist Ethics",
+           "html": "Nagapriya discusses common misconceptions about Karma, Rebirth and Ethics",
+           "playlist": "PG9yZ2FuaXphdGlvbiBpZD0iNCI+ICAgICAgICAgICAgICAgIDxjb3Vyc2UgaWQ9IjciPiAgICAgICAgICAgICAgICAgICAgPG1vZHVsZSBpZD0iMTMiPiAgICAgICAgICAgICAgICAgICAgICAgIDxjb250ZW50PiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGVzY3JpcHRpb24+VW5kZXJzdGFuZGluZyBLYXJtYSBhbmQgQnVkZGhpc3QgRXRoaWNzPC9kZXNjcmlwdGlvbj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPHRpbWU+MzIyNTwvdGltZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPHNpemU+MjguNzwvc2l6ZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPG93bmVyPmluZm9AZnJlZWJ1ZGRoaXN0YXVkaW8uY29tPC9vd25lcj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPGZpbGU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx1cmw+aHR0cHMlM0ElMkYlMkZkbC5kcm9wYm94dXNlcmNvbnRlbnQuY29tJTJGdSUyRjExMjA0NTMlMkZmYmElMkZrYXJtYV9hbmRfYnVkZGhpc3RfZXRoaWNzLm1wMzwvdXJsPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8L2ZpbGU+ICAgICAgICAgICAgICAgICAgICAgICAgPC9jb250ZW50PiAgICAgICAgICAgICAgICAgICAgPC9tb2R1bGU+ICAgICAgICAgICAgICAgIDwvY291cnNlPiAgICAgICAgICAgICAgICA8L29yZ2FuaXphdGlvbj4="
+       },
+       {
+           "id": "14",
+           "courseId": "7",
+           "name": "Universal Awakening",
+           "html": "Nagapriya discusses the ideal of Universal Awakening",
+           "playlist": "PG9yZ2FuaXphdGlvbiBpZD0iNCI+ICAgICAgICAgICAgICAgIDxjb3Vyc2UgaWQ9IjciPiAgICAgICAgICAgICAgICAgICAgPG1vZHVsZSBpZD0iMTQiPiAgICAgICAgICAgICAgICAgICAgICAgIDxjb250ZW50PiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGVzY3JpcHRpb24+VW5pdmVyc2FsIEF3YWtlbmluZzwvZGVzY3JpcHRpb24+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx0aW1lPjM4MDg8L3RpbWU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxzaXplPjMwLjU8L3NpemU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxvd25lcj5pbmZvQGZyZWVidWRkaGlzdGF1ZGlvLmNvbTwvb3duZXI+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxmaWxlPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPHR5cGU+YXVkaW88L3R5cGU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dXJsPmh0dHBzJTNBJTJGJTJGZGwuZHJvcGJveHVzZXJjb250ZW50LmNvbSUyRnUlMkYxMTIwNDUzJTJGZmJhJTJGdW5pdmVyc2FsX2F3YWtlbmluZy5tcDM8L3VybD4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPC9maWxlPiAgICAgICAgICAgICAgICAgICAgICAgIDwvY29udGVudD4gICAgICAgICAgICAgICAgICAgIDwvbW9kdWxlPiAgICAgICAgICAgICAgICA8L2NvdXJzZT4gICAgICAgICAgICAgICAgPC9vcmdhbml6YXRpb24+"
+       },
+       {
+           "id": "15",
+           "courseId": "6",
+           "name": "Introducing Buddhism",
+           "html": "Sangharakshita talks about the Buddhism",
+           "playlist": "PG9yZ2FuaXphdGlvbiBpZD0iMSI+ICAgICAgICAgICAgICAgIDxjb3Vyc2UgaWQ9IjYiPiAgICAgICAgICAgICAgICAgICAgPG1vZHVsZSBpZD0iMTUiPiAgICAgICAgICAgICAgICAgICAgICAgIDxjb250ZW50PiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGVzY3JpcHRpb24+SW50cm9kdWNpbmcgQnVkZGhpc208L2Rlc2NyaXB0aW9uPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dGltZT40MzE2PC90aW1lPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8c2l6ZT4zNS4yPC9zaXplPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8b3duZXI+aW5mb0BmcmVlYnVkZGhpc3RhdWRpby5jb208L293bmVyPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZmlsZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx0eXBlPmF1ZGlvPC90eXBlPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPHVybD5odHRwcyUzQSUyRiUyRmRsLmRyb3Bib3h1c2VyY29udGVudC5jb20lMkZ1JTJGMTEyMDQ1MyUyRmZiYSUyRmludHJvZHVjaW5nX2J1ZGRoaXNtLm1wMzwvdXJsPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8L2ZpbGU+ICAgICAgICAgICAgICAgICAgICAgICAgPC9jb250ZW50PiAgICAgICAgICAgICAgICAgICAgPC9tb2R1bGU+ICAgICAgICAgICAgICAgIDwvY291cnNlPiAgICAgICAgICAgICAgICA8L29yZ2FuaXphdGlvbj4="
+       },
+       {
+           "id": "16",
+           "courseId": "6",
+           "name": "The Dynamics of Being",
+           "html": "Sangharakshita talks about the dynamics of being",
+           "playlist": "PG9yZ2FuaXphdGlvbiBpZD0iNCI+ICAgICAgICAgICAgICAgIDxjb3Vyc2UgaWQ9IjYiPiAgICAgICAgICAgICAgICAgICAgPG1vZHVsZSBpZD0iMTYiPiAgICAgICAgICAgICAgICAgICAgICAgIDxjb250ZW50PiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGVzY3JpcHRpb24+VGhlIER5bmFtaWNzIG9mIEJlaW5nPC9kZXNjcmlwdGlvbj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPHRpbWU+NDAxNzwvdGltZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPHNpemU+MzM8L3NpemU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxvd25lcj5pbmZvQGZyZWVidWRkaGlzdGF1ZGlvLmNvbTwvb3duZXI+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxmaWxlPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPHR5cGU+YXVkaW88L3R5cGU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dXJsPmh0dHBzJTNBJTJGJTJGZGwuZHJvcGJveHVzZXJjb250ZW50LmNvbSUyRnUlMkYxMTIwNDUzJTJGZmJhJTJGdGhlX2R5bmFtaWNzX29mX2JlaW5nLm1wMzwvdXJsPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8L2ZpbGU+ICAgICAgICAgICAgICAgICAgICAgICAgPC9jb250ZW50PiAgICAgICAgICAgICAgICAgICAgPC9tb2R1bGU+ICAgICAgICAgICAgICAgIDwvY291cnNlPiAgICAgICAgICAgICAgICA8L29yZ2FuaXphdGlvbj4="
+       },
+       {
+           "id": "17",
+           "courseId": "6",
+           "name": "An Evening With Sangharakshita",
+           "html": "Sangharakshita question and answer session at Croydon Bhuddist Centre",
+           "playlist": "PG9yZ2FuaXphdGlvbiBpZD0iNCI+ICAgICAgICAgICAgICAgIDxjb3Vyc2UgaWQ9IjYiPiAgICAgICAgICAgICAgICAgICAgPG1vZHVsZSBpZD0iMTciPiAgICAgICAgICAgICAgICAgICAgICAgIDxjb250ZW50PiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGVzY3JpcHRpb24+QW4gRXZlbmluZyBXaXRoIFNhbmdoYXJha3NoaXRhPC9kZXNjcmlwdGlvbj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPHRpbWU+NDUwNjwvdGltZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPHNpemU+MzkuNzwvc2l6ZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPG93bmVyPmluZm9AZnJlZWJ1ZGRoaXN0YXVkaW8uY29tPC9vd25lcj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPGZpbGU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx1cmw+aHR0cHMlM0ElMkYlMkZkbC5kcm9wYm94dXNlcmNvbnRlbnQuY29tJTJGdSUyRjExMjA0NTMlMkZmYmElMkZhbl9ldmVuaW5nX3dpdGhfc2FuZ2hhcmFrc2hpdGEubXAzPC91cmw+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvZmlsZT4gICAgICAgICAgICAgICAgICAgICAgICA8L2NvbnRlbnQ+ICAgICAgICAgICAgICAgICAgICA8L21vZHVsZT4gICAgICAgICAgICAgICAgPC9jb3Vyc2U+ICAgICAgICAgICAgICAgIDwvb3JnYW5pemF0aW9uPg=="
+       },
+       {
+           "id": "18",
+           "courseId": "2",
+           "name": "Taking Refuge",
+           "html": "Taking Refuge (short form)",
+           "playlist": "PG9yZ2FuaXphdGlvbiBpZD0iMSI+ICAgICAgICAgICAgICAgIDxjb3Vyc2UgaWQ9IjIiPiAgICAgICAgICAgICAgICAgICAgPG1vZHVsZSBpZD0iMTgiPiAgICAgICAgICAgICAgICAgICAgICAgIDxjb250ZW50PiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGVzY3JpcHRpb24+VGFraW5nIFJlZnVnZTwvZGVzY3JpcHRpb24+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx0aW1lPjMwPC90aW1lPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8c2l6ZT4wLjI0PC9zaXplPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8b3duZXI+ZGgucC5kYWtpbmlAZ21haWwuY29tPC9vd25lcj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPGZpbGU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx1cmw+aHR0cHMlM0ElMkYlMkZkbC5kcm9wYm94dXNlcmNvbnRlbnQuY29tJTJGdSUyRjExMjA0NTMlMkZ0cmlyYXRuYSUyRmNsZWFuJTJGdGFraW5nLXJlZnVnZTY0Lm1wMzwvdXJsPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8L2ZpbGU+ICAgICAgICAgICAgICAgICAgICAgICAgPC9jb250ZW50PiAgICAgICAgICAgICAgICAgICAgPC9tb2R1bGU+ICAgICAgICAgICAgICAgIDwvY291cnNlPiAgICAgICAgICAgICAgICA8L29yZ2FuaXphdGlvbj4="
+       },
+       {
+           "id": "19",
+           "courseId": "2",
+           "name": "The Heart Sutra",
+           "html": "The Heart Sutra",
+           "playlist": "PG9yZ2FuaXphdGlvbiBpZD0iMSI+ICAgICAgICAgICAgICAgIDxjb3Vyc2UgaWQ9IjIiPiAgICAgICAgICAgICAgICAgICAgPG1vZHVsZSBpZD0iMTkiPiAgICAgICAgICAgICAgICAgICAgICAgIDxjb250ZW50PiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGVzY3JpcHRpb24+VGhlIEhlYXJ0IFN1dHJhPC9kZXNjcmlwdGlvbj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPHRpbWU+MTg4PC90aW1lPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8c2l6ZT4xLjU8L3NpemU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxvd25lcj5kaC5wLmRha2luaUBnbWFpbC5jb208L293bmVyPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZmlsZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx0eXBlPmF1ZGlvPC90eXBlPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPHVybD5odHRwcyUzQSUyRiUyRmRsLmRyb3Bib3h1c2VyY29udGVudC5jb20lMkZ1JTJGMTEyMDQ1MyUyRnRyaXJhdG5hJTJGY2xlYW4lMkZoZWFydC1zdXRyYTY0Lm1wMzwvdXJsPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8L2ZpbGU+ICAgICAgICAgICAgICAgICAgICAgICAgPC9jb250ZW50PiAgICAgICAgICAgICAgICAgICAgPC9tb2R1bGU+ICAgICAgICAgICAgICAgIDwvY291cnNlPiAgICAgICAgICAgICAgICA8L29yZ2FuaXphdGlvbj4="
+       },
+       {
+           "id": "20",
+           "courseId": "2",
+           "name": "Going for Refuge",
+           "html": "Going for Refuge ( Long Form )",
+           "playlist": "PG9yZ2FuaXphdGlvbiBpZD0iMSI+ICAgICAgICAgICAgICAgIDxjb3Vyc2UgaWQ9IjIiPiAgICAgICAgICAgICAgICAgICAgPG1vZHVsZSBpZD0iMjAiPiAgICAgICAgICAgICAgICAgICAgICAgIDxjb250ZW50PiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGVzY3JpcHRpb24+R29pbmcgZm9yIFJlZnVnZTwvZGVzY3JpcHRpb24+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx0aW1lPjIxOTwvdGltZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPHNpemU+MS44PC9zaXplPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8b3duZXI+ZGgucC5kYWtpbmlAZ21haWwuY29tPC9vd25lcj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPGZpbGU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx1cmw+aHR0cHMlM0ElMkYlMkZkbC5kcm9wYm94dXNlcmNvbnRlbnQuY29tJTJGdSUyRjExMjA0NTMlMkZ0cmlyYXRuYSUyRmNsZWFuJTJGR2ZSLWZ1bGw2NC5tcDM8L3VybD4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPC9maWxlPiAgICAgICAgICAgICAgICAgICAgICAgIDwvY29udGVudD4gICAgICAgICAgICAgICAgICAgIDwvbW9kdWxlPiAgICAgICAgICAgICAgICA8L2NvdXJzZT4gICAgICAgICAgICAgICAgPC9vcmdhbml6YXRpb24+"
+       },
+       {
+           "id": "21",
+           "courseId": "2",
+           "name": "3 Fold Puja",
+           "html": "Triratna 3 fold Puja",
+           "playlist": "PG9yZ2FuaXphdGlvbiBpZD0iMSI+ICAgICAgICAgICAgICAgIDxjb3Vyc2UgaWQ9IjIiPiAgICAgICAgICAgICAgICAgICAgPG1vZHVsZSBpZD0iMjEiPiAgICAgICAgICAgICAgICAgICAgICAgIDxjb250ZW50PiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGVzY3JpcHRpb24+MyBGb2xkIFB1amE8L2Rlc2NyaXB0aW9uPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dGltZT4xNzg8L3RpbWU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxzaXplPjEuNDwvc2l6ZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPG93bmVyPmRoLnAuZGFraW5pQGdtYWlsLmNvbTwvb3duZXI+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxmaWxlPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPHR5cGU+YXVkaW88L3R5cGU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dXJsPmh0dHBzJTNBJTJGJTJGZGwuZHJvcGJveHVzZXJjb250ZW50LmNvbSUyRnUlMkYxMTIwNDUzJTJGdHJpcmF0bmElMkZjbGVhbiUyRjNmb2xkcHVqYTY0Lm1wMzwvdXJsPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8L2ZpbGU+ICAgICAgICAgICAgICAgICAgICAgICAgPC9jb250ZW50PiAgICAgICAgICAgICAgICAgICAgPC9tb2R1bGU+ICAgICAgICAgICAgICAgIDwvY291cnNlPiAgICAgICAgICAgICAgICA8L29yZ2FuaXphdGlvbj4="
+       },
+         {
+           "id": "22",
+           "courseId": "8",
+           "name": "Sleep",
+           "html": "Deep relaxation for sleep",
+           "playlist": "PG9yZ2FuaXphdGlvbiBpZD0iNSI+ICAgICAgICAgICAgICAgIDxjb3Vyc2UgaWQ9IjgiPiAgICAgICAgICAgICAgICAgICAgPG1vZHVsZSBpZD0iMjIiPiAgICAgICAgICAgICAgICAgICAgICAgIDxjb250ZW50PiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGVzY3JpcHRpb24+U2xlZXA8L2Rlc2NyaXB0aW9uPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dGltZT4xODAyPC90aW1lPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8c2l6ZT4xNC40PC9zaXplPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8b3duZXI+aW5zcGlyZWRoeXBub3Npc0BnbWFpbC5jb208L293bmVyPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZmlsZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx0eXBlPmF1ZGlvPC90eXBlPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPHVybD5odHRwcyUzQSUyRiUyRmRsLmRyb3Bib3h1c2VyY29udGVudC5jb20lMkZ1JTJGMTEyMDQ1MyUyRmluc3BpcmVkJTJGaW5zcGlyZWQtc2xlZXAtNjQubXAzPC91cmw+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvZmlsZT4gICAgICAgICAgICAgICAgICAgICAgICA8L2NvbnRlbnQ+ICAgICAgICAgICAgICAgICAgICA8L21vZHVsZT4gICAgICAgICAgICAgICAgPC9jb3Vyc2U+ICAgICAgICAgICAgICAgIDwvb3JnYW5pemF0aW9uPg=="
+         },
+         {
+           "id": "23",
+           "courseId": "8",
+           "name": "Muscle Relaxation",
+           "html": "Deep muscle relaxation",
+           "playlist": "PG9yZ2FuaXphdGlvbiBpZD0iNSI+ICAgICAgICAgICAgICAgIDxjb3Vyc2UgaWQ9IjgiPiAgICAgICAgICAgICAgICAgICAgPG1vZHVsZSBpZD0iMjMiPiAgICAgICAgICAgICAgICAgICAgICAgIDxjb250ZW50PiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGVzY3JpcHRpb24+TXVzY2xlPC9kZXNjcmlwdGlvbj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPHRpbWU+MTIwNTwvdGltZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPHNpemU+OS42PC9zaXplPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8b3duZXI+aW5zcGlyZWRoeXBub3Npc0BnbWFpbC5jb208L293bmVyPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZmlsZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx0eXBlPmF1ZGlvPC90eXBlPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPHVybD5odHRwcyUzQSUyRiUyRmRsLmRyb3Bib3h1c2VyY29udGVudC5jb20lMkZ1JTJGMTEyMDQ1MyUyRmluc3BpcmVkJTJGaW5zcGlyZWQtbXVzY2xlLTY0Lm1wMzwvdXJsPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8L2ZpbGU+ICAgICAgICAgICAgICAgICAgICAgICAgPC9jb250ZW50PiAgICAgICAgICAgICAgICAgICAgPC9tb2R1bGU+ICAgICAgICAgICAgICAgIDwvY291cnNlPiAgICAgICAgICAgICAgICA8L29yZ2FuaXphdGlvbj4="
+         },
+         {
+           "id": "24",
+           "courseId": "8",
+           "name": "Social Confidence",
+           "html": "Deep relaxation & Social Confidence",
+           "playlist": "PG9yZ2FuaXphdGlvbiBpZD0iNSI+ICAgICAgICAgICAgICAgIDxjb3Vyc2UgaWQ9IjgiPiAgICAgICAgICAgICAgICAgICAgPG1vZHVsZSBpZD0iMjQiPiAgICAgICAgICAgICAgICAgICAgICAgIDxjb250ZW50PiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGVzY3JpcHRpb24+U29jaWFsPC9kZXNjcmlwdGlvbj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPHRpbWU+MTE4NjwvdGltZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPHNpemU+OS41PC9zaXplPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8b3duZXI+aW5zcGlyZWRoeXBub3Npc0BnbWFpbC5jb208L293bmVyPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZmlsZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx0eXBlPmF1ZGlvPC90eXBlPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPHVybD5odHRwcyUzQSUyRiUyRmRsLmRyb3Bib3h1c2VyY29udGVudC5jb20lMkZ1JTJGMTEyMDQ1MyUyRmluc3BpcmVkJTJGaW5zcGlyZWQtc29jaWFsLTY0Lm1wMzwvdXJsPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8L2ZpbGU+ICAgICAgICAgICAgICAgICAgICAgICAgPC9jb250ZW50PiAgICAgICAgICAgICAgICAgICAgPC9tb2R1bGU+ICAgICAgICAgICAgICAgIDwvY291cnNlPiAgICAgICAgICAgICAgICA8L29yZ2FuaXphdGlvbj4="
+         },
+         {
+           "id": "25",
+           "courseId": "4",
+           "name": "4 x 3 (12 mins)",
+           "html": "12 minutes in 4 sections for Mindfulness of Breathing",
+           "playlist": "PG9yZ2FuaXphdGlvbiBpZD0iMyI+ICAgICAgICAgICAgICAgIDxjb3Vyc2UgaWQ9IjQiPiAgICAgICAgICAgICAgICAgICAgPG1vZHVsZSBpZD0iMjUiPiAgICAgICAgICAgICAgICAgICAgICAgIDxjb250ZW50PiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGVzY3JpcHRpb24+NCB4IDMgKDEyIG1pbnMpPC9kZXNjcmlwdGlvbj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPHRpbWU+NzQ0PC90aW1lPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8c2l6ZT41Ljk8L3NpemU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxvd25lcj5iZWxsc0BkYWRkeXN3b3JrLmNvbTwvb3duZXI+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxmaWxlPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPHR5cGU+YXVkaW88L3R5cGU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dXJsPmh0dHBzJTNBJTJGJTJGZGwuZHJvcGJveHVzZXJjb250ZW50LmNvbSUyRnUlMkYxMTIwNDUzJTJGbWVkaXQ4JTJGNHgzLm1wMzwvdXJsPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8L2ZpbGU+ICAgICAgICAgICAgICAgICAgICAgICAgPC9jb250ZW50PiAgICAgICAgICAgICAgICAgICAgPC9tb2R1bGU+ICAgICAgICAgICAgICAgIDwvY291cnNlPiAgICAgICAgICAgICAgICA8L29yZ2FuaXphdGlvbj4="
+         },
+         {
+           "id": "26",
+           "courseId": "4",
+           "name": "5 x 3 (15 mins)",
+           "html": "15 minutes in 5 sections for Metta Bhavana",
+           "playlist": "PG9yZ2FuaXphdGlvbiBpZD0iMyI+ICAgICAgICAgICAgICAgIDxjb3Vyc2UgaWQ9IjQiPiAgICAgICAgICAgICAgICAgICAgPG1vZHVsZSBpZD0iMjYiPiAgICAgICAgICAgICAgICAgICAgICAgIDxjb250ZW50PiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGVzY3JpcHRpb24+NSB4IDMgKDE1IG1pbnMpPC9kZXNjcmlwdGlvbj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPHRpbWU+OTE5PC90aW1lPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8c2l6ZT43LjQ8L3NpemU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxvd25lcj5iZWxsc0BkYWRkeXN3b3JrLmNvbTwvb3duZXI+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxmaWxlPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPHR5cGU+YXVkaW88L3R5cGU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dXJsPmh0dHBzJTNBJTJGJTJGZGwuZHJvcGJveHVzZXJjb250ZW50LmNvbSUyRnUlMkYxMTIwNDUzJTJGbWVkaXQ4JTJGNXgzLm1wMzwvdXJsPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8L2ZpbGU+ICAgICAgICAgICAgICAgICAgICAgICAgPC9jb250ZW50PiAgICAgICAgICAgICAgICAgICAgPC9tb2R1bGU+ICAgICAgICAgICAgICAgIDwvY291cnNlPiAgICAgICAgICAgICAgICA8L29yZ2FuaXphdGlvbj4="
+         },
+         {
+           "id": "27",
+           "courseId": "4",
+           "name": "4 x 5 (20 mins) ",
+           "html": "20 minutes in four sections for Mindfulness of Breathing",
+           "playlist": "PG9yZ2FuaXphdGlvbiBpZD0iMyI+ICAgICAgICAgICAgICAgIDxjb3Vyc2UgaWQ9IjQiPiAgICAgICAgICAgICAgICAgICAgPG1vZHVsZSBpZD0iMjciPiAgICAgICAgICAgICAgICAgICAgICAgIDxjb250ZW50PiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGVzY3JpcHRpb24+NCB4IDUgKDIwIG1pbnMpIDwvZGVzY3JpcHRpb24+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx0aW1lPjEyMjI8L3RpbWU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxzaXplPjkuODwvc2l6ZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPG93bmVyPmJlbGxzQGRhZGR5c3dvcmsuY29tPC9vd25lcj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPGZpbGU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx1cmw+aHR0cHMlM0ElMkYlMkZkbC5kcm9wYm94dXNlcmNvbnRlbnQuY29tJTJGdSUyRjExMjA0NTMlMkZtZWRpdDglMkY0eDUubXAzPC91cmw+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvZmlsZT4gICAgICAgICAgICAgICAgICAgICAgICA8L2NvbnRlbnQ+ICAgICAgICAgICAgICAgICAgICA8L21vZHVsZT4gICAgICAgICAgICAgICAgPC9jb3Vyc2U+ICAgICAgICAgICAgICAgIDwvb3JnYW5pemF0aW9uPg=="
+         },
+         {
+           "id": "28",
+           "courseId": "4",
+           "name": "5 x 5 (25 mins)",
+           "html": "25 minutes in five sections for Metta Bhavana",
+           "playlist": "PG9yZ2FuaXphdGlvbiBpZD0iMyI+ICAgICAgICAgICAgICAgIDxjb3Vyc2UgaWQ9IjQiPiAgICAgICAgICAgICAgICAgICAgPG1vZHVsZSBpZD0iMjgiPiAgICAgICAgICAgICAgICAgICAgICAgIDxjb250ZW50PiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGVzY3JpcHRpb24+NSB4IDUgKDI1IG1pbnMpPC9kZXNjcmlwdGlvbj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPHRpbWU+MTUxNjwvdGltZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPHNpemU+MTIuMTwvc2l6ZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPG93bmVyPmJlbGxzQGRhZGR5c3dvcmsuY29tPC9vd25lcj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPGZpbGU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx1cmw+aHR0cHMlM0ElMkYlMkZkbC5kcm9wYm94dXNlcmNvbnRlbnQuY29tJTJGdSUyRjExMjA0NTMlMkZtZWRpdDglMkY1eDUubXAzPC91cmw+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvZmlsZT4gICAgICAgICAgICAgICAgICAgICAgICA8L2NvbnRlbnQ+ICAgICAgICAgICAgICAgICAgICA8L21vZHVsZT4gICAgICAgICAgICAgICAgPC9jb3Vyc2U+ICAgICAgICAgICAgICAgIDwvb3JnYW5pemF0aW9uPg=="
+         },
+         {
+           "id": "29",
+           "courseId": "4",
+           "name": "4 x 7 (28 mins)",
+           "html": "28 minutes in four sections for Mindfulness of Breathing",
+           "playlist": "PG9yZ2FuaXphdGlvbiBpZD0iMyI+ICAgICAgICAgICAgICAgIDxjb3Vyc2UgaWQ9IjQiPiAgICAgICAgICAgICAgICAgICAgPG1vZHVsZSBpZD0iMjkiPiAgICAgICAgICAgICAgICAgICAgICAgIDxjb250ZW50PiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGVzY3JpcHRpb24+NCB4IDcgKDI4IG1pbnMpPC9kZXNjcmlwdGlvbj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPHRpbWU+MTcwMjwvdGltZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPHNpemU+MTMuNjwvc2l6ZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPG93bmVyPmJlbGxzQGRhZGR5c3dvcmsuY29tPC9vd25lcj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPGZpbGU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx1cmw+aHR0cHMlM0ElMkYlMkZkbC5kcm9wYm94dXNlcmNvbnRlbnQuY29tJTJGdSUyRjExMjA0NTMlMkZtZWRpdDglMkY0eDcubXAzPC91cmw+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDwvZmlsZT4gICAgICAgICAgICAgICAgICAgICAgICA8L2NvbnRlbnQ+ICAgICAgICAgICAgICAgICAgICA8L21vZHVsZT4gICAgICAgICAgICAgICAgPC9jb3Vyc2U+ICAgICAgICAgICAgICAgIDwvb3JnYW5pemF0aW9uPg=="
+         },
+         {
+           "id": "30",
+           "courseId": "4",
+           "name": "5 x 7 (35 mins)",
+           "html": "35 minutes in five sections for Metta Bhavana",
+           "playlist": "PG9yZ2FuaXphdGlvbiBpZD0iMyI+ICAgICAgICAgICAgICAgIDxjb3Vyc2UgaWQ9IjQiPiAgICAgICAgICAgICAgICAgICAgPG1vZHVsZSBpZD0iMzAiPiAgICAgICAgICAgICAgICAgICAgICAgIDxjb250ZW50PiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGVzY3JpcHRpb24+NSB4IDcgKDM1IG1pbnMpPC9kZXNjcmlwdGlvbj4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPHRpbWU+MjEyMTwvdGltZT4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPHNpemU+MTc8L3NpemU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxvd25lcj5iZWxsc0BkYWRkeXN3b3JrLmNvbTwvb3duZXI+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxmaWxlPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPHR5cGU+YXVkaW88L3R5cGU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dXJsPmh0dHBzJTNBJTJGJTJGZGwuZHJvcGJveHVzZXJjb250ZW50LmNvbSUyRnUlMkYxMTIwNDUzJTJGbWVkaXQ4JTJGNXg3Lm1wMzwvdXJsPiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8L2ZpbGU+ICAgICAgICAgICAgICAgICAgICAgICAgPC9jb250ZW50PiAgICAgICAgICAgICAgICAgICAgPC9tb2R1bGU+ICAgICAgICAgICAgICAgIDwvY291cnNlPiAgICAgICAgICAgICAgICA8L29yZ2FuaXphdGlvbj4="
+         },
+         {
+           "id": "31",
+           "courseId": "4",
+           "name": "4 x 10 (40 mins)",
+           "html": "40 minutes in four sections for Mindfulness of Breathing",
+           "playlist": "PG9yZ2FuaXphdGlvbiBpZD0iMyI+ICAgICAgICAgICAgICAgIDxjb3Vyc2UgaWQ9IjQiPiAgICAgICAgICAgICAgICAgICAgPG1vZHVsZSBpZD0iMzEiPiAgICAgICAgICAgICAgICAgICAgICAgIDxjb250ZW50PiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGVzY3JpcHRpb24+NCB4IDEwICg0MCBtaW5zKTwvZGVzY3JpcHRpb24+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx0aW1lPjI0MjI8L3RpbWU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxzaXplPjE5LjQ8L3NpemU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxvd25lcj5iZWxsc0BkYWRkeXN3b3JrLmNvbTwvb3duZXI+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxmaWxlPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPHR5cGU+YXVkaW88L3R5cGU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dXJsPmh0dHBzJTNBJTJGJTJGZGwuZHJvcGJveHVzZXJjb250ZW50LmNvbSUyRnUlMkYxMTIwNDUzJTJGbWVkaXQ4JTJGNHgxMC5tcDM8L3VybD4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPC9maWxlPiAgICAgICAgICAgICAgICAgICAgICAgIDwvY29udGVudD4gICAgICAgICAgICAgICAgICAgIDwvbW9kdWxlPiAgICAgICAgICAgICAgICA8L2NvdXJzZT4gICAgICAgICAgICAgICAgPC9vcmdhbml6YXRpb24+"
+         },
+         {
+           "id": "32",
+           "courseId": "4",
+           "name": "5 x 10 (50 mins)",
+           "html": "50 minutes in five sections for Metta Bhavana",
+           "playlist": "PG9yZ2FuaXphdGlvbiBpZD0iMyI+ICAgICAgICAgICAgICAgIDxjb3Vyc2UgaWQ9IjQiPiAgICAgICAgICAgICAgICAgICAgPG1vZHVsZSBpZD0iMzIiPiAgICAgICAgICAgICAgICAgICAgICAgIDxjb250ZW50PiAgICAgICAgICAgICAgICAgICAgICAgICAgICA8ZGVzY3JpcHRpb24+NSB4IDEwICg1MCBtaW5zKTwvZGVzY3JpcHRpb24+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDx0aW1lPjMwMjM8L3RpbWU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxzaXplPjI0LjI8L3NpemU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxvd25lcj5iZWxsc0BkYWRkeXN3b3JrLmNvbTwvb3duZXI+ICAgICAgICAgICAgICAgICAgICAgICAgICAgIDxmaWxlPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgPHR5cGU+YXVkaW88L3R5cGU+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA8dXJsPmh0dHBzJTNBJTJGJTJGZGwuZHJvcGJveHVzZXJjb250ZW50LmNvbSUyRnUlMkYxMTIwNDUzJTJGbWVkaXQ4JTJGNXgxMC5tcDM8L3VybD4gICAgICAgICAgICAgICAgICAgICAgICAgICAgPC9maWxlPiAgICAgICAgICAgICAgICAgICAgICAgIDwvY29udGVudD4gICAgICAgICAgICAgICAgICAgIDwvbW9kdWxlPiAgICAgICAgICAgICAgICA8L2NvdXJzZT4gICAgICAgICAgICAgICAgPC9vcmdhbml6YXRpb24+"
+         }
 ]
