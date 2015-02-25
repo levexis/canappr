@@ -6,3 +6,4 @@ www/scripts/vendor
 test/artifacts
 client/scripts/vendor
 phonegap/
+lib/
