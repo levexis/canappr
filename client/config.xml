@@ -43,7 +43,9 @@
     <access origin="https://*.live.com" subdomains="true" /> <!-- one drive -->
     <access origin="https://*.google.com" subdomains="true" /> <!-- analytics and google drive -->
     <access origin="https://*.amazon.com" subdomains="true" /><!-- aws -->
+    <access origin="http://*.daddyswork.com" subdomains="true" /><!-- api etc -->
     <access origin="https://*.daddyswork.com" subdomains="true" /><!-- api etc -->
+    <access origin=".daddyswork.com" /> <!--- ios -->
 
     <access origin="http://localhost" subdomains="true" /> <!-- debugging -->
 
