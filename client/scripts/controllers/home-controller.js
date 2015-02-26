@@ -4,7 +4,7 @@
     // how can we dynamically inject the resource, have hard coded organizations for now
     // need current model and then collection for list, eg collectionId 5 is model and courses is the collection etc
     myApp.controller( 'HomeCtrl',
-        function ( $scope , $rootScope, prefService , navService, registryService ) {
+        function ( $scope , $rootScope, prefService , navService, registryService , courseService ) {
             $scope.go = function (where) {
                 navService.go ( 'views/main.html' ,{ collection : where ,
                     navDir: 'forward'});
@@ -40,6 +40,16 @@
             $scope.resetFiles =  function () {
                 prefService.resetSubscriptions();
                 $scope.courses = [];
+            };
+            // doesn't work, doesn't fill in list correctly as subscribeCourse relies on nav params so need to refactor that
+            // if you want this to work
+            $scope.subscribeAll =  function () {
+                courseService.query( {} , function (courses) {
+                    courses.forEach ( function (course ) {
+                        prefService.subscribeCourse( course.id );
+                    });
+                    $scope.courses = prefService.getCourses();
+                });
             };
         } );
 })(angular,_)// jshint ignore:line

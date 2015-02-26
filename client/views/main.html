@@ -11,7 +11,7 @@
             <p class="ca-main-body" ng-bind-html="model.html"></p>
         </div>
         <div class="ca-main-empty" ng-show="!someFiltered"><p>Sorry, there are no {{collectionName}} from {{model.name}} available to you right now.</p></div>
-        <div class="ca-main-empty" ng-show="collectionName === 'Modules'"><p>Use switch to subscribe and enable offline access</p></div>
+        <div class="ca-main-empty" ng-show="collectionName === 'Modules'"><p>Switch subscription to enable/clear offline access</p></div>
         <ons-navigator title="{{collectionName}}" ng-show="someFiltered" class="ca-main-list" >
             <ons-list>
                 <span ng-repeat="item in collection | filter:filterWhere | orderBy : name">

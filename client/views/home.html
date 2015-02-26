@@ -6,6 +6,7 @@
             <div class="ca-main-empty" ng-show="!courses.length">
                 <p>Welcome to Medit8, you have not yet joined any courses</p>
                 <p><ons-button ng-click="go('org');">Get Started</ons-button></p>
+                <p ><ons-button ng-click="subscribeAll();" style="background-color: darkorange;" ng-hide="true">Download All</ons-button></p>
             </div>
         </div>
         <div ng-show="courses.length">
