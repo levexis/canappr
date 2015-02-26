@@ -13,7 +13,11 @@
                                     return $injector.get( what );
                                 },
                                 ready: false };
-
+             if ( $window.location.port === '9000' ) {
+                 registryService.setConfig( 'isE2E', true );
+                 $rootScope.canAppr.prefs.module = {};
+                 $rootScope.canAppr.prefs.course = {};
+             }
              // phonegap stuff - where to put?
              if ( typeof $window.cordova !== 'undefined' ) {
                  var onDeviceReady = function () {
@@ -53,14 +57,6 @@
                  // triggers web app initialisation
                  registryService.setConfig( 'isNative', false );
                  registryService.isReady( true );
-             }
-             if ( $window.location.port === '9000' ) {
-                 registryService.setConfig( 'isE2E', true );
-                 $rootScope.canAppr.prefs.module = {};
-                 $rootScope.canAppr.prefs.course = {};
-             } else if ( $window.location.port !== '9876' ) { // karma
-                // live so set api base to remote
-                registryService.setAPIBase( 'http://medit8.daddyswork.com/' );
              }
          });
 })(angular, _); // jshint ignore:line

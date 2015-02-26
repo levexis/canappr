@@ -13,6 +13,7 @@
         return new $cachedResource('modules',$rootScope.canAppr.apiBase + 'modules/:id', { id:'@id' });
     });
 // whilst we use a local flat file API this mocks the response for us
+    // better name for this would be static api interceptor as still using flat files
     myApp.factory ( 'localAPIInterceptor', function( $q , $log, registryService) {
         var apiBase = registryService.getAPIBase();
         function isLocalAPIRequest(url) {

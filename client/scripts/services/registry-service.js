@@ -3,18 +3,25 @@
     // this can be used to replace the rootScope nonsense
     var myApp = angular.module( 'canAppr' );
 
-    myApp.factory('registryService', function($rootScope) {
-        var _navParams, _config,_apiBase;
+    myApp.factory('registryService', function($rootScope, $window) {
+        var _navParams, _config,_apiBase = 'api/0/';
+        //testing config
+        if ( $window.location.port !== '9000' &&  $window.location.port !== '9876' ) { // e2e & karma
+            // live so set api base to remote
+            _apiBase = ( 'http://medit8.daddyswork.com/api/0/' );
+        }
+
 
         if ( !$rootScope.canAppr) {
             // initialize if not already
             // app global config, there is probably a service for this. This is changed in app.js if remote
-            $rootScope.canAppr = { apiBase : 'api/0/',
+            $rootScope.canAppr = { apiBase : _apiBase,
                 navParams : { org : { name : 'Organizations' }, module : {}, course : {} },
                 config : { isNative : ( typeof window.cordova !== 'undefined' ) },
                 ready : false
             };
         }
+
         _navParams =  $rootScope.canAppr.navParams;
         _config = $rootScope.canAppr.config;
         _apiBase = $rootScope.canAppr.apiBase;
@@ -115,6 +122,7 @@
                 return _apiBase;
             },
             setAPIBase: function (url) {
+                throw new Error ('cant recofigure api base after resources created!');
                 if ( url ) {
                     _apiBase = url;
                 }
