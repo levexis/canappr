@@ -6,6 +6,7 @@
             <div class="ca-blurb">
                 <p align="center" class="ca-main-body" ng-bind-html="model.html"></p>
             </div>
+            <div class="ca-main-empty" ng-show="!disableDownload"><p>Use switch to manage offline availabilty</p></div>
             <div ng-repeat="item in content">
                 <cd-play-item src="{{item.file.url | cfurlDecode | cftrustUrl}}"/>
             </div>

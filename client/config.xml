@@ -14,7 +14,7 @@
 	<author href="http://linedin.com/in/adtechzen" email="levexis@googlemail.com">
         Paul Cook et Al
     </author>
-<preference name="phonegap-version" value="3.1.0" />
+<preference name="phonegap-version" value="4.2.0" />
 
 
     <gap:platform name="android" />

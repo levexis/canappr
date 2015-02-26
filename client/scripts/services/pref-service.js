@@ -189,7 +189,6 @@
             checkCourseFiles : function ( courseId , modules ) {
                 var deferred;
                 courseId = courseId || _courseId;
-                console.log ('check course files', courseId,modules);
                 if ( _isNative && courseId ) {
                     // could check files and mark as all downloaded if done
                     if ( modules ) {
@@ -389,6 +388,13 @@
                     });
                 }
                 return _outArr;
+            },
+            /*
+             * hard reset for cached data
+             */
+            resetSubscriptions: function() {
+                _prefs.course = {};
+//                fileService.resetAll();
             }
         };
     });

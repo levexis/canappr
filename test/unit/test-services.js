@@ -263,7 +263,7 @@ describe('Services', function() {
                 service.getAPIBase.should.be.a( 'function' );
                 service.setAPIBase.should.be.a( 'function' );
             } );
-            it( 'should return local default', function () {
+            it( 'should return api/0 by default', function () {
                 service.getAPIBase().should.equal( 'api/0/');
             } );
             it( 'should be settable', function () {

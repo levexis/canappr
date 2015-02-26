@@ -13,6 +13,7 @@
             <p ng-show="isNative">Modules listed with <i class="fa fa-file-audio-o"></i> are available for offline playback. You can remove the files by using the switch on the playback screen.</p>
             <cd-course-status ng-repeat="course in courses"></cd-course-status>
             <p><ons-button ng-click="go('org');">Find More</ons-button></p>
+            <p><ons-button ng-click="resetFiles();" style="background-color: red;">Clear all</ons-button></p>
         </div>
     </div>
 </ons-scroller>
