@@ -15,6 +15,10 @@
         Paul Cook et Al
     </author>
 <preference name="phonegap-version" value="4.2.0" />
+    <preference name="fullscreen" value="true" />
+    <preference name="webviewbounce" value="false" />
+    <preference name="UIWebViewBounce" value="false" />
+    <preference name="DisallowOverscroll" value="true" />
 
 
     <gap:platform name="android" />
