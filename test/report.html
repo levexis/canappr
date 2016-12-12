@@ -9,18 +9,18 @@
     <h1>Unit Test Results</h1>
     <table cellspacing="0" cellpadding="0" border="0">
       <tr class="overview">
-        <td colspan="3" title="Mozilla/5.0 (Macintosh; PPC Mac OS X) AppleWebKit/534.34 (KHTML, like Gecko) PhantomJS/1.9.8 Safari/534.34">Browser: PhantomJS 1.9.8 (Mac OS X)</td>
+        <td colspan="3" title="Mozilla/5.0 (Macintosh; Intel Mac OS X) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.0.0 Safari/538.1">Browser: PhantomJS 2.0.0 (Mac OS X)</td>
       </tr>
       <tr class="overview">
-        <td colspan="3">Timestamp: 2015-02-26T07:52:07</td>
+        <td colspan="3">Timestamp: 2015-09-24T12:02:07</td>
       </tr>
       <tr>
         <td colspan="3">
           158 tests / 
           0 errors / 
-          0 failures / 
+          1 failures / 
           17 skipped / 
-          runtime: 0.055s
+          runtime: 0.077s
         </td>
       </tr>
       <tr class="header">
@@ -39,7 +39,7 @@
         <td>Main Controller &raquo; ContentCtrl</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0s</td>
+        <td>Passed in 0.001s</td>
         <td>should convert playlist to an object</td>
         <td>Main Controller &raquo; ContentCtrl</td>
       </tr>
@@ -54,7 +54,7 @@
         <td>directives &raquo; content directives &raquo; cdPlayItem</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0s</td>
+        <td>Passed in 0.001s</td>
         <td>should return a checkbox</td>
         <td>directives &raquo; main directives &raquo; cdSwitch</td>
       </tr>
@@ -79,7 +79,7 @@
         <td>directives &raquo; menu directives &raquo; cdMenu</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0s</td>
+        <td>Passed in 0.001s</td>
         <td>should format a number</td>
         <td>filters &raquo; generic example</td>
       </tr>
@@ -114,7 +114,7 @@
         <td>Main Controller &raquo; MainCtrl &raquo; Organizations View</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0s</td>
+        <td>Passed in 0.001s</td>
         <td>should set collectionClass to fa-male</td>
         <td>Main Controller &raquo; MainCtrl &raquo; Organizations View</td>
       </tr>
@@ -164,12 +164,12 @@
         <td>Main Controller &raquo; MenuCtrl</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0s</td>
+        <td>Passed in 0.001s</td>
         <td>should convert valid xml toJSON</td>
         <td>Services &raquo; libs &raquo; xml</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0s</td>
         <td>should convert valid xml toObject</td>
         <td>Services &raquo; libs &raquo; xml</td>
       </tr>
@@ -179,12 +179,12 @@
         <td>Services &raquo; libs &raquo; xml</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.004s</td>
+        <td>Passed in 0.006s</td>
         <td>should be a cachedResource</td>
         <td>Services &raquo; api &raquo; orgService</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0s</td>
         <td>should return empty from cache</td>
         <td>Services &raquo; api &raquo; orgService</td>
       </tr>
@@ -201,20 +201,20 @@
       <tr class="pass">
         <td>Passed in 0.001s</td>
         <td>should return empty from cache</td>
+        <td>Services &raquo; api &raquo; courseService</td>
+      </tr>
+      <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should return 1 from server</td>
         <td>Services &raquo; api &raquo; courseService</td>
       </tr>
       <tr class="pass">
         <td>Passed in 0s</td>
-        <td>should return 1 from server</td>
-        <td>Services &raquo; api &raquo; courseService</td>
-      </tr>
-      <tr class="pass">
-        <td>Passed in 0.001s</td>
         <td>should be a cachedResource</td>
         <td>Services &raquo; api &raquo; moduleService</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0s</td>
+        <td>Passed in 0.001s</td>
         <td>should return empty from cache</td>
         <td>Services &raquo; api &raquo; moduleService</td>
       </tr>
@@ -229,7 +229,7 @@
         <td>Services &raquo; registryService &raquo; getNavModels</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0s</td>
+        <td>Passed in 0.001s</td>
         <td>should be a method</td>
         <td>Services &raquo; registryService &raquo; resetNavModel</td>
       </tr>
@@ -259,7 +259,7 @@
         <td>Services &raquo; registryService &raquo; getConfig</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0s</td>
         <td>should return undefined if name not defined </td>
         <td>Services &raquo; registryService &raquo; getConfig</td>
       </tr>
@@ -269,7 +269,7 @@
         <td>Services &raquo; registryService &raquo; setConfig</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0s</td>
         <td>should return config from rootScope</td>
         <td>Services &raquo; registryService &raquo; setConfig</td>
       </tr>
@@ -298,10 +298,16 @@
         <td>should return api/0 by default</td>
         <td>Services &raquo; registryService &raquo; APIBase</td>
       </tr>
-      <tr class="pass">
-        <td>Passed in 0s</td>
+      <tr class="fail">
+        <td>Failed</td>
         <td>should be settable</td>
-        <td>Services &raquo; registryService &raquo; APIBase</td>
+        <td>
+          Services &raquo; registryService &raquo; APIBase
+          <br />cant recofigure api base after resources created!
+	at setAPIBase (/Users/paulcook/levexis/canappr/client/scripts/services/registry-service.js:125:86)
+	at /Users/paulcook/levexis/canappr/test/unit/test-services.js:270:35
+
+        </td>
       </tr>
       <tr class="pass">
         <td>Passed in 0s</td>
@@ -319,7 +325,7 @@
         <td>Services &raquo; navService &raquo; go</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.002s</td>
         <td>should use slidingMenu if navType slide</td>
         <td>Services &raquo; navService &raquo; go</td>
       </tr>
@@ -349,12 +355,12 @@
         <td>Services &raquo; navService &raquo; getRouteOptions</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.002s</td>
+        <td>Passed in 0.003s</td>
         <td>should return a promise</td>
         <td>Services &raquo; navService &raquo; setNavState</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.002s</td>
         <td>should allow org to be set</td>
         <td>Services &raquo; navService &raquo; setNavState</td>
       </tr>
@@ -369,7 +375,7 @@
         <td>Services &raquo; navService &raquo; setNavState</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.003s</td>
+        <td>Passed in 0.002s</td>
         <td>should be async if course, module and org to all be set explicitly</td>
         <td>Services &raquo; navService &raquo; setNavState</td>
       </tr>
@@ -394,7 +400,7 @@
         <td>Services &raquo; navService &raquo; getRouteTemplate</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0s</td>
+        <td>Passed in 0.001s</td>
         <td>should route 404 if not known</td>
         <td>Services &raquo; navService &raquo; getRouteTemplate</td>
       </tr>
@@ -414,7 +420,7 @@
         <td>Services &raquo; qutils</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0s</td>
         <td>should return success handler which logs message with debug</td>
         <td>Services &raquo; qutils</td>
       </tr>
@@ -424,7 +430,7 @@
         <td>Services &raquo; qutils</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0s</td>
         <td>should return rejection handler which logs message with debub</td>
         <td>Services &raquo; qutils</td>
       </tr>
@@ -439,7 +445,7 @@
         <td>Services &raquo; analService &raquo; track</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0s</td>
+        <td>Passed in 0.001s</td>
         <td>should have trackEvent method</td>
         <td>Services &raquo; analService &raquo; track</td>
       </tr>
@@ -504,22 +510,22 @@
         <td>Services &raquo; prefService &raquo; getCourses</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.005s</td>
+        <td>Passed in 0.008s</td>
         <td>should lookup files and add to queue if checkCourseFiles called without modules</td>
         <td>Services &raquo; prefService &raquo; files</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.004s</td>
+        <td>Passed in 0.003s</td>
         <td>should add files if checkfiles called with modules collection</td>
         <td>Services &raquo; prefService &raquo; files</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.002s</td>
         <td>should return aggregate status for course files</td>
         <td>Services &raquo; prefService &raquo; files</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.003s</td>
+        <td>Passed in 0.004s</td>
         <td>should add files to queue if modules collection passed with subscription</td>
         <td>Services &raquo; prefService &raquo; files</td>
       </tr>
@@ -529,12 +535,12 @@
         <td>Services &raquo; prefService &raquo; files</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0s</td>
+        <td>Passed in 0.002s</td>
         <td>checkFiles should populate cache status by module</td>
         <td>Services &raquo; prefService &raquo; files</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0s</td>
+        <td>Passed in 0.002s</td>
         <td>checkFiles should only checkCourseFiles for subscribed courses</td>
         <td>Services &raquo; prefService &raquo; files</td>
       </tr>
@@ -574,12 +580,12 @@
         <td>Services &raquo;  fileService</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0s</td>
+        <td>Passed in 0.001s</td>
         <td>should return a promise on init</td>
         <td>Services &raquo;  fileService</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0s</td>
+        <td>Passed in 0.001s</td>
         <td>should initialise</td>
         <td>Services &raquo;  fileService</td>
       </tr>
@@ -589,7 +595,7 @@
         <td>Services &raquo;  fileService &raquo; downloading &raquo; getURL</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0s</td>
+        <td>Passed in 0.001s</td>
         <td>should return the target url if downloading</td>
         <td>Services &raquo;  fileService &raquo; downloading &raquo; getURL</td>
       </tr>
@@ -599,17 +605,17 @@
         <td>Services &raquo;  fileService &raquo; downloading &raquo; getURL</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0s</td>
+        <td>Passed in 0.001s</td>
         <td>should return false if not in cache</td>
         <td>Services &raquo;  fileService &raquo; downloading &raquo; cacheURL</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0s</td>
+        <td>Passed in 0.001s</td>
         <td>should add to queue if url and directory specified</td>
         <td>Services &raquo;  fileService &raquo; downloading &raquo; cacheURL</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0s</td>
+        <td>Passed in 0.001s</td>
         <td>should return local URL if in cache</td>
         <td>Services &raquo;  fileService &raquo; downloading &raquo; cacheURL</td>
       </tr>
@@ -634,12 +640,12 @@
         <td>Services &raquo;  fileService &raquo; downloading &raquo; downloadURL</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0s</td>
+        <td>Passed in 0.001s</td>
         <td>should resolve immediately to url if canDownload is false and not cached</td>
         <td>Services &raquo;  fileService &raquo; downloading &raquo; downloadURL</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0.002s</td>
         <td>should poll for completion if currently downloading</td>
         <td>Services &raquo;  fileService &raquo; downloading &raquo; downloadURL</td>
       </tr>
@@ -669,17 +675,17 @@
         <td>Services &raquo;  fileService &raquo; downloading &raquo; downloadQueued</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0s</td>
         <td>should use filetable if no queue passed in</td>
         <td>Services &raquo;  fileService &raquo; downloading &raquo; downloadQueued</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0s</td>
+        <td>Passed in 0.001s</td>
         <td>should raise error if downloadQueued reaches 250 recrusions</td>
         <td>Services &raquo;  fileService &raquo; downloading &raquo; downloadQueued</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0s</td>
         <td>should clear all the files</td>
         <td>Services &raquo;  fileService &raquo; downloading &raquo; resetAll</td>
       </tr>
@@ -694,12 +700,12 @@
         <td>Services &raquo;  fileService &raquo; downloading &raquo; resetAll</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0s</td>
         <td>should delete just the file</td>
         <td>Services &raquo;  fileService &raquo; downloading &raquo; clearFile</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0s</td>
+        <td>Passed in 0.001s</td>
         <td>should return status of deleted for getStatus</td>
         <td>Services &raquo;  fileService &raquo; downloading &raquo; clearFile</td>
       </tr>
@@ -724,12 +730,12 @@
         <td>Services &raquo;  fileService &raquo; downloading &raquo; clearDir</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0s</td>
+        <td>Passed in 0.001s</td>
         <td>should delete files in that directory</td>
         <td>Services &raquo;  fileService &raquo; downloading &raquo; clearDir</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0s</td>
+        <td>Passed in 0.001s</td>
         <td>should return status of false for getStatus</td>
         <td>Services &raquo;  fileService &raquo; downloading &raquo; clearDir</td>
       </tr>
@@ -759,12 +765,12 @@
         <td>Services &raquo;  fileService &raquo; downloading &raquo; flags, getters and setters</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0s</td>
+        <td>Passed in 0.001s</td>
         <td>should get fileTable</td>
         <td>Services &raquo;  fileService &raquo; downloading &raquo; flags, getters and setters</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0s</td>
         <td>should get / set canDowwload</td>
         <td>Services &raquo;  fileService &raquo; downloading &raquo; flags, getters and setters</td>
       </tr>
@@ -774,27 +780,27 @@
         <td>Services &raquo;  fileService &raquo; downloading &raquo; flags, getters and setters</td>
       </tr>
       <tr class="pass">
+        <td>Passed in 0.001s</td>
+        <td>should return true if isDownloaded passed a module</td>
+        <td>Services &raquo;  fileService &raquo; downloading &raquo; prefService.checkFiles</td>
+      </tr>
+      <tr class="pass">
         <td>Passed in 0s</td>
         <td>should return true if isDownloaded passed a module</td>
         <td>Services &raquo;  fileService &raquo; downloading &raquo; prefService.checkFiles</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
-        <td>should return true if isDownloaded passed a module</td>
-        <td>Services &raquo;  fileService &raquo; downloading &raquo; prefService.checkFiles</td>
-      </tr>
-      <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0s</td>
         <td>should return false if isDownloaded not passed a module</td>
         <td>Services &raquo;  fileService &raquo; downloading &raquo; prefService.checkFiles</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0s</td>
         <td>should mark module ready if cached or deleted</td>
         <td>Services &raquo;  fileService &raquo; downloading &raquo; prefService.checkFiles</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0.001s</td>
+        <td>Passed in 0s</td>
         <td>should return a promise if not passed module(s) for isReady</td>
         <td>Services &raquo;  fileService &raquo; downloading &raquo; prefService.checkFiles</td>
       </tr>
@@ -804,7 +810,7 @@
         <td>Services &raquo;  fileService &raquo; downloading &raquo; prefService.checkFiles</td>
       </tr>
       <tr class="pass">
-        <td>Passed in 0s</td>
+        <td>Passed in 0.001s</td>
         <td>should but not ready or downloaded if I unsubscribe</td>
         <td>Services &raquo;  fileService &raquo; downloading &raquo; prefService.checkFiles</td>
       </tr>
@@ -817,25 +823,6 @@
         <td>Passed in 0s</td>
         <td>should not attempt to re-download module files unless explicity set cacheURL</td>
         <td>Services &raquo;  fileService &raquo; downloading &raquo; prefService.checkFiles</td>
-      </tr>
-      <tr class="system-out">
-        <td colspan="3"><strong>System output:</strong><br />PhantomJS 1.9.8 (Mac OS X) LOG: 'check course files', '1', undefined
-<br />PhantomJS 1.9.8 (Mac OS X) LOG: 'check course files', '1', [Object{id: '1', courseId: '1', name: 'Awareness of The Body', html: 'Awareness of the body is quite simply the most fundamental practise of meditation. Most of us spend so much of our time stuck in our heads. Rarely are we aware of our bodies until a painful sensation forces our attention away from our mind. The practise of awareness of the body helps us to reintegrate the mind into the totality of the mind body experience.', available: 1, playlist: 'PG9yZ2FuaXphdGlvbiBpZD0iMSI+DQogICAgPGNvdXJzZSBpZD0iMSI+DQogICAgICAgPG1vZHVsZSBpZD0iMSI+DQogICAgICAgICAgPGNvbnRlbnQ+DQogICAgICAgICAgICA8ZGVzY3JpcHRpb24+QXdhcmVuZXNzIE9mIFRoZSBCb2R5PC9kZXNjcmlwdGlvbj4gDQogICAgICAgICAgICA8b3duZXI+ZGgucC5kYWtpbmlAZ21haWwuY29tPC9vd25lcj4NCiAgICAgICAgICAgIDx0aW1lPjE4MDA8L3RpbWU+IA0KICAgICAgICAgICAgPHNpemU+Mjk8L3NpemU+DQogICAgICAgICAgICA8ZmlsZT4NCiAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4NCiAgICAgICAgICAgICAgICA8dXJsPmh0dHBzJTNBJTJGJTJGZGwuZHJvcGJveHVzZXJjb250ZW50LmNvbSUyRnUlMkYxMTIwNDUzJTJGdHJpcmF0bmElMkZib2R5LjEyOC5tcDM8L3VybD4NCiAgICAgICAgICAgIDwvZmlsZT4gICAgICAgICAgICAgICAgDQogICAgICAgICAgPC9jb250ZW50Pg0KICAgICAgIDwvbW9kdWxlPg0KICAgIDwvY291cnNlPg0KPC9vcmdhbml6YXRpb24+DQo='}, Object{id: '2', courseId: '1', name: 'Awareness of Positive Emotion', html: 'Within the Buddhist tradition the practise of awareness of positive emotion is called the Mettabhavana. Although often a preliminary practise along with the mindfulness of breathing it is an indispensable foundation for subsequent insight practise. Indeed when used reflectively the practise of positive emotion is an insight practise.', playlist: 'DQo8b3JnYW5pemF0aW9uIGlkPSIxIj4NCiAgICA8Y291cnNlIGlkPSIxIj4NCiAgICAgICA8bW9kdWxlIGlkPSIyIj4NCiAgICAgICAgICA8Y29udGVudD4NCiAgICAgICAgICAgIDxkZXNjcmlwdGlvbj5Bd2FyZW5lc3MgT2YgUG9zaXRpdmUgRW1vdGlvbjwvZGVzY3JpcHRpb24+IA0KICAgICAgICAgICAgPG93bmVyPmRoLnAuZGFraW5pQGdtYWlsLmNvbTwvb3duZXI+DQogICAgICAgICAgICA8dGltZT4yNTM3PC90aW1lPg0KICAgICAgICAgICAgPHNpemU+NDE8L3NpemU+DQogICAgICAgICAgICA8ZmlsZT4NCiAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4NCiAgICAgICAgICAgICAgICA8dXJsPmh0dHBzJTNBJTJGJTJGZGwuZHJvcGJveHVzZXJjb250ZW50LmNvbSUyRnUlMkYxMTIwNDUzJTJGdHJpcmF0bmElMkZtZXR0YS4xMjgubXAzPC91cmw+DQogICAgICAgICAgICA8L2ZpbGU+ICAgICAgICAgICAgICAgIA0KICAgICAgICAgIDwvY29udGVudD4NCiAgICAgICA8L21vZHVsZT4NCiAgICA8L2NvdXJzZT4NCjwvb3JnYW5pemF0aW9uPg=='}, Object{id: '3', courseId: '1', name: 'Awareness of Breath experience', html: 'Experience of breath is not an abstract thing. The breath is here! Now! In this very moment. It is not a recollection of a past experience nor is it a fantasy of the future. Although largely considered a preliminary, but indispensable, practise it has the potential to become an insight practise. Indeed, we are told that it was this practise the Buddha of this age, Shakyamuni, used on the eve of his enlightenment.<p>Available one you have completed Awareness of Body and Postive Emotion modules.</p>', availableAfter: [..., ...], playlist: 'PG9yZ2FuaXphdGlvbiBpZD0iMSI+DQogICAgPGNvdXJzZSBpZD0iMSI+DQogICAgICAgPG1vZHVsZSBpZD0iMyI+DQogICAgICAgICAgPGNvbnRlbnQ+DQogICAgICAgICAgICA8ZGVzY3JpcHRpb24+QXdhcmVuZXNzIE9mIEJyZWF0aCBFeHBlcmllbmNlPC9kZXNjcmlwdGlvbj4gDQogICAgICAgICAgICA8b3duZXI+ZGgucC5kYWtpbmlAZ21haWwuY29tPC9vd25lcj4NCiAgICAgICAgICAgIDx0aW1lPjI1ODM8L3RpbWU+DQogICAgICAgICAgICA8c2l6ZT40Mjwvc2l6ZT4NCiAgICAgICAgICAgIDxmaWxlPg0KICAgICAgICAgICAgICAgIDx0eXBlPmF1ZGlvPC90eXBlPg0KICAgICAgICAgICAgICAgIDx1cmw+aHR0cHMlM0ElMkYlMkZkbC5kcm9wYm94dXNlcmNvbnRlbnQuY29tJTJGdSUyRjExMjA0NTMlMkZ0cmlyYXRuYSUyRmJyZWF0aC4xMjgubXAzPC91cmw+DQogICAgICAgICAgICA8L2ZpbGU+ICAgICAgICAgICAgICAgIA0KICAgICAgICAgIDwvY29udGVudD4NCiAgICAgICA8L21vZHVsZT4NCiAgICA8L2NvdXJzZT4NCjwvb3JnYW5pemF0aW9uPg=='}, Object{id: '4', courseId: '1', name: 'Awareness of Just Being', html: 'Awareness of Just being is the natural state of a healthy, calm, emotionally positive body/mind experience. It is, we are told, the enlightened mind. A mind that is awake, alert, attentive, broad in its awareness, deep in its understanding and giving rise to spontaneous, non conceptual, appropriate, skilful action.<p>Available once you have completed Awareness of Breath.</p>', availableAfter: [...], playlist: 'PG9yZ2FuaXphdGlvbiBpZD0iMSI+DQogICAgPGNvdXJzZSBpZD0iMSI+DQogICAgICAgPG1vZHVsZSBpZD0iNCI+DQogICAgICAgICAgPGNvbnRlbnQ+DQogICAgICAgICAgICA8ZGVzY3JpcHRpb24+QXdhcmVuZXNzIE9mIEp1c3QgQmVpbmc8L2Rlc2NyaXB0aW9uPiANCiAgICAgICAgICAgIDxvd25lcj5kaC5wLmRha2luaUBnbWFpbC5jb208L293bmVyPg0KICAgICAgICAgICAgPHRpbWU+MjIzOTwvdGltZT4NCiAgICAgICAgICAgIDxzaXplPjM2PC9zaXplPg0KICAgICAgICAgICAgPGZpbGU+DQogICAgICAgICAgICAgICAgPHR5cGU+YXVkaW88L3R5cGU+DQogICAgICAgICAgICAgICAgPHVybD5odHRwcyUzQSUyRiUyRmRsLmRyb3Bib3h1c2VyY29udGVudC5jb20lMkZ1JTJGMTEyMDQ1MyUyRnRyaXJhdG5hJTJGYmVpbmcuMTI4Lm1wMzwvdXJsPg0KICAgICAgICAgICAgPC9maWxlPiAgICAgICAgICAgICAgICANCiAgICAgICAgICA8L2NvbnRlbnQ+DQogICAgICAgPC9tb2R1bGU+DQogICAgPC9jb3Vyc2U+DQo8L29yZ2FuaXphdGlvbj4='}, Object{id: '5', courseId: '1', name: 'Dreaming The New', html: 'I have been asked to co guide a Buddhafield retreat based upon the theme "Dreaming the new". Having reflected on what I might do this meditation came about and after being asked to record it at our communal practise evening at Heaven, here it is.<p>Available once you have completed Awareness of Breath.</p>', availableAfter: 3, playlist: 'PG9yZ2FuaXphdGlvbiBpZD0iMSI+DQogICAgPGNvdXJzZSBpZD0iMSI+DQogICAgICAgPG1vZHVsZSBpZD0iNSI+DQogICAgICAgICAgPGNvbnRlbnQ+DQogICAgICAgICAgICA8ZGVzY3JpcHRpb24+RHJlYW1pbmcgdGhlIG5ldzwvZGVzY3JpcHRpb24+IA0KICAgICAgICAgICAgPG93bmVyPmRoLnAuZGFraW5pQGdtYWlsLmNvbTwvb3duZXI+DQogICAgICAgICAgICA8dGltZT4yNzcwPC90aW1lPg0KICAgICAgICAgICAgPHNpemU+NDU8L3NpemU+DQogICAgICAgICAgICA8ZmlsZT4NCiAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4NCiAgICAgICAgICAgICAgICA8dXJsPmh0dHBzJTNBJTJGJTJGZGwuZHJvcGJveHVzZXJjb250ZW50LmNvbSUyRnUlMkYxMTIwNDUzJTJGdHJpcmF0bmElMkZuZXcuMTI4Lm1wMzwvdXJsPg0KICAgICAgICAgICAgPC9maWxlPiAgICAgICAgICAgICAgICANCiAgICAgICAgICA8L2NvbnRlbnQ+DQogICAgICAgPC9tb2R1bGU+DQogICAgPC9jb3Vyc2U+DQo8L29yZ2FuaXphdGlvbj4='}]
-<br />PhantomJS 1.9.8 (Mac OS X) LOG: 'check course files', '1', [Object{id: '1', courseId: '1', name: 'Awareness of The Body', html: 'Awareness of the body is quite simply the most fundamental practise of meditation. Most of us spend so much of our time stuck in our heads. Rarely are we aware of our bodies until a painful sensation forces our attention away from our mind. The practise of awareness of the body helps us to reintegrate the mind into the totality of the mind body experience.', available: 1, playlist: 'PG9yZ2FuaXphdGlvbiBpZD0iMSI+DQogICAgPGNvdXJzZSBpZD0iMSI+DQogICAgICAgPG1vZHVsZSBpZD0iMSI+DQogICAgICAgICAgPGNvbnRlbnQ+DQogICAgICAgICAgICA8ZGVzY3JpcHRpb24+QXdhcmVuZXNzIE9mIFRoZSBCb2R5PC9kZXNjcmlwdGlvbj4gDQogICAgICAgICAgICA8b3duZXI+ZGgucC5kYWtpbmlAZ21haWwuY29tPC9vd25lcj4NCiAgICAgICAgICAgIDx0aW1lPjE4MDA8L3RpbWU+IA0KICAgICAgICAgICAgPHNpemU+Mjk8L3NpemU+DQogICAgICAgICAgICA8ZmlsZT4NCiAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4NCiAgICAgICAgICAgICAgICA8dXJsPmh0dHBzJTNBJTJGJTJGZGwuZHJvcGJveHVzZXJjb250ZW50LmNvbSUyRnUlMkYxMTIwNDUzJTJGdHJpcmF0bmElMkZib2R5LjEyOC5tcDM8L3VybD4NCiAgICAgICAgICAgIDwvZmlsZT4gICAgICAgICAgICAgICAgDQogICAgICAgICAgPC9jb250ZW50Pg0KICAgICAgIDwvbW9kdWxlPg0KICAgIDwvY291cnNlPg0KPC9vcmdhbml6YXRpb24+DQo='}, Object{id: '2', courseId: '1', name: 'Awareness of Positive Emotion', html: 'Within the Buddhist tradition the practise of awareness of positive emotion is called the Mettabhavana. Although often a preliminary practise along with the mindfulness of breathing it is an indispensable foundation for subsequent insight practise. Indeed when used reflectively the practise of positive emotion is an insight practise.', playlist: 'DQo8b3JnYW5pemF0aW9uIGlkPSIxIj4NCiAgICA8Y291cnNlIGlkPSIxIj4NCiAgICAgICA8bW9kdWxlIGlkPSIyIj4NCiAgICAgICAgICA8Y29udGVudD4NCiAgICAgICAgICAgIDxkZXNjcmlwdGlvbj5Bd2FyZW5lc3MgT2YgUG9zaXRpdmUgRW1vdGlvbjwvZGVzY3JpcHRpb24+IA0KICAgICAgICAgICAgPG93bmVyPmRoLnAuZGFraW5pQGdtYWlsLmNvbTwvb3duZXI+DQogICAgICAgICAgICA8dGltZT4yNTM3PC90aW1lPg0KICAgICAgICAgICAgPHNpemU+NDE8L3NpemU+DQogICAgICAgICAgICA8ZmlsZT4NCiAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4NCiAgICAgICAgICAgICAgICA8dXJsPmh0dHBzJTNBJTJGJTJGZGwuZHJvcGJveHVzZXJjb250ZW50LmNvbSUyRnUlMkYxMTIwNDUzJTJGdHJpcmF0bmElMkZtZXR0YS4xMjgubXAzPC91cmw+DQogICAgICAgICAgICA8L2ZpbGU+ICAgICAgICAgICAgICAgIA0KICAgICAgICAgIDwvY29udGVudD4NCiAgICAgICA8L21vZHVsZT4NCiAgICA8L2NvdXJzZT4NCjwvb3JnYW5pemF0aW9uPg=='}, Object{id: '3', courseId: '1', name: 'Awareness of Breath experience', html: 'Experience of breath is not an abstract thing. The breath is here! Now! In this very moment. It is not a recollection of a past experience nor is it a fantasy of the future. Although largely considered a preliminary, but indispensable, practise it has the potential to become an insight practise. Indeed, we are told that it was this practise the Buddha of this age, Shakyamuni, used on the eve of his enlightenment.<p>Available one you have completed Awareness of Body and Postive Emotion modules.</p>', availableAfter: [..., ...], playlist: 'PG9yZ2FuaXphdGlvbiBpZD0iMSI+DQogICAgPGNvdXJzZSBpZD0iMSI+DQogICAgICAgPG1vZHVsZSBpZD0iMyI+DQogICAgICAgICAgPGNvbnRlbnQ+DQogICAgICAgICAgICA8ZGVzY3JpcHRpb24+QXdhcmVuZXNzIE9mIEJyZWF0aCBFeHBlcmllbmNlPC9kZXNjcmlwdGlvbj4gDQogICAgICAgICAgICA8b3duZXI+ZGgucC5kYWtpbmlAZ21haWwuY29tPC9vd25lcj4NCiAgICAgICAgICAgIDx0aW1lPjI1ODM8L3RpbWU+DQogICAgICAgICAgICA8c2l6ZT40Mjwvc2l6ZT4NCiAgICAgICAgICAgIDxmaWxlPg0KICAgICAgICAgICAgICAgIDx0eXBlPmF1ZGlvPC90eXBlPg0KICAgICAgICAgICAgICAgIDx1cmw+aHR0cHMlM0ElMkYlMkZkbC5kcm9wYm94dXNlcmNvbnRlbnQuY29tJTJGdSUyRjExMjA0NTMlMkZ0cmlyYXRuYSUyRmJyZWF0aC4xMjgubXAzPC91cmw+DQogICAgICAgICAgICA8L2ZpbGU+ICAgICAgICAgICAgICAgIA0KICAgICAgICAgIDwvY29udGVudD4NCiAgICAgICA8L21vZHVsZT4NCiAgICA8L2NvdXJzZT4NCjwvb3JnYW5pemF0aW9uPg=='}, Object{id: '4', courseId: '1', name: 'Awareness of Just Being', html: 'Awareness of Just being is the natural state of a healthy, calm, emotionally positive body/mind experience. It is, we are told, the enlightened mind. A mind that is awake, alert, attentive, broad in its awareness, deep in its understanding and giving rise to spontaneous, non conceptual, appropriate, skilful action.<p>Available once you have completed Awareness of Breath.</p>', availableAfter: [...], playlist: 'PG9yZ2FuaXphdGlvbiBpZD0iMSI+DQogICAgPGNvdXJzZSBpZD0iMSI+DQogICAgICAgPG1vZHVsZSBpZD0iNCI+DQogICAgICAgICAgPGNvbnRlbnQ+DQogICAgICAgICAgICA8ZGVzY3JpcHRpb24+QXdhcmVuZXNzIE9mIEp1c3QgQmVpbmc8L2Rlc2NyaXB0aW9uPiANCiAgICAgICAgICAgIDxvd25lcj5kaC5wLmRha2luaUBnbWFpbC5jb208L293bmVyPg0KICAgICAgICAgICAgPHRpbWU+MjIzOTwvdGltZT4NCiAgICAgICAgICAgIDxzaXplPjM2PC9zaXplPg0KICAgICAgICAgICAgPGZpbGU+DQogICAgICAgICAgICAgICAgPHR5cGU+YXVkaW88L3R5cGU+DQogICAgICAgICAgICAgICAgPHVybD5odHRwcyUzQSUyRiUyRmRsLmRyb3Bib3h1c2VyY29udGVudC5jb20lMkZ1JTJGMTEyMDQ1MyUyRnRyaXJhdG5hJTJGYmVpbmcuMTI4Lm1wMzwvdXJsPg0KICAgICAgICAgICAgPC9maWxlPiAgICAgICAgICAgICAgICANCiAgICAgICAgICA8L2NvbnRlbnQ+DQogICAgICAgPC9tb2R1bGU+DQogICAgPC9jb3Vyc2U+DQo8L29yZ2FuaXphdGlvbj4='}, Object{id: '5', courseId: '1', name: 'Dreaming The New', html: 'I have been asked to co guide a Buddhafield retreat based upon the theme "Dreaming the new". Having reflected on what I might do this meditation came about and after being asked to record it at our communal practise evening at Heaven, here it is.<p>Available once you have completed Awareness of Breath.</p>', availableAfter: 3, playlist: 'PG9yZ2FuaXphdGlvbiBpZD0iMSI+DQogICAgPGNvdXJzZSBpZD0iMSI+DQogICAgICAgPG1vZHVsZSBpZD0iNSI+DQogICAgICAgICAgPGNvbnRlbnQ+DQogICAgICAgICAgICA8ZGVzY3JpcHRpb24+RHJlYW1pbmcgdGhlIG5ldzwvZGVzY3JpcHRpb24+IA0KICAgICAgICAgICAgPG93bmVyPmRoLnAuZGFraW5pQGdtYWlsLmNvbTwvb3duZXI+DQogICAgICAgICAgICA8dGltZT4yNzcwPC90aW1lPg0KICAgICAgICAgICAgPHNpemU+NDU8L3NpemU+DQogICAgICAgICAgICA8ZmlsZT4NCiAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4NCiAgICAgICAgICAgICAgICA8dXJsPmh0dHBzJTNBJTJGJTJGZGwuZHJvcGJveHVzZXJjb250ZW50LmNvbSUyRnUlMkYxMTIwNDUzJTJGdHJpcmF0bmElMkZuZXcuMTI4Lm1wMzwvdXJsPg0KICAgICAgICAgICAgPC9maWxlPiAgICAgICAgICAgICAgICANCiAgICAgICAgICA8L2NvbnRlbnQ+DQogICAgICAgPC9tb2R1bGU+DQogICAgPC9jb3Vyc2U+DQo8L29yZ2FuaXphdGlvbj4='}]
-<br />PhantomJS 1.9.8 (Mac OS X) LOG: 'check course files', '1', undefined
-<br />PhantomJS 1.9.8 (Mac OS X) LOG: 'check course files', 1, Object{id: '1', courseId: '1', name: 'Awareness of The Body', html: 'Awareness of the body is quite simply the most fundamental practise of meditation. Most of us spend so much of our time stuck in our heads. Rarely are we aware of our bodies until a painful sensation forces our attention away from our mind. The practise of awareness of the body helps us to reintegrate the mind into the totality of the mind body experience.', available: 1, playlist: 'PG9yZ2FuaXphdGlvbiBpZD0iMSI+DQogICAgPGNvdXJzZSBpZD0iMSI+DQogICAgICAgPG1vZHVsZSBpZD0iMSI+DQogICAgICAgICAgPGNvbnRlbnQ+DQogICAgICAgICAgICA8ZGVzY3JpcHRpb24+QXdhcmVuZXNzIE9mIFRoZSBCb2R5PC9kZXNjcmlwdGlvbj4gDQogICAgICAgICAgICA8b3duZXI+ZGgucC5kYWtpbmlAZ21haWwuY29tPC9vd25lcj4NCiAgICAgICAgICAgIDx0aW1lPjE4MDA8L3RpbWU+IA0KICAgICAgICAgICAgPHNpemU+Mjk8L3NpemU+DQogICAgICAgICAgICA8ZmlsZT4NCiAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4NCiAgICAgICAgICAgICAgICA8dXJsPmh0dHBzJTNBJTJGJTJGZGwuZHJvcGJveHVzZXJjb250ZW50LmNvbSUyRnUlMkYxMTIwNDUzJTJGdHJpcmF0bmElMkZib2R5LjEyOC5tcDM8L3VybD4NCiAgICAgICAgICAgIDwvZmlsZT4gICAgICAgICAgICAgICAgDQogICAgICAgICAgPC9jb250ZW50Pg0KICAgICAgIDwvbW9kdWxlPg0KICAgIDwvY291cnNlPg0KPC9vcmdhbml6YXRpb24+DQo='}
-<br />PhantomJS 1.9.8 (Mac OS X) LOG: 'check course files', 1, Object{id: '1', courseId: '1', name: 'Awareness of The Body', html: 'Awareness of the body is quite simply the most fundamental practise of meditation. Most of us spend so much of our time stuck in our heads. Rarely are we aware of our bodies until a painful sensation forces our attention away from our mind. The practise of awareness of the body helps us to reintegrate the mind into the totality of the mind body experience.', available: 1, playlist: 'PG9yZ2FuaXphdGlvbiBpZD0iMSI+DQogICAgPGNvdXJzZSBpZD0iMSI+DQogICAgICAgPG1vZHVsZSBpZD0iMSI+DQogICAgICAgICAgPGNvbnRlbnQ+DQogICAgICAgICAgICA8ZGVzY3JpcHRpb24+QXdhcmVuZXNzIE9mIFRoZSBCb2R5PC9kZXNjcmlwdGlvbj4gDQogICAgICAgICAgICA8b3duZXI+ZGgucC5kYWtpbmlAZ21haWwuY29tPC9vd25lcj4NCiAgICAgICAgICAgIDx0aW1lPjE4MDA8L3RpbWU+IA0KICAgICAgICAgICAgPHNpemU+Mjk8L3NpemU+DQogICAgICAgICAgICA8ZmlsZT4NCiAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4NCiAgICAgICAgICAgICAgICA8dXJsPmh0dHBzJTNBJTJGJTJGZGwuZHJvcGJveHVzZXJjb250ZW50LmNvbSUyRnUlMkYxMTIwNDUzJTJGdHJpcmF0bmElMkZib2R5LjEyOC5tcDM8L3VybD4NCiAgICAgICAgICAgIDwvZmlsZT4gICAgICAgICAgICAgICAgDQogICAgICAgICAgPC9jb250ZW50Pg0KICAgICAgIDwvbW9kdWxlPg0KICAgIDwvY291cnNlPg0KPC9vcmdhbml6YXRpb24+DQo='}
-<br />PhantomJS 1.9.8 (Mac OS X) LOG: 'check course files', 1, Object{id: '1', courseId: '1', name: 'Awareness of The Body', html: 'Awareness of the body is quite simply the most fundamental practise of meditation. Most of us spend so much of our time stuck in our heads. Rarely are we aware of our bodies until a painful sensation forces our attention away from our mind. The practise of awareness of the body helps us to reintegrate the mind into the totality of the mind body experience.', available: 1, playlist: 'PG9yZ2FuaXphdGlvbiBpZD0iMSI+DQogICAgPGNvdXJzZSBpZD0iMSI+DQogICAgICAgPG1vZHVsZSBpZD0iMSI+DQogICAgICAgICAgPGNvbnRlbnQ+DQogICAgICAgICAgICA8ZGVzY3JpcHRpb24+QXdhcmVuZXNzIE9mIFRoZSBCb2R5PC9kZXNjcmlwdGlvbj4gDQogICAgICAgICAgICA8b3duZXI+ZGgucC5kYWtpbmlAZ21haWwuY29tPC9vd25lcj4NCiAgICAgICAgICAgIDx0aW1lPjE4MDA8L3RpbWU+IA0KICAgICAgICAgICAgPHNpemU+Mjk8L3NpemU+DQogICAgICAgICAgICA8ZmlsZT4NCiAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4NCiAgICAgICAgICAgICAgICA8dXJsPmh0dHBzJTNBJTJGJTJGZGwuZHJvcGJveHVzZXJjb250ZW50LmNvbSUyRnUlMkYxMTIwNDUzJTJGdHJpcmF0bmElMkZib2R5LjEyOC5tcDM8L3VybD4NCiAgICAgICAgICAgIDwvZmlsZT4gICAgICAgICAgICAgICAgDQogICAgICAgICAgPC9jb250ZW50Pg0KICAgICAgIDwvbW9kdWxlPg0KICAgIDwvY291cnNlPg0KPC9vcmdhbml6YXRpb24+DQo='}
-<br />PhantomJS 1.9.8 (Mac OS X) LOG: 'check course files', 1, Object{id: '1', courseId: '1', name: 'Awareness of The Body', html: 'Awareness of the body is quite simply the most fundamental practise of meditation. Most of us spend so much of our time stuck in our heads. Rarely are we aware of our bodies until a painful sensation forces our attention away from our mind. The practise of awareness of the body helps us to reintegrate the mind into the totality of the mind body experience.', available: 1, playlist: 'PG9yZ2FuaXphdGlvbiBpZD0iMSI+DQogICAgPGNvdXJzZSBpZD0iMSI+DQogICAgICAgPG1vZHVsZSBpZD0iMSI+DQogICAgICAgICAgPGNvbnRlbnQ+DQogICAgICAgICAgICA8ZGVzY3JpcHRpb24+QXdhcmVuZXNzIE9mIFRoZSBCb2R5PC9kZXNjcmlwdGlvbj4gDQogICAgICAgICAgICA8b3duZXI+ZGgucC5kYWtpbmlAZ21haWwuY29tPC9vd25lcj4NCiAgICAgICAgICAgIDx0aW1lPjE4MDA8L3RpbWU+IA0KICAgICAgICAgICAgPHNpemU+Mjk8L3NpemU+DQogICAgICAgICAgICA8ZmlsZT4NCiAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4NCiAgICAgICAgICAgICAgICA8dXJsPmh0dHBzJTNBJTJGJTJGZGwuZHJvcGJveHVzZXJjb250ZW50LmNvbSUyRnUlMkYxMTIwNDUzJTJGdHJpcmF0bmElMkZib2R5LjEyOC5tcDM8L3VybD4NCiAgICAgICAgICAgIDwvZmlsZT4gICAgICAgICAgICAgICAgDQogICAgICAgICAgPC9jb250ZW50Pg0KICAgICAgIDwvbW9kdWxlPg0KICAgIDwvY291cnNlPg0KPC9vcmdhbml6YXRpb24+DQo='}
-<br />PhantomJS 1.9.8 (Mac OS X) LOG: 'check course files', 1, Object{id: '1', courseId: '1', name: 'Awareness of The Body', html: 'Awareness of the body is quite simply the most fundamental practise of meditation. Most of us spend so much of our time stuck in our heads. Rarely are we aware of our bodies until a painful sensation forces our attention away from our mind. The practise of awareness of the body helps us to reintegrate the mind into the totality of the mind body experience.', available: 1, playlist: 'PG9yZ2FuaXphdGlvbiBpZD0iMSI+DQogICAgPGNvdXJzZSBpZD0iMSI+DQogICAgICAgPG1vZHVsZSBpZD0iMSI+DQogICAgICAgICAgPGNvbnRlbnQ+DQogICAgICAgICAgICA8ZGVzY3JpcHRpb24+QXdhcmVuZXNzIE9mIFRoZSBCb2R5PC9kZXNjcmlwdGlvbj4gDQogICAgICAgICAgICA8b3duZXI+ZGgucC5kYWtpbmlAZ21haWwuY29tPC9vd25lcj4NCiAgICAgICAgICAgIDx0aW1lPjE4MDA8L3RpbWU+IA0KICAgICAgICAgICAgPHNpemU+Mjk8L3NpemU+DQogICAgICAgICAgICA8ZmlsZT4NCiAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4NCiAgICAgICAgICAgICAgICA8dXJsPmh0dHBzJTNBJTJGJTJGZGwuZHJvcGJveHVzZXJjb250ZW50LmNvbSUyRnUlMkYxMTIwNDUzJTJGdHJpcmF0bmElMkZib2R5LjEyOC5tcDM8L3VybD4NCiAgICAgICAgICAgIDwvZmlsZT4gICAgICAgICAgICAgICAgDQogICAgICAgICAgPC9jb250ZW50Pg0KICAgICAgIDwvbW9kdWxlPg0KICAgIDwvY291cnNlPg0KPC9vcmdhbml6YXRpb24+DQo='}
-<br />PhantomJS 1.9.8 (Mac OS X) LOG: 'check course files', 1, Object{id: '1', courseId: '1', name: 'Awareness of The Body', html: 'Awareness of the body is quite simply the most fundamental practise of meditation. Most of us spend so much of our time stuck in our heads. Rarely are we aware of our bodies until a painful sensation forces our attention away from our mind. The practise of awareness of the body helps us to reintegrate the mind into the totality of the mind body experience.', available: 1, playlist: 'PG9yZ2FuaXphdGlvbiBpZD0iMSI+DQogICAgPGNvdXJzZSBpZD0iMSI+DQogICAgICAgPG1vZHVsZSBpZD0iMSI+DQogICAgICAgICAgPGNvbnRlbnQ+DQogICAgICAgICAgICA8ZGVzY3JpcHRpb24+QXdhcmVuZXNzIE9mIFRoZSBCb2R5PC9kZXNjcmlwdGlvbj4gDQogICAgICAgICAgICA8b3duZXI+ZGgucC5kYWtpbmlAZ21haWwuY29tPC9vd25lcj4NCiAgICAgICAgICAgIDx0aW1lPjE4MDA8L3RpbWU+IA0KICAgICAgICAgICAgPHNpemU+Mjk8L3NpemU+DQogICAgICAgICAgICA8ZmlsZT4NCiAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4NCiAgICAgICAgICAgICAgICA8dXJsPmh0dHBzJTNBJTJGJTJGZGwuZHJvcGJveHVzZXJjb250ZW50LmNvbSUyRnUlMkYxMTIwNDUzJTJGdHJpcmF0bmElMkZib2R5LjEyOC5tcDM8L3VybD4NCiAgICAgICAgICAgIDwvZmlsZT4gICAgICAgICAgICAgICAgDQogICAgICAgICAgPC9jb250ZW50Pg0KICAgICAgIDwvbW9kdWxlPg0KICAgIDwvY291cnNlPg0KPC9vcmdhbml6YXRpb24+DQo='}
-<br />PhantomJS 1.9.8 (Mac OS X) LOG: 'check course files', 1, Object{id: '1', courseId: '1', name: 'Awareness of The Body', html: 'Awareness of the body is quite simply the most fundamental practise of meditation. Most of us spend so much of our time stuck in our heads. Rarely are we aware of our bodies until a painful sensation forces our attention away from our mind. The practise of awareness of the body helps us to reintegrate the mind into the totality of the mind body experience.', available: 1, playlist: 'PG9yZ2FuaXphdGlvbiBpZD0iMSI+DQogICAgPGNvdXJzZSBpZD0iMSI+DQogICAgICAgPG1vZHVsZSBpZD0iMSI+DQogICAgICAgICAgPGNvbnRlbnQ+DQogICAgICAgICAgICA8ZGVzY3JpcHRpb24+QXdhcmVuZXNzIE9mIFRoZSBCb2R5PC9kZXNjcmlwdGlvbj4gDQogICAgICAgICAgICA8b3duZXI+ZGgucC5kYWtpbmlAZ21haWwuY29tPC9vd25lcj4NCiAgICAgICAgICAgIDx0aW1lPjE4MDA8L3RpbWU+IA0KICAgICAgICAgICAgPHNpemU+Mjk8L3NpemU+DQogICAgICAgICAgICA8ZmlsZT4NCiAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4NCiAgICAgICAgICAgICAgICA8dXJsPmh0dHBzJTNBJTJGJTJGZGwuZHJvcGJveHVzZXJjb250ZW50LmNvbSUyRnUlMkYxMTIwNDUzJTJGdHJpcmF0bmElMkZib2R5LjEyOC5tcDM8L3VybD4NCiAgICAgICAgICAgIDwvZmlsZT4gICAgICAgICAgICAgICAgDQogICAgICAgICAgPC9jb250ZW50Pg0KICAgICAgIDwvbW9kdWxlPg0KICAgIDwvY291cnNlPg0KPC9vcmdhbml6YXRpb24+DQo='}
-<br />PhantomJS 1.9.8 (Mac OS X) LOG: 'check course files', 1, Object{id: '1', courseId: '1', name: 'Awareness of The Body', html: 'Awareness of the body is quite simply the most fundamental practise of meditation. Most of us spend so much of our time stuck in our heads. Rarely are we aware of our bodies until a painful sensation forces our attention away from our mind. The practise of awareness of the body helps us to reintegrate the mind into the totality of the mind body experience.', available: 1, playlist: 'PG9yZ2FuaXphdGlvbiBpZD0iMSI+DQogICAgPGNvdXJzZSBpZD0iMSI+DQogICAgICAgPG1vZHVsZSBpZD0iMSI+DQogICAgICAgICAgPGNvbnRlbnQ+DQogICAgICAgICAgICA8ZGVzY3JpcHRpb24+QXdhcmVuZXNzIE9mIFRoZSBCb2R5PC9kZXNjcmlwdGlvbj4gDQogICAgICAgICAgICA8b3duZXI+ZGgucC5kYWtpbmlAZ21haWwuY29tPC9vd25lcj4NCiAgICAgICAgICAgIDx0aW1lPjE4MDA8L3RpbWU+IA0KICAgICAgICAgICAgPHNpemU+Mjk8L3NpemU+DQogICAgICAgICAgICA8ZmlsZT4NCiAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4NCiAgICAgICAgICAgICAgICA8dXJsPmh0dHBzJTNBJTJGJTJGZGwuZHJvcGJveHVzZXJjb250ZW50LmNvbSUyRnUlMkYxMTIwNDUzJTJGdHJpcmF0bmElMkZib2R5LjEyOC5tcDM8L3VybD4NCiAgICAgICAgICAgIDwvZmlsZT4gICAgICAgICAgICAgICAgDQogICAgICAgICAgPC9jb250ZW50Pg0KICAgICAgIDwvbW9kdWxlPg0KICAgIDwvY291cnNlPg0KPC9vcmdhbml6YXRpb24+DQo='}
-<br />PhantomJS 1.9.8 (Mac OS X) LOG: 'check course files', '1', undefined
-<br />PhantomJS 1.9.8 (Mac OS X) LOG: 'check course files', '2', undefined
-<br />PhantomJS 1.9.8 (Mac OS X) LOG: 'check course files', 1, Object{id: '1', courseId: '1', name: 'Awareness of The Body', html: 'Awareness of the body is quite simply the most fundamental practise of meditation. Most of us spend so much of our time stuck in our heads. Rarely are we aware of our bodies until a painful sensation forces our attention away from our mind. The practise of awareness of the body helps us to reintegrate the mind into the totality of the mind body experience.', available: 1, playlist: 'PG9yZ2FuaXphdGlvbiBpZD0iMSI+DQogICAgPGNvdXJzZSBpZD0iMSI+DQogICAgICAgPG1vZHVsZSBpZD0iMSI+DQogICAgICAgICAgPGNvbnRlbnQ+DQogICAgICAgICAgICA8ZGVzY3JpcHRpb24+QXdhcmVuZXNzIE9mIFRoZSBCb2R5PC9kZXNjcmlwdGlvbj4gDQogICAgICAgICAgICA8b3duZXI+ZGgucC5kYWtpbmlAZ21haWwuY29tPC9vd25lcj4NCiAgICAgICAgICAgIDx0aW1lPjE4MDA8L3RpbWU+IA0KICAgICAgICAgICAgPHNpemU+Mjk8L3NpemU+DQogICAgICAgICAgICA8ZmlsZT4NCiAgICAgICAgICAgICAgICA8dHlwZT5hdWRpbzwvdHlwZT4NCiAgICAgICAgICAgICAgICA8dXJsPmh0dHBzJTNBJTJGJTJGZGwuZHJvcGJveHVzZXJjb250ZW50LmNvbSUyRnUlMkYxMTIwNDUzJTJGdHJpcmF0bmElMkZib2R5LjEyOC5tcDM8L3VybD4NCiAgICAgICAgICAgIDwvZmlsZT4gICAgICAgICAgICAgICAgDQogICAgICAgICAgPC9jb250ZW50Pg0KICAgICAgIDwvbW9kdWxlPg0KICAgIDwvY291cnNlPg0KPC9vcmdhbml6YXRpb24+DQo='}
-<br />PhantomJS 1.9.8 (Mac OS X) LOG: 'check course files', '1', undefined
-</td>
       </tr>
     </table>
     <hr/>

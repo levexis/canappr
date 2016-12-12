@@ -135,7 +135,7 @@ module.exports = function (grunt) {
                 cleanBeforeBuild: false, // when false the build path doesn't get regenerated
 //                plugins: ['/local/path/to/plugin', 'http://example.com/path/to/plugin.git'],
                 plugins: ['org.apache.cordova.device' ,
-//                           'org.apache.cordova.statusbar' ,
+                           'org.apache.cordova.statusbar' ,
                            'org.apache.cordova.network-information',
                            'org.apache.cordova.media',
                             'org.apache.cordova.file',
