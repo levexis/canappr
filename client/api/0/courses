@@ -14,13 +14,6 @@
            "startDate" : "2014-06-18T00:00:00.000Z"
        },
        {
-           "id" : "3",
-           "orgId" : "1",
-           "name" : "Talks by Padmapriya",
-           "html" : "Buddhism and Mindfulness for every day living",
-           "startDate" : "2014-06-18T00:00:00.000Z"
-       },
-       {
            "id" : "4",
            "orgId" : "3",
            "name" : "Bells and bowls",
@@ -55,13 +48,7 @@
            "html" : "Self-hypnosis recordings by Mark Davis",
            "startDate" : "2015-1-01T00:00:00.000Z"
        },
-         {
-           "id" : "9",
-           "orgId" : "2",
-           "name" : "7 day introduction",
-           "html" : "7 daily lessons to introduce you to mindfulness.",
-           "startDate" : "2014-06-08T00:00:00.000Z"
-         },
+
         {
         "id" : "10",
         "orgId" : "3",

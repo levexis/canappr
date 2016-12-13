@@ -9,22 +9,13 @@
                 "html": "Buddhist Mediation group based in Nutfield, Surrey. <a href=\"http://east.surreytriratna.org/\">http://east.surreytriratna.org/</a>"
             },
             {
-                "id": "2",
-                "name": "The Now Project",
-                "url": "http://www.lovelifelivenow.com/",
-                "contact": "lovelifelivenow@gmail.com",
-                "description": "Mindfulness for beginners.",
-                "logo": "http://www.lovelifelivenow.com/wp-content/uploads/2013/12/Now-Project-5-150x100.png",
-                "html": "Mindfulness courses and retreats without religion, find out more at <a href=\"http://www.lovelifelivenow.com/\">http://www.lovelifelivenow.com/</a>"
-            },
-            {
                 "id": "3",
-                "name": "Medit8 Sounds & Beats",
+                "name": "Bells & Beats",
                 "url": "http://medit8.daddyswork.com/",
                 "contact": "contact@daddyswork.com",
                 "description": "Core developers of the Medit8 app.",
                 "logo": "",
-                "html": "Sounds for meditations from the core developers of Medit8"
+                "html": "Timed Practice Bells and Binaural beats"
             },
             {
                 "id": "4",
